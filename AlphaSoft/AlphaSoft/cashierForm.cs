@@ -19,7 +19,8 @@ namespace AlphaSoft
 {
     public partial class cashierForm : Form
     {
-        private const string posTitle = "\"" + "ROYALE PETZ" + "\"" + " A Royale Shop For Your Pets";
+        //private const string posTitle = "\"" + "ROYALE PETZ" + "\"" + " A Royale Shop For Your Pets";
+        private const string posTitle = "LARAS BAKERY";
         private string selectedsalesinvoice = "";
         private string selectedsalesinvoiceTax = "";
         public static int objCounter = 1;
