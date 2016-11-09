@@ -183,6 +183,7 @@
             this.SHORTCUT_returBeli = new System.Windows.Forms.ToolStripButton();
             this.SHORTCUT_returJual = new System.Windows.Forms.ToolStripButton();
             this.timerMessage = new System.Windows.Forms.Timer(this.components);
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.MAINMENU_Strip.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.MAINMENU_ShortCut.SuspendLayout();
@@ -409,7 +410,8 @@
             this.MENU_satuan,
             this.MENU_stokOpname,
             this.MENU_mutasiBarang,
-            this.MENU_penerimaanBarang});
+            this.MENU_penerimaanBarang,
+            this.toolStripMenuItem1});
             this.MAINMENU_gudang.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.MAINMENU_gudang.ForeColor = System.Drawing.Color.FloralWhite;
             this.MAINMENU_gudang.Name = "MAINMENU_gudang";
@@ -430,7 +432,7 @@
             this.MENU_pengaturanNomorRak});
             this.MENU_produk.ForeColor = System.Drawing.Color.FloralWhite;
             this.MENU_produk.Name = "MENU_produk";
-            this.MENU_produk.Size = new System.Drawing.Size(211, 22);
+            this.MENU_produk.Size = new System.Drawing.Size(213, 22);
             this.MENU_produk.Text = "Produk";
             // 
             // MENU_tambahProduk
@@ -494,7 +496,7 @@
             this.MENU_tambahKategori});
             this.MENU_kategori.ForeColor = System.Drawing.Color.FloralWhite;
             this.MENU_kategori.Name = "MENU_kategori";
-            this.MENU_kategori.Size = new System.Drawing.Size(211, 22);
+            this.MENU_kategori.Size = new System.Drawing.Size(213, 22);
             this.MENU_kategori.Text = "Kategori";
             // 
             // MENU_tambahKategori
@@ -514,7 +516,7 @@
             this.MENU_pengaturanKonversiSatuan});
             this.MENU_satuan.ForeColor = System.Drawing.Color.FloralWhite;
             this.MENU_satuan.Name = "MENU_satuan";
-            this.MENU_satuan.Size = new System.Drawing.Size(211, 22);
+            this.MENU_satuan.Size = new System.Drawing.Size(213, 22);
             this.MENU_satuan.Text = "Satuan";
             // 
             // MENU_tambahSatuan
@@ -544,7 +546,7 @@
             this.MENU_penyesuaianStok});
             this.MENU_stokOpname.ForeColor = System.Drawing.Color.FloralWhite;
             this.MENU_stokOpname.Name = "MENU_stokOpname";
-            this.MENU_stokOpname.Size = new System.Drawing.Size(211, 22);
+            this.MENU_stokOpname.Size = new System.Drawing.Size(213, 22);
             this.MENU_stokOpname.Text = "Stok Opname";
             // 
             // MENU_exportDataCSV
@@ -582,7 +584,7 @@
             this.MENU_cekPermintaanBarang});
             this.MENU_mutasiBarang.ForeColor = System.Drawing.Color.FloralWhite;
             this.MENU_mutasiBarang.Name = "MENU_mutasiBarang";
-            this.MENU_mutasiBarang.Size = new System.Drawing.Size(211, 22);
+            this.MENU_mutasiBarang.Size = new System.Drawing.Size(213, 22);
             this.MENU_mutasiBarang.Text = "Mutasi Barang";
             // 
             // MENU_tambahMutasiBarang
@@ -609,7 +611,7 @@
             this.MENU_penerimaanBarang.ForeColor = System.Drawing.Color.FloralWhite;
             this.MENU_penerimaanBarang.Name = "MENU_penerimaanBarang";
             this.MENU_penerimaanBarang.ShowShortcutKeys = false;
-            this.MENU_penerimaanBarang.Size = new System.Drawing.Size(211, 22);
+            this.MENU_penerimaanBarang.Size = new System.Drawing.Size(213, 22);
             this.MENU_penerimaanBarang.Text = "Penerimaan Barang";
             this.MENU_penerimaanBarang.Click += new System.EventHandler(this.MENU_penerimaanBarang_Click);
             // 
@@ -1731,6 +1733,16 @@
             this.timerMessage.Interval = 3600000;
             this.timerMessage.Tick += new System.EventHandler(this.timerMessage_Tick);
             // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.BackColor = System.Drawing.Color.SteelBlue;
+            this.toolStripMenuItem1.ForeColor = System.Drawing.Color.FloralWhite;
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.ShowShortcutKeys = false;
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(213, 22);
+            this.toolStripMenuItem1.Text = "Penyesuaian Harian";
+            this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
+            // 
             // adminForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -1922,6 +1934,7 @@
         private System.Windows.Forms.ToolStripMenuItem uSBToolStripMenuItem;
         private System.Windows.Forms.Timer timerMessage;
         private System.Windows.Forms.ToolStripMenuItem stokProdukToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         //private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
     }
 }

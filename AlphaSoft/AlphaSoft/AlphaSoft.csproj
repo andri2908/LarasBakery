@@ -132,6 +132,12 @@
     <Compile Include="crReportContainer.Designer.cs">
       <DependentUpon>crReportContainer.cs</DependentUpon>
     </Compile>
+    <Compile Include="dailyStockTakeDetailForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="dailyStockTakeDetailForm.Designer.cs">
+      <DependentUpon>dailyStockTakeDetailForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="dataNomorAkun.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1121,6 +1127,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="crReportContainer.resx">
       <DependentUpon>crReportContainer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="dailyStockTakeDetailForm.resx">
+      <DependentUpon>dailyStockTakeDetailForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="dataNomorAkun.resx">
       <DependentUpon>dataNomorAkun.cs</DependentUpon>

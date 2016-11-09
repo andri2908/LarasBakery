@@ -146,7 +146,12 @@ namespace AlphaSoft
 
         public const int MENU_MODULE_MESSAGING = 50;
         public const int MENU_TAX_MODULE = 51;
-        public const int MENU_USB_UTILITY_MODULE = 52;
+        public const int SALES_QUOTATION = 52;
+        public const int APPROVAL_SALES_QUOTATION = 53;
+        public const int PENGATURAN_HARGA_POKOK = 54;
+        public const int REVISI_STOCK_TAKE_HARIAN = 55;
+
+        //public const int MENU_USB_UTILITY_MODULE = 52;
 
 
         // CONSTANTS FOR USER CHANGE LOG

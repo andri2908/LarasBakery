@@ -15,7 +15,7 @@ namespace AlphaSoft
     {
         private string userName = "SYS_POS_ADMIN";
         private string password = "pass123";
-        private string databaseName = "SYS_POS";
+        private string databaseName = "SYS_POS_LARASBAKERY";
         public const int LOCAL_SERVER = 0;
         public const int HQ_SERVER = 1;
         public const int BRANCH_SERVER = 2;
@@ -48,7 +48,7 @@ namespace AlphaSoft
                     {
                         if ((s = sr.ReadLine()) != null)
                         {
-                            configFileConnectionString = "server=" + s + ";uid=SYS_POS_ADMIN;pwd=pass123;database=SYS_POS;";
+                            configFileConnectionString = "server=" + s + ";uid=SYS_POS_ADMIN;pwd=pass123;database=SYS_POS_LARASBAKERY;";
                             ipServer = s;
                         }
                     }

@@ -1000,7 +1000,7 @@ namespace AlphaSoft
             setAccessibility(globalConstants.MENU_PENGATURAN_PRINTER, MENU_pengaturanPrinter);
             setAccessibility(globalConstants.MENU_PENGATURAN_GAMBAR_LATAR, MENU_pengaturanGambarLatar);
 
-            setAccessibility(globalConstants.MENU_USB_UTILITY_MODULE, uSBToolStripMenuItem);
+            //setAccessibility(globalConstants.MENU_USB_UTILITY_MODULE, uSBToolStripMenuItem);
 
             // SET ACCESSIBILITY FOR GUDANG MAIN MENU
             // SUB MENU PRODUK
@@ -1508,6 +1508,12 @@ namespace AlphaSoft
         private void stokProdukToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ReportStockInOutSearchForm displayedForm = new ReportStockInOutSearchForm(globalConstants.REPORT_STOCK);
+            displayedForm.ShowDialog(this);
+        }
+
+        private void toolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            dailyStockTakeDetailForm displayedForm = new dailyStockTakeDetailForm();
             displayedForm.ShowDialog(this);
         }
     }

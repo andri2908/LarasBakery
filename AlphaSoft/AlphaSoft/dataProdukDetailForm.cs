@@ -297,30 +297,30 @@ namespace AlphaSoft
                 return;
 
             isLoading = true;
-            if (hargaPartaiTextBox.Text.Length == 0)
+            if (hargaBSTextBox.Text.Length == 0)
             {
                 // IF TEXTBOX IS EMPTY, SET THE VALUE TO 0 AND EXIT THE CHECKING
                 hargaPartaiText = "0";
-                hargaPartaiTextBox.Text = "0";
+                hargaBSTextBox.Text = "0";
 
-                hargaPartaiTextBox.SelectionStart = hargaPartaiTextBox.Text.Length;
+                hargaBSTextBox.SelectionStart = hargaBSTextBox.Text.Length;
                 isLoading = false;
 
                 return;
             }
             // CHECKING TO PREVENT PREFIX "0" IN A NUMERIC INPUT WHILE ALLOWING A DECIMAL VALUE STARTED WITH "0"
-            else if (hargaPartaiTextBox.Text.IndexOf('0') == 0 && hargaPartaiTextBox.Text.Length > 1 && hargaPartaiTextBox.Text.IndexOf("0.") < 0)
+            else if (hargaBSTextBox.Text.IndexOf('0') == 0 && hargaBSTextBox.Text.Length > 1 && hargaBSTextBox.Text.IndexOf("0.") < 0)
             {
-                tempString = hargaPartaiTextBox.Text;
-                hargaPartaiTextBox.Text = tempString.Remove(0, 1);
+                tempString = hargaBSTextBox.Text;
+                hargaBSTextBox.Text = tempString.Remove(0, 1);
             }
 
-            if (checkRegEx(hargaPartaiTextBox.Text))
-                hargaPartaiText = hargaPartaiTextBox.Text;
+            if (checkRegEx(hargaBSTextBox.Text))
+                hargaPartaiText = hargaBSTextBox.Text;
             else
-                hargaPartaiTextBox.Text = hargaPartaiText;
+                hargaBSTextBox.Text = hargaPartaiText;
 
-            hargaPartaiTextBox.SelectionStart = hargaPartaiTextBox.Text.Length;
+            hargaBSTextBox.SelectionStart = hargaBSTextBox.Text.Length;
             isLoading = false;
         }
 
@@ -381,8 +381,8 @@ namespace AlphaSoft
                         produkDescTextBox.Text = rdr.GetString("PRODUCT_DESCRIPTION");
                         hppTextBox.Text = rdr.GetString("PRODUCT_BASE_PRICE");
                         hargaEcerTextBox.Text = rdr.GetString("PRODUCT_RETAIL_PRICE");
-                        hargaPartaiTextBox.Text = rdr.GetString("PRODUCT_BULK_PRICE");
-                        hargaGrosirTextBox.Text = rdr.GetString("PRODUCT_WHOLESALE_PRICE"); ;
+                        //hargaBSTextBox.Text = rdr.GetString("PRODUCT_BULK_PRICE");
+                        //hargaGrosirTextBox.Text = rdr.GetString("PRODUCT_WHOLESALE_PRICE"); ;
                         merkTextBox.Text = rdr.GetString("PRODUCT_BRAND");
                         stokAwalTextBox.Text = rdr.GetString("PRODUCT_STOCK_QTY");
                         limitStokTextBox.Text = rdr.GetString("PRODUCT_LIMIT_STOCK");
@@ -549,11 +549,11 @@ namespace AlphaSoft
                 return false;
             }
 
-            if (hppTextBox.Text.Length <= 0 || Convert.ToDouble(hppTextBox.Text) == 0)
-            {
-                errorLabel.Text = "HARGA POKOK TIDAK BOLEH 0 / KOSONG";
-                return false;
-            }
+            //if (hppTextBox.Text.Length <= 0 || Convert.ToDouble(hppTextBox.Text) == 0)
+            //{
+            //    errorLabel.Text = "HARGA POKOK TIDAK BOLEH 0 / KOSONG";
+            //    return false;
+            //}
 
             if (hargaEcerTextBox.Text.Length <= 0 || Convert.ToDouble(hargaEcerTextBox.Text) == 0)
             {
@@ -561,15 +561,15 @@ namespace AlphaSoft
                 return false;
             }
 
-            if (hargaGrosirTextBox.Text.Length <= 0 || Convert.ToDouble(hargaGrosirTextBox.Text) == 0)
-            {
-                errorLabel.Text = "HARGA PARTAI TIDAK BOLEH 0 / KOSONG";
-                return false;
-            }
+            //if (hargaGrosirTextBox.Text.Length <= 0 || Convert.ToDouble(hargaGrosirTextBox.Text) == 0)
+            //{
+            //    errorLabel.Text = "HARGA PARTAI TIDAK BOLEH 0 / KOSONG";
+            //    return false;
+            //}
 
-            if (hargaPartaiTextBox.Text.Length <= 0 || Convert.ToDouble(hargaPartaiTextBox.Text) == 0)
+            if (hargaBSTextBox.Text.Length <= 0 || Convert.ToDouble(hargaBSTextBox.Text) == 0)
             {
-                errorLabel.Text = "HARGA GROSIR TIDAK BOLEH 0 / KOSONG";
+                errorLabel.Text = "HARGA BS TIDAK BOLEH 0 / KOSONG";
                 return false;
             }
 
@@ -624,8 +624,9 @@ namespace AlphaSoft
 
             string produkHargaPokok = hppTextBox.Text;
             string produkHargaEcer = hargaEcerTextBox.Text;
-            string produkHargaPartai = hargaPartaiTextBox.Text;
-            string produkHargaGrosir = hargaGrosirTextBox.Text;
+            string produkHargaPartai = "0";//hargaBSTextBox.Text;
+            string produkHargaGrosir = "0"; //hargaGrosirTextBox.Text;
+            string produkHargaBS = hargaBSTextBox.Text;
 
             string produkBrand = merkTextBox.Text.Trim();
             if (produkBrand.Equals(""))
@@ -693,12 +694,13 @@ namespace AlphaSoft
                                                 "PRODUCT_SHELVES = '" + produkShelves + "', " +
                                                 "PRODUCT_ACTIVE = " + produkStatus + ", " +
                                                 "PRODUCT_BRAND = '" + produkBrand + "', " +
-                                                "PRODUCT_IS_SERVICE = " + produkSvc + " " +
+                                                "PRODUCT_IS_SERVICE = " + produkSvc + ", " +
+                                                "PRODUCT_BS_PRICE = " + produkHargaBS + " " +
                                                 "WHERE PRODUCT_ID = '" + productID + "'";
 
-                        gUtil.saveSystemDebugLog(globalConstants.MENU_TAMBAH_PRODUK, "UPDATE CURRENT PRODUCT DATA [" + productID + "]");
-                        if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
-                                throw internalEX;
+                            gUtil.saveSystemDebugLog(globalConstants.MENU_TAMBAH_PRODUK, "UPDATE CURRENT PRODUCT DATA [" + productID + "]");
+                            if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
+                                    throw internalEX;
 
                             // UPDATE PRODUCT_CATEGORY TABLE
                             gUtil.saveSystemDebugLog(globalConstants.MENU_TAMBAH_PRODUK, "UPDATE PRODUCT CATEGORY FOR [" + productID + "]");
@@ -723,9 +725,9 @@ namespace AlphaSoft
                     default: // NEW PRODUK
                         // SAVE TO MASTER_PRODUK TABLE
                         sqlCommand = "INSERT INTO MASTER_PRODUCT " +
-                                            "(PRODUCT_ID, PRODUCT_BARCODE, PRODUCT_NAME, PRODUCT_DESCRIPTION, PRODUCT_BASE_PRICE, PRODUCT_RETAIL_PRICE, PRODUCT_BULK_PRICE, PRODUCT_WHOLESALE_PRICE, PRODUCT_PHOTO_1, UNIT_ID, PRODUCT_STOCK_QTY, PRODUCT_LIMIT_STOCK, PRODUCT_SHELVES, PRODUCT_ACTIVE, PRODUCT_BRAND, PRODUCT_IS_SERVICE) " +
+                                            "(PRODUCT_ID, PRODUCT_BARCODE, PRODUCT_NAME, PRODUCT_DESCRIPTION, PRODUCT_BASE_PRICE, PRODUCT_RETAIL_PRICE, PRODUCT_BULK_PRICE, PRODUCT_WHOLESALE_PRICE, PRODUCT_PHOTO_1, UNIT_ID, PRODUCT_STOCK_QTY, PRODUCT_LIMIT_STOCK, PRODUCT_SHELVES, PRODUCT_ACTIVE, PRODUCT_BRAND, PRODUCT_IS_SERVICE, PRODUCT_STOCK_AWAL, PRODUCT_BS_PRICE) " +
                                             "VALUES " +
-                                            "('" + productID + "', '" + produkBarcode + "', '" + produkName + "', '" + produkDesc + "', " + produkHargaPokok + ", " + produkHargaEcer + ", " + produkHargaPartai + ", " + produkHargaGrosir + ", '" + produkPhoto + "', " + selectedUnitID + ", " + produkQty + ", " + limitStock + ", '" + produkShelves + "', " + produkStatus + ", '" + produkBrand + "', " + produkSvc + ")";
+                                            "('" + productID + "', '" + produkBarcode + "', '" + produkName + "', '" + produkDesc + "', " + produkHargaPokok + ", " + produkHargaEcer + ", " + produkHargaPartai + ", " + produkHargaGrosir + ", '" + produkPhoto + "', " + selectedUnitID + ", " + produkQty + ", " + limitStock + ", '" + produkShelves + "', " + produkStatus + ", '" + produkBrand + "', " + produkSvc + ", " + produkQty + ", " + produkHargaBS + ")";
 
                         gUtil.saveSystemDebugLog(globalConstants.MENU_TAMBAH_PRODUK, "INSERT NEW PRODUCT [" + productID + "]");
 
@@ -874,7 +876,7 @@ namespace AlphaSoft
                 hppTextBox.Text = "0";
                 hargaEcerTextBox.Text = "0";
                 hargaGrosirTextBox.Text = "0";
-                hargaPartaiTextBox.Text = "0";
+                hargaBSTextBox.Text = "0";
 
                 selectedPhoto = "";
                 panelImage.BackgroundImage = null;
@@ -945,7 +947,7 @@ namespace AlphaSoft
             hppTextBox.Text = "0";
             hargaEcerTextBox.Text = "0";
             hargaGrosirTextBox.Text = "0";
-            hargaPartaiTextBox.Text = "0";
+            hargaBSTextBox.Text = "0";
 
             selectedPhoto = "";
             panelImage.BackgroundImage = null;
@@ -1023,6 +1025,13 @@ namespace AlphaSoft
                 {
                     gUtil.setReadOnlyAllControls(this);
                 }
+            }
+
+            userAccessOption = DS.getUserAccessRight(globalConstants.PENGATURAN_HARGA_POKOK, gUtil.getUserGroupID());
+            if (userAccessOption != 1)
+            {
+                label21.Visible = false;
+                hppTextBox.Visible = false;
             }
 
             arrButton[0] = saveButton;

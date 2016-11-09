@@ -58,7 +58,7 @@
             this.searchKategoriButton = new System.Windows.Forms.Button();
             this.label8 = new System.Windows.Forms.Label();
             this.produkDescTextBox = new System.Windows.Forms.TextBox();
-            this.hargaPartaiTextBox = new System.Windows.Forms.TextBox();
+            this.hargaBSTextBox = new System.Windows.Forms.TextBox();
             this.hargaGrosirTextBox = new System.Windows.Forms.TextBox();
             this.saveButton = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -422,17 +422,17 @@
             this.produkDescTextBox.TabIndex = 33;
             this.produkDescTextBox.TextChanged += new System.EventHandler(this.produkDescTextBox_TextChanged);
             // 
-            // hargaPartaiTextBox
+            // hargaBSTextBox
             // 
-            this.hargaPartaiTextBox.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.hargaPartaiTextBox.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.hargaPartaiTextBox.Location = new System.Drawing.Point(212, 91);
-            this.hargaPartaiTextBox.Name = "hargaPartaiTextBox";
-            this.hargaPartaiTextBox.Size = new System.Drawing.Size(159, 27);
-            this.hargaPartaiTextBox.TabIndex = 49;
-            this.hargaPartaiTextBox.Text = "0";
-            this.hargaPartaiTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.hargaPartaiTextBox.TextChanged += new System.EventHandler(this.hargaPartaiTextBox_TextChanged);
+            this.hargaBSTextBox.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.hargaBSTextBox.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.hargaBSTextBox.Location = new System.Drawing.Point(212, 91);
+            this.hargaBSTextBox.Name = "hargaBSTextBox";
+            this.hargaBSTextBox.Size = new System.Drawing.Size(159, 27);
+            this.hargaBSTextBox.TabIndex = 49;
+            this.hargaBSTextBox.Text = "0";
+            this.hargaBSTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.hargaBSTextBox.TextChanged += new System.EventHandler(this.hargaPartaiTextBox_TextChanged);
             // 
             // hargaGrosirTextBox
             // 
@@ -444,6 +444,7 @@
             this.hargaGrosirTextBox.TabIndex = 49;
             this.hargaGrosirTextBox.Text = "0";
             this.hargaGrosirTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.hargaGrosirTextBox.Visible = false;
             this.hargaGrosirTextBox.TextChanged += new System.EventHandler(this.hargaGrosirTextBox_TextChanged);
             // 
             // saveButton
@@ -581,7 +582,7 @@
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.hargaGrosirTextBox);
-            this.groupBox3.Controls.Add(this.hargaPartaiTextBox);
+            this.groupBox3.Controls.Add(this.hargaBSTextBox);
             this.groupBox3.Controls.Add(this.hargaEcerTextBox);
             this.groupBox3.Controls.Add(this.hppTextBox);
             this.groupBox3.Controls.Add(this.label21);
@@ -628,9 +629,9 @@
             this.label24.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.label24.Location = new System.Drawing.Point(6, 94);
             this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(188, 18);
+            this.label24.Size = new System.Drawing.Size(142, 18);
             this.label24.TabIndex = 75;
-            this.label24.Text = "HARGA JUAL GROSIR";
+            this.label24.Text = "HARGA JUAL BS";
             // 
             // label25
             // 
@@ -643,6 +644,7 @@
             this.label25.Size = new System.Drawing.Size(185, 18);
             this.label25.TabIndex = 76;
             this.label25.Text = "HARGA JUAL PARTAI";
+            this.label25.Visible = false;
             // 
             // dataProdukDetailForm
             // 
@@ -711,7 +713,7 @@
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Panel panelImage;
-        private System.Windows.Forms.TextBox hargaPartaiTextBox;
+        private System.Windows.Forms.TextBox hargaBSTextBox;
         private System.Windows.Forms.TextBox hargaGrosirTextBox;
         private System.Windows.Forms.TextBox stokAwalTextBox;
         private System.Windows.Forms.TextBox limitStokTextBox;
