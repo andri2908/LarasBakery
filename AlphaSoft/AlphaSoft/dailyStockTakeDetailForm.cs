@@ -114,25 +114,6 @@ namespace AlphaSoft
             produksiColumn.ReadOnly = true;
             detailDataGrid.Columns.Add(produksiColumn);
 
-            remarkColumn.Name = "remark";
-            remarkColumn.HeaderText = "REMARK";
-            remarkColumn.ReadOnly = false;
-            remarkColumn.Width = 180;
-            remarkColumn.DefaultCellStyle.BackColor = Color.AliceBlue;
-            detailDataGrid.Columns.Add(remarkColumn);
-
-            BSColumn.Name = "BS";
-            BSColumn.HeaderText = "BS";
-            BSColumn.ReadOnly = false;
-            BSColumn.DefaultCellStyle.BackColor = Color.AliceBlue;
-            detailDataGrid.Columns.Add(BSColumn);
-
-            akhirColumn.Name = "akhir";
-            akhirColumn.HeaderText = "AKHIR";
-            akhirColumn.ReadOnly = true;
-//            akhirColumn.Visible = false;
-            detailDataGrid.Columns.Add(akhirColumn);
-
             lakuColumn.Name = "laku";
             lakuColumn.HeaderText = "LAKU";
             lakuColumn.ReadOnly = true;
@@ -143,11 +124,30 @@ namespace AlphaSoft
             penyesuaianColumn.ReadOnly = true;
             detailDataGrid.Columns.Add(penyesuaianColumn);
 
+            BSColumn.Name = "BS";
+            BSColumn.HeaderText = "BS";
+            BSColumn.ReadOnly = false;
+            BSColumn.DefaultCellStyle.BackColor = Color.AliceBlue;
+            detailDataGrid.Columns.Add(BSColumn);
+
+            akhirColumn.Name = "akhir";
+            akhirColumn.HeaderText = "AKHIR";
+            akhirColumn.ReadOnly = true;
+            //            akhirColumn.Visible = false;
+            detailDataGrid.Columns.Add(akhirColumn);
+
             akhirRiilColumn.Name = "akhirRiil";
             akhirRiilColumn.HeaderText = "AKHIR RIIL";
             akhirRiilColumn.ReadOnly = false;
             akhirRiilColumn.DefaultCellStyle.BackColor = Color.AliceBlue;
             detailDataGrid.Columns.Add(akhirRiilColumn);
+
+            remarkColumn.Name = "remark";
+            remarkColumn.HeaderText = "REMARK";
+            remarkColumn.ReadOnly = false;
+            remarkColumn.Width = 180;
+            remarkColumn.DefaultCellStyle.BackColor = Color.AliceBlue;
+            detailDataGrid.Columns.Add(remarkColumn);
         }
 
         private void loadDataStockTake()
@@ -166,15 +166,15 @@ namespace AlphaSoft
 
                 if (userAccessOption == 1)
                 {
+                    sqlCommand = "SELECT PRODUCT_ADJUSTMENT_ID FROM PRODUCT_DAILY_ADJUSTMENT_HEADER WHERE DATE_FORMAT(PRODUCT_ADJUSTMENT_DATE, '%Y%m%d')  = '" + selectedDate + "'";
+                    globalProductAdjustmentID = DS.getDataSingleValue(sqlCommand).ToString();
+
                     revID = getRevisiNo();
                     moduleID = EDIT_DAILY_STOCK_TAKE;
                     revisionLabel.Visible = true;
                     revisionLabel.Text = "REV : " + revID;
                     revisionRemark.Visible = true;
                     allowToEdit = true;
-
-                    sqlCommand = "SELECT PRODUCT_ADJUSTMENT_ID FROM PRODUCT_DAILY_ADJUSTMENT_HEADER WHERE DATE_FORMAT(PRODUCT_ADJUSTMENT_DATE, '%Y%m%d')  = '" + selectedDate + "'";
-                    globalProductAdjustmentID = DS.getDataSingleValue(sqlCommand).ToString();
                 }
                 else
                 {
@@ -191,7 +191,8 @@ namespace AlphaSoft
             switch (moduleID)
             {
                 case NEW_DAILY_STOCK_TAKE:
-                    sqlCommand = "SELECT MP.PRODUCT_ID, MP.PRODUCT_NAME AS ROTI, MP.PRODUCT_STOCK_AWAL AS AWAL, (IFNULL(TAB1.TOTAL_RECEIVED, 0)-IFNULL(TAB4.TOTAL_RECEIVED_RETURN, 0)) AS PRODUKSI, '' AS REMARK, '0' AS BS, MP.PRODUCT_STOCK_QTY AS AKHIR, (IFNULL(TAB2.TOTAL_SALES, 0)-IFNULL(TAB3.TOTAL_SALES_RETURN, 0)) AS LAKU, '0' AS PENYESUAIAN, '0' AS RIILQTY " +
+                    sqlCommand = "SELECT MP.PRODUCT_ID, MP.PRODUCT_NAME AS ROTI, MP.PRODUCT_STOCK_AWAL AS AWAL, (IFNULL(TAB1.TOTAL_RECEIVED, 0)-IFNULL(TAB4.TOTAL_RECEIVED_RETURN, 0)) AS PRODUKSI, '' AS REMARK, '0' AS BS, MP.PRODUCT_STOCK_QTY AS AKHIR, (IFNULL(TAB2.TOTAL_SALES, 0)-IFNULL(TAB3.TOTAL_SALES_RETURN, 0)) AS LAKU, " +
+                                           "MP.PRODUCT_STOCK_QTY - (MP.PRODUCT_STOCK_AWAL+ (IFNULL(TAB1.TOTAL_RECEIVED, 0)-IFNULL(TAB4.TOTAL_RECEIVED_RETURN, 0)) - (IFNULL(TAB2.TOTAL_SALES, 0)-IFNULL(TAB3.TOTAL_SALES_RETURN, 0))) AS PENYESUAIAN, '0' AS RIILQTY " +
                                            "FROM MASTER_PRODUCT MP LEFT OUTER JOIN " +
                                            "(SELECT PRODUCT_ID, SUM(PRODUCT_ACTUAL_QTY) AS TOTAL_RECEIVED FROM PRODUCTS_RECEIVED_HEADER PRH, PRODUCTS_RECEIVED_DETAIL PRD WHERE PRD.PR_INVOICE = PRH.PR_INVOICE AND DATE_FORMAT(PRH.PR_DATE , '%Y%m%d')  = '" + selectedDate + "' GROUP BY PRODUCT_ID) TAB1 ON TAB1.PRODUCT_ID = MP.PRODUCT_ID " +
                                            "LEFT OUTER JOIN(SELECT PRODUCT_ID, SUM(PRODUCT_QTY) AS TOTAL_SALES FROM SALES_HEADER SH, SALES_DETAIL SD WHERE SD.SALES_INVOICE = SH.SALES_INVOICE AND DATE_FORMAT(SH.SALES_DATE, '%Y%m%d')  = '" + selectedDate + "' GROUP BY PRODUCT_ID) TAB2 ON TAB2.PRODUCT_ID = MP.PRODUCT_ID " +
@@ -214,9 +215,20 @@ namespace AlphaSoft
                 {
                     while (rdr.Read())
                     {
-                        detailDataGrid.Rows.Add(rdr.GetString("PRODUCT_ID"), detailDataGrid.Rows.Count + 1, rdr.GetString("ROTI"), rdr.GetString("AWAL"), rdr.GetString("PRODUKSI"), rdr.GetString("REMARK"), rdr.GetString("BS"), rdr.GetString("AKHIR"), rdr.GetString("LAKU"), rdr.GetString("PENYESUAIAN"), rdr.GetString("RIILQTY"));
+                        detailDataGrid.Rows.Add(rdr.GetString("PRODUCT_ID"), 
+                            detailDataGrid.Rows.Count + 1, 
+                            rdr.GetString("ROTI"), 
+                            rdr.GetString("AWAL"), 
+                            rdr.GetString("PRODUKSI"),
+                            rdr.GetString("LAKU"),
+                            rdr.GetString("PENYESUAIAN"),
+                            rdr.GetString("BS"), 
+                            rdr.GetString("AKHIR"),
+                            rdr.GetString("RIILQTY"),
+                            rdr.GetString("REMARK")
+                            );
                         BSQty.Add(rdr.GetString("BS"));
-                        calculateAkhirValue(detailDataGrid.Rows.Count-1);
+                        //calculateAkhirValue(detailDataGrid.Rows.Count-1);
                     }
                 }
             }
@@ -243,18 +255,20 @@ namespace AlphaSoft
         private void calculateAkhirValue(int rowIndex)
         {
             DataGridViewRow selectedRow = detailDataGrid.Rows[rowIndex];
-            int awal = 0;
-            int produksi = 0;
+            //int awal = 0;
+            //int produksi = 0;
             int bs = 0;
             int akhir = 0;
-            int laku = 0;
+            //int laku = 0;
 
-            awal = Convert.ToInt32(selectedRow.Cells["AWAL"].Value);
-            produksi = Convert.ToInt32(selectedRow.Cells["PRODUKSI"].Value);
-            laku = Convert.ToInt32(selectedRow.Cells["LAKU"].Value);
+            //awal = Convert.ToInt32(selectedRow.Cells["AWAL"].Value);
+            //produksi = Convert.ToInt32(selectedRow.Cells["PRODUKSI"].Value);
+            //laku = Convert.ToInt32(selectedRow.Cells["LAKU"].Value);
             bs = Convert.ToInt32(BSQty[rowIndex]);
+            akhir = Convert.ToInt32(selectedRow.Cells["AKHIR"].Value);
 
-            akhir = awal + produksi - bs - laku;
+            //            akhir = awal + produksi - bs - laku;
+            akhir = akhir - bs;
 
             selectedRow.Cells["AKHIR"].Value = akhir;
         }
@@ -393,7 +407,6 @@ namespace AlphaSoft
 
             return revisionNo;
         }
-
 
         private bool saveDataTransaction()
         {
