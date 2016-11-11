@@ -255,5 +255,7 @@ namespace AlphaSoft
         public const string returPermintaanXML = "ReturPermintaan.xml";
         public const string returPenjualanXML = "ReturPenjualan.xml";
 
+        public const string dailyStockTakeXML = "DailyStockTake.xml";
+
     }
 }

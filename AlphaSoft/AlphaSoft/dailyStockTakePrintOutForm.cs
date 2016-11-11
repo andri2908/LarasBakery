@@ -16,12 +16,12 @@ using MySql.Data.MySqlClient;
 
 namespace AlphaSoft
 {
-    public partial class SalesReceiptForm : Form
+    public partial class dailyStockTakePrintOutForm : Form
     {
         private globalUtilities gutil = new globalUtilities();
         private Data_Access DS = new Data_Access();
 
-        public SalesReceiptForm()
+        public dailyStockTakePrintOutForm()
         {
             InitializeComponent();
         }
@@ -43,51 +43,17 @@ namespace AlphaSoft
             }
         }
 
-        private void testPaper()
+        private void dailyStockTakePrintOutForm_Load(object sender, EventArgs e)
         {
-            //⁠⁠⁠System.Drawing.Printing.PrintDocument pDoc = new System.Drawing.Printing.PrintDocument();
-            //CrystalDecisions.ReportAppServer.Controllers.PrintReportOptions rasPROpts = new CrystalDecisions.ReportAppServer.Controllers.PrintReportOptions();
-            //CrystalDecisions.ReportAppServer.ReportDefModel.PrintOptions newOpts = new CrystalDecisions.ReportAppServer.ReportDefModel.PrintOptions();
-
-            //newOpts.DissociatePageSizeAndPrinterPaperSize = false;
-
-            //if (rdoCurrent.Checked)
-            //{
-            //    newOpts.PrinterName = cboCurrentPrinters.SelectedItem.ToString();
-
-            //    newOpts.PaperSize = (CrPaperSizeEnum)cboCurrentPaperSizes.SelectedIndex;
-            //    newOpts.PaperSource = (CrPaperSourceEnum)cboCurrentPaperTrays.SelectedIndex;
-            //}
-            //else
-            //{
-            //    pDoc.PrinterSettings.PrinterName = cboDefaultPrinters.Text;
-
-            //    newOpts.PrinterName = cboDefaultPrinters.Text;
-            //    newOpts.PaperSize = (CrPaperSizeEnum)cboDefaultPaperTrays.SelectedIndex;
-            //    newOpts.PaperSource = (CrPaperSourceEnum)cboDefaultPaperTrays.SelectedIndex;
-            //}
-
-            //rptClientDoc.PrintOutputController.ModifyPrintOptions(newOpts);
-        }
-    
-
-        private void SalesReceiptForm_Load(object sender, EventArgs e)
-        {
-            /*
-            if (gutil.getPaper() == 2) // kuarto
-            {
-                SalesReceipt1.PrintOptions.PaperSize = CrystalDecisions.Shared.PaperSize.PaperLetter;                
-            }
-            */
             DataSet dsTempReport = new DataSet();
             try
             {
-                string appPath = Directory.GetCurrentDirectory() + "\\" + globalConstants.SalesReceiptXML;
+                string appPath = Directory.GetCurrentDirectory() + "\\" + globalConstants.dailyStockTakeXML;
                 dsTempReport.ReadXml(@appPath);
 
                 //prepare report for preview
-                SalesReceipt rptXMLReport = new SalesReceipt();
-                
+                dailyStockTake rptXMLReport = new dailyStockTake();
+
                 CrystalDecisions.CrystalReports.Engine.TextObject txtReportHeader1, txtReportHeader2, txtReportHeader3, txtReportHeader4;
                 txtReportHeader1 = rptXMLReport.ReportDefinition.ReportObjects["NamaTokoLabel"] as TextObject;
                 txtReportHeader2 = rptXMLReport.ReportDefinition.ReportObjects["InfoTokoLabel"] as TextObject;

@@ -1,0 +1,67 @@
+<?xml version="1.0" standalone="yes"?>
+<NewDataSet>
+  <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true">
+      <xs:complexType>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+          <xs:element name="Table">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="STOCK_TAKE_DATE" type="xs:string" minOccurs="0" />
+                <xs:element name="PRODUCT_ID" type="xs:string" minOccurs="0" />
+                <xs:element name="ROTI" type="xs:string" minOccurs="0" />
+                <xs:element name="AWAL" type="xs:double" minOccurs="0" />
+                <xs:element name="PRODUKSI" type="xs:double" minOccurs="0" />
+                <xs:element name="REMARK" type="xs:string" minOccurs="0" />
+                <xs:element name="BS" type="xs:double" minOccurs="0" />
+                <xs:element name="AKHIR" type="xs:double" minOccurs="0" />
+                <xs:element name="LAKU" type="xs:double" minOccurs="0" />
+                <xs:element name="PENYESUAIAN" type="xs:double" minOccurs="0" />
+                <xs:element name="RIILQTY" type="xs:double" minOccurs="0" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:choice>
+      </xs:complexType>
+    </xs:element>
+  </xs:schema>
+  <Table>
+    <STOCK_TAKE_DATE>11-November-2016</STOCK_TAKE_DATE>
+    <PRODUCT_ID>RT001</PRODUCT_ID>
+    <ROTI>ROTI PISANG</ROTI>
+    <AWAL>0</AWAL>
+    <PRODUKSI>0</PRODUKSI>
+    <REMARK>aa</REMARK>
+    <BS>0</BS>
+    <AKHIR>12</AKHIR>
+    <LAKU>0</LAKU>
+    <PENYESUAIAN>12</PENYESUAIAN>
+    <RIILQTY>12</RIILQTY>
+  </Table>
+  <Table>
+    <STOCK_TAKE_DATE>11-November-2016</STOCK_TAKE_DATE>
+    <PRODUCT_ID>RT002</PRODUCT_ID>
+    <ROTI>ROTI PISANG COKLAT</ROTI>
+    <AWAL>0</AWAL>
+    <PRODUKSI>0</PRODUKSI>
+    <REMARK>aa</REMARK>
+    <BS>0</BS>
+    <AKHIR>12</AKHIR>
+    <LAKU>0</LAKU>
+    <PENYESUAIAN>12</PENYESUAIAN>
+    <RIILQTY>12</RIILQTY>
+  </Table>
+  <Table>
+    <STOCK_TAKE_DATE>11-November-2016</STOCK_TAKE_DATE>
+    <PRODUCT_ID>RT003</PRODUCT_ID>
+    <ROTI>ROTI PISANG COKLAT KEJU</ROTI>
+    <AWAL>0</AWAL>
+    <PRODUKSI>0</PRODUKSI>
+    <REMARK>aa</REMARK>
+    <BS>0</BS>
+    <AKHIR>5</AKHIR>
+    <LAKU>0</LAKU>
+    <PENYESUAIAN>5</PENYESUAIAN>
+    <RIILQTY>5</RIILQTY>
+  </Table>
+</NewDataSet>

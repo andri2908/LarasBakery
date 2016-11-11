@@ -38,12 +38,9 @@
             this.stockTakeDateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.label2 = new System.Windows.Forms.Label();
             this.revisionLabel = new System.Windows.Forms.Label();
-            this.revisionRemark = new System.Windows.Forms.TextBox();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.detailDataGrid)).BeginInit();
             this.panel1.SuspendLayout();
-            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // detailDataGrid
@@ -67,10 +64,10 @@
             dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.detailDataGrid.DefaultCellStyle = dataGridViewCellStyle4;
-            this.detailDataGrid.Location = new System.Drawing.Point(1, 77);
+            this.detailDataGrid.Location = new System.Drawing.Point(1, 91);
             this.detailDataGrid.Name = "detailDataGrid";
             this.detailDataGrid.RowHeadersVisible = false;
-            this.detailDataGrid.Size = new System.Drawing.Size(984, 586);
+            this.detailDataGrid.Size = new System.Drawing.Size(1102, 572);
             this.detailDataGrid.TabIndex = 52;
             this.detailDataGrid.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.detailDataGrid_CellBeginEdit);
             this.detailDataGrid.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.detailDataGrid_CellEndEdit);
@@ -84,7 +81,7 @@
             this.panel1.Controls.Add(this.errorLabel);
             this.panel1.Location = new System.Drawing.Point(1, 1);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(984, 29);
+            this.panel1.Size = new System.Drawing.Size(1102, 29);
             this.panel1.TabIndex = 51;
             // 
             // errorLabel
@@ -121,7 +118,7 @@
             this.stockTakeDateTimePicker.Enabled = false;
             this.stockTakeDateTimePicker.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.stockTakeDateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.stockTakeDateTimePicker.Location = new System.Drawing.Point(96, 38);
+            this.stockTakeDateTimePicker.Location = new System.Drawing.Point(96, 44);
             this.stockTakeDateTimePicker.Name = "stockTakeDateTimePicker";
             this.stockTakeDateTimePicker.Size = new System.Drawing.Size(144, 27);
             this.stockTakeDateTimePicker.TabIndex = 56;
@@ -131,7 +128,7 @@
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label2.Location = new System.Drawing.Point(11, 44);
+            this.label2.Location = new System.Drawing.Point(11, 50);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(79, 18);
             this.label2.TabIndex = 55;
@@ -142,46 +139,30 @@
             this.revisionLabel.AutoSize = true;
             this.revisionLabel.Font = new System.Drawing.Font("Verdana", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.revisionLabel.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.revisionLabel.Location = new System.Drawing.Point(287, 44);
+            this.revisionLabel.Location = new System.Drawing.Point(666, 37);
             this.revisionLabel.Name = "revisionLabel";
-            this.revisionLabel.Size = new System.Drawing.Size(70, 18);
+            this.revisionLabel.Size = new System.Drawing.Size(295, 18);
             this.revisionLabel.TabIndex = 58;
-            this.revisionLabel.Text = "REV : 0";
+            this.revisionLabel.Text = "Tekan F9 untuk menyimpan data";
             // 
-            // revisionRemark
+            // label1
             // 
-            this.revisionRemark.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.revisionRemark.Location = new System.Drawing.Point(379, 39);
-            this.revisionRemark.MaxLength = 50;
-            this.revisionRemark.Name = "revisionRemark";
-            this.revisionRemark.Size = new System.Drawing.Size(593, 27);
-            this.revisionRemark.TabIndex = 59;
-            // 
-            // statusStrip1
-            // 
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripStatusLabel1});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 641);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(984, 23);
-            this.statusStrip1.TabIndex = 60;
-            this.statusStrip1.Text = "statusStrip1";
-            // 
-            // toolStripStatusLabel1
-            // 
-            this.toolStripStatusLabel1.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(309, 18);
-            this.toolStripStatusLabel1.Text = "TEKAN F9 UNTUK MENYIMPAN DATA";
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Verdana", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.label1.Location = new System.Drawing.Point(654, 63);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(318, 18);
+            this.label1.TabIndex = 59;
+            this.label1.Text = "Tekan F10 untuk mencetak laporan";
             // 
             // dailyStockTakeDetailForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FloralWhite;
-            this.ClientSize = new System.Drawing.Size(984, 664);
-            this.Controls.Add(this.statusStrip1);
-            this.Controls.Add(this.revisionRemark);
+            this.ClientSize = new System.Drawing.Size(1103, 664);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.revisionLabel);
             this.Controls.Add(this.stockTakeDateTimePicker);
             this.Controls.Add(this.label2);
@@ -198,8 +179,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.detailDataGrid)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            this.statusStrip1.ResumeLayout(false);
-            this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -215,8 +194,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label errorLabel;
         private System.Windows.Forms.Label revisionLabel;
-        private System.Windows.Forms.TextBox revisionRemark;
-        private System.Windows.Forms.StatusStrip statusStrip1;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
+        private System.Windows.Forms.Label label1;
     }
 }

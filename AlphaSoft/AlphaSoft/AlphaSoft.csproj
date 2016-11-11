@@ -132,11 +132,23 @@
     <Compile Include="crReportContainer.Designer.cs">
       <DependentUpon>crReportContainer.cs</DependentUpon>
     </Compile>
+    <Compile Include="dailyStockTake.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dailyStockTake.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="dailyStockTakeDetailForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="dailyStockTakeDetailForm.Designer.cs">
       <DependentUpon>dailyStockTakeDetailForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="dailyStockTakePrintOutForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="dailyStockTakePrintOutForm.Designer.cs">
+      <DependentUpon>dailyStockTakePrintOutForm.cs</DependentUpon>
     </Compile>
     <Compile Include="dataNomorAkun.cs">
       <SubType>Form</SubType>
@@ -1128,8 +1140,15 @@
     <EmbeddedResource Include="crReportContainer.resx">
       <DependentUpon>crReportContainer.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="dailyStockTake.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>dailyStockTake.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="dailyStockTakeDetailForm.resx">
       <DependentUpon>dailyStockTakeDetailForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="dailyStockTakePrintOutForm.resx">
+      <DependentUpon>dailyStockTakePrintOutForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="dataNomorAkun.resx">
       <DependentUpon>dataNomorAkun.cs</DependentUpon>

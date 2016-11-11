@@ -29,10 +29,13 @@ namespace AlphaSoft
         private bool dataSaved = false;
         private int moduleID = NEW_DAILY_STOCK_TAKE;
         private string globalProductAdjustmentID = "";
+        int stockTakeCloseStatus = 0;
 
         private bool isLoading = false;
 
+        private Hotkeys.GlobalHotkey ghk_F7;
         private Hotkeys.GlobalHotkey ghk_F9;
+        private Hotkeys.GlobalHotkey ghk_F10;
 
         public dailyStockTakeDetailForm()
         {
@@ -43,8 +46,19 @@ namespace AlphaSoft
         {
             switch (key)
             {
+                case Keys.F7:
+                    if (stockTakeCloseStatus == 1)
+                        printOutDailyStockTake();
+                    else
+                        MessageBox.Show("DATA BELUM FINAL");
+                    break;
+
                 case Keys.F9:
                     saveData();
+                    break;
+
+                case Keys.F10:
+                    saveData(true);
                     break;
             }
         }
@@ -65,13 +79,21 @@ namespace AlphaSoft
 
         private void registerGlobalHotkey()
         {
+            ghk_F7 = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.F7, this);
+            ghk_F7.Register();
+
             ghk_F9 = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.F9, this);
             ghk_F9.Register();
+
+            ghk_F10 = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.F10, this);
+            ghk_F10.Register();
         }
 
         private void unregisterGlobalHotkey()
         {
+            ghk_F7.Unregister();
             ghk_F9.Unregister();
+            ghk_F10.Unregister();
         }
 
         private void addDataGridColumn()
@@ -155,7 +177,6 @@ namespace AlphaSoft
             string selectedDate = String.Format(culture, "{0:yyyyMMdd}", Convert.ToDateTime(stockTakeDateTimePicker.Value));
             string sqlCommand = "";
             MySqlDataReader rdr;
-            string revID = "";
             DataTable dt = new DataTable();
 
             // CHECK WHETHER DATA HAS BEEN SAVED BEFORE OR NOT
@@ -169,12 +190,18 @@ namespace AlphaSoft
                     sqlCommand = "SELECT PRODUCT_ADJUSTMENT_ID FROM PRODUCT_DAILY_ADJUSTMENT_HEADER WHERE DATE_FORMAT(PRODUCT_ADJUSTMENT_DATE, '%Y%m%d')  = '" + selectedDate + "'";
                     globalProductAdjustmentID = DS.getDataSingleValue(sqlCommand).ToString();
 
-                    revID = getRevisiNo();
                     moduleID = EDIT_DAILY_STOCK_TAKE;
-                    revisionLabel.Visible = true;
-                    revisionLabel.Text = "REV : " + revID;
-                    revisionRemark.Visible = true;
-                    allowToEdit = true;
+
+                    sqlCommand = "SELECT STOCK_TAKE_CLOSED FROM PRODUCT_DAILY_ADJUSTMENT_HEADER WHERE DATE_FORMAT(PRODUCT_ADJUSTMENT_DATE, '%Y%m%d')  = '" + selectedDate + "'";
+                    stockTakeCloseStatus = Convert.ToInt32(DS.getDataSingleValue(sqlCommand));
+
+                    if (stockTakeCloseStatus == 1)
+                    {
+                        allowToEdit = false;
+                        detailDataGrid.ReadOnly = true;
+                    }
+                    else
+                        allowToEdit = true;
                 }
                 else
                 {
@@ -183,11 +210,7 @@ namespace AlphaSoft
                     detailDataGrid.ReadOnly = true;
                 }
             }
-            else
-            { 
-                revisionLabel.Visible = false;
-                revisionRemark.Visible = false;
-            }
+
             switch (moduleID)
             {
                 case NEW_DAILY_STOCK_TAKE:
@@ -235,6 +258,21 @@ namespace AlphaSoft
             rdr.Close();
         }
 
+        private void printOutDailyStockTake()
+        {
+            string selectedDate = String.Format(culture, "{0:yyyyMMdd}", Convert.ToDateTime(stockTakeDateTimePicker.Value));
+            string sqlCommandx;
+
+            sqlCommandx = "SELECT DATE_FORMAT(PAH.PRODUCT_ADJUSTMENT_DATE, '%d-%M-%Y') AS STOCK_TAKE_DATE, PAD.PRODUCT_ID, MP.PRODUCT_NAME AS ROTI, PAD.PRODUCT_LAST_STOCK_QTY AS AWAL, PAD.PRODUCT_RECEIVED_QTY AS PRODUKSI, PAD.REMARKS AS REMARK, PAD.PRODUCT_BS_QTY AS BS, PAD.PRODUCT_LEFTOVER_QTY AS AKHIR, PAD.PRODUCT_SOLD_QTY AS LAKU, PAD.PRODUCT_ADJUSTMENT_QTY AS PENYESUAIAN, PAD.PRODUCT_RIIL_QTY AS RIILQTY " +
+                                           "FROM PRODUCT_DAILY_ADJUSTMENT_HEADER PAH, PRODUCT_DAILY_ADJUSTMENT_DETAIL AS PAD, MASTER_PRODUCT MP " +
+                                           "WHERE PAD.PRODUCT_ADJUSTMENT_ID = PAH.PRODUCT_ADJUSTMENT_ID AND PAD.PRODUCT_ID = MP.PRODUCT_ID AND DATE_FORMAT(PAH.PRODUCT_ADJUSTMENT_DATE, '%Y%m%d')  = '" + selectedDate + "'";
+
+            DS.writeXML(sqlCommandx, globalConstants.dailyStockTakeXML);
+
+            dailyStockTakePrintOutForm displayForm = new dailyStockTakePrintOutForm();
+            displayForm.ShowDialog(this);
+        }
+
         private void dailyStockTakeDetailForm_Load(object sender, EventArgs e)
         {
             stockTakeDateTimePicker.Format = DateTimePickerFormat.Custom;
@@ -255,15 +293,15 @@ namespace AlphaSoft
         private void calculateAkhirValue(int rowIndex)
         {
             DataGridViewRow selectedRow = detailDataGrid.Rows[rowIndex];
-            //int awal = 0;
-            //int produksi = 0;
+            int awal = 0;
+            int produksi = 0;
             int bs = 0;
             int akhir = 0;
-            //int laku = 0;
+            int laku = 0;
 
-            //awal = Convert.ToInt32(selectedRow.Cells["AWAL"].Value);
-            //produksi = Convert.ToInt32(selectedRow.Cells["PRODUKSI"].Value);
-            //laku = Convert.ToInt32(selectedRow.Cells["LAKU"].Value);
+            awal = Convert.ToInt32(selectedRow.Cells["AWAL"].Value);
+            produksi = Convert.ToInt32(selectedRow.Cells["PRODUKSI"].Value);
+            laku = Convert.ToInt32(selectedRow.Cells["LAKU"].Value);
             bs = Convert.ToInt32(BSQty[rowIndex]);
             akhir = Convert.ToInt32(selectedRow.Cells["AKHIR"].Value);
 
@@ -378,15 +416,6 @@ namespace AlphaSoft
                 }
             }
 
-            if (moduleID == EDIT_DAILY_STOCK_TAKE)
-            {
-                if (revisionRemark.Text.Length <= 0)
-                {
-                    errorLabel.Text = "REMARK UNTUK REVISI HARUS DIISI";
-                    result = false;
-                }
-            }
-
             return result;
         }
 
@@ -408,7 +437,7 @@ namespace AlphaSoft
             return revisionNo;
         }
 
-        private bool saveDataTransaction()
+        private bool saveDataTransaction(bool closeStockTake = false)
         {
             bool result = false;
             string sqlCommand = "";
@@ -431,7 +460,11 @@ namespace AlphaSoft
                     case NEW_DAILY_STOCK_TAKE:
                         globalProductAdjustmentID = getProductAdjustmentID();
                         // SAVE DATA HEADER
-                        sqlCommand = "INSERT INTO PRODUCT_DAILY_ADJUSTMENT_HEADER (PRODUCT_ADJUSTMENT_ID, PRODUCT_ADJUSTMENT_DATE, USER_ID) VALUES (" + globalProductAdjustmentID + ", STR_TO_DATE('" + productAdjustmentDate + "', '%d-%m-%Y %H:%i'), " + userID + ")";
+
+                        if (closeStockTake)
+                            sqlCommand = "INSERT INTO PRODUCT_DAILY_ADJUSTMENT_HEADER (PRODUCT_ADJUSTMENT_ID, PRODUCT_ADJUSTMENT_DATE, USER_ID, STOCK_TAKE_CLOSED) VALUES (" + globalProductAdjustmentID + ", STR_TO_DATE('" + productAdjustmentDate + "', '%d-%m-%Y %H:%i'), " + userID + ", 1)";
+                        else
+                            sqlCommand = "INSERT INTO PRODUCT_DAILY_ADJUSTMENT_HEADER (PRODUCT_ADJUSTMENT_ID, PRODUCT_ADJUSTMENT_DATE, USER_ID, STOCK_TAKE_CLOSED) VALUES (" + globalProductAdjustmentID + ", STR_TO_DATE('" + productAdjustmentDate + "', '%d-%m-%Y %H:%i'), " + userID + ", 0)";
 
                         if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
                             throw internalEX;
@@ -449,12 +482,22 @@ namespace AlphaSoft
                         if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
                             throw internalEX;
 
-                        // SAVE DATA REVISI
-                        revisiNo = getRevisiNo();
-                        sqlCommand = "INSERT INTO PRODUCT_DAILY_ADJUSTMENT_HISTORY (PRODUCT_ADJUSTMENT_ID, PRODUCT_REVISION_NO, REVISION_REMARK) VALUES(" +
-                                               globalProductAdjustmentID + ", " + revisiNo + ", '" + revisionRemark.Text + "')";
-                        if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
-                            throw internalEX;
+                        if (closeStockTake)
+                        {
+                            // UPDATE FLAG
+                            sqlCommand = "UPDATE PRODUCT_DAILY_ADJUSTMENT_HEADER SET " +
+                                                    "STOCK_TAKE_CLOSED = 1 WHERE PRODUCT_ADJUSTMENT_ID = " + globalProductAdjustmentID;
+
+                            if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
+                                throw internalEX;
+                        }
+
+                        //// SAVE DATA REVISI
+                        //revisiNo = getRevisiNo();
+                        //sqlCommand = "INSERT INTO PRODUCT_DAILY_ADJUSTMENT_HISTORY (PRODUCT_ADJUSTMENT_ID, PRODUCT_REVISION_NO, REVISION_REMARK) VALUES(" +
+                        //                       globalProductAdjustmentID + ", " + revisiNo + ", '" + revisionRemark.Text + "')";
+                        //if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
+                        //    throw internalEX;
 
                         break;
                 }
@@ -476,6 +519,15 @@ namespace AlphaSoft
 
                     if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
                         throw internalEX;
+
+                    if (closeStockTake)
+                    {
+                        // UPDATE STOCK AWAL WITH AKHIR RIIL VALUE
+                        sqlCommand = "UPDATE MASTER_PRODUCT SET PRODUCT_STOCK_QTY = " + detailDataGrid.Rows[i].Cells["akhirRiil"].Value.ToString() + ", PRODUCT_STOCK_AWAL = " + detailDataGrid.Rows[i].Cells["akhirRiil"].Value.ToString() + " WHERE PRODUCT_ID = '" + detailDataGrid.Rows[i].Cells["productID"].Value.ToString() + "'";
+
+                        if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
+                            throw internalEX;
+                    }
                 }
 
                 DS.commit();
@@ -502,21 +554,32 @@ namespace AlphaSoft
             return result;
         }
 
-        private void saveData()
+        private void saveData(bool closeStockTake = false)
         {
+            string messageString = "";
+
             if (moduleID == EDIT_DAILY_STOCK_TAKE && allowToEdit == false && dataSaved)
                 return;
 
+            if (closeStockTake)
+                messageString = "SAVE DATA DAN PRINT OUT?";
+            else
+                messageString = "SAVE DATA?";
 
-            if (DialogResult.Yes == MessageBox.Show("SAVE DATA", "WARNING", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
+            if (DialogResult.Yes == MessageBox.Show(messageString, "WARNING", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
             { 
                 if (dataValidated())
                 {
-                    if (saveDataTransaction())
+                    if (saveDataTransaction(closeStockTake))
                     {
                         MessageBox.Show("SUCCESS");
                         dataSaved = true;
                         gUtil.setReadOnlyAllControls(this);
+
+                        if (closeStockTake)
+                        {
+                            printOutDailyStockTake();
+                        }
                     }
                     else
                         MessageBox.Show("FAILED TO SAVE");

@@ -1,0 +1,41 @@
+[] [11/10/2016 21:54] [] USER = ADMIN IS ACTIVE
+[ADMIN] [11/10/2016 21:54] [] USER ID = 1 LOGIN SUCCESSFULLY
+[ADMIN] [11/10/2016 21:54] [] ACTIVATE USER ACCESS RIGHT
+[ADMIN] [11/10/2016 21:54] [] DISPLAY ADMIN FORM
+[ADMIN] [11/10/2016 21:54] [] adminForm Load
+[ADMIN] [11/10/2016 21:54] [] ACTIVATE USER ACCESS RIGHT
+[ADMIN] [11/10/2016 22:04] [] DAILY STOCK TAKE : detailDataGrid_CellValueChanged [BS]
+[ADMIN] [11/10/2016 22:04] [PENJUALAN] DAILY STOCK TAKE : detailDataGrid_CellValueChanged, empty texbox, reset [BS] value to 0
+[ADMIN] [11/10/2016 22:04] [] DAILY STOCK TAKE : detailDataGrid_CellValueChanged [BS]
+[ADMIN] [11/10/2016 22:04] [PENJUALAN] DAILY STOCK TAKE : detailDataGrid_CellValueChanged, previousInput [0]
+[ADMIN] [11/10/2016 22:04] [PENJUALAN] DAILY STOCK TAKE : detailDataGrid_CellValueChanged, cellValue [2]
+[ADMIN] [11/10/2016 22:04] [PENJUALAN] DAILY STOCK TAKE : detailDataGrid_CellValueChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [11/10/2016 22:04] [] DAILY STOCK TAKE : detailDataGrid_CellValueChanged [remark]
+[ADMIN] [11/10/2016 22:04] [] DAILY STOCK TAKE : detailDataGrid_CellValueChanged [remark]
+[ADMIN] [11/10/2016 22:04] [] DAILY STOCK TAKE : detailDataGrid_CellValueChanged [remark]
+[ADMIN] [11/10/2016 22:04] [] DAILY STOCK TAKE : detailDataGrid_CellValueChanged [remark]
+[ADMIN] [11/10/2016 22:04] [] DAILY STOCK TAKE : detailDataGrid_CellValueChanged [remark]
+[ADMIN] [11/10/2016 22:04] [] DAILY STOCK TAKE : detailDataGrid_CellValueChanged [remark]
+[ADMIN] [11/10/2016 22:04] [] DAILY STOCK TAKE : detailDataGrid_CellValueChanged [BS]
+[ADMIN] [11/10/2016 22:04] [PENJUALAN] DAILY STOCK TAKE : detailDataGrid_CellValueChanged, previousInput [2]
+[ADMIN] [11/10/2016 22:04] [PENJUALAN] DAILY STOCK TAKE : detailDataGrid_CellValueChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [11/10/2016 22:04] [] DAILY STOCK TAKE : detailDataGrid_CellValueChanged [BS]
+[ADMIN] [11/10/2016 22:04] [PENJUALAN] DAILY STOCK TAKE : detailDataGrid_CellValueChanged, previousInput [2]
+[ADMIN] [11/10/2016 22:04] [PENJUALAN] DAILY STOCK TAKE : detailDataGrid_CellValueChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[] [11/10/2016 22:12] [] USER = ADMIN IS ACTIVE
+[ADMIN] [11/10/2016 22:12] [] USER ID = 1 LOGIN SUCCESSFULLY
+[ADMIN] [11/10/2016 22:13] [] ACTIVATE USER ACCESS RIGHT
+[ADMIN] [11/10/2016 22:13] [] DISPLAY ADMIN FORM
+[ADMIN] [11/10/2016 22:13] [] adminForm Load
+[ADMIN] [11/10/2016 22:13] [] ACTIVATE USER ACCESS RIGHT
+[ADMIN] [11/10/2016 22:13] [] DAILY STOCK TAKE : detailDataGrid_CellValueChanged [BS]
+[ADMIN] [11/10/2016 22:13] [PENJUALAN] DAILY STOCK TAKE : detailDataGrid_CellValueChanged, previousInput [2]
+[ADMIN] [11/10/2016 22:13] [PENJUALAN] DAILY STOCK TAKE : detailDataGrid_CellValueChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [11/10/2016 22:13] [] DAILY STOCK TAKE : detailDataGrid_CellValueChanged [BS]
+[ADMIN] [11/10/2016 22:13] [PENJUALAN] DAILY STOCK TAKE : detailDataGrid_CellValueChanged, previousInput [1]
+[ADMIN] [11/10/2016 22:13] [PENJUALAN] DAILY STOCK TAKE : detailDataGrid_CellValueChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [11/10/2016 22:13] [] DAILY STOCK TAKE : detailDataGrid_CellValueChanged [BS]
+[ADMIN] [11/10/2016 22:13] [PENJUALAN] DAILY STOCK TAKE : detailDataGrid_CellValueChanged, previousInput [0]
+[ADMIN] [11/10/2016 22:13] [PENJUALAN] DAILY STOCK TAKE : detailDataGrid_CellValueChanged, cellValue [4]
+[ADMIN] [11/10/2016 22:13] [PENJUALAN] DAILY STOCK TAKE : detailDataGrid_CellValueChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [11/10/2016 22:15] [] USER ID = 1LOGOUT
