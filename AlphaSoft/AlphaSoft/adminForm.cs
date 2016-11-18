@@ -1516,5 +1516,11 @@ namespace AlphaSoft
             dailyStockTakeDetailForm displayedForm = new dailyStockTakeDetailForm();
             displayedForm.ShowDialog(this);
         }
+
+        private void MENU_SalesQuotation_Click(object sender, EventArgs e)
+        {
+            dataSalesInvoice displayedForm = new dataSalesInvoice(globalConstants.SALES_QUOTATION);
+            displayedForm.ShowDialog(this);
+        }
     }
 }

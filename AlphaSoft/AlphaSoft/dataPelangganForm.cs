@@ -21,6 +21,7 @@ namespace AlphaSoft
         private globalUtilities gutil = new globalUtilities();
         cashierForm parentForm;
         int originModuleID = 0;
+        int lastDisplayMode = 0; // DISPLAY ALL
 
         private Data_Access DS = new Data_Access();
 
@@ -71,7 +72,7 @@ namespace AlphaSoft
 
             if (originModuleID == globalConstants.CASHIER_MODULE)
             { 
-                newButton.Visible = false;
+            //    newButton.Visible = false;
             //    unknownCustomerButton.Visible = false;
                 pelanggangnonactiveoption.Visible = false;
             }
@@ -144,15 +145,16 @@ namespace AlphaSoft
 
             DS.mySqlConnect();
 
-            if (namaPelangganTextbox.Text.Equals(""))
-                return;
-
             namaPelangganParam = MySqlHelper.EscapeString(namaPelangganTextbox.Text);
             if (options == 1)
             {
                 sqlCommand = "SELECT CUSTOMER_ID, CUSTOMER_FULL_NAME AS 'NAMA PELANGGAN', DATE_FORMAT(CUSTOMER_JOINED_DATE,'%d-%M-%Y') AS 'TANGGAL BERGABUNG', IF(CUSTOMER_GROUP = 1,'ECER', IF(CUSTOMER_GROUP = 2,'PARTAI', 'GROSIR')) AS 'GROUP CUSTOMER' FROM MASTER_CUSTOMER";
-            } else
+            }
+            else
             {
+                if (namaPelangganTextbox.Text.Equals(""))
+                    return;
+
                 if (pelanggangnonactiveoption.Checked == true)
                 {
                     sqlCommand = "SELECT CUSTOMER_ID, CUSTOMER_FULL_NAME AS 'NAMA PELANGGAN', DATE_FORMAT(CUSTOMER_JOINED_DATE,'%d-%M-%Y') AS 'TANGGAL BERGABUNG', IF(CUSTOMER_GROUP = 1,'ECER', IF(CUSTOMER_GROUP = 2,'PARTAI', 'GROSIR')) AS 'GROUP CUSTOMER' FROM MASTER_CUSTOMER WHERE CUSTOMER_FULL_NAME LIKE '%" + namaPelangganParam + "%'";
@@ -181,10 +183,10 @@ namespace AlphaSoft
         private void dataPelangganForm_Activated(object sender, EventArgs e)
         {
             //loadCustomerData();
-            if (!namaPelangganTextbox.Text.Equals(""))
-            {
+            if (!namaPelangganTextbox.Text.Equals("") && lastDisplayMode == 1)
                 loadCustomerData();
-            }
+            else if (lastDisplayMode == 0)
+                loadCustomerData(1);
 
             registerGlobalHotkey();
         }
@@ -194,6 +196,7 @@ namespace AlphaSoft
             //loadCustomerData();
             if (!namaPelangganTextbox.Text.Equals(""))
             {
+                lastDisplayMode = 1;
                 loadCustomerData();
             }
         }
@@ -328,7 +331,13 @@ namespace AlphaSoft
 
         private void AllButton_Click(object sender, EventArgs e)
         {
+            lastDisplayMode = 0;
             loadCustomerData(1);
+        }
+
+        private void namaPelangganTextbox_TextAlignChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

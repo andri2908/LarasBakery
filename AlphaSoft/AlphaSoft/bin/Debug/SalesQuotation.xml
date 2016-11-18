@@ -1,0 +1,43 @@
+<?xml version="1.0" standalone="yes"?>
+<NewDataSet>
+  <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true">
+      <xs:complexType>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+          <xs:element name="Table">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="ID" type="xs:unsignedInt" minOccurs="0" />
+                <xs:element name="ORDER_x0020_DATE" type="xs:dateTime" minOccurs="0" />
+                <xs:element name="DATE" type="xs:dateTime" minOccurs="0" />
+                <xs:element name="INVOICE" type="xs:string" minOccurs="0" />
+                <xs:element name="CUSTOMER" type="xs:string" minOccurs="0" />
+                <xs:element name="PRODUCT" type="xs:string" minOccurs="0" />
+                <xs:element name="QTY" type="xs:double" minOccurs="0" />
+                <xs:element name="PRICE" type="xs:double" minOccurs="0" />
+                <xs:element name="SUBTOTAL" type="xs:double" minOccurs="0" />
+                <xs:element name="PAYMENT" type="xs:double" minOccurs="0" />
+                <xs:element name="SQ_ORDER_ADDRESS" type="xs:string" minOccurs="0" />
+                <xs:element name="DELIVERED" type="xs:byte" minOccurs="0" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:choice>
+      </xs:complexType>
+    </xs:element>
+  </xs:schema>
+  <Table>
+    <ID>27</ID>
+    <ORDER_x0020_DATE>2016-11-18T00:00:00+07:00</ORDER_x0020_DATE>
+    <DATE>2016-11-18T15:06:00+07:00</DATE>
+    <INVOICE>SQ-27</INVOICE>
+    <CUSTOMER>ANDRI</CUSTOMER>
+    <PRODUCT>ROTI PISANG</PRODUCT>
+    <QTY>2</QTY>
+    <PRICE>1000</PRICE>
+    <SUBTOTAL>2000</SUBTOTAL>
+    <PAYMENT>100</PAYMENT>
+    <SQ_ORDER_ADDRESS />
+    <DELIVERED>0</DELIVERED>
+  </Table>
+</NewDataSet>

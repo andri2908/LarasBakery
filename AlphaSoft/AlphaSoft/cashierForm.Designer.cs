@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(cashierForm));
             this.panel1 = new System.Windows.Forms.Panel();
             this.titleLabel = new System.Windows.Forms.Label();
@@ -41,7 +41,11 @@
             this.noFakturLabel = new System.Windows.Forms.Label();
             this.cashierDataGridView = new System.Windows.Forms.DataGridView();
             this.panel5 = new System.Windows.Forms.Panel();
+            this.addressTextBox = new System.Windows.Forms.TextBox();
+            this.deliveredCheckbox = new System.Windows.Forms.CheckBox();
+            this.rejectButton = new System.Windows.Forms.Button();
             this.ChangePrinterButton = new System.Windows.Forms.Button();
+            this.approvalButton = new System.Windows.Forms.Button();
             this.errorLabel = new System.Windows.Forms.Label();
             this.tempoMaskedTextBox = new System.Windows.Forms.MaskedTextBox();
             this.pelangganTextBox = new System.Windows.Forms.TextBox();
@@ -54,6 +58,8 @@
             this.customerComboBox = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.panel6 = new System.Windows.Forms.Panel();
+            this.jobStartDateTimePicker = new System.Windows.Forms.DateTimePicker();
+            this.label7 = new System.Windows.Forms.Label();
             this.discJualMaskedTextBox = new System.Windows.Forms.TextBox();
             this.bayarTextBox = new System.Windows.Forms.TextBox();
             this.uangKembaliTextBox = new System.Windows.Forms.TextBox();
@@ -155,47 +161,47 @@
             // 
             this.cashierDataGridView.AllowUserToDeleteRows = false;
             this.cashierDataGridView.AllowUserToResizeRows = false;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FloralWhite;
-            this.cashierDataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle13.BackColor = System.Drawing.Color.FloralWhite;
+            this.cashierDataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle13;
             this.cashierDataGridView.BackgroundColor = System.Drawing.Color.FloralWhite;
             this.cashierDataGridView.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.SteelBlue;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Verdana", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.FloralWhite;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.cashierDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle14.BackColor = System.Drawing.Color.SteelBlue;
+            dataGridViewCellStyle14.Font = new System.Drawing.Font("Verdana", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle14.ForeColor = System.Drawing.Color.FloralWhite;
+            dataGridViewCellStyle14.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle14.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.cashierDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle14;
             this.cashierDataGridView.ColumnHeadersHeight = 50;
             this.cashierDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.cashierDataGridView.Cursor = System.Windows.Forms.Cursors.Default;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FloralWhite;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.cashierDataGridView.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle15.BackColor = System.Drawing.Color.FloralWhite;
+            dataGridViewCellStyle15.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle15.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle15.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle15.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle15.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.cashierDataGridView.DefaultCellStyle = dataGridViewCellStyle15;
             this.cashierDataGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.cashierDataGridView.EnableHeadersVisualStyles = false;
             this.cashierDataGridView.GridColor = System.Drawing.Color.Black;
             this.cashierDataGridView.Location = new System.Drawing.Point(2, 130);
             this.cashierDataGridView.MultiSelect = false;
             this.cashierDataGridView.Name = "cashierDataGridView";
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.cashierDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle16.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle16.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle16.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle16.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle16.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle16.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.cashierDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle16;
             this.cashierDataGridView.RowHeadersVisible = false;
             this.cashierDataGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.cashierDataGridView.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.cashierDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.cashierDataGridView.Size = new System.Drawing.Size(983, 334);
+            this.cashierDataGridView.Size = new System.Drawing.Size(983, 285);
             this.cashierDataGridView.TabIndex = 8;
             this.cashierDataGridView.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.cashierDataGridView_CellBeginEdit);
             this.cashierDataGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.cashierDataGridView_CellEndEdit);
@@ -211,7 +217,11 @@
             // panel5
             // 
             this.panel5.BackColor = System.Drawing.Color.SteelBlue;
+            this.panel5.Controls.Add(this.addressTextBox);
+            this.panel5.Controls.Add(this.deliveredCheckbox);
+            this.panel5.Controls.Add(this.rejectButton);
             this.panel5.Controls.Add(this.ChangePrinterButton);
+            this.panel5.Controls.Add(this.approvalButton);
             this.panel5.Controls.Add(this.errorLabel);
             this.panel5.Controls.Add(this.tempoMaskedTextBox);
             this.panel5.Controls.Add(this.pelangganTextBox);
@@ -226,22 +236,71 @@
             this.panel5.Controls.Add(this.panel6);
             this.panel5.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.panel5.ForeColor = System.Drawing.Color.AntiqueWhite;
-            this.panel5.Location = new System.Drawing.Point(2, 477);
+            this.panel5.Location = new System.Drawing.Point(2, 421);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(982, 162);
+            this.panel5.Size = new System.Drawing.Size(982, 218);
             this.panel5.TabIndex = 9;
+            // 
+            // addressTextBox
+            // 
+            this.addressTextBox.Location = new System.Drawing.Point(343, 114);
+            this.addressTextBox.Multiline = true;
+            this.addressTextBox.Name = "addressTextBox";
+            this.addressTextBox.Size = new System.Drawing.Size(253, 102);
+            this.addressTextBox.TabIndex = 43;
+            this.addressTextBox.Visible = false;
+            // 
+            // deliveredCheckbox
+            // 
+            this.deliveredCheckbox.AutoSize = true;
+            this.deliveredCheckbox.FlatAppearance.BorderColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.deliveredCheckbox.ForeColor = System.Drawing.Color.FloralWhite;
+            this.deliveredCheckbox.Location = new System.Drawing.Point(343, 91);
+            this.deliveredCheckbox.Name = "deliveredCheckbox";
+            this.deliveredCheckbox.Size = new System.Drawing.Size(84, 22);
+            this.deliveredCheckbox.TabIndex = 42;
+            this.deliveredCheckbox.Text = "Dikirim";
+            this.deliveredCheckbox.UseVisualStyleBackColor = true;
+            this.deliveredCheckbox.Visible = false;
+            this.deliveredCheckbox.CheckedChanged += new System.EventHandler(this.selfCollectCheckbox_CheckedChanged);
+            // 
+            // rejectButton
+            // 
+            this.rejectButton.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rejectButton.ForeColor = System.Drawing.Color.Black;
+            this.rejectButton.Location = new System.Drawing.Point(471, 53);
+            this.rejectButton.Name = "rejectButton";
+            this.rejectButton.Size = new System.Drawing.Size(95, 34);
+            this.rejectButton.TabIndex = 41;
+            this.rejectButton.Text = "CANCEL";
+            this.rejectButton.UseVisualStyleBackColor = true;
+            this.rejectButton.Visible = false;
+            this.rejectButton.Click += new System.EventHandler(this.rejectButton_Click);
             // 
             // ChangePrinterButton
             // 
             this.ChangePrinterButton.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ChangePrinterButton.ForeColor = System.Drawing.Color.Black;
-            this.ChangePrinterButton.Location = new System.Drawing.Point(343, 68);
+            this.ChangePrinterButton.Location = new System.Drawing.Point(389, 16);
             this.ChangePrinterButton.Name = "ChangePrinterButton";
             this.ChangePrinterButton.Size = new System.Drawing.Size(158, 34);
             this.ChangePrinterButton.TabIndex = 37;
             this.ChangePrinterButton.Text = "SET PRINTER";
             this.ChangePrinterButton.UseVisualStyleBackColor = true;
             this.ChangePrinterButton.Click += new System.EventHandler(this.ChangePrinterButton_Click);
+            // 
+            // approvalButton
+            // 
+            this.approvalButton.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.approvalButton.ForeColor = System.Drawing.Color.Black;
+            this.approvalButton.Location = new System.Drawing.Point(362, 53);
+            this.approvalButton.Name = "approvalButton";
+            this.approvalButton.Size = new System.Drawing.Size(103, 34);
+            this.approvalButton.TabIndex = 40;
+            this.approvalButton.Text = "CONFIRM";
+            this.approvalButton.UseVisualStyleBackColor = true;
+            this.approvalButton.Visible = false;
+            this.approvalButton.Click += new System.EventHandler(this.approvalButton_Click);
             // 
             // errorLabel
             // 
@@ -250,7 +309,7 @@
             this.errorLabel.BackColor = System.Drawing.Color.White;
             this.errorLabel.Font = new System.Drawing.Font("Verdana", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.errorLabel.ForeColor = System.Drawing.Color.Red;
-            this.errorLabel.Location = new System.Drawing.Point(8, 137);
+            this.errorLabel.Location = new System.Drawing.Point(8, 174);
             this.errorLabel.Name = "errorLabel";
             this.errorLabel.Size = new System.Drawing.Size(23, 18);
             this.errorLabel.TabIndex = 36;
@@ -259,7 +318,7 @@
             // tempoMaskedTextBox
             // 
             this.tempoMaskedTextBox.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tempoMaskedTextBox.Location = new System.Drawing.Point(154, 68);
+            this.tempoMaskedTextBox.Location = new System.Drawing.Point(154, 108);
             this.tempoMaskedTextBox.Mask = "00000";
             this.tempoMaskedTextBox.Name = "tempoMaskedTextBox";
             this.tempoMaskedTextBox.Size = new System.Drawing.Size(71, 27);
@@ -272,10 +331,10 @@
             // pelangganTextBox
             // 
             this.pelangganTextBox.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.pelangganTextBox.Location = new System.Drawing.Point(154, 10);
+            this.pelangganTextBox.Location = new System.Drawing.Point(154, 16);
             this.pelangganTextBox.Name = "pelangganTextBox";
             this.pelangganTextBox.ReadOnly = true;
-            this.pelangganTextBox.Size = new System.Drawing.Size(181, 27);
+            this.pelangganTextBox.Size = new System.Drawing.Size(183, 27);
             this.pelangganTextBox.TabIndex = 17;
             // 
             // printoutCheckBox
@@ -283,7 +342,7 @@
             this.printoutCheckBox.AutoSize = true;
             this.printoutCheckBox.FlatAppearance.BorderColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.printoutCheckBox.ForeColor = System.Drawing.Color.FloralWhite;
-            this.printoutCheckBox.Location = new System.Drawing.Point(11, 110);
+            this.printoutCheckBox.Location = new System.Drawing.Point(11, 141);
             this.printoutCheckBox.Name = "printoutCheckBox";
             this.printoutCheckBox.Size = new System.Drawing.Size(234, 22);
             this.printoutCheckBox.TabIndex = 8;
@@ -297,7 +356,7 @@
             "Cash",
             "Kartu Kredit",
             "Kartu Debit"});
-            this.paymentComboBox.Location = new System.Drawing.Point(154, 69);
+            this.paymentComboBox.Location = new System.Drawing.Point(157, 109);
             this.paymentComboBox.Name = "paymentComboBox";
             this.paymentComboBox.Size = new System.Drawing.Size(142, 26);
             this.paymentComboBox.TabIndex = 7;
@@ -311,7 +370,7 @@
             this.labelCaraBayar.AutoSize = true;
             this.labelCaraBayar.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelCaraBayar.ForeColor = System.Drawing.Color.FloralWhite;
-            this.labelCaraBayar.Location = new System.Drawing.Point(8, 71);
+            this.labelCaraBayar.Location = new System.Drawing.Point(8, 111);
             this.labelCaraBayar.Name = "labelCaraBayar";
             this.labelCaraBayar.Size = new System.Drawing.Size(146, 18);
             this.labelCaraBayar.TabIndex = 6;
@@ -321,7 +380,7 @@
             // 
             this.creditRadioButton.AutoSize = true;
             this.creditRadioButton.ForeColor = System.Drawing.Color.FloralWhite;
-            this.creditRadioButton.Location = new System.Drawing.Point(229, 41);
+            this.creditRadioButton.Location = new System.Drawing.Point(229, 81);
             this.creditRadioButton.Name = "creditRadioButton";
             this.creditRadioButton.Size = new System.Drawing.Size(75, 22);
             this.creditRadioButton.TabIndex = 5;
@@ -334,7 +393,7 @@
             this.cashRadioButton.AutoSize = true;
             this.cashRadioButton.Checked = true;
             this.cashRadioButton.ForeColor = System.Drawing.Color.FloralWhite;
-            this.cashRadioButton.Location = new System.Drawing.Point(154, 41);
+            this.cashRadioButton.Location = new System.Drawing.Point(154, 81);
             this.cashRadioButton.Name = "cashRadioButton";
             this.cashRadioButton.Size = new System.Drawing.Size(69, 22);
             this.cashRadioButton.TabIndex = 4;
@@ -348,7 +407,7 @@
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.Color.FloralWhite;
-            this.label4.Location = new System.Drawing.Point(9, 42);
+            this.label4.Location = new System.Drawing.Point(9, 82);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(145, 18);
             this.label4.TabIndex = 3;
@@ -361,11 +420,11 @@
             "P-UMUM [ECER]",
             "P-PARTAI",
             "P-GROSIR"});
-            this.customerComboBox.Location = new System.Drawing.Point(343, 10);
+            this.customerComboBox.Location = new System.Drawing.Point(154, 50);
             this.customerComboBox.Name = "customerComboBox";
             this.customerComboBox.Size = new System.Drawing.Size(183, 26);
             this.customerComboBox.TabIndex = 2;
-            this.customerComboBox.Text = "P-UMUM";
+            this.customerComboBox.Text = "P-UMUM [ECER]";
             this.customerComboBox.SelectedIndexChanged += new System.EventHandler(this.customerComboBox_SelectedIndexChanged);
             this.customerComboBox.Enter += new System.EventHandler(this.customerComboBox_Enter);
             this.customerComboBox.Leave += new System.EventHandler(this.customerComboBox_Leave);
@@ -375,7 +434,7 @@
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.Color.FloralWhite;
-            this.label3.Location = new System.Drawing.Point(9, 13);
+            this.label3.Location = new System.Drawing.Point(9, 19);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(151, 18);
             this.label3.TabIndex = 1;
@@ -386,6 +445,8 @@
             this.panel6.BackColor = System.Drawing.Color.FloralWhite;
             this.panel6.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.panel6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel6.Controls.Add(this.jobStartDateTimePicker);
+            this.panel6.Controls.Add(this.label7);
             this.panel6.Controls.Add(this.discJualMaskedTextBox);
             this.panel6.Controls.Add(this.bayarTextBox);
             this.panel6.Controls.Add(this.uangKembaliTextBox);
@@ -398,10 +459,34 @@
             this.panel6.Controls.Add(this.label11);
             this.panel6.Controls.Add(this.label10);
             this.panel6.Controls.Add(this.label9);
-            this.panel6.Location = new System.Drawing.Point(602, 0);
+            this.panel6.Location = new System.Drawing.Point(602, 11);
             this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(370, 161);
+            this.panel6.Size = new System.Drawing.Size(370, 204);
             this.panel6.TabIndex = 0;
+            // 
+            // jobStartDateTimePicker
+            // 
+            this.jobStartDateTimePicker.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.jobStartDateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.jobStartDateTimePicker.Location = new System.Drawing.Point(188, 176);
+            this.jobStartDateTimePicker.Name = "jobStartDateTimePicker";
+            this.jobStartDateTimePicker.Size = new System.Drawing.Size(152, 27);
+            this.jobStartDateTimePicker.TabIndex = 44;
+            this.jobStartDateTimePicker.Visible = false;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.BackColor = System.Drawing.Color.FloralWhite;
+            this.label7.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.ForeColor = System.Drawing.Color.Black;
+            this.label7.Location = new System.Drawing.Point(10, 184);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(172, 18);
+            this.label7.TabIndex = 43;
+            this.label7.Text = "Tanggal Order      :";
+            this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.label7.Visible = false;
             // 
             // discJualMaskedTextBox
             // 
@@ -420,7 +505,7 @@
             // bayarTextBox
             // 
             this.bayarTextBox.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bayarTextBox.Location = new System.Drawing.Point(186, 102);
+            this.bayarTextBox.Location = new System.Drawing.Point(186, 109);
             this.bayarTextBox.Name = "bayarTextBox";
             this.bayarTextBox.Size = new System.Drawing.Size(181, 27);
             this.bayarTextBox.TabIndex = 18;
@@ -434,7 +519,7 @@
             // uangKembaliTextBox
             // 
             this.uangKembaliTextBox.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.uangKembaliTextBox.Location = new System.Drawing.Point(186, 131);
+            this.uangKembaliTextBox.Location = new System.Drawing.Point(188, 146);
             this.uangKembaliTextBox.Name = "uangKembaliTextBox";
             this.uangKembaliTextBox.ReadOnly = true;
             this.uangKembaliTextBox.Size = new System.Drawing.Size(181, 27);
@@ -469,7 +554,7 @@
             this.panel8.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.panel8.BackColor = System.Drawing.Color.Black;
             this.panel8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel8.Location = new System.Drawing.Point(-1, 96);
+            this.panel8.Location = new System.Drawing.Point(-1, 140);
             this.panel8.Name = "panel8";
             this.panel8.Size = new System.Drawing.Size(371, 5);
             this.panel8.TabIndex = 11;
@@ -479,7 +564,7 @@
             this.panel7.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.panel7.BackColor = System.Drawing.Color.Black;
             this.panel7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel7.Location = new System.Drawing.Point(-1, 60);
+            this.panel7.Location = new System.Drawing.Point(-1, 100);
             this.panel7.Name = "panel7";
             this.panel7.Size = new System.Drawing.Size(371, 5);
             this.panel7.TabIndex = 10;
@@ -490,7 +575,7 @@
             this.label13.BackColor = System.Drawing.Color.FloralWhite;
             this.label13.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label13.ForeColor = System.Drawing.Color.Black;
-            this.label13.Location = new System.Drawing.Point(8, 135);
+            this.label13.Location = new System.Drawing.Point(7, 151);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(184, 18);
             this.label13.TabIndex = 6;
@@ -503,7 +588,7 @@
             this.label12.BackColor = System.Drawing.Color.FloralWhite;
             this.label12.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label12.ForeColor = System.Drawing.Color.Black;
-            this.label12.Location = new System.Drawing.Point(5, 106);
+            this.label12.Location = new System.Drawing.Point(5, 115);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(182, 18);
             this.label12.TabIndex = 5;
@@ -529,7 +614,7 @@
             this.label10.BackColor = System.Drawing.Color.FloralWhite;
             this.label10.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label10.ForeColor = System.Drawing.Color.Black;
-            this.label10.Location = new System.Drawing.Point(4, 36);
+            this.label10.Location = new System.Drawing.Point(7, 36);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(183, 18);
             this.label10.TabIndex = 3;
@@ -554,7 +639,7 @@
             this.panel9.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.panel9.BackColor = System.Drawing.Color.Black;
             this.panel9.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel9.Location = new System.Drawing.Point(1, 465);
+            this.panel9.Location = new System.Drawing.Point(1, 416);
             this.panel9.Name = "panel9";
             this.panel9.Size = new System.Drawing.Size(983, 10);
             this.panel9.TabIndex = 10;
@@ -780,6 +865,12 @@
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel3;
         private System.Windows.Forms.TextBox bayarTextBox;
         private System.Windows.Forms.TextBox discJualMaskedTextBox;
+        private System.Windows.Forms.Button rejectButton;
+        private System.Windows.Forms.Button approvalButton;
+        private System.Windows.Forms.DateTimePicker jobStartDateTimePicker;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.CheckBox deliveredCheckbox;
+        private System.Windows.Forms.TextBox addressTextBox;
     }
 }
 

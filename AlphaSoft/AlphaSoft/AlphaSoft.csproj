@@ -1023,6 +1023,18 @@
       <DependentUpon>dataReturPermintaanPrintOut.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="SalesQuotation.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SalesQuotation.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="salesQuotationPrintOutForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="salesQuotationPrintOutForm.Designer.cs">
+      <DependentUpon>salesQuotationPrintOutForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="SalesReceipt.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1636,6 +1648,13 @@
     <EmbeddedResource Include="dataReturPermintaanPrintOut.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>dataReturPermintaanPrintOut.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SalesQuotation.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>SalesQuotation.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="salesQuotationPrintOutForm.resx">
+      <DependentUpon>salesQuotationPrintOutForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SalesReceipt.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>

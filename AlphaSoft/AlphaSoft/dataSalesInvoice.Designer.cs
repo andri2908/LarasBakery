@@ -44,6 +44,7 @@
             this.displayButton = new System.Windows.Forms.Button();
             this.dataPenerimaanBarang = new System.Windows.Forms.DataGridView();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.newInvoiceButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataPenerimaanBarang)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -65,7 +66,7 @@
             // 
             this.PODtPicker_1.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.PODtPicker_1.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.PODtPicker_1.Location = new System.Drawing.Point(575, 10);
+            this.PODtPicker_1.Location = new System.Drawing.Point(575, 17);
             this.PODtPicker_1.Name = "PODtPicker_1";
             this.PODtPicker_1.Size = new System.Drawing.Size(144, 27);
             this.PODtPicker_1.TabIndex = 38;
@@ -77,7 +78,7 @@
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.Color.FloralWhite;
-            this.label5.Location = new System.Drawing.Point(725, 16);
+            this.label5.Location = new System.Drawing.Point(725, 23);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(16, 18);
             this.label5.TabIndex = 44;
@@ -87,7 +88,7 @@
             // 
             this.PODtPicker_2.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.PODtPicker_2.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.PODtPicker_2.Location = new System.Drawing.Point(745, 10);
+            this.PODtPicker_2.Location = new System.Drawing.Point(745, 17);
             this.PODtPicker_2.Name = "PODtPicker_2";
             this.PODtPicker_2.Size = new System.Drawing.Size(145, 27);
             this.PODtPicker_2.TabIndex = 43;
@@ -132,7 +133,7 @@
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.FloralWhite;
-            this.label2.Location = new System.Drawing.Point(421, 13);
+            this.label2.Location = new System.Drawing.Point(421, 20);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(148, 18);
             this.label2.TabIndex = 37;
@@ -166,7 +167,7 @@
             // displayButton
             // 
             this.displayButton.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.displayButton.Location = new System.Drawing.Point(401, 98);
+            this.displayButton.Location = new System.Drawing.Point(268, 98);
             this.displayButton.Name = "displayButton";
             this.displayButton.Size = new System.Drawing.Size(95, 37);
             this.displayButton.TabIndex = 64;
@@ -209,6 +210,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.newInvoiceButton);
             this.groupBox1.Controls.Add(this.showAllCheckBox);
             this.groupBox1.Controls.Add(this.customerCombo);
             this.groupBox1.Controls.Add(this.displayButton);
@@ -224,6 +226,17 @@
             this.groupBox1.Size = new System.Drawing.Size(896, 150);
             this.groupBox1.TabIndex = 68;
             this.groupBox1.TabStop = false;
+            // 
+            // newInvoiceButton
+            // 
+            this.newInvoiceButton.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.newInvoiceButton.Location = new System.Drawing.Point(502, 98);
+            this.newInvoiceButton.Name = "newInvoiceButton";
+            this.newInvoiceButton.Size = new System.Drawing.Size(146, 37);
+            this.newInvoiceButton.TabIndex = 66;
+            this.newInvoiceButton.Text = "NEW INVOICE";
+            this.newInvoiceButton.UseVisualStyleBackColor = true;
+            this.newInvoiceButton.Click += new System.EventHandler(this.newInvoiceButton_Click);
             // 
             // dataSalesInvoice
             // 
@@ -264,5 +277,6 @@
         private System.Windows.Forms.Button displayButton;
         private System.Windows.Forms.DataGridView dataPenerimaanBarang;
         private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Button newInvoiceButton;
     }
 }

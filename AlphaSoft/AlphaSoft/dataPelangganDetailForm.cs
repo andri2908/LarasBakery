@@ -36,6 +36,8 @@ namespace AlphaSoft
         private Hotkeys.GlobalHotkey ghk_UP;
         private Hotkeys.GlobalHotkey ghk_DOWN;
 
+        bool isNavKeyRegistered = false;
+
         public dataPelangganDetailForm()
         {
             InitializeComponent();
@@ -90,12 +92,19 @@ namespace AlphaSoft
 
             ghk_DOWN = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.Down, this);
             ghk_DOWN.Register();
+
+            isNavKeyRegistered = true;
         }
 
         private void unregisterGlobalHotkey()
         {
+            if (!isNavKeyRegistered)
+                return;
+
             ghk_UP.Unregister();
             ghk_DOWN.Unregister();
+
+            isNavKeyRegistered = false;
         }
 
         private void loadCustomerData()

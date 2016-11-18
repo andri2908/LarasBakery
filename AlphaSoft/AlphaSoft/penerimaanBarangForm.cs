@@ -722,7 +722,7 @@ namespace AlphaSoft
             arrButton[2] = resetButton;
             gUtil.reArrangeButtonPosition(arrButton, arrButton[0].Top, this.Width);
             
-            gUtil.reArrangeTabOrder(this);
+            gUtil.reArrangeTabOrder(this,1);
 
             detailHpp.Add("0");
             detailRequestQty.Add("0");

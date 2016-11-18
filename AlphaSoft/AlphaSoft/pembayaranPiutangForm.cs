@@ -33,6 +33,8 @@ namespace AlphaSoft
         private Hotkeys.GlobalHotkey ghk_UP;
         private Hotkeys.GlobalHotkey ghk_DOWN;
 
+        private bool navKeyRegistered = false;
+
         public pembayaranPiutangForm()
         {
             InitializeComponent();
@@ -79,12 +81,19 @@ namespace AlphaSoft
 
             ghk_DOWN = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.Down, this);
             ghk_DOWN.Register();
+
+            navKeyRegistered = true;
         }
 
         private void unregisterGlobalHotkey()
         {
+            if (!navKeyRegistered)
+                return;
+
             ghk_UP.Unregister();
             ghk_DOWN.Unregister();
+
+            navKeyRegistered = false;
         }
 
         private void loadDataHeaderSO()

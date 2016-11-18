@@ -81,6 +81,9 @@ namespace AlphaSoft
         public const int NEW_DJ = 503;
         public const int EDIT_DJ = 504;
         public const int COPY_NOTA = 505;
+        public const int NEW_SALES_QUOTATION = 506;
+        public const int EDIT_SALES_QUOTATION = 507;
+        public const int SQ_TO_SO = 508;
 
         // THESE CONSTANTS ARE USED TO CHECK GROUP ACCESS MODULE
         // THE VALUES MUST BE TIED TO THE VALUES INSIDE THE DATABASE TABLE
@@ -150,6 +153,8 @@ namespace AlphaSoft
         public const int APPROVAL_SALES_QUOTATION = 53;
         public const int PENGATURAN_HARGA_POKOK = 54;
         public const int REVISI_STOCK_TAKE_HARIAN = 55;
+
+        public const int MENU_SALES_QUOTATION= 56;
 
         //public const int MENU_USB_UTILITY_MODULE = 52;
 
@@ -256,6 +261,7 @@ namespace AlphaSoft
         public const string returPenjualanXML = "ReturPenjualan.xml";
 
         public const string dailyStockTakeXML = "DailyStockTake.xml";
+        public const string salesQuotationReceiptXML = "SalesQuotation.xml";
 
     }
 }

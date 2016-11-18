@@ -408,12 +408,13 @@ namespace AlphaSoft
             errorLabel.Text = "";
             for (int i =0;i<detailDataGrid.Rows.Count && result;i++)
             {
-                if (detailDataGrid.Rows[i].Cells["REMARK"].Value.ToString().Length <= 0)
-                {
-                    pos = i + 1;
-                    errorLabel.Text = "REMARK PADA BARIS KE " + pos + " KOSONG"; 
-                    result = false;
-                }
+                if (detailDataGrid.Rows[i].Cells["AKHIR"].Value.ToString() != detailDataGrid.Rows[i].Cells["AKHIRRIIL"].Value.ToString())
+                    if (detailDataGrid.Rows[i].Cells["REMARK"].Value.ToString().Length <= 0)
+                    {
+                        pos = i + 1;
+                        errorLabel.Text = "JUMLAH AKHIR PADA BARIS KE " + pos + "  TIDAK SAMA, ISI REMARK"; 
+                        result = false;
+                    }
             }
 
             return result;
