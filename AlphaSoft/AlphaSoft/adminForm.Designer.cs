@@ -86,6 +86,7 @@
             this.MENU_pelanggan = new System.Windows.Forms.ToolStripMenuItem();
             this.MENU_tambahPelanggan = new System.Windows.Forms.ToolStripMenuItem();
             this.MENU_transaksiPenjualan = new System.Windows.Forms.ToolStripMenuItem();
+            this.MENU_SalesQuotation = new System.Windows.Forms.ToolStripMenuItem();
             this.MENU_modulKasir = new System.Windows.Forms.ToolStripMenuItem();
             this.MENU_setNoFaktur = new System.Windows.Forms.ToolStripMenuItem();
             this.MENU_CopyNota = new System.Windows.Forms.ToolStripMenuItem();
@@ -184,7 +185,7 @@
             this.SHORTCUT_returBeli = new System.Windows.Forms.ToolStripButton();
             this.SHORTCUT_returJual = new System.Windows.Forms.ToolStripButton();
             this.timerMessage = new System.Windows.Forms.Timer(this.components);
-            this.MENU_SalesQuotation = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.MAINMENU_Strip.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.MAINMENU_ShortCut.SuspendLayout();
@@ -765,6 +766,7 @@
             this.MENU_transaksiPenjualan.BackColor = System.Drawing.Color.SteelBlue;
             this.MENU_transaksiPenjualan.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.MENU_SalesQuotation,
+            this.toolStripMenuItem2,
             this.MENU_modulKasir,
             this.MENU_setNoFaktur,
             this.MENU_CopyNota});
@@ -772,6 +774,15 @@
             this.MENU_transaksiPenjualan.Name = "MENU_transaksiPenjualan";
             this.MENU_transaksiPenjualan.Size = new System.Drawing.Size(221, 22);
             this.MENU_transaksiPenjualan.Text = "Transaksi Penjualan";
+            // 
+            // MENU_SalesQuotation
+            // 
+            this.MENU_SalesQuotation.BackColor = System.Drawing.Color.SteelBlue;
+            this.MENU_SalesQuotation.ForeColor = System.Drawing.Color.FloralWhite;
+            this.MENU_SalesQuotation.Name = "MENU_SalesQuotation";
+            this.MENU_SalesQuotation.Size = new System.Drawing.Size(191, 22);
+            this.MENU_SalesQuotation.Text = "Sales Quotation";
+            this.MENU_SalesQuotation.Click += new System.EventHandler(this.MENU_SalesQuotation_Click);
             // 
             // MENU_modulKasir
             // 
@@ -1745,14 +1756,14 @@
             this.timerMessage.Interval = 3600000;
             this.timerMessage.Tick += new System.EventHandler(this.timerMessage_Tick);
             // 
-            // MENU_SalesQuotation
+            // toolStripMenuItem2
             // 
-            this.MENU_SalesQuotation.BackColor = System.Drawing.Color.SteelBlue;
-            this.MENU_SalesQuotation.ForeColor = System.Drawing.Color.FloralWhite;
-            this.MENU_SalesQuotation.Name = "MENU_SalesQuotation";
-            this.MENU_SalesQuotation.Size = new System.Drawing.Size(191, 22);
-            this.MENU_SalesQuotation.Text = "Sales Quotation";
-            this.MENU_SalesQuotation.Click += new System.EventHandler(this.MENU_SalesQuotation_Click);
+            this.toolStripMenuItem2.BackColor = System.Drawing.Color.SteelBlue;
+            this.toolStripMenuItem2.ForeColor = System.Drawing.Color.FloralWhite;
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(191, 22);
+            this.toolStripMenuItem2.Text = "Sales Order";
+            this.toolStripMenuItem2.Click += new System.EventHandler(this.toolStripMenuItem2_Click_1);
             // 
             // adminForm
             // 
@@ -1947,6 +1958,7 @@
         private System.Windows.Forms.ToolStripMenuItem stokProdukToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem MENU_SalesQuotation;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
         //private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
     }
 }

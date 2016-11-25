@@ -555,11 +555,11 @@ namespace AlphaSoft
             //    return false;
             //}
 
-            if (hargaEcerTextBox.Text.Length <= 0 || Convert.ToDouble(hargaEcerTextBox.Text) == 0)
-            {
-                errorLabel.Text = "HARGA ECER TIDAK BOLEH 0 / KOSONG";
-                return false;
-            }
+            //if (hargaEcerTextBox.Text.Length <= 0 || Convert.ToDouble(hargaEcerTextBox.Text) == 0)
+            //{
+            //    errorLabel.Text = "HARGA ECER TIDAK BOLEH 0 / KOSONG";
+            //    return false;
+            //}
 
             //if (hargaGrosirTextBox.Text.Length <= 0 || Convert.ToDouble(hargaGrosirTextBox.Text) == 0)
             //{
@@ -567,11 +567,11 @@ namespace AlphaSoft
             //    return false;
             //}
 
-            if (hargaBSTextBox.Text.Length <= 0 || Convert.ToDouble(hargaBSTextBox.Text) == 0)
-            {
-                errorLabel.Text = "HARGA BS TIDAK BOLEH 0 / KOSONG";
-                return false;
-            }
+            //if (hargaBSTextBox.Text.Length <= 0 || Convert.ToDouble(hargaBSTextBox.Text) == 0)
+            //{
+            //    errorLabel.Text = "HARGA BS TIDAK BOLEH 0 / KOSONG";
+            //    return false;
+            //}
 
             if (unitTextBox.Text.Equals(""))
             {

@@ -132,6 +132,16 @@ namespace AlphaSoft
                                        "FROM SALES_QUOTATION_HEADER SQ " +
                                        "WHERE SQ.CUSTOMER_ID = 0";
             }
+            else if (originModuleID == globalConstants.SQ_TO_SO)
+            {
+                sqlClause1 = "SELECT IF(SQ_APPROVED = 1, 'APPROVED', IF(SQ_APPROVED = -1, 'REJECTED', 'PENDING')) AS STATUS, ID, SQ_INVOICE AS 'NO INVOICE', CUSTOMER_FULL_NAME AS 'CUSTOMER', DATE_FORMAT(SQ_DATE, '%d-%M-%Y')  AS 'TGL INVOICE', (SQ_TOTAL - SALES_DISCOUNT_FINAL) AS 'TOTAL', SQ_APPROVED " +
+                                       "FROM SALES_QUOTATION_HEADER SQ, MASTER_CUSTOMER MC " +
+                                       "WHERE SQ.CUSTOMER_ID = MC.CUSTOMER_ID AND SQ_APPROVED = 1";
+
+                sqlClause2 = "SELECT IF(SQ_APPROVED = 1, 'APPROVED', IF(SQ_APPROVED = -1, 'REJECTED', 'PENDING')) AS STATUS, ID, SQ_INVOICE AS 'NO INVOICE', '' AS 'CUSTOMER', DATE_FORMAT(SQ_DATE, '%d-%M-%Y') AS 'TGL INVOICE', (SQ_TOTAL - SALES_DISCOUNT_FINAL) AS 'TOTAL', SQ_APPROVED " +
+                                       "FROM SALES_QUOTATION_HEADER SQ " +
+                                       "WHERE SQ.CUSTOMER_ID = 0 AND SQ_APPROVED = 1";
+            }
             else
             { 
                 sqlClause1 = "SELECT ID, SALES_INVOICE AS 'NO INVOICE', CUSTOMER_FULL_NAME AS 'CUSTOMER', DATE_FORMAT(SALES_DATE, '%d-%M-%Y')  AS 'TGL INVOICE', (SALES_TOTAL - SALES_DISCOUNT_FINAL) AS 'TOTAL' " +
@@ -147,7 +157,7 @@ namespace AlphaSoft
             {
                 if (noInvoiceTextBox.Text.Length > 0)
                 {
-                    if (originModuleID == globalConstants.SALES_QUOTATION)
+                    if (originModuleID == globalConstants.SALES_QUOTATION || originModuleID == globalConstants.SQ_TO_SO)
                         whereClause1 = whereClause1 + " AND SQ.SQ_INVOICE LIKE '%" + noInvoiceParam + "%'";
                     else
                         whereClause1 = whereClause1 + " AND SH.SALES_INVOICE LIKE '%" + noInvoiceParam + "%'";
@@ -156,14 +166,14 @@ namespace AlphaSoft
                 dateFrom = String.Format(culture, "{0:yyyyMMdd}", Convert.ToDateTime(PODtPicker_1.Value));
                 dateTo = String.Format(culture, "{0:yyyyMMdd}", Convert.ToDateTime(PODtPicker_2.Value));
 
-                if (originModuleID == globalConstants.SALES_QUOTATION)
+                if (originModuleID == globalConstants.SALES_QUOTATION || originModuleID == globalConstants.SQ_TO_SO)
                     whereClause1 = whereClause1 + " AND DATE_FORMAT(SQ.SQ_DATE, '%Y%m%d')  >= '" + dateFrom + "' AND DATE_FORMAT(SQ.SQ_DATE, '%Y%m%d')  <= '" + dateTo + "'";
                 else
                     whereClause1 = whereClause1 + " AND DATE_FORMAT(SH.SALES_DATE, '%Y%m%d')  >= '" + dateFrom + "' AND DATE_FORMAT(SH.SALES_DATE, '%Y%m%d')  <= '" + dateTo + "'";
 
                 if (customerID > 0)
                 {
-                    if (originModuleID == globalConstants.SALES_QUOTATION)
+                    if (originModuleID == globalConstants.SALES_QUOTATION || originModuleID == globalConstants.SQ_TO_SO)
                         sqlCommand = sqlClause1 + whereClause1 + " AND AND SQ.CUSTOMER_ID = " + customerID;
                     else
                         sqlCommand = sqlClause1 + whereClause1 + " AND AND SH.CUSTOMER_ID = " + customerID;
@@ -227,19 +237,31 @@ namespace AlphaSoft
             customerID = Convert.ToInt32(customerHiddenCombo.Items[customerCombo.SelectedIndex].ToString());
         }
 
-        private void displaySpecificForm(string noInvoice, string revNo = "")
+        private void displaySpecificForm(string noInvoice, int status = 0)
         {
             //int salesActiveStatus = 0;
             //string dialogMessage = "";
             switch (originModuleID)
             {
                 case globalConstants.SALES_QUOTATION:
-                    cashierForm displayedForm = new cashierForm(globalConstants.EDIT_SALES_QUOTATION, noInvoice);
-                    displayedForm.ShowDialog(this);
+                    if (status == 0)
+                    { 
+                        cashierForm displayedForm = new cashierForm(globalConstants.EDIT_SALES_QUOTATION, noInvoice);
+                        displayedForm.ShowDialog(this);
+                        displayedForm.Dispose();
+                    }
                     break;
+
+                case globalConstants.SQ_TO_SO:
+                    cashierForm displayedFormCashier = new cashierForm(globalConstants.SQ_TO_SO, noInvoice);
+                    displayedFormCashier.ShowDialog(this);
+                    displayedFormCashier.Dispose();
+                    break;
+
                 default:
                     cashierForm cashierFormDisplay = new cashierForm(noInvoice);
                     cashierFormDisplay.ShowDialog(this);
+                    cashierFormDisplay.Dispose();
                     break;
 
                 //case globalConstants.DELIVERY_ORDER:
@@ -266,15 +288,17 @@ namespace AlphaSoft
         private void dataPenerimaanBarang_DoubleClick(object sender, EventArgs e)
         {
             string noInvoice = "";
-            
+            int status = 0;
+
             if (dataPenerimaanBarang.Rows.Count <= 0)
                 return;
 
             int rowSelectedIndex = (dataPenerimaanBarang.SelectedCells[0].RowIndex);
             DataGridViewRow selectedRow = dataPenerimaanBarang.Rows[rowSelectedIndex];
             noInvoice = selectedRow.Cells["NO INVOICE"].Value.ToString();
+            status = Convert.ToInt32(selectedRow.Cells["SQ_APPROVED"].Value);
 
-            displaySpecificForm(noInvoice);
+            displaySpecificForm(noInvoice, status);
         }
 
         private void dataPenerimaanBarang_KeyDown(object sender, KeyEventArgs e)
@@ -282,6 +306,7 @@ namespace AlphaSoft
             if (e.KeyCode == Keys.Enter)
             {
                 string noInvoice = "";
+                int status = 0;
 
                 if (dataPenerimaanBarang.Rows.Count <= 0)
                     return;
@@ -290,7 +315,8 @@ namespace AlphaSoft
                 DataGridViewRow selectedRow = dataPenerimaanBarang.Rows[rowSelectedIndex];
                 noInvoice = selectedRow.Cells["NO INVOICE"].Value.ToString();
 
-                displaySpecificForm(noInvoice);
+                status = Convert.ToInt32(selectedRow.Cells["SQ_APPROVED"].Value);
+                displaySpecificForm(noInvoice, status);
             }
         }
 

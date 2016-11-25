@@ -462,7 +462,6 @@ namespace AlphaSoft
 
                     durationTextBox.Visible = false;
                     label1.Visible = false;
-                    
                     break;
 
                 case globalConstants.PENERIMAAN_BARANG_DARI_PO:
@@ -480,10 +479,12 @@ namespace AlphaSoft
 
                     durationTextBox.Visible = true;
                     label1.Visible = true;
-                    
-
                     break;
             }
+
+            // LARAS : HIDE ALL PRICE
+            label15.Visible = false;
+            labelAcceptValue.Visible = false;
         }
 
         private void loadDataHeader()
@@ -673,6 +674,7 @@ namespace AlphaSoft
             hpp_textBox.HeaderText = "HARGA POKOK";
             hpp_textBox.Width = 150;
             hpp_textBox.DefaultCellStyle.BackColor = Color.LightBlue;
+            hpp_textBox.Visible = false;
             detailGridView.Columns.Add(hpp_textBox);
 
             qty_textBox.Name = "qtyReceived";
@@ -685,6 +687,7 @@ namespace AlphaSoft
             subtotal_textBox.HeaderText = "SUBTOTAL";
             subtotal_textBox.ReadOnly = true;
             subtotal_textBox.Width = 150;
+            subtotal_textBox.Visible = false;
             detailGridView.Columns.Add(subtotal_textBox);
         }
 
@@ -1128,11 +1131,11 @@ namespace AlphaSoft
             bool dataExist = true;
             int i = 0;
 
-            if (prInvoiceTextBox.Text.Length <=0)
-            {
-                errorLabel.Text = "NO PENERIMAAN TIDAK BOLEH KOSONG";
-                return false;
-            }
+            //if (prInvoiceTextBox.Text.Length <=0)
+            //{
+            //    errorLabel.Text = "NO PENERIMAAN TIDAK BOLEH KOSONG";
+            //    return false;
+            //}
 
             if (detailGridView.Rows.Count <= 0)
             {
@@ -1162,6 +1165,32 @@ namespace AlphaSoft
             return true;
         }
        
+        private string getPRInvoiceNo()
+        {
+            string result = "";
+            string sqlCommand = "";
+            string PRInvoice = "";
+            int maxPRInvoiceValue = 0;
+
+            sqlCommand = "SELECT IFNULL(MAX(CONVERT(PR_INVOICE, UNSIGNED INTEGER)),'0') AS SALES_INVOICE FROM PRODUCTS_RECEIVED_HEADER";
+
+            PRInvoice = DS.getDataSingleValue(sqlCommand).ToString();
+            gUtil.saveSystemDebugLog(globalConstants.MENU_PENERIMAAN_BARANG, "PENERIMAAN BARANG : MAX PR INVOICE [" + PRInvoice+ "]");
+
+            maxPRInvoiceValue = Convert.ToInt32(PRInvoice);
+            if (maxPRInvoiceValue > 0)
+            {
+                maxPRInvoiceValue += 1;
+                result = maxPRInvoiceValue.ToString();
+            }
+            else
+            {
+                result = "1";
+            }
+
+            return result;
+        }
+
         private bool saveDataTransaction()
         {
             bool result = false;
@@ -1193,8 +1222,9 @@ namespace AlphaSoft
 
             string selectedDate = PRDtPicker.Value.ToShortDateString();
             PRDateTime = String.Format(culture, "{0:dd-MM-yyyy}", Convert.ToDateTime(selectedDate));
-            
-            PRInvoice = prInvoiceTextBox.Text;
+
+            //PRInvoice = prInvoiceTextBox.Text;
+            PRInvoice = getPRInvoiceNo(); // LARAS : PRInvoice auto generate
             branchIDFrom = selectedFromID;
             branchIDTo = selectedToID;
             PRTotal = globalTotalValue;

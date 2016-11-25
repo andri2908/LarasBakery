@@ -169,6 +169,7 @@ namespace AlphaSoft
             remarkColumn.ReadOnly = false;
             remarkColumn.Width = 180;
             remarkColumn.DefaultCellStyle.BackColor = Color.AliceBlue;
+            remarkColumn.Visible = false;
             detailDataGrid.Columns.Add(remarkColumn);
         }
 
@@ -403,19 +404,19 @@ namespace AlphaSoft
         private bool dataValidated()
         {
             bool result = true;
-            int pos = 0;
+            //int pos = 0;
 
-            errorLabel.Text = "";
-            for (int i =0;i<detailDataGrid.Rows.Count && result;i++)
-            {
-                if (detailDataGrid.Rows[i].Cells["AKHIR"].Value.ToString() != detailDataGrid.Rows[i].Cells["AKHIRRIIL"].Value.ToString())
-                    if (detailDataGrid.Rows[i].Cells["REMARK"].Value.ToString().Length <= 0)
-                    {
-                        pos = i + 1;
-                        errorLabel.Text = "JUMLAH AKHIR PADA BARIS KE " + pos + "  TIDAK SAMA, ISI REMARK"; 
-                        result = false;
-                    }
-            }
+            //errorLabel.Text = "";
+            //for (int i =0;i<detailDataGrid.Rows.Count && result;i++)
+            //{
+            //    if (detailDataGrid.Rows[i].Cells["AKHIR"].Value.ToString() != detailDataGrid.Rows[i].Cells["AKHIRRIIL"].Value.ToString())
+            //        if (detailDataGrid.Rows[i].Cells["REMARK"].Value.ToString().Length <= 0)
+            //        {
+            //            pos = i + 1;
+            //            errorLabel.Text = "JUMLAH AKHIR PADA BARIS KE " + pos + "  TIDAK SAMA, ISI REMARK"; 
+            //            result = false;
+            //        }
+            //}
 
             return result;
         }
@@ -524,7 +525,7 @@ namespace AlphaSoft
                     if (closeStockTake)
                     {
                         // UPDATE STOCK AWAL WITH AKHIR RIIL VALUE
-                        sqlCommand = "UPDATE MASTER_PRODUCT SET PRODUCT_STOCK_QTY = " + detailDataGrid.Rows[i].Cells["akhirRiil"].Value.ToString() + ", PRODUCT_STOCK_AWAL = " + detailDataGrid.Rows[i].Cells["akhirRiil"].Value.ToString() + " WHERE PRODUCT_ID = '" + detailDataGrid.Rows[i].Cells["productID"].Value.ToString() + "'";
+                        sqlCommand = "UPDATE MASTER_PRODUCT SET PRODUCT_STOCK_QTY = " + detailDataGrid.Rows[i].Cells["akhir"].Value.ToString() + ", PRODUCT_STOCK_AWAL = " + detailDataGrid.Rows[i].Cells["akhir"].Value.ToString() + " WHERE PRODUCT_ID = '" + detailDataGrid.Rows[i].Cells["productID"].Value.ToString() + "'";
 
                         if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
                             throw internalEX;

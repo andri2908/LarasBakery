@@ -41,6 +41,9 @@ namespace AlphaSoft
         private bool navKeyRegistered = false;
         private bool delKeyRegistered = false;
 
+        private double previousSQ_DP = 0; // LARAS : TO STORE PREVIOUS DP AMOUNT
+        private string selectedSQInvoice = ""; // LARAS : TO STORE SQ INVOICE
+
         private Data_Access DS = new Data_Access();
 
         private globalUtilities gutil = new globalUtilities();
@@ -984,9 +987,11 @@ namespace AlphaSoft
 
             string SQOrderDate = "";
             int delivered = 0;
+            double DPAmount = 0;
 
             //SODateTime = String.Format(culture, "{0:dd-MM-yyyy HH:mm}", DateTime.Now);
-            SODateTime = gutil.getCustomStringFormatDate(DateTime.Now);
+            //SODateTime = gutil.getCustomStringFormatDate(DateTime.Now);
+            SODateTime = gutil.getCustomStringFormatDate(SODateTimePicker.Value); // LARAS : Transaction Date is based on user input
 
             gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : ATTEMPT TO SAVE SALES DATA [" + SODateTime + "]");
 
@@ -1005,7 +1010,9 @@ namespace AlphaSoft
                 else
                     salesPaid = 1;
 
-                SODueDateTime = String.Format(culture, "{0:dd-MM-yyyy}", DateTime.Now); 
+                //SODueDateTime = String.Format(culture, "{0:dd-MM-yyyy}", DateTime.Now);
+                SODueDateTime = String.Format(culture, "{0:dd-MM-yyyy}", SODateTimePicker.Value); // LARAS : Transaction Date is based on user input
+
                 gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : CASH SALES");
                 //paymentMethod = paymentComboBox.SelectedIndex;
             }
@@ -1085,10 +1092,21 @@ namespace AlphaSoft
                     salesInvoice = getSalesInvoiceID();
                     //pass thru to receipt generator
                     selectedsalesinvoice = salesInvoice;
+                    
                     // SAVE HEADER TABLE
-                    sqlCommand = "INSERT INTO SALES_HEADER (SALES_INVOICE, CUSTOMER_ID, SALES_DATE, SALES_TOTAL, SALES_DISCOUNT_FINAL, SALES_TOP, SALES_TOP_DATE, SALES_PAID, SALES_PAYMENT, SALES_PAYMENT_CHANGE, SALES_PAYMENT_METHOD) " +
-                                        "VALUES " +
-                                        "('" + salesInvoice + "', " + selectedPelangganID + ", STR_TO_DATE('" + SODateTime + "', '%d-%m-%Y %H:%i'), " + gutil.validateDecimalNumericInput(globalTotalValue) + ", " + gutil.validateDecimalNumericInput(Convert.ToDouble(salesDiscountFinal)) + ", " + salesTop + ", STR_TO_DATE('" + SODueDateTime + "', '%d-%m-%Y'), " + salesPaid + ", " + gutil.validateDecimalNumericInput(bayarAmount) + ", " + gutil.validateDecimalNumericInput(sisaBayar) + ", " + selectedPaymentMethod + ")";
+                    if (originModuleID == 0)
+                    { 
+                        sqlCommand = "INSERT INTO SALES_HEADER (SALES_INVOICE, CUSTOMER_ID, SALES_DATE, SALES_TOTAL, SALES_DISCOUNT_FINAL, SALES_TOP, SALES_TOP_DATE, SALES_PAID, SALES_PAYMENT, SALES_PAYMENT_CHANGE, SALES_PAYMENT_METHOD) " +
+                                            "VALUES " +
+                                            "('" + salesInvoice + "', " + selectedPelangganID + ", STR_TO_DATE('" + SODateTime + "', '%d-%m-%Y %H:%i'), " + gutil.validateDecimalNumericInput(globalTotalValue) + ", " + gutil.validateDecimalNumericInput(Convert.ToDouble(salesDiscountFinal)) + ", " + salesTop + ", STR_TO_DATE('" + SODueDateTime + "', '%d-%m-%Y'), " + salesPaid + ", " + gutil.validateDecimalNumericInput(bayarAmount) + ", " + gutil.validateDecimalNumericInput(sisaBayar) + ", " + selectedPaymentMethod + ")";
+                    }
+                    else if (originModuleID == globalConstants.SQ_TO_SO)
+                    {
+                        // STORE SQ INVOICE AS WELL, TO CREATE LINK TO TRACE THE ORIGIN SQ INVOICE
+                        sqlCommand = "INSERT INTO SALES_HEADER (SALES_INVOICE, CUSTOMER_ID, SALES_DATE, SALES_TOTAL, SALES_DISCOUNT_FINAL, SALES_TOP, SALES_TOP_DATE, SALES_PAID, SALES_PAYMENT, SALES_PAYMENT_CHANGE, SALES_PAYMENT_METHOD, SQ_INVOICE) " +
+                                            "VALUES " +
+                                            "('" + salesInvoice + "', " + selectedPelangganID + ", STR_TO_DATE('" + SODateTime + "', '%d-%m-%Y %H:%i'), " + gutil.validateDecimalNumericInput(globalTotalValue) + ", " + gutil.validateDecimalNumericInput(Convert.ToDouble(salesDiscountFinal)) + ", " + salesTop + ", STR_TO_DATE('" + SODueDateTime + "', '%d-%m-%Y'), " + salesPaid + ", " + gutil.validateDecimalNumericInput(bayarAmount) + ", " + gutil.validateDecimalNumericInput(sisaBayar) + ", " + selectedPaymentMethod + ", '" + selectedSQInvoice + "')";
+                    }
 
                     gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "INSERT INTO SALES HEADER [" + salesInvoice + "]");
                     if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
@@ -1244,7 +1262,8 @@ namespace AlphaSoft
                 }
 
                 if (originModuleID == 0 || originModuleID == globalConstants.SQ_TO_SO)  // NORMAL TRANSACTION OR SO FROM SQ
-                { 
+                {
+                    double journalAmount = 0;
                     // SAVE TO CREDIT TABLE
                     sqlCommand = "INSERT INTO CREDIT (SALES_INVOICE, CREDIT_DUE_DATE, CREDIT_NOMINAL, CREDIT_PAID) VALUES " +
                                         "('" + salesInvoice + "', STR_TO_DATE('" + SODueDateTime + "', '%d-%m-%Y'), " + gutil.validateDecimalNumericInput(globalTotalValue) + ", " + salesPaid + ")";
@@ -1253,14 +1272,52 @@ namespace AlphaSoft
                     if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
                         throw internalEX;
 
-
-                    if (salesTop == 1 && selectedPaymentMethod == 0)
+                    if (salesTop == 1 && selectedPaymentMethod == 0 && originModuleID == 0)
                     {
                         // PAYMENT IN CASH THEREFORE ADDING THE AMOUNT OF CASH IN THE CASH REGISTER
                         // ADD A NEW ENTRY ON THE DAILY JOURNAL TO KEEP TRACK THE ADDITIONAL CASH AMOUNT 
                         sqlCommand = "INSERT INTO DAILY_JOURNAL (ACCOUNT_ID, JOURNAL_DATETIME, JOURNAL_NOMINAL, JOURNAL_DESCRIPTION, USER_ID, PM_ID) " +
                                                        "VALUES (1, STR_TO_DATE('" + SODateTime + "', '%d-%m-%Y %H:%i')" + ", " + gutil.validateDecimalNumericInput(globalTotalValue) + ", 'PEMBAYARAN " + salesInvoice + "', '" + gutil.getUserID() + "', 1)";
                         gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "INSERT TO DAILY JOURNAL TABLE [" + gutil.validateDecimalNumericInput(globalTotalValue) + "]");
+
+                        if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
+                            throw internalEX;
+                    }
+                    else if (originModuleID == globalConstants.SQ_TO_SO)
+                    {
+                        // CALCULATE DIFFERENCE WITH PREVIOUS DP AMOUNT
+                        DPAmount = bayarAmount - previousSQ_DP;
+
+                        if (DPAmount != 0)
+                        {
+                            // ONLY SALES QUOTATION ABLE TO ADD DP TO JOURNAL
+                            sqlCommand = "INSERT INTO DAILY_JOURNAL (ACCOUNT_ID, JOURNAL_DATETIME, JOURNAL_NOMINAL, JOURNAL_DESCRIPTION, USER_ID, PM_ID) " +
+                                                           "VALUES (1, STR_TO_DATE('" + SODateTime + "', '%d-%m-%Y %H:%i')" + ", " + gutil.validateDecimalNumericInput(DPAmount) + ", 'PEMBAYARAN " + salesInvoice + "', '" + gutil.getUserID() + "', 1)";
+                            gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "INSERT TO DAILY JOURNAL TABLE [" + gutil.validateDecimalNumericInput(DPAmount) + "]");
+
+                            if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
+                                throw internalEX;
+                        }
+                    }
+                }
+                else if (originModuleID == globalConstants.SALES_QUOTATION || originModuleID == globalConstants.EDIT_SALES_QUOTATION)
+                {
+                    string journalDate = "";
+
+                    if (originModuleID == globalConstants.SALES_QUOTATION)   // JOURNAL DATE IS THE SAME AS SQ DATE IF NEW SALES QUOTATION
+                        journalDate = SODateTime;
+                    else if(originModuleID == globalConstants.EDIT_SALES_QUOTATION) // TAKE CURRENT DATE FOR EDIT SALES QUOTATION
+                        journalDate = String.Format(culture, "{0:dd-MM-yyyy}", DateTime.Now);
+
+                    // CALCULATE DIFFERENCE WITH PREVIOUS DP AMOUNT
+                    DPAmount = bayarAmount - previousSQ_DP;
+
+                    if (DPAmount != 0)
+                    { 
+                        // ONLY SALES QUOTATION ABLE TO ADD DP TO JOURNAL
+                        sqlCommand = "INSERT INTO DAILY_JOURNAL (ACCOUNT_ID, JOURNAL_DATETIME, JOURNAL_NOMINAL, JOURNAL_DESCRIPTION, USER_ID, PM_ID) " +
+                                                       "VALUES (1, STR_TO_DATE('" + SODateTime + "', '%d-%m-%Y %H:%i')" + ", " + gutil.validateDecimalNumericInput(DPAmount) + ", 'PEMBAYARAN DP " + salesInvoice + "', '" + gutil.getUserID() + "', 1)";
+                        gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "INSERT TO DAILY JOURNAL TABLE [" + gutil.validateDecimalNumericInput(DPAmount) + "]");
 
                         if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
                             throw internalEX;
@@ -1317,6 +1374,95 @@ namespace AlphaSoft
             return result;
         }
 
+        private bool saveDPToPaymentCredit()
+        {
+            bool result = false;
+            string sqlCommand = "";
+            string creditID = "";
+            double DPAmount = 0;
+            string paymentDate = String.Format(culture, "{0:dd-MM-yyyy}", DateTime.Now);
+            MySqlException internalEX = null;
+            string SQCreatedDate = "";
+            DS.beginTransaction();
+
+            try
+            {
+                SQCreatedDate = gutil.getCustomStringFormatDate(Convert.ToDateTime(DS.getDataSingleValue("SELECT SQ_DATE FROM SALES_QUOTATION_HEADER WHERE SQ_INVOICE = '" + selectedSQInvoice + "'")));
+
+                // GET CREDIT ID
+                sqlCommand = "SELECT IFNULL(CREDIT_ID, 0) FROM CREDIT WHERE SALES_INVOICE = '" + selectedsalesinvoice + "'";
+                creditID = DS.getDataSingleValue(sqlCommand).ToString();
+
+                if (creditID != "0")
+                {
+                    // CHECK WHETHER INVOICE HAS BEEN FULLY PAID
+                    sqlCommand = "SELECT CREDIT_PAID FROM CREDIT WHERE CREDIT_ID = " + creditID;
+                    if (DS.getDataSingleValue(sqlCommand).ToString() == "0")
+                    {
+                        sqlCommand = "SELECT IFNULL(SQ_DP, 0) AS DP FROM SALES_QUOTATION_HEADER WHERE SQ_INVOICE = '" + selectedSQInvoice + "'";
+                        DPAmount = Convert.ToDouble(DS.getDataSingleValue(sqlCommand));
+
+                        if (DPAmount > 0)
+                        {
+                            int paymentMethod = 0;
+
+                            if (cashRadioButton.Checked == true) // CASH PAYMENT
+                            {
+                                paymentMethod = paymentComboBox.SelectedIndex + 1;
+                            }
+                            else
+                            {
+                                paymentMethod = 4;
+                            }
+
+                            // INSERT INTO PAYMENT CREDIT
+                            sqlCommand = "INSERT INTO PAYMENT_CREDIT (CREDIT_ID, PAYMENT_DATE, PM_ID, PAYMENT_NOMINAL, PAYMENT_DESCRIPTION, PAYMENT_CONFIRMED, PAYMENT_CONFIRMED_DATE, PAYMENT_DUE_DATE) " +
+                                                   "VALUES (" + creditID + ", STR_TO_DATE('" + paymentDate + "', '%d-%m-%Y %H:%i'), " + paymentMethod + ", " + DPAmount + ", 'DP', 1, STR_TO_DATE('" + SQCreatedDate + "', '%d-%m-%Y %H:%i'), STR_TO_DATE('" + SQCreatedDate + "', '%d-%m-%Y %H:%i'))";
+
+                            if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
+                                throw internalEX;
+                        }
+                    }
+
+                }
+                DS.commit();
+                result = true;
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            return result;
+        }
+
+        private bool setQuotationToCompleted()
+        {
+            bool result = false;
+            string sqlCommand = "";
+            MySqlException internalEX = null;
+
+            DS.beginTransaction();
+
+            try
+            {
+                // INSERT INTO PAYMENT CREDIT
+                sqlCommand = "UPDATE SALES_QUOTATION_HEADER SET COMPLETED = 1 WHERE SQ_INVOICE = '" + selectedSQInvoice + "'";
+
+                if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
+                    throw internalEX;
+
+                DS.commit();
+                result = true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            return result;
+        }
+
         private void saveAndPrintOutInvoice()
         {
             string message = "";
@@ -1334,6 +1480,23 @@ namespace AlphaSoft
                 if (saveData())
                 {
                     gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "TRANSACTION SAVED");
+
+                    if (originModuleID == globalConstants.SQ_TO_SO)
+                    {
+                        gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "SAVE DP PAYMENT TO PAYMENT CREDIT");
+                        if (!saveDPToPaymentCredit())
+                        {
+                            gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "SAVE DP PAYMENT TO PAYMENT CREDIT FAILED");
+                        }
+
+                        if (DialogResult.Yes == MessageBox.Show("QUOTATION COMPLETE ????", "WARNING", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
+                        {
+                            if (!setQuotationToCompleted())
+                                gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "SQ ["+selectedSQInvoice+"] FAILED TO SET TO COMPLETE");
+                            else
+                                gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "SQ [" + selectedSQInvoice + "] SET TO COMPLETE");
+                        }
+                    }
 
                     gutil.saveUserChangeLog(globalConstants.MENU_PENJUALAN, globalConstants.CHANGE_LOG_INSERT, "NEW TRANSAKSI PENJUALAN [" + selectedsalesinvoice + "]");
 
@@ -1917,6 +2080,8 @@ namespace AlphaSoft
             switch (originModuleID)
             {
                 case globalConstants.EDIT_SALES_QUOTATION:
+                case globalConstants.SQ_TO_SO:
+                    selectedSQInvoice = selectedsalesinvoice;
                     // PULL DETAIL DATA               
                     sqlCommand = "SELECT M.PRODUCT_ID AS KODE_PRODUK, M.PRODUCT_NAME AS NAMA_PRODUK, SD.PRODUCT_SALES_PRICE AS HARGA_PRODUK, SD.PRODUCT_QTY AS QTY, SD.SQ_SUBTOTAL AS SUBTOTAL " +
                                            "FROM SALES_QUOTATION_DETAIL SD, MASTER_PRODUCT M WHERE SD.SQ_INVOICE = '" + selectedsalesinvoice + "' AND SD.PRODUCT_ID = M.PRODUCT_ID";
@@ -1949,7 +2114,9 @@ namespace AlphaSoft
                         while (rdr.Read())
                         {
                             pelangganTextBox.Text = rdr.GetString("NAMA");
-                            noFakturLabel.Text = noFakturLabel.Text + " " + rdr.GetString("NO_INVOICE");
+
+                            if (originModuleID == globalConstants.EDIT_SALES_QUOTATION)
+                                noFakturLabel.Text = noFakturLabel.Text + " " + rdr.GetString("NO_INVOICE");
 
                             customerComboBox.SelectedIndex = rdr.GetInt32("CUSTOMER_GROUP") - 1;
                             customerComboBox.Text = customerComboBox.Items[customerComboBox.SelectedIndex].ToString();
@@ -1962,6 +2129,7 @@ namespace AlphaSoft
                             discJualMaskedTextBox.Text = discValue.ToString();
 
                             bayarAmount = rdr.GetDouble("SQ_DP");
+                            previousSQ_DP = bayarAmount;
                             bayarTextBox.Text = bayarAmount.ToString();
 
                             calculateChangeValue();
@@ -1996,7 +2164,8 @@ namespace AlphaSoft
 
                     break;
 
-                case globalConstants.COPY_NOTA:
+                case globalConstants.COPY_NOTA :
+                case globalConstants.CASHIER_MODULE:
                     // PULL HEADER DATA
                     sqlCommand = "SELECT SH.SALES_INVOICE AS NO_INVOICE, IFNULL(M.CUSTOMER_ID, 0) AS PELANGGAN_ID, IFNULL(M.CUSTOMER_FULL_NAME, '') AS NAMA, IFNULL(M.CUSTOMER_GROUP, 1) AS CUSTOMER_GROUP, SH.SALES_TOTAL AS TOTAL, SH.SALES_DISCOUNT_FINAL AS DISC_FINAL, SH.SALES_TOP AS TOP, DATEDIFF(SH.SALES_TOP_DATE, SH.SALES_DATE) AS TOP_DURATION " +
                                            "FROM SALES_HEADER SH LEFT OUTER JOIN MASTER_CUSTOMER M ON (SH.CUSTOMER_ID = M.CUSTOMER_ID) WHERE SH.SALES_INVOICE = '" + selectedsalesinvoice + "'";
@@ -2104,6 +2273,9 @@ namespace AlphaSoft
             gutil.reArrangeTabOrder(this);
             errorLabel.Text = "";
 
+            SODateTimePicker.Format = DateTimePickerFormat.Custom;
+            SODateTimePicker.CustomFormat = globalUtilities.CUSTOM_DATE_FORMAT;
+
             userStatusLabel.Text = "Welcome, " + DS.getDataSingleValue("SELECT IFNULL(USER_FULL_NAME, 0) FROM MASTER_USER WHERE ID = " + gutil.getUserID()).ToString();
 
            
@@ -2127,6 +2299,10 @@ namespace AlphaSoft
 
                 discJualMaskedTextBox.ReadOnly = true;
                 bayarTextBox.ReadOnly = true;     
+            }
+            else if (originModuleID == globalConstants.CASHIER_MODULE && selectedsalesinvoice != "")
+            {
+                loadInvoiceData();
             }
             else if (originModuleID == globalConstants.SALES_QUOTATION)
             {
@@ -2171,6 +2347,27 @@ namespace AlphaSoft
                 label7.Visible = true;
                 jobStartDateTimePicker.Visible = true;
                 deliveredCheckbox.Visible = true;
+                //addressTextBox.Visible = true;
+                jobStartDateTimePicker.Format = DateTimePickerFormat.Custom;
+                jobStartDateTimePicker.CustomFormat = globalUtilities.CUSTOM_DATE_FORMAT;
+            }
+            else if (originModuleID == globalConstants.SQ_TO_SO)
+            {
+                loadInvoiceData();
+
+                approvalButton.Visible = false;
+                rejectButton.Visible = false;
+                
+                //label12.Visible = false;
+                //label13.Visible = false;
+                //bayarTextBox.Visible = false;
+                // uangKembaliTextBox.Visible = false;
+                label7.Visible = true;
+                jobStartDateTimePicker.Visible = true;
+                jobStartDateTimePicker.Enabled = false;
+                deliveredCheckbox.Visible = true;
+                deliveredCheckbox.Enabled = false;
+                addressTextBox.ReadOnly = true;
                 //addressTextBox.Visible = true;
                 jobStartDateTimePicker.Format = DateTimePickerFormat.Custom;
                 jobStartDateTimePicker.CustomFormat = globalUtilities.CUSTOM_DATE_FORMAT;
@@ -2262,7 +2459,8 @@ namespace AlphaSoft
             stockQtyColumn.Width = 80;
             cashierDataGridView.Columns.Add(stockQtyColumn);
 
-            if (originModuleID == globalConstants.SALES_QUOTATION || originModuleID == globalConstants.EDIT_SALES_QUOTATION)
+            // LARAS : DISC PER ITEM IS DISABLED
+            //if (originModuleID == globalConstants.SALES_QUOTATION || originModuleID == globalConstants.EDIT_SALES_QUOTATION)
             {
                 discVisible = false;
             }
@@ -2528,7 +2726,7 @@ namespace AlphaSoft
                     "FROM SALES_HEADER_TAX SH, SALES_DETAIL_TAX SD, MASTER_PRODUCT M WHERE SD.PRODUCT_ID = M.PRODUCT_ID AND SD.SALES_INVOICE = SH.SALES_INVOICE AND SH.CUSTOMER_ID = 0 AND SH.SALES_INVOICE='" + selectedsalesinvoiceTax + "'";
                 }
 
-                if (originModuleID == globalConstants.SALES_QUOTATION)
+                if (originModuleID == globalConstants.SALES_QUOTATION || originModuleID == globalConstants.EDIT_SALES_QUOTATION)
                 {
                     DS.writeXML(sqlCommandx, globalConstants.salesQuotationReceiptXML);
                     if (gutil.getPaper() == 2) // kuarto
@@ -3548,7 +3746,7 @@ namespace AlphaSoft
             SQApprovedDate = gutil.getCustomStringFormatDate(DateTime.Now); //String.Format(culture, "{0:dd-MM-yyyy HH:mm}", DateTime.Now);
             SQCreatedDate = gutil.getCustomStringFormatDate(Convert.ToDateTime(DS.getDataSingleValue("SELECT SQ_DATE FROM SALES_QUOTATION_HEADER WHERE SQ_INVOICE = '" + sqInvoice+ "'")));
 
-            originModuleID = globalConstants.SQ_TO_SO;
+            //originModuleID = globalConstants.SQ_TO_SO;
             saveAndPrintOutInvoice();
 
             DS.beginTransaction();
@@ -3557,58 +3755,58 @@ namespace AlphaSoft
             {
                 DS.mySqlConnect();
 
-                // UPDATE SALES HEADER TABLE
-                sqlCommand = "UPDATE SALES_HEADER SET SQ_INVOICE = '" + sqInvoice + "' WHERE SALES_INVOICE = '" + selectedsalesinvoice + "'";
-                if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
-                    throw internalEX;
-
-                // UPDATE SALES HEADER TAX TABLE
-                sqlCommand = "UPDATE SALES_HEADER_TAX SET SQ_INVOICE = '" + sqInvoice + "' WHERE SALES_INVOICE = '" + selectedsalesinvoice + "'";
-                if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
-                    throw internalEX;
-
                 // UPDATE SALES QUOTATION TABLE
                 sqlCommand = "UPDATE SALES_QUOTATION_HEADER SET SQ_APPROVED = 1, SQ_APPROVED_DATE = STR_TO_DATE('" + SQApprovedDate + "', '%d-%m-%Y %H:%i') WHERE SQ_INVOICE = '" + sqInvoice + "'";
                 if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
                     throw internalEX;
 
+                //// UPDATE SALES HEADER TABLE
+                //sqlCommand = "UPDATE SALES_HEADER SET SQ_INVOICE = '" + sqInvoice + "' WHERE SALES_INVOICE = '" + selectedsalesinvoice + "'";
+                //if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
+                //    throw internalEX;
+
+                //// UPDATE SALES HEADER TAX TABLE
+                //sqlCommand = "UPDATE SALES_HEADER_TAX SET SQ_INVOICE = '" + sqInvoice + "' WHERE SALES_INVOICE = '" + selectedsalesinvoice + "'";
+                //if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
+                //    throw internalEX;
+
                 // INSERT TO CREDIT TABLE, TO INCLUDE DP
                 // GET CREDIT ID
-                sqlCommand = "SELECT IFNULL(CREDIT_ID, 0) FROM CREDIT WHERE SALES_INVOICE = '" + selectedsalesinvoice + "'";
-                creditID = DS.getDataSingleValue(sqlCommand).ToString();
+                //sqlCommand = "SELECT IFNULL(CREDIT_ID, 0) FROM CREDIT WHERE SALES_INVOICE = '" + selectedsalesinvoice + "'";
+                //creditID = DS.getDataSingleValue(sqlCommand).ToString();
 
-                if (creditID != "0")
-                {
-                    // CHECK WHETHER INVOICE HAS BEEN FULLY PAID
-                    sqlCommand = "SELECT CREDIT_PAID FROM CREDIT WHERE CREDIT_ID = " + creditID;
-                    if (DS.getDataSingleValue(sqlCommand).ToString() == "0")
-                    {
-                        sqlCommand = "SELECT IFNULL(SQ_DP, 0) AS DP FROM SALES_QUOTATION_HEADER WHERE SQ_INVOICE = '" + sqInvoice + "'";
-                        DPAmount = Convert.ToDouble(DS.getDataSingleValue(sqlCommand));
+                //if (creditID != "0")
+                //{
+                //    // CHECK WHETHER INVOICE HAS BEEN FULLY PAID
+                //    sqlCommand = "SELECT CREDIT_PAID FROM CREDIT WHERE CREDIT_ID = " + creditID;
+                //    if (DS.getDataSingleValue(sqlCommand).ToString() == "0")
+                //    {
+                //        sqlCommand = "SELECT IFNULL(SQ_DP, 0) AS DP FROM SALES_QUOTATION_HEADER WHERE SQ_INVOICE = '" + sqInvoice + "'";
+                //        DPAmount = Convert.ToDouble(DS.getDataSingleValue(sqlCommand));
 
-                        if (DPAmount > 0)
-                        {
-                            int paymentMethod = 0;
+                //        if (DPAmount > 0)
+                //        {
+                //            int paymentMethod = 0;
 
-                            if (cashRadioButton.Checked == true) // CASH PAYMENT
-                            {
-                                paymentMethod = paymentComboBox.SelectedIndex + 1;
-                            }
-                            else
-                            {
-                                paymentMethod = 4;
-                            }
+                //            if (cashRadioButton.Checked == true) // CASH PAYMENT
+                //            {
+                //                paymentMethod = paymentComboBox.SelectedIndex + 1;
+                //            }
+                //            else
+                //            {
+                //                paymentMethod = 4;
+                //            }
 
-                            // INSERT INTO PAYMENT CREDIT
-                            sqlCommand = "INSERT INTO PAYMENT_CREDIT (CREDIT_ID, PAYMENT_DATE, PM_ID, PAYMENT_NOMINAL, PAYMENT_DESCRIPTION, PAYMENT_CONFIRMED, PAYMENT_CONFIRMED_DATE, PAYMENT_DUE_DATE) " +
-                                                   "VALUES (" + creditID + ", STR_TO_DATE('" + paymentDate + "', '%d-%m-%Y %H:%i'), " + paymentMethod + ", " + DPAmount + ", 'DP', 1, STR_TO_DATE('" + SQCreatedDate + "', '%d-%m-%Y %H:%i'), STR_TO_DATE('" + SQCreatedDate + "', '%d-%m-%Y %H:%i'))";
+                //            // INSERT INTO PAYMENT CREDIT
+                //            sqlCommand = "INSERT INTO PAYMENT_CREDIT (CREDIT_ID, PAYMENT_DATE, PM_ID, PAYMENT_NOMINAL, PAYMENT_DESCRIPTION, PAYMENT_CONFIRMED, PAYMENT_CONFIRMED_DATE, PAYMENT_DUE_DATE) " +
+                //                                   "VALUES (" + creditID + ", STR_TO_DATE('" + paymentDate + "', '%d-%m-%Y %H:%i'), " + paymentMethod + ", " + DPAmount + ", 'DP', 1, STR_TO_DATE('" + SQCreatedDate + "', '%d-%m-%Y %H:%i'), STR_TO_DATE('" + SQCreatedDate + "', '%d-%m-%Y %H:%i'))";
 
-                            if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
-                                throw internalEX;
-                        }
-                    }
+                //            if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
+                //                throw internalEX;
+                //        }
+                //    }
 
-                }
+                //}
 
                 DS.commit();
             }
