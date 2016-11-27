@@ -14,6 +14,12 @@ using System.Globalization;
 
 using Hotkeys;
 
+/*
+MODULE ID USED
+- SALES_QUOTATION -> CONTINUED TO EDIT_SALES_QUOTATION OR CREATE A NEW SALES QUOTATION
+
+*/
+
 namespace AlphaSoft
 {
     public partial class dataSalesInvoice : Form
@@ -132,7 +138,7 @@ namespace AlphaSoft
                                        "FROM SALES_QUOTATION_HEADER SQ " +
                                        "WHERE SQ.CUSTOMER_ID = 0";
             }
-            else if (originModuleID == globalConstants.SQ_TO_SO)
+            else if (originModuleID == globalConstants.SQ_TO_SO || originModuleID == globalConstants.COPY_NOTA_SQ)
             {
                 sqlClause1 = "SELECT IF(SQ_APPROVED = 1, 'APPROVED', IF(SQ_APPROVED = -1, 'REJECTED', 'PENDING')) AS STATUS, ID, SQ_INVOICE AS 'NO INVOICE', CUSTOMER_FULL_NAME AS 'CUSTOMER', DATE_FORMAT(SQ_DATE, '%d-%M-%Y')  AS 'TGL INVOICE', (SQ_TOTAL - SALES_DISCOUNT_FINAL) AS 'TOTAL', SQ_APPROVED " +
                                        "FROM SALES_QUOTATION_HEADER SQ, MASTER_CUSTOMER MC " +
@@ -142,7 +148,7 @@ namespace AlphaSoft
                                        "FROM SALES_QUOTATION_HEADER SQ " +
                                        "WHERE SQ.CUSTOMER_ID = 0 AND SQ_APPROVED = 1";
             }
-            else
+            else if (originModuleID == globalConstants.COPY_NOTA)
             { 
                 sqlClause1 = "SELECT ID, SALES_INVOICE AS 'NO INVOICE', CUSTOMER_FULL_NAME AS 'CUSTOMER', DATE_FORMAT(SALES_DATE, '%d-%M-%Y')  AS 'TGL INVOICE', (SALES_TOTAL - SALES_DISCOUNT_FINAL) AS 'TOTAL' " +
                                            "FROM SALES_HEADER SH, MASTER_CUSTOMER MC " +
@@ -253,12 +259,13 @@ namespace AlphaSoft
                     break;
 
                 case globalConstants.SQ_TO_SO:
-                    cashierForm displayedFormCashier = new cashierForm(globalConstants.SQ_TO_SO, noInvoice);
+                case globalConstants.COPY_NOTA_SQ:
+                    cashierForm displayedFormCashier = new cashierForm(originModuleID, noInvoice);
                     displayedFormCashier.ShowDialog(this);
                     displayedFormCashier.Dispose();
                     break;
 
-                default:
+                case globalConstants.COPY_NOTA:
                     cashierForm cashierFormDisplay = new cashierForm(noInvoice);
                     cashierFormDisplay.ShowDialog(this);
                     cashierFormDisplay.Dispose();

@@ -1087,6 +1087,8 @@ namespace AlphaSoft
             {
                 DS.mySqlConnect();
 
+                // SAVE TO HEADER TABLE
+                // ======================================================================================================
                 if (originModuleID == 0 || originModuleID == globalConstants.SQ_TO_SO)   // NORMAL TRANSACTION OR SO FROM SQ
                 { 
                     salesInvoice = getSalesInvoiceID();
@@ -1174,8 +1176,11 @@ namespace AlphaSoft
                     if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
                         throw internalEX;
                 }
+                // ======================================================================================================
 
-                // SAVE DETAIL TABLE
+
+                // SAVE TO DETAIL TABLE
+                // ======================================================================================================
                 for (int i = 0; i < cashierDataGridView.Rows.Count; i++)
                 {
                     if (null != cashierDataGridView.Rows[i].Cells["productID"].Value && productIDValid(cashierDataGridView.Rows[i].Cells["productID"].Value.ToString()))
@@ -1197,6 +1202,38 @@ namespace AlphaSoft
 
                             if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
                                 throw internalEX;
+
+                            if (!gutil.productIsService(cashierDataGridView.Rows[i].Cells["productID"].Value.ToString()))
+                            {
+                                // REDUCE STOCK QTY AT MASTER PRODUCT
+                                sqlCommand = "UPDATE MASTER_PRODUCT SET PRODUCT_STOCK_QTY = PRODUCT_STOCK_QTY - " + Convert.ToDouble(cashierDataGridView.Rows[i].Cells["qty"].Value) +
+                                                    " WHERE PRODUCT_ID = '" + cashierDataGridView.Rows[i].Cells["productID"].Value.ToString() + "'";
+
+                                gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "REDUCE STOCK AT MASTER PRODUCT [" + cashierDataGridView.Rows[i].Cells["productID"].Value.ToString() + "]");
+                                if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
+                                    throw internalEX;
+                            }
+
+                            // SAVE OR UPDATE TO CUSTOMER_PRODUCT_DISC
+                            if (selectedPelangganID != 0)
+                            {
+                                if (Convert.ToInt32(DS.getDataSingleValue("SELECT COUNT(1) FROM CUSTOMER_PRODUCT_DISC WHERE CUSTOMER_ID = " + selectedPelangganID + " AND PRODUCT_ID = '" + cashierDataGridView.Rows[i].Cells["productID"].Value.ToString() + "'")) > 0)
+                                {
+                                    // UPDATE VALUE
+                                    sqlCommand = "UPDATE CUSTOMER_PRODUCT_DISC SET DISC_1 = " + gutil.validateDecimalNumericInput(disc1) + ", DISC_2 = " + gutil.validateDecimalNumericInput(disc2) + ", DISC_RP = " + gutil.validateDecimalNumericInput(discRP) + " WHERE CUSTOMER_ID = " + selectedPelangganID + " AND PRODUCT_ID = '" + productID + "'";
+                                    gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "UPDATE CUSTOMER PRODUCT DISC [" + productID + "]");
+                                }
+                                else
+                                {
+                                    // INSERT VALUE
+                                    sqlCommand = "INSERT INTO CUSTOMER_PRODUCT_DISC (CUSTOMER_ID, PRODUCT_ID, DISC_1, DISC_2 , DISC_RP) VALUES " +
+                                                        "(" + selectedPelangganID + ", '" + productID + "', " + gutil.validateDecimalNumericInput(disc1) + ", " + gutil.validateDecimalNumericInput(disc2) + ", " + gutil.validateDecimalNumericInput(discRP) + ")";
+                                    gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "INSERT CUSTOMER PRODUCT DISC [" + productID + "]");
+                                }
+
+                                if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
+                                    throw internalEX;
+                            }
                         }
                         else if (originModuleID == globalConstants.SALES_QUOTATION || originModuleID == globalConstants.EDIT_SALES_QUOTATION)
                         {
@@ -1223,44 +1260,12 @@ namespace AlphaSoft
                             if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
                                 throw internalEX;
                         }
-
-                        if (originModuleID == 0 || originModuleID == globalConstants.SQ_TO_SO)  // NORMAL TRANSACTION OR SO FROM SQ
-                        { 
-                            if (!gutil.productIsService(cashierDataGridView.Rows[i].Cells["productID"].Value.ToString()))
-                            { 
-                                // REDUCE STOCK QTY AT MASTER PRODUCT
-                                sqlCommand = "UPDATE MASTER_PRODUCT SET PRODUCT_STOCK_QTY = PRODUCT_STOCK_QTY - " + Convert.ToDouble(cashierDataGridView.Rows[i].Cells["qty"].Value) +
-                                                    " WHERE PRODUCT_ID = '" + cashierDataGridView.Rows[i].Cells["productID"].Value.ToString() + "'";
-
-                                gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "REDUCE STOCK AT MASTER PRODUCT [" + cashierDataGridView.Rows[i].Cells["productID"].Value.ToString() + "]");
-                                if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
-                                    throw internalEX;
-                            }
-
-                            // SAVE OR UPDATE TO CUSTOMER_PRODUCT_DISC
-                            if (selectedPelangganID != 0)
-                            {
-                                if (Convert.ToInt32(DS.getDataSingleValue("SELECT COUNT(1) FROM CUSTOMER_PRODUCT_DISC WHERE CUSTOMER_ID = " + selectedPelangganID + " AND PRODUCT_ID = '" + cashierDataGridView.Rows[i].Cells["productID"].Value.ToString() + "'"))>0)
-                                {
-                                    // UPDATE VALUE
-                                    sqlCommand = "UPDATE CUSTOMER_PRODUCT_DISC SET DISC_1 = " + gutil.validateDecimalNumericInput(disc1) + ", DISC_2 = " + gutil.validateDecimalNumericInput(disc2) + ", DISC_RP = " + gutil.validateDecimalNumericInput(discRP) + " WHERE CUSTOMER_ID = " + selectedPelangganID + " AND PRODUCT_ID = '" + productID + "'";
-                                    gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "UPDATE CUSTOMER PRODUCT DISC [" + productID + "]");
-                                }
-                                else
-                                {
-                                    // INSERT VALUE
-                                    sqlCommand = "INSERT INTO CUSTOMER_PRODUCT_DISC (CUSTOMER_ID, PRODUCT_ID, DISC_1, DISC_2 , DISC_RP) VALUES " +
-                                                        "(" + selectedPelangganID + ", '" + productID + "', " + gutil.validateDecimalNumericInput(disc1) + ", " + gutil.validateDecimalNumericInput(disc2) + ", " + gutil.validateDecimalNumericInput(discRP) + ")";
-                                    gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "INSERT CUSTOMER PRODUCT DISC [" + productID + "]");
-                                }
-
-                                if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
-                                    throw internalEX;
-                            }
-                        }
                     }
                 }
+                // ======================================================================================================
 
+                // INSERT INTO DAILY JOURNAL FOR CASH TRANSACTION
+                // ======================================================================================================
                 if (originModuleID == 0 || originModuleID == globalConstants.SQ_TO_SO)  // NORMAL TRANSACTION OR SO FROM SQ
                 {
                     double journalAmount = 0;
@@ -1323,6 +1328,7 @@ namespace AlphaSoft
                             throw internalEX;
                     }
                 }
+                // ======================================================================================================
 
                 DS.commit();
                 result = true;
@@ -2692,7 +2698,7 @@ namespace AlphaSoft
                 DS.mySqlConnect();
                 string sqlCommandx = "";
 
-                if (originModuleID == 0 || originModuleID == globalConstants.SQ_TO_SO)
+                if (originModuleID == 0 || originModuleID == globalConstants.SQ_TO_SO || originModuleID == globalConstants.COPY_NOTA)
                 {
                     // NORMAL TRANSACTION
                     sqlCommandx = "SELECT SD.ID, SH.SALES_DATE AS 'DATE', SD.SALES_INVOICE AS 'INVOICE', MC.CUSTOMER_FULL_NAME AS 'CUSTOMER', M.PRODUCT_NAME AS 'PRODUCT', PRODUCT_QTY AS 'QTY', " +
@@ -2703,7 +2709,7 @@ namespace AlphaSoft
                     "ROUND((PRODUCT_QTY * PRODUCT_SALES_PRICE) - SALES_SUBTOTAL, 2) AS 'POTONGAN', SALES_SUBTOTAL AS 'SUBTOTAL', SH.SALES_PAYMENT AS 'PAYMENT', SH.SALES_PAYMENT_CHANGE AS 'CHANGE' " +
                     "FROM SALES_HEADER SH, SALES_DETAIL SD, MASTER_PRODUCT M WHERE SD.PRODUCT_ID = M.PRODUCT_ID AND SD.SALES_INVOICE = SH.SALES_INVOICE AND SH.CUSTOMER_ID = 0 AND SH.SALES_INVOICE='" + selectedsalesinvoice + "'";
                 }
-                else if (originModuleID == globalConstants.SALES_QUOTATION || originModuleID == globalConstants.EDIT_SALES_QUOTATION)
+                else if (originModuleID == globalConstants.SALES_QUOTATION || originModuleID == globalConstants.EDIT_SALES_QUOTATION || originModuleID == globalConstants.COPY_NOTA_SQ)
                 {
                     // SALES QUOTATION
                     sqlCommandx = "SELECT SD.ID, SH.SQ_ORDER_DATE AS 'ORDER DATE', SH.SQ_DATE AS 'DATE', SD.SQ_INVOICE AS 'INVOICE', MC.CUSTOMER_FULL_NAME AS 'CUSTOMER', M.PRODUCT_NAME AS 'PRODUCT', PRODUCT_QTY AS 'QTY', " +
@@ -2726,7 +2732,7 @@ namespace AlphaSoft
                     "FROM SALES_HEADER_TAX SH, SALES_DETAIL_TAX SD, MASTER_PRODUCT M WHERE SD.PRODUCT_ID = M.PRODUCT_ID AND SD.SALES_INVOICE = SH.SALES_INVOICE AND SH.CUSTOMER_ID = 0 AND SH.SALES_INVOICE='" + selectedsalesinvoiceTax + "'";
                 }
 
-                if (originModuleID == globalConstants.SALES_QUOTATION || originModuleID == globalConstants.EDIT_SALES_QUOTATION)
+                if (originModuleID == globalConstants.SALES_QUOTATION || originModuleID == globalConstants.EDIT_SALES_QUOTATION || originModuleID == globalConstants.COPY_NOTA_SQ)
                 {
                     DS.writeXML(sqlCommandx, globalConstants.salesQuotationReceiptXML);
                     if (gutil.getPaper() == 2) // kuarto

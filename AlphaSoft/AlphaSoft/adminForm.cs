@@ -1528,5 +1528,11 @@ namespace AlphaSoft
             dataSalesInvoice displayedForm = new dataSalesInvoice(globalConstants.SQ_TO_SO);
             displayedForm.ShowDialog(this);
         }
+
+        private void toolStripMenuItem3_Click_2(object sender, EventArgs e)
+        {
+            dataSalesInvoice displayedForm = new dataSalesInvoice(globalConstants.COPY_NOTA_SQ);
+            displayedForm.ShowDialog(this);
+        }
     }
 }
