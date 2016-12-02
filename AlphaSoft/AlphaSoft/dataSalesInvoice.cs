@@ -128,7 +128,7 @@ namespace AlphaSoft
 
             DS.mySqlConnect();
 
-            if (originModuleID == globalConstants.SALES_QUOTATION)
+            if (originModuleID == globalConstants.SALES_QUOTATION || originModuleID == globalConstants.COPY_NOTA_SQ)
             {
                 sqlClause1 = "SELECT IF(SQ_APPROVED = 1, 'APPROVED', IF(SQ_APPROVED = -1, 'REJECTED', 'PENDING')) AS STATUS, ID, SQ_INVOICE AS 'NO INVOICE', CUSTOMER_FULL_NAME AS 'CUSTOMER', DATE_FORMAT(SQ_DATE, '%d-%M-%Y')  AS 'TGL INVOICE', (SQ_TOTAL - SALES_DISCOUNT_FINAL) AS 'TOTAL', SQ_APPROVED " +
                                        "FROM SALES_QUOTATION_HEADER SQ, MASTER_CUSTOMER MC " +
@@ -138,15 +138,15 @@ namespace AlphaSoft
                                        "FROM SALES_QUOTATION_HEADER SQ " +
                                        "WHERE SQ.CUSTOMER_ID = 0";
             }
-            else if (originModuleID == globalConstants.SQ_TO_SO || originModuleID == globalConstants.COPY_NOTA_SQ)
+            else if (originModuleID == globalConstants.SQ_TO_SO)
             {
-                sqlClause1 = "SELECT IF(SQ_APPROVED = 1, 'APPROVED', IF(SQ_APPROVED = -1, 'REJECTED', 'PENDING')) AS STATUS, ID, SQ_INVOICE AS 'NO INVOICE', CUSTOMER_FULL_NAME AS 'CUSTOMER', DATE_FORMAT(SQ_DATE, '%d-%M-%Y')  AS 'TGL INVOICE', (SQ_TOTAL - SALES_DISCOUNT_FINAL) AS 'TOTAL', SQ_APPROVED " +
+                sqlClause1 = "SELECT IF(SQ_APPROVED = 1, 'APPROVED', IF(SQ_APPROVED = -1, 'REJECTED', 'PENDING')) AS STATUS, ID, SQ_INVOICE AS 'NO INVOICE', CUSTOMER_FULL_NAME AS 'CUSTOMER', DATE_FORMAT(SQ_DATE, '%d-%M-%Y')  AS 'TGL INVOICE', (SQ_TOTAL - SALES_DISCOUNT_FINAL) AS 'TOTAL', SQ_DP AS 'DP', SQ_APPROVED " +
                                        "FROM SALES_QUOTATION_HEADER SQ, MASTER_CUSTOMER MC " +
-                                       "WHERE SQ.CUSTOMER_ID = MC.CUSTOMER_ID AND SQ_APPROVED = 1";
+                                       "WHERE SQ.CUSTOMER_ID = MC.CUSTOMER_ID AND SQ_APPROVED = 1 AND SQ.COMPLETED = 0";
 
-                sqlClause2 = "SELECT IF(SQ_APPROVED = 1, 'APPROVED', IF(SQ_APPROVED = -1, 'REJECTED', 'PENDING')) AS STATUS, ID, SQ_INVOICE AS 'NO INVOICE', '' AS 'CUSTOMER', DATE_FORMAT(SQ_DATE, '%d-%M-%Y') AS 'TGL INVOICE', (SQ_TOTAL - SALES_DISCOUNT_FINAL) AS 'TOTAL', SQ_APPROVED " +
+                sqlClause2 = "SELECT IF(SQ_APPROVED = 1, 'APPROVED', IF(SQ_APPROVED = -1, 'REJECTED', 'PENDING')) AS STATUS, ID, SQ_INVOICE AS 'NO INVOICE', '' AS 'CUSTOMER', DATE_FORMAT(SQ_DATE, '%d-%M-%Y') AS 'TGL INVOICE', (SQ_TOTAL - SALES_DISCOUNT_FINAL) AS 'TOTAL', SQ_DP AS 'DP', SQ_APPROVED " +
                                        "FROM SALES_QUOTATION_HEADER SQ " +
-                                       "WHERE SQ.CUSTOMER_ID = 0 AND SQ_APPROVED = 1";
+                                       "WHERE SQ.CUSTOMER_ID = 0 AND SQ_APPROVED = 1 AND SQ.COMPLETED = 0";
             }
             else if (originModuleID == globalConstants.COPY_NOTA)
             { 
@@ -163,7 +163,7 @@ namespace AlphaSoft
             {
                 if (noInvoiceTextBox.Text.Length > 0)
                 {
-                    if (originModuleID == globalConstants.SALES_QUOTATION || originModuleID == globalConstants.SQ_TO_SO)
+                    if (originModuleID == globalConstants.SALES_QUOTATION || originModuleID == globalConstants.SQ_TO_SO || originModuleID == globalConstants.COPY_NOTA_SQ)
                         whereClause1 = whereClause1 + " AND SQ.SQ_INVOICE LIKE '%" + noInvoiceParam + "%'";
                     else
                         whereClause1 = whereClause1 + " AND SH.SALES_INVOICE LIKE '%" + noInvoiceParam + "%'";
@@ -172,14 +172,14 @@ namespace AlphaSoft
                 dateFrom = String.Format(culture, "{0:yyyyMMdd}", Convert.ToDateTime(PODtPicker_1.Value));
                 dateTo = String.Format(culture, "{0:yyyyMMdd}", Convert.ToDateTime(PODtPicker_2.Value));
 
-                if (originModuleID == globalConstants.SALES_QUOTATION || originModuleID == globalConstants.SQ_TO_SO)
+                if (originModuleID == globalConstants.SALES_QUOTATION || originModuleID == globalConstants.SQ_TO_SO || originModuleID == globalConstants.COPY_NOTA_SQ)
                     whereClause1 = whereClause1 + " AND DATE_FORMAT(SQ.SQ_DATE, '%Y%m%d')  >= '" + dateFrom + "' AND DATE_FORMAT(SQ.SQ_DATE, '%Y%m%d')  <= '" + dateTo + "'";
                 else
                     whereClause1 = whereClause1 + " AND DATE_FORMAT(SH.SALES_DATE, '%Y%m%d')  >= '" + dateFrom + "' AND DATE_FORMAT(SH.SALES_DATE, '%Y%m%d')  <= '" + dateTo + "'";
 
                 if (customerID > 0)
                 {
-                    if (originModuleID == globalConstants.SALES_QUOTATION || originModuleID == globalConstants.SQ_TO_SO)
+                    if (originModuleID == globalConstants.SALES_QUOTATION || originModuleID == globalConstants.SQ_TO_SO || originModuleID == globalConstants.COPY_NOTA_SQ)
                         sqlCommand = sqlClause1 + whereClause1 + " AND AND SQ.CUSTOMER_ID = " + customerID;
                     else
                         sqlCommand = sqlClause1 + whereClause1 + " AND AND SH.CUSTOMER_ID = " + customerID;
@@ -203,7 +203,7 @@ namespace AlphaSoft
                     dataPenerimaanBarang.DataSource = dt;
                     dataPenerimaanBarang.Columns["ID"].Visible = false;
 
-                    if (originModuleID == globalConstants.SALES_QUOTATION)
+                    if (originModuleID == globalConstants.SALES_QUOTATION || originModuleID == globalConstants.SQ_TO_SO || originModuleID == globalConstants.COPY_NOTA_SQ)
                         dataPenerimaanBarang.Columns["SQ_APPROVED"].Visible = false;
 
                     dataPenerimaanBarang.Columns["NO INVOICE"].Width = 200;
@@ -303,7 +303,9 @@ namespace AlphaSoft
             int rowSelectedIndex = (dataPenerimaanBarang.SelectedCells[0].RowIndex);
             DataGridViewRow selectedRow = dataPenerimaanBarang.Rows[rowSelectedIndex];
             noInvoice = selectedRow.Cells["NO INVOICE"].Value.ToString();
-            status = Convert.ToInt32(selectedRow.Cells["SQ_APPROVED"].Value);
+
+            if (originModuleID == globalConstants.SALES_QUOTATION || originModuleID == globalConstants.COPY_NOTA_SQ || originModuleID == globalConstants.SQ_TO_SO)
+                status = Convert.ToInt32(selectedRow.Cells["SQ_APPROVED"].Value);
 
             displaySpecificForm(noInvoice, status);
         }
@@ -322,7 +324,9 @@ namespace AlphaSoft
                 DataGridViewRow selectedRow = dataPenerimaanBarang.Rows[rowSelectedIndex];
                 noInvoice = selectedRow.Cells["NO INVOICE"].Value.ToString();
 
-                status = Convert.ToInt32(selectedRow.Cells["SQ_APPROVED"].Value);
+                if (originModuleID == globalConstants.SALES_QUOTATION || originModuleID == globalConstants.COPY_NOTA_SQ || originModuleID == globalConstants.SQ_TO_SO)
+                    status = Convert.ToInt32(selectedRow.Cells["SQ_APPROVED"].Value);
+
                 displaySpecificForm(noInvoice, status);
             }
         }

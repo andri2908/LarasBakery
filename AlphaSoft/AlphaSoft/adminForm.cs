@@ -1481,7 +1481,7 @@ namespace AlphaSoft
         private void toolStripMenuItem11_Click_1(object sender, EventArgs e)
         {
             if (null == copyNotaForm || copyNotaForm.IsDisposed)
-                copyNotaForm = new dataSalesInvoice();
+                copyNotaForm = new dataSalesInvoice(globalConstants.COPY_NOTA);
 
             copyNotaForm.Show();
             copyNotaForm.WindowState = FormWindowState.Normal;

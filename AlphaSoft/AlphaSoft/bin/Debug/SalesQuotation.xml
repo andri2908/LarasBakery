@@ -19,6 +19,7 @@
                 <xs:element name="PAYMENT" type="xs:double" minOccurs="0" />
                 <xs:element name="SQ_ORDER_ADDRESS" type="xs:string" minOccurs="0" />
                 <xs:element name="DELIVERED" type="xs:byte" minOccurs="0" />
+                <xs:element name="SALES_DISCOUNT_FINAL" type="xs:double" minOccurs="0" />
               </xs:sequence>
             </xs:complexType>
           </xs:element>
@@ -27,17 +28,18 @@
     </xs:element>
   </xs:schema>
   <Table>
-    <ID>28</ID>
-    <ORDER_x0020_DATE>2016-11-30T00:00:00+07:00</ORDER_x0020_DATE>
-    <DATE>2016-11-25T12:06:00+07:00</DATE>
-    <INVOICE>SQ-28</INVOICE>
+    <ID>39</ID>
+    <ORDER_x0020_DATE>2016-12-02T00:00:00+07:00</ORDER_x0020_DATE>
+    <DATE>2016-12-02T22:47:00+07:00</DATE>
+    <INVOICE>SQ-34</INVOICE>
     <CUSTOMER>ANDRI</CUSTOMER>
-    <PRODUCT>ROTI PISANG</PRODUCT>
-    <QTY>2</QTY>
-    <PRICE>1000</PRICE>
-    <SUBTOTAL>2000</SUBTOTAL>
-    <PAYMENT>100</PAYMENT>
-    <SQ_ORDER_ADDRESS>aaaaaaa</SQ_ORDER_ADDRESS>
-    <DELIVERED>1</DELIVERED>
+    <PRODUCT>ROTI PISANG COKLAT</PRODUCT>
+    <QTY>22</QTY>
+    <PRICE>5000</PRICE>
+    <SUBTOTAL>110000</SUBTOTAL>
+    <PAYMENT>20000</PAYMENT>
+    <SQ_ORDER_ADDRESS />
+    <DELIVERED>0</DELIVERED>
+    <SALES_DISCOUNT_FINAL>15000</SALES_DISCOUNT_FINAL>
   </Table>
 </NewDataSet>

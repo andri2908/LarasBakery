@@ -137,7 +137,7 @@ namespace AlphaSoft
                     break;
 
                 case Keys.F2:
-                    if (originModuleID != globalConstants.COPY_NOTA)
+                    if (originModuleID != globalConstants.COPY_NOTA && originModuleID != globalConstants.COPY_NOTA_SQ)
                     { 
                         totalAfterDiscTextBox.Focus();
                         gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : DISPLAY BARCODE FORM");
@@ -168,7 +168,7 @@ namespace AlphaSoft
                     break;
 
                 case Keys.F4:
-                    if (originModuleID != globalConstants.COPY_NOTA)
+                    if (originModuleID != globalConstants.COPY_NOTA && originModuleID != globalConstants.COPY_NOTA_SQ)
                     {
                         //MessageBox.Show("F4");
                         gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : DISPLAY PELANGGAN FORM");
@@ -181,20 +181,20 @@ namespace AlphaSoft
                     break;
 
                 case Keys.F5: // NOT USED
-                    if (originModuleID != globalConstants.COPY_NOTA)
+                    if (originModuleID != globalConstants.COPY_NOTA && originModuleID != globalConstants.COPY_NOTA_SQ)
                         if (DialogResult.Yes == MessageBox.Show("HAPUS DATA DATA DI LAYAR ?", "WARNING", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
                             clearUpScreen();
                     break;
 
                 case Keys.F7: 
-                    if (originModuleID == globalConstants.COPY_NOTA)
+                    if (originModuleID == globalConstants.COPY_NOTA || originModuleID == globalConstants.COPY_NOTA_SQ)
                         if (selectedsalesinvoice != "")
                             if (DialogResult.Yes == MessageBox.Show("REPRINT INVOICE ?", "WARNING", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
                                 reprintInvoice();
                     break;
 
                 case Keys.F8: // USED
-                    if (originModuleID != globalConstants.COPY_NOTA)
+                    if (originModuleID != globalConstants.COPY_NOTA && originModuleID != globalConstants.COPY_NOTA_SQ)
                     {
                         gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : HOTKEY TO ADD NEW ROW PRESSED");
                         //focus to row below
@@ -213,7 +213,7 @@ namespace AlphaSoft
                     break;
 
                 case Keys.F9:
-                    if (originModuleID != globalConstants.COPY_NOTA)
+                    if (originModuleID != globalConstants.COPY_NOTA && originModuleID != globalConstants.COPY_NOTA_SQ)
                     {
                         gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : HOTKEY TO SAVE AND PRINT OUT INVOICE PRESSED");
 
@@ -222,7 +222,7 @@ namespace AlphaSoft
                     break;
 
                 case Keys.F11:
-                    if (originModuleID != globalConstants.COPY_NOTA)
+                    if (originModuleID != globalConstants.COPY_NOTA && originModuleID != globalConstants.COPY_NOTA_SQ)
                     {
                         totalAfterDiscTextBox.Focus();
 
@@ -253,7 +253,7 @@ namespace AlphaSoft
                     //    !customerComboBox.Focused 
                     //    )
                     { 
-                        if (originModuleID != globalConstants.COPY_NOTA)
+                        if (originModuleID != globalConstants.COPY_NOTA && originModuleID != globalConstants.COPY_NOTA_SQ)
                             if (cashierDataGridView.Rows.Count > 1)
                                 if (DialogResult.Yes == MessageBox.Show("DELETE CURRENT ROW?", "WARNING", MessageBoxButtons.YesNo))
                                 {
@@ -288,8 +288,9 @@ namespace AlphaSoft
             switch (key)
             {
                 case Keys.F4: // ALT + F4
-                    MessageBox.Show("ALT+F4");
+                    //MessageBox.Show("ALT+F4");
                     this.Close();
+                    this.Dispose();
                     break;
             }
         }
@@ -300,7 +301,7 @@ namespace AlphaSoft
             {
                 case Keys.Delete: // CTRL + DELETE
                                   //MessageBox.Show("CTRL+DELETE");
-                    if (originModuleID != globalConstants.COPY_NOTA)
+                    if (originModuleID != globalConstants.COPY_NOTA && originModuleID != globalConstants.COPY_NOTA_SQ)
                         if (DialogResult.Yes == MessageBox.Show("DELETE CURRENT ROW?", "WARNING", MessageBoxButtons.YesNo))
                         {
                             gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : cashierDataGridView_KeyDown ATTEMPT TO DELETE ROW");
@@ -311,7 +312,7 @@ namespace AlphaSoft
                     break;
 
                 case Keys.Enter:
-                    if (originModuleID != globalConstants.COPY_NOTA)
+                    if (originModuleID != globalConstants.COPY_NOTA && originModuleID != globalConstants.COPY_NOTA_SQ)
                     {
                         gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : HOTKEY TO SAVE AND PRINT OUT INVOICE PRESSED");
 
@@ -671,22 +672,22 @@ namespace AlphaSoft
             gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : ADD NEW ROW,  isActive [" + isActive.ToString() + "]");
             gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : ADD NEW ROW,  ROW COUNT [" + cashierDataGridView.Rows.Count + "]");
 
-            for (int i = 0; i < cashierDataGridView.Rows.Count && allowToAdd; i++)
-            {
-                if (null != cashierDataGridView.Rows[i].Cells["productID"].Value)
-                {
-                    if (!productIDValid(cashierDataGridView.Rows[i].Cells["productID"].Value.ToString()))
-                    {
-                        allowToAdd = false;
-                        newRowIndex = i;
-                    }
-                }
-                else
-                {
-                    allowToAdd = false;
-                    newRowIndex = i;
-                }
-            }
+            //for (int i = 0; i < cashierDataGridView.Rows.Count && allowToAdd; i++)
+            //{
+            //    if (null != cashierDataGridView.Rows[i].Cells["productID"].Value)
+            //    {
+            //        if (!productIDValid(cashierDataGridView.Rows[i].Cells["productID"].Value.ToString()))
+            //        {
+            //            allowToAdd = false;
+            //            newRowIndex = i;
+            //        }
+            //    }
+            //    else
+            //    {
+            //        allowToAdd = false;
+            //        newRowIndex = i;
+            //    }
+            //}
 
             gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : ADD NEW ROW,  ALLOW TO ADD [" + allowToAdd.ToString() + "]");
 
@@ -870,10 +871,13 @@ namespace AlphaSoft
 
         private bool dataValidated()
         {
-            if (globalTotalValue <= 0)
-            {
-                errorLabel.Text = "NILAI TRANSAKSI 0";
-                return false;
+            if (originModuleID != globalConstants.SALES_QUOTATION && originModuleID != globalConstants.EDIT_SALES_QUOTATION && originModuleID != globalConstants.SQ_TO_SO)
+            { 
+                if (globalTotalValue <= 0)
+                {
+                    errorLabel.Text = "NILAI TRANSAKSI 0";
+                    return false;
+                }
             }
 
             if (cashierDataGridView.Rows.Count <= 0)
@@ -1469,16 +1473,57 @@ namespace AlphaSoft
             return result;
         }
 
-        private void saveAndPrintOutInvoice()
+        private bool setQuotationToApproved(string selectedSO)
+        {
+            bool result = true;
+            string sqInvoice = "";
+            string sqlCommand = "";
+            MySqlException internalEX = null;
+            string SQApprovedDate = "";
+            string SQCreatedDate = "";
+            string paymentDate = String.Format(culture, "{0:dd-MM-yyyy}", DateTime.Now);
+            // STORE SALES QUOTATION INVOICE NO
+            sqInvoice = selectedsalesinvoice;
+
+            SQApprovedDate = gutil.getCustomStringFormatDate(DateTime.Now); //String.Format(culture, "{0:dd-MM-yyyy HH:mm}", DateTime.Now);
+            SQCreatedDate = gutil.getCustomStringFormatDate(Convert.ToDateTime(DS.getDataSingleValue("SELECT SQ_DATE FROM SALES_QUOTATION_HEADER WHERE SQ_INVOICE = '" + sqInvoice + "'")));
+
+            DS.beginTransaction();
+
+            try
+            {
+                DS.mySqlConnect();
+
+                // UPDATE SALES QUOTATION TABLE
+                sqlCommand = "UPDATE SALES_QUOTATION_HEADER SET SQ_APPROVED = 1, SQ_APPROVED_DATE = STR_TO_DATE('" + SQApprovedDate + "', '%d-%m-%Y %H:%i') WHERE SQ_INVOICE = '" + sqInvoice + "'";
+                if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
+                    throw internalEX;
+
+                DS.commit();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                DS.mySqlClose();
+            }
+
+            return result;
+        }
+
+        private bool saveAndPrintOutInvoice()
         {
             string message = "";
+            bool result = false;
 
             if (printoutCheckBox.Checked == false)
                 message = "SAVE AND PRINT OUT ?";
             else
                 message = "SAVE DATA ?";
 
-            if (DialogResult.Yes == MessageBox.Show(message, "WARNING", MessageBoxButtons.YesNo,MessageBoxIcon.Warning))
+            if (DialogResult.Yes == MessageBox.Show(message, "WARNING", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
             {
                 gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "ATTEMPT TO SAVE AND PRINT OUT INVOICE");
 
@@ -1498,7 +1543,7 @@ namespace AlphaSoft
                         if (DialogResult.Yes == MessageBox.Show("QUOTATION COMPLETE ????", "WARNING", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
                         {
                             if (!setQuotationToCompleted())
-                                gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "SQ ["+selectedSQInvoice+"] FAILED TO SET TO COMPLETE");
+                                gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "SQ [" + selectedSQInvoice + "] FAILED TO SET TO COMPLETE");
                             else
                                 gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "SQ [" + selectedSQInvoice + "] SET TO COMPLETE");
                         }
@@ -1507,7 +1552,7 @@ namespace AlphaSoft
                     gutil.saveUserChangeLog(globalConstants.MENU_PENJUALAN, globalConstants.CHANGE_LOG_INSERT, "NEW TRANSAKSI PENJUALAN [" + selectedsalesinvoice + "]");
 
                     if (printoutCheckBox.Checked == false)
-                    { 
+                    {
                         gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "PRINT OUT INVOICE");
                         PrintReceipt();
                     }
@@ -1515,8 +1560,14 @@ namespace AlphaSoft
                     gutil.showSuccess(gutil.INS);
 
                     clearUpScreen();
+
+                    result = true;
                 }
             }
+            else
+                result = false;
+
+            return result;
         }
 
         private string getNoFaktur()
@@ -2087,6 +2138,7 @@ namespace AlphaSoft
             {
                 case globalConstants.EDIT_SALES_QUOTATION:
                 case globalConstants.SQ_TO_SO:
+                case globalConstants.COPY_NOTA_SQ:
                     selectedSQInvoice = selectedsalesinvoice;
                     // PULL DETAIL DATA               
                     sqlCommand = "SELECT M.PRODUCT_ID AS KODE_PRODUK, M.PRODUCT_NAME AS NAMA_PRODUK, SD.PRODUCT_SALES_PRICE AS HARGA_PRODUK, SD.PRODUCT_QTY AS QTY, SD.SQ_SUBTOTAL AS SUBTOTAL " +
@@ -2112,7 +2164,7 @@ namespace AlphaSoft
                     rdr.Close();
 
                     // PULL HEADER DATA
-                    sqlCommand = "SELECT SH.SQ_ORDER_DATE, SH.SQ_DP, SH.SQ_ORDER_ADDRESS, SH.DELIVERED, SH.SQ_INVOICE AS NO_INVOICE, IFNULL(M.CUSTOMER_ID, 0) AS PELANGGAN_ID, IFNULL(M.CUSTOMER_FULL_NAME, '') AS NAMA, IFNULL(M.CUSTOMER_GROUP, 1) AS CUSTOMER_GROUP, SH.SQ_TOTAL AS TOTAL, SH.SALES_DISCOUNT_FINAL AS DISC_FINAL, SH.SQ_TOP AS TOP, DATEDIFF(SH.SQ_TOP_DATE, SH.SQ_DATE) AS TOP_DURATION " +
+                    sqlCommand = "SELECT SH.SQ_DATE, SH.SQ_ORDER_DATE, SH.SQ_DP, SH.SQ_ORDER_ADDRESS, SH.DELIVERED, SH.SQ_INVOICE AS NO_INVOICE, IFNULL(M.CUSTOMER_ID, 0) AS PELANGGAN_ID, IFNULL(M.CUSTOMER_FULL_NAME, '') AS NAMA, IFNULL(M.CUSTOMER_GROUP, 1) AS CUSTOMER_GROUP, SH.SQ_TOTAL AS TOTAL, SH.SALES_DISCOUNT_FINAL AS DISC_FINAL, SH.SQ_TOP AS TOP, DATEDIFF(SH.SQ_TOP_DATE, SH.SQ_DATE) AS TOP_DURATION " +
                                            "FROM SALES_QUOTATION_HEADER SH LEFT OUTER JOIN MASTER_CUSTOMER M ON (SH.CUSTOMER_ID = M.CUSTOMER_ID) WHERE SH.SQ_INVOICE = '" + selectedsalesinvoice + "'";
                     rdr = DS.getData(sqlCommand);
                     if (rdr.HasRows)
@@ -2127,23 +2179,41 @@ namespace AlphaSoft
                             customerComboBox.SelectedIndex = rdr.GetInt32("CUSTOMER_GROUP") - 1;
                             customerComboBox.Text = customerComboBox.Items[customerComboBox.SelectedIndex].ToString();
                             selectedPelangganID = rdr.GetInt32("PELANGGAN_ID");
-
-                            globalTotalValue = rdr.GetDouble("TOTAL");
-                            totalPenjualanTextBox.Text = globalTotalValue.ToString("C2", culture);
-
+                            
                             discValue = rdr.GetDouble("DISC_FINAL");
                             discJualMaskedTextBox.Text = discValue.ToString();
 
                             bayarAmount = rdr.GetDouble("SQ_DP");
-                            previousSQ_DP = bayarAmount;
-                            bayarTextBox.Text = bayarAmount.ToString();
+                            previousSQ_DP = rdr.GetDouble("SQ_DP");
+
+                            if (originModuleID == globalConstants.SQ_TO_SO)
+                                DPTextBox.Text = previousSQ_DP.ToString("C2", culture);
+                            else
+                                bayarTextBox.Text = previousSQ_DP.ToString("C2", culture);
+
+                            globalTotalValue = rdr.GetDouble("TOTAL");
+                            totalLabel.Text = globalTotalValue.ToString("C2", culture);
+                            totalPenjualanTextBox.Text = globalTotalValue.ToString("C2", culture);
 
                             calculateChangeValue();
-                            int tempVal = 0;
-                            if (bayarAmount <= (globalTotalValue - discValue))
-                                totalLabel.Text = (globalTotalValue - discValue - bayarAmount).ToString("C2", culture);
-                            else
-                                totalLabel.Text = tempVal.ToString("C2", culture);
+
+                            if (originModuleID == globalConstants.SQ_TO_SO)
+                                bayarAmount = 0;
+                            //int tempVal = 0;
+
+                            //if (previousSQ_DP <= (globalTotalValue - discValue))
+                            //{ 
+                            //    //totalLabel.Text = (globalTotalValue - discValue - bayarAmount).ToString("C2", culture);
+                            //    //globalTotalValue = globalTotalValue - bayarAmount;
+                            //    bayarAmount = 0;
+                            //    totalPenjualanTextBox.Text = globalTotalValue.ToString("C2", culture);
+                            //}
+                            //else
+                            //{ 
+                            //    totalLabel.Text = tempVal.ToString("C2", culture);
+                            //    totalPenjualanTextBox.Text = tempVal.ToString("C2", culture);
+                            //    globalTotalValue = 0;
+                            //}
 
                             TOPValue = rdr.GetInt32("TOP");
                             if (TOPValue == 1)
@@ -2164,6 +2234,7 @@ namespace AlphaSoft
                                 deliveredCheckbox.Checked = false;
 
                             jobStartDateTimePicker.Value = rdr.GetDateTime("SQ_ORDER_DATE");
+                            SODateTimePicker.Value = rdr.GetDateTime("SQ_DATE");
                         }
                     }
                     rdr.Close();
@@ -2173,7 +2244,7 @@ namespace AlphaSoft
                 case globalConstants.COPY_NOTA :
                 case globalConstants.CASHIER_MODULE:
                     // PULL HEADER DATA
-                    sqlCommand = "SELECT SH.SALES_INVOICE AS NO_INVOICE, IFNULL(M.CUSTOMER_ID, 0) AS PELANGGAN_ID, IFNULL(M.CUSTOMER_FULL_NAME, '') AS NAMA, IFNULL(M.CUSTOMER_GROUP, 1) AS CUSTOMER_GROUP, SH.SALES_TOTAL AS TOTAL, SH.SALES_DISCOUNT_FINAL AS DISC_FINAL, SH.SALES_TOP AS TOP, DATEDIFF(SH.SALES_TOP_DATE, SH.SALES_DATE) AS TOP_DURATION " +
+                    sqlCommand = "SELECT SH.SALES_DATE, SH.SALES_INVOICE AS NO_INVOICE, IFNULL(M.CUSTOMER_ID, 0) AS PELANGGAN_ID, IFNULL(M.CUSTOMER_FULL_NAME, '') AS NAMA, IFNULL(M.CUSTOMER_GROUP, 1) AS CUSTOMER_GROUP, SH.SALES_TOTAL AS TOTAL, SH.SALES_DISCOUNT_FINAL AS DISC_FINAL, SH.SALES_TOP AS TOP, DATEDIFF(SH.SALES_TOP_DATE, SH.SALES_DATE) AS TOP_DURATION " +
                                            "FROM SALES_HEADER SH LEFT OUTER JOIN MASTER_CUSTOMER M ON (SH.CUSTOMER_ID = M.CUSTOMER_ID) WHERE SH.SALES_INVOICE = '" + selectedsalesinvoice + "'";
                     rdr = DS.getData(sqlCommand);
                     if (rdr.HasRows)
@@ -2211,6 +2282,7 @@ namespace AlphaSoft
 
                             totalAfterDiscTextBox.Text = (globalTotalValue - discValue).ToString("C0", culture);
                         }
+                        SODateTimePicker.Value = rdr.GetDateTime("SALES_DATE");
                     }
                     rdr.Close();
 
@@ -2225,12 +2297,12 @@ namespace AlphaSoft
                         {
                             addNewRow();
 
-                            salesQty.Add("0");
-                            disc1.Add("0");
-                            disc2.Add("0");
-                            discRP.Add("0");
-                            productPriceList.Add("0");
-                            jumlahList.Add("0");
+                            //salesQty.Add("0");
+                            //disc1.Add("0");
+                            //disc2.Add("0");
+                            //discRP.Add("0");
+                            //productPriceList.Add("0");
+                            //jumlahList.Add("0");
 
                             cashierDataGridView.Rows[rowPos].Cells["productID"].Value = rdr.GetString("KODE_PRODUK");
                             cashierDataGridView.Rows[rowPos].Cells["productName"].Value = rdr.GetString("NAMA_PRODUK");
@@ -2284,7 +2356,6 @@ namespace AlphaSoft
 
             userStatusLabel.Text = "Welcome, " + DS.getDataSingleValue("SELECT IFNULL(USER_FULL_NAME, 0) FROM MASTER_USER WHERE ID = " + gutil.getUserID()).ToString();
 
-           
             if (originModuleID == globalConstants.COPY_NOTA && selectedsalesinvoice != "")
             {
                 cashierDataGridView.AllowUserToAddRows = false;
@@ -2312,24 +2383,23 @@ namespace AlphaSoft
             }
             else if (originModuleID == globalConstants.SALES_QUOTATION)
             {
-                noFakturLabel.Text = "SALES QUOTATION";
+                //noFakturLabel.Text = "SALES QUOTATION";
                 approvalButton.Visible = false;
                 rejectButton.Visible = false;
-                //label12.Visible = false;
-                //label13.Visible = false;
-                //bayarTextBox.Visible = false;
-                //uangKembaliTextBox.Visible = false;
-                label7.Visible = true;
-                jobStartDateTimePicker.Visible = true;
+
                 deliveredCheckbox.Visible = true;
-                //addressTextBox.Visible = true;
+
+                labelTglOrder.Visible = true;
+                jobStartDateTimePicker.Visible = true;
+
+                labelBayar.Text = "Total DP";
 
                 jobStartDateTimePicker.Format = DateTimePickerFormat.Custom;
                 jobStartDateTimePicker.CustomFormat = globalUtilities.CUSTOM_DATE_FORMAT;
             }
             else if (originModuleID == globalConstants.EDIT_SALES_QUOTATION)
             {
-                noFakturLabel.Text = "SALES QUOTATION";
+                //noFakturLabel.Text = "SALES QUOTATION";
 
                 loadInvoiceData();
 
@@ -2346,14 +2416,13 @@ namespace AlphaSoft
                     rejectButton.Visible = false;
                 }
 
-                //label12.Visible = false;
-                //label13.Visible = false;
-                //bayarTextBox.Visible = false;
-               // uangKembaliTextBox.Visible = false;
-                label7.Visible = true;
-                jobStartDateTimePicker.Visible = true;
                 deliveredCheckbox.Visible = true;
-                //addressTextBox.Visible = true;
+
+                labelBayar.Text = "Total DP";
+
+                labelTglOrder.Visible = true;
+                jobStartDateTimePicker.Visible = true;
+
                 jobStartDateTimePicker.Format = DateTimePickerFormat.Custom;
                 jobStartDateTimePicker.CustomFormat = globalUtilities.CUSTOM_DATE_FORMAT;
             }
@@ -2363,20 +2432,53 @@ namespace AlphaSoft
 
                 approvalButton.Visible = false;
                 rejectButton.Visible = false;
-                
-                //label12.Visible = false;
-                //label13.Visible = false;
-                //bayarTextBox.Visible = false;
-                // uangKembaliTextBox.Visible = false;
-                label7.Visible = true;
-                jobStartDateTimePicker.Visible = true;
-                jobStartDateTimePicker.Enabled = false;
+
                 deliveredCheckbox.Visible = true;
+
+                labelTglOrder.Visible = true;
+                labelTglOrder.Text = "Total DP";
+                jobStartDateTimePicker.Visible = false;
+                DPTextBox.Visible = true;
+
+                jobStartDateTimePicker.Enabled = false;
+
                 deliveredCheckbox.Enabled = false;
                 addressTextBox.ReadOnly = true;
-                //addressTextBox.Visible = true;
+
                 jobStartDateTimePicker.Format = DateTimePickerFormat.Custom;
                 jobStartDateTimePicker.CustomFormat = globalUtilities.CUSTOM_DATE_FORMAT;
+            }
+            else if (originModuleID == globalConstants.COPY_NOTA_SQ)
+            {
+                loadInvoiceData();
+
+                approvalButton.Visible = false;
+                rejectButton.Visible = false;
+
+                deliveredCheckbox.Visible = true;
+
+                labelTglOrder.Visible = true;
+                jobStartDateTimePicker.Visible = true;
+
+                jobStartDateTimePicker.Enabled = false;
+                deliveredCheckbox.Enabled = false;
+                addressTextBox.ReadOnly = true;
+
+                jobStartDateTimePicker.Format = DateTimePickerFormat.Custom;
+                jobStartDateTimePicker.CustomFormat = globalUtilities.CUSTOM_DATE_FORMAT;
+
+                cashierDataGridView.ReadOnly = true;
+                cashierDataGridView.AllowUserToAddRows = false;
+
+                customerComboBox.Enabled = false;
+                cashRadioButton.Enabled = false;
+                creditRadioButton.Enabled = false;
+                tempoMaskedTextBox.ReadOnly = true;
+                paymentComboBox.Enabled = false;
+                printoutCheckBox.Enabled = false;
+
+                discJualMaskedTextBox.ReadOnly = true;
+                bayarTextBox.ReadOnly = true;
             }
 
             //add double buffer
@@ -2702,22 +2804,22 @@ namespace AlphaSoft
                 {
                     // NORMAL TRANSACTION
                     sqlCommandx = "SELECT SD.ID, SH.SALES_DATE AS 'DATE', SD.SALES_INVOICE AS 'INVOICE', MC.CUSTOMER_FULL_NAME AS 'CUSTOMER', M.PRODUCT_NAME AS 'PRODUCT', PRODUCT_QTY AS 'QTY', " +
-                    "PRODUCT_SALES_PRICE AS 'PRICE', ROUND((PRODUCT_QTY * PRODUCT_SALES_PRICE) - SALES_SUBTOTAL, 2) AS 'POTONGAN', SALES_SUBTOTAL AS 'SUBTOTAL', SH.SALES_PAYMENT AS 'PAYMENT', SH.SALES_PAYMENT_CHANGE AS 'CHANGE' " +
+                    "PRODUCT_SALES_PRICE AS 'PRICE', ROUND((PRODUCT_QTY * PRODUCT_SALES_PRICE) - SALES_SUBTOTAL, 2) AS 'POTONGAN', SALES_SUBTOTAL AS 'SUBTOTAL', SH.SALES_PAYMENT AS 'PAYMENT', SH.SALES_PAYMENT_CHANGE AS 'CHANGE', SH.SALES_DISCOUNT_FINAL " +
                     "FROM SALES_HEADER SH, SALES_DETAIL SD, MASTER_PRODUCT M, MASTER_CUSTOMER MC WHERE SD.PRODUCT_ID = M.PRODUCT_ID AND SD.SALES_INVOICE = SH.SALES_INVOICE AND SH.CUSTOMER_ID = MC.CUSTOMER_ID AND SH.SALES_INVOICE='" + selectedsalesinvoice + "'" +
                     "UNION " +
                     "SELECT SD.ID, SH.SALES_DATE AS 'DATE', SD.SALES_INVOICE AS 'INVOICE', 'P-UMUM' AS 'CUSTOMER', M.PRODUCT_NAME AS 'PRODUCT', PRODUCT_QTY AS 'QTY', PRODUCT_SALES_PRICE AS 'PRICE', " +
-                    "ROUND((PRODUCT_QTY * PRODUCT_SALES_PRICE) - SALES_SUBTOTAL, 2) AS 'POTONGAN', SALES_SUBTOTAL AS 'SUBTOTAL', SH.SALES_PAYMENT AS 'PAYMENT', SH.SALES_PAYMENT_CHANGE AS 'CHANGE' " +
+                    "ROUND((PRODUCT_QTY * PRODUCT_SALES_PRICE) - SALES_SUBTOTAL, 2) AS 'POTONGAN', SALES_SUBTOTAL AS 'SUBTOTAL', SH.SALES_PAYMENT AS 'PAYMENT', SH.SALES_PAYMENT_CHANGE AS 'CHANGE', SH.SALES_DISCOUNT_FINAL " +
                     "FROM SALES_HEADER SH, SALES_DETAIL SD, MASTER_PRODUCT M WHERE SD.PRODUCT_ID = M.PRODUCT_ID AND SD.SALES_INVOICE = SH.SALES_INVOICE AND SH.CUSTOMER_ID = 0 AND SH.SALES_INVOICE='" + selectedsalesinvoice + "'";
                 }
                 else if (originModuleID == globalConstants.SALES_QUOTATION || originModuleID == globalConstants.EDIT_SALES_QUOTATION || originModuleID == globalConstants.COPY_NOTA_SQ)
                 {
                     // SALES QUOTATION
                     sqlCommandx = "SELECT SD.ID, SH.SQ_ORDER_DATE AS 'ORDER DATE', SH.SQ_DATE AS 'DATE', SD.SQ_INVOICE AS 'INVOICE', MC.CUSTOMER_FULL_NAME AS 'CUSTOMER', M.PRODUCT_NAME AS 'PRODUCT', PRODUCT_QTY AS 'QTY', " +
-                    "PRODUCT_SALES_PRICE AS 'PRICE', SQ_SUBTOTAL AS 'SUBTOTAL', SH.SQ_DP AS 'PAYMENT', SH.SQ_ORDER_ADDRESS, SH.DELIVERED " +
+                    "PRODUCT_SALES_PRICE AS 'PRICE', SQ_SUBTOTAL AS 'SUBTOTAL', SH.SQ_DP AS 'PAYMENT', SH.SQ_ORDER_ADDRESS, SH.DELIVERED, SH.SALES_DISCOUNT_FINAL " +
                     "FROM SALES_QUOTATION_HEADER SH, SALES_QUOTATION_DETAIL SD, MASTER_PRODUCT M, MASTER_CUSTOMER MC WHERE SD.PRODUCT_ID = M.PRODUCT_ID AND SD.SQ_INVOICE = SH.SQ_INVOICE AND SH.CUSTOMER_ID = MC.CUSTOMER_ID AND SH.SQ_INVOICE='" + selectedsalesinvoice + "'" +
                     "UNION " +
                     "SELECT SD.ID, SH.SQ_ORDER_DATE AS 'ORDER DATE', SH.SQ_DATE AS 'DATE', SD.SQ_INVOICE AS 'INVOICE', 'P-UMUM' AS 'CUSTOMER', M.PRODUCT_NAME AS 'PRODUCT', PRODUCT_QTY AS 'QTY', PRODUCT_SALES_PRICE AS 'PRICE', " +
-                    "SQ_SUBTOTAL AS 'SUBTOTAL', SH.SQ_DP AS 'PAYMENT', SH.SQ_ORDER_ADDRESS, SH.DELIVERED " +
+                    "SQ_SUBTOTAL AS 'SUBTOTAL', SH.SQ_DP AS 'PAYMENT', SH.SQ_ORDER_ADDRESS, SH.DELIVERED, SH.SALES_DISCOUNT_FINAL " +
                     "FROM SALES_QUOTATION_HEADER SH, SALES_QUOTATION_DETAIL SD, MASTER_PRODUCT M WHERE SD.PRODUCT_ID = M.PRODUCT_ID AND SD.SQ_INVOICE = SH.SQ_INVOICE AND SH.CUSTOMER_ID = 0 AND SH.SQ_INVOICE='" + selectedsalesinvoice + "'";
                 }
                 else
@@ -3732,98 +3834,8 @@ namespace AlphaSoft
 
         private void approveSQ(string selectedSO)
         {
-            string sqInvoice = "";
-            string sqlCommand = "";
-            MySqlException internalEX = null;
-            string SQApprovedDate = "";
-            string SQCreatedDate = "";
-            string creditID = "";
-            double DPAmount = 0;
-            string paymentDate = String.Format(culture, "{0:dd-MM-yyyy}", DateTime.Now);
-            // STORE SALES QUOTATION INVOICE NO
-            sqInvoice = selectedsalesinvoice;
-
-            //if (cashRadioButton.Checked)
-            //{
-            //    // FOR CASH QUOTATION, ASSUME THAT PAYMENT HAS ALREADY BEEN PAID
-            //    //bayarTextBox.Text = globalTotalValue.ToString();
-            //}
-
-            SQApprovedDate = gutil.getCustomStringFormatDate(DateTime.Now); //String.Format(culture, "{0:dd-MM-yyyy HH:mm}", DateTime.Now);
-            SQCreatedDate = gutil.getCustomStringFormatDate(Convert.ToDateTime(DS.getDataSingleValue("SELECT SQ_DATE FROM SALES_QUOTATION_HEADER WHERE SQ_INVOICE = '" + sqInvoice+ "'")));
-
-            //originModuleID = globalConstants.SQ_TO_SO;
-            saveAndPrintOutInvoice();
-
-            DS.beginTransaction();
-
-            try
-            {
-                DS.mySqlConnect();
-
-                // UPDATE SALES QUOTATION TABLE
-                sqlCommand = "UPDATE SALES_QUOTATION_HEADER SET SQ_APPROVED = 1, SQ_APPROVED_DATE = STR_TO_DATE('" + SQApprovedDate + "', '%d-%m-%Y %H:%i') WHERE SQ_INVOICE = '" + sqInvoice + "'";
-                if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
-                    throw internalEX;
-
-                //// UPDATE SALES HEADER TABLE
-                //sqlCommand = "UPDATE SALES_HEADER SET SQ_INVOICE = '" + sqInvoice + "' WHERE SALES_INVOICE = '" + selectedsalesinvoice + "'";
-                //if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
-                //    throw internalEX;
-
-                //// UPDATE SALES HEADER TAX TABLE
-                //sqlCommand = "UPDATE SALES_HEADER_TAX SET SQ_INVOICE = '" + sqInvoice + "' WHERE SALES_INVOICE = '" + selectedsalesinvoice + "'";
-                //if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
-                //    throw internalEX;
-
-                // INSERT TO CREDIT TABLE, TO INCLUDE DP
-                // GET CREDIT ID
-                //sqlCommand = "SELECT IFNULL(CREDIT_ID, 0) FROM CREDIT WHERE SALES_INVOICE = '" + selectedsalesinvoice + "'";
-                //creditID = DS.getDataSingleValue(sqlCommand).ToString();
-
-                //if (creditID != "0")
-                //{
-                //    // CHECK WHETHER INVOICE HAS BEEN FULLY PAID
-                //    sqlCommand = "SELECT CREDIT_PAID FROM CREDIT WHERE CREDIT_ID = " + creditID;
-                //    if (DS.getDataSingleValue(sqlCommand).ToString() == "0")
-                //    {
-                //        sqlCommand = "SELECT IFNULL(SQ_DP, 0) AS DP FROM SALES_QUOTATION_HEADER WHERE SQ_INVOICE = '" + sqInvoice + "'";
-                //        DPAmount = Convert.ToDouble(DS.getDataSingleValue(sqlCommand));
-
-                //        if (DPAmount > 0)
-                //        {
-                //            int paymentMethod = 0;
-
-                //            if (cashRadioButton.Checked == true) // CASH PAYMENT
-                //            {
-                //                paymentMethod = paymentComboBox.SelectedIndex + 1;
-                //            }
-                //            else
-                //            {
-                //                paymentMethod = 4;
-                //            }
-
-                //            // INSERT INTO PAYMENT CREDIT
-                //            sqlCommand = "INSERT INTO PAYMENT_CREDIT (CREDIT_ID, PAYMENT_DATE, PM_ID, PAYMENT_NOMINAL, PAYMENT_DESCRIPTION, PAYMENT_CONFIRMED, PAYMENT_CONFIRMED_DATE, PAYMENT_DUE_DATE) " +
-                //                                   "VALUES (" + creditID + ", STR_TO_DATE('" + paymentDate + "', '%d-%m-%Y %H:%i'), " + paymentMethod + ", " + DPAmount + ", 'DP', 1, STR_TO_DATE('" + SQCreatedDate + "', '%d-%m-%Y %H:%i'), STR_TO_DATE('" + SQCreatedDate + "', '%d-%m-%Y %H:%i'))";
-
-                //            if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
-                //                throw internalEX;
-                //        }
-                //    }
-
-                //}
-
-                DS.commit();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-            finally
-            {
-                DS.mySqlClose();
-            }
+            if (saveAndPrintOutInvoice()) // SAVE ALL THE LATEST CHANGES
+                setQuotationToApproved(selectedSO);
         }
 
         private void approvalButton_Click(object sender, EventArgs e)

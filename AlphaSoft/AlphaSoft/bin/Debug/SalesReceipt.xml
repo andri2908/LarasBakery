@@ -18,6 +18,7 @@
                 <xs:element name="SUBTOTAL" type="xs:double" minOccurs="0" />
                 <xs:element name="PAYMENT" type="xs:double" minOccurs="0" />
                 <xs:element name="CHANGE" type="xs:double" minOccurs="0" />
+                <xs:element name="SALES_DISCOUNT_FINAL" type="xs:double" minOccurs="0" />
               </xs:sequence>
             </xs:complexType>
           </xs:element>
@@ -26,10 +27,10 @@
     </xs:element>
   </xs:schema>
   <Table>
-    <ID>10</ID>
-    <DATE>2016-11-25T12:33:00+07:00</DATE>
-    <INVOICE>SLO001-23</INVOICE>
-    <CUSTOMER>ANDRI</CUSTOMER>
+    <ID>14</ID>
+    <DATE>2016-12-02T22:46:00+07:00</DATE>
+    <INVOICE>SLO001-27</INVOICE>
+    <CUSTOMER>P-UMUM</CUSTOMER>
     <PRODUCT>ROTI PISANG</PRODUCT>
     <QTY>2</QTY>
     <PRICE>1000</PRICE>
@@ -37,5 +38,6 @@
     <SUBTOTAL>2000</SUBTOTAL>
     <PAYMENT>2000</PAYMENT>
     <CHANGE>0</CHANGE>
+    <SALES_DISCOUNT_FINAL>0</SALES_DISCOUNT_FINAL>
   </Table>
 </NewDataSet>
