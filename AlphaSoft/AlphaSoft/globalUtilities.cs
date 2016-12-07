@@ -314,6 +314,7 @@ namespace AlphaSoft
             string sqlCommand = "";
             string dateToday = String.Format(culture, "{0:yyyyMMdd}", Convert.ToDateTime(DateTime.Now));
             string roExpiredDate = String.Format(culture, "{0:dd-MM-yyyy}", DateTime.Now.AddDays(7));
+            string sqOrderDate = String.Format(culture, "{0:dd-MM-yyyy}", DateTime.Now.AddDays(2));
 
             // PULL SALES INVOICE THAT'S DUE TODAY
             moduleID = globalConstants.MENU_TRANSAKSI_PENJUALAN;
@@ -348,6 +349,12 @@ namespace AlphaSoft
             // PULL PRODUCT_ID THAT ALREADY HIT LIMIT STOCK
             moduleID = globalConstants.MENU_PRODUK;
             sqlCommand = "SELECT COUNT(1) FROM  MASTER_PRODUCT WHERE PRODUCT_ACTIVE = 1 AND PRODUCT_IS_SERVICE = 0 AND PRODUCT_STOCK_QTY <= PRODUCT_LIMIT_STOCK AND PRODUCT_ID NOT IN (SELECT IDENTIFIER_NO FROM MASTER_MESSAGE WHERE MODULE_ID = " + moduleID + " AND STATUS = 0)";
+            if (Convert.ToInt32(DS.getDataSingleValue(sqlCommand)) > 0)
+                return true;
+
+            // PULL SALES QUOTATION THAT'S GOING TO DUE NEXT WEEK
+            moduleID = globalConstants.MENU_SALES_QUOTATION;
+            sqlCommand = "SELECT COUNT(1) FROM SALES_QUOTATION_HEADER WHERE COMPLETED = 0 AND DATE_FORMAT(SQ_ORDER_DATE, '%Y%m%d')  <= '" + sqOrderDate + "'  AND SQ_INVOICE NOT IN (SELECT IDENTIFIER_NO FROM MASTER_MESSAGE WHERE MODULE_ID = " + moduleID + " AND STATUS = 0)";
             if (Convert.ToInt32(DS.getDataSingleValue(sqlCommand)) > 0)
                 return true;
 

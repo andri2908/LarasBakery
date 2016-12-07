@@ -85,6 +85,7 @@ namespace AlphaSoft
         public const int EDIT_SALES_QUOTATION = 507;
         public const int SQ_TO_SO = 508;
         public const int COPY_NOTA_SQ = 509;
+        public const int VIEW_SALES_QUOTATION = 510;
 
         // THESE CONSTANTS ARE USED TO CHECK GROUP ACCESS MODULE
         // THE VALUES MUST BE TIED TO THE VALUES INSIDE THE DATABASE TABLE

@@ -85,6 +85,10 @@ namespace AlphaSoft
                                 case globalConstants.MENU_PRODUK:
                                     messageContent = "PRODUCT_ID [" + param1 + "] SUDAH MENDEKATI LIMIT";
                                     break;
+
+                                case globalConstants.MENU_SALES_QUOTATION:
+                                    messageContent = "QUOTATION [" + param1 + "] DIPESAN TGL " + param2;
+                                    break;
                             }
 
                             insertSQLCommand = "INSERT INTO MASTER_MESSAGE (STATUS, MODULE_ID, IDENTIFIER_NO, MSG_DATETIME_CREATED, MSG_CONTENT) " +
@@ -127,6 +131,7 @@ namespace AlphaSoft
             string sqlCommand = "";
             string dateToday = String.Format(culture, "{0:yyyyMMdd}", Convert.ToDateTime(DateTime.Now));
             string roExpiredDate = String.Format(culture, "{0:dd-MM-yyyy}", DateTime.Now.AddDays(7));
+            string sqOrderDate = String.Format(culture, "{0:dd-MM-yyyy}", DateTime.Now.AddDays(2));
             bool newData = false;
 
             // PULL SALES INVOICE THAT'S DUE TODAY
@@ -157,6 +162,11 @@ namespace AlphaSoft
             // PULL PRODUCT_ID THAT ALREADY HIT LIMIT STOCK
             moduleID = globalConstants.MENU_PRODUK;
             sqlCommand = "SELECT PRODUCT_ID AS 'PARAM_1', PRODUCT_LIMIT_STOCK AS 'PARAM_2' FROM  MASTER_PRODUCT WHERE PRODUCT_ACTIVE = 1 AND PRODUCT_IS_SERVICE = 0 AND PRODUCT_STOCK_QTY <= PRODUCT_LIMIT_STOCK AND PRODUCT_ID NOT IN (SELECT IDENTIFIER_NO FROM MASTER_MESSAGE WHERE MODULE_ID = " + moduleID + " AND STATUS = 0)";
+            newData |= pullDetailMessageAndSaveToTable(moduleID, sqlCommand);
+
+            // PULL SQ DATA THAT'S DUE NEXT WEEK
+            moduleID = globalConstants.MENU_SALES_QUOTATION;
+            sqlCommand = "SELECT SQ_INVOICE AS 'PARAM_1', DATE_FORMAT(SQ_ORDER_DATE, '%d-%M-%Y') AS 'PARAM_2' FROM SALES_QUOTATION_HEADER WHERE DATE_FORMAT(SQ_ORDER_DATE, '%Y%m%d')  <= '" + sqOrderDate + "'  AND SQ_INVOICE NOT IN (SELECT IDENTIFIER_NO FROM MASTER_MESSAGE WHERE MODULE_ID = " + moduleID + " AND STATUS = 0)";
             newData |= pullDetailMessageAndSaveToTable(moduleID, sqlCommand);
 
             return newData;                

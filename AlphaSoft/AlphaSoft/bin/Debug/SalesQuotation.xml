@@ -7,6 +7,7 @@
           <xs:element name="Table">
             <xs:complexType>
               <xs:sequence>
+                <xs:element name="USER_NAME" type="xs:string" minOccurs="0" />
                 <xs:element name="ID" type="xs:unsignedInt" minOccurs="0" />
                 <xs:element name="ORDER_x0020_DATE" type="xs:dateTime" minOccurs="0" />
                 <xs:element name="DATE" type="xs:dateTime" minOccurs="0" />
@@ -28,18 +29,51 @@
     </xs:element>
   </xs:schema>
   <Table>
-    <ID>39</ID>
-    <ORDER_x0020_DATE>2016-12-02T00:00:00+07:00</ORDER_x0020_DATE>
-    <DATE>2016-12-02T22:47:00+07:00</DATE>
-    <INVOICE>SQ-34</INVOICE>
+    <USER_NAME>ADMIN</USER_NAME>
+    <ID>43</ID>
+    <ORDER_x0020_DATE>2016-12-06T00:00:00+07:00</ORDER_x0020_DATE>
+    <DATE>2016-12-06T12:05:00+07:00</DATE>
+    <INVOICE>SQ-35</INVOICE>
     <CUSTOMER>ANDRI</CUSTOMER>
-    <PRODUCT>ROTI PISANG COKLAT</PRODUCT>
+    <PRODUCT>ROTI PISANG</PRODUCT>
     <QTY>22</QTY>
-    <PRICE>5000</PRICE>
-    <SUBTOTAL>110000</SUBTOTAL>
+    <PRICE>1000</PRICE>
+    <SUBTOTAL>22000</SUBTOTAL>
     <PAYMENT>20000</PAYMENT>
     <SQ_ORDER_ADDRESS />
     <DELIVERED>0</DELIVERED>
-    <SALES_DISCOUNT_FINAL>15000</SALES_DISCOUNT_FINAL>
+    <SALES_DISCOUNT_FINAL>0</SALES_DISCOUNT_FINAL>
+  </Table>
+  <Table>
+    <USER_NAME>ADMIN</USER_NAME>
+    <ID>44</ID>
+    <ORDER_x0020_DATE>2016-12-06T00:00:00+07:00</ORDER_x0020_DATE>
+    <DATE>2016-12-06T12:05:00+07:00</DATE>
+    <INVOICE>SQ-35</INVOICE>
+    <CUSTOMER>ANDRI</CUSTOMER>
+    <PRODUCT>ROTI PISANG COKLAT</PRODUCT>
+    <QTY>2</QTY>
+    <PRICE>5000</PRICE>
+    <SUBTOTAL>10000</SUBTOTAL>
+    <PAYMENT>20000</PAYMENT>
+    <SQ_ORDER_ADDRESS />
+    <DELIVERED>0</DELIVERED>
+    <SALES_DISCOUNT_FINAL>0</SALES_DISCOUNT_FINAL>
+  </Table>
+  <Table>
+    <USER_NAME>ADMIN</USER_NAME>
+    <ID>45</ID>
+    <ORDER_x0020_DATE>2016-12-06T00:00:00+07:00</ORDER_x0020_DATE>
+    <DATE>2016-12-06T12:05:00+07:00</DATE>
+    <INVOICE>SQ-35</INVOICE>
+    <CUSTOMER>ANDRI</CUSTOMER>
+    <PRODUCT>ROTI PISANG COKLAT KEJU</PRODUCT>
+    <QTY>4</QTY>
+    <PRICE>8000</PRICE>
+    <SUBTOTAL>32000</SUBTOTAL>
+    <PAYMENT>20000</PAYMENT>
+    <SQ_ORDER_ADDRESS />
+    <DELIVERED>0</DELIVERED>
+    <SALES_DISCOUNT_FINAL>0</SALES_DISCOUNT_FINAL>
   </Table>
 </NewDataSet>

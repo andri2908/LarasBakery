@@ -1029,6 +1029,18 @@
       <DependentUpon>SalesQuotation.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="SalesQuotationKuarto.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SalesQuotationKuarto.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="salesQuotationKuartoPrintOutForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="salesQuotationKuartoPrintOutForm.Designer.cs">
+      <DependentUpon>salesQuotationKuartoPrintOutForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="salesQuotationPrintOutForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1652,6 +1664,13 @@
     <EmbeddedResource Include="SalesQuotation.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>SalesQuotation.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SalesQuotationKuarto.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>SalesQuotationKuarto.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="salesQuotationKuartoPrintOutForm.resx">
+      <DependentUpon>salesQuotationKuartoPrintOutForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="salesQuotationPrintOutForm.resx">
       <DependentUpon>salesQuotationPrintOutForm.cs</DependentUpon>

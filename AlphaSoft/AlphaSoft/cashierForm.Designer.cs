@@ -41,6 +41,7 @@
             this.noFakturLabel = new System.Windows.Forms.Label();
             this.cashierDataGridView = new System.Windows.Forms.DataGridView();
             this.panel5 = new System.Windows.Forms.Panel();
+            this.panel3 = new System.Windows.Forms.Panel();
             this.addressTextBox = new System.Windows.Forms.TextBox();
             this.deliveredCheckbox = new System.Windows.Forms.CheckBox();
             this.rejectButton = new System.Windows.Forms.Button();
@@ -58,6 +59,7 @@
             this.customerComboBox = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.panel6 = new System.Windows.Forms.Panel();
+            this.DPTextBox = new System.Windows.Forms.TextBox();
             this.jobStartDateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.labelTglOrder = new System.Windows.Forms.Label();
             this.discJualMaskedTextBox = new System.Windows.Forms.TextBox();
@@ -91,8 +93,6 @@
             this.toolStripStatusLabel3 = new System.Windows.Forms.ToolStripStatusLabel();
             this.SODateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.labelTglNota = new System.Windows.Forms.Label();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.DPTextBox = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cashierDataGridView)).BeginInit();
             this.panel5.SuspendLayout();
@@ -245,6 +245,16 @@
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(982, 218);
             this.panel5.TabIndex = 9;
+            // 
+            // panel3
+            // 
+            this.panel3.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.panel3.BackColor = System.Drawing.Color.Black;
+            this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel3.Location = new System.Drawing.Point(607, 48);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(366, 5);
+            this.panel3.TabIndex = 20;
             // 
             // addressTextBox
             // 
@@ -469,6 +479,18 @@
             this.panel6.Name = "panel6";
             this.panel6.Size = new System.Drawing.Size(367, 204);
             this.panel6.TabIndex = 0;
+            // 
+            // DPTextBox
+            // 
+            this.DPTextBox.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DPTextBox.Location = new System.Drawing.Point(179, 6);
+            this.DPTextBox.Name = "DPTextBox";
+            this.DPTextBox.ReadOnly = true;
+            this.DPTextBox.Size = new System.Drawing.Size(181, 27);
+            this.DPTextBox.TabIndex = 45;
+            this.DPTextBox.Text = "0";
+            this.DPTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.DPTextBox.Visible = false;
             // 
             // jobStartDateTimePicker
             // 
@@ -803,28 +825,6 @@
             this.labelTglNota.TabIndex = 45;
             this.labelTglNota.Text = "Tanggal Nota";
             this.labelTglNota.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // panel3
-            // 
-            this.panel3.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.panel3.BackColor = System.Drawing.Color.Black;
-            this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel3.Location = new System.Drawing.Point(607, 48);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(366, 5);
-            this.panel3.TabIndex = 20;
-            // 
-            // DPTextBox
-            // 
-            this.DPTextBox.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.DPTextBox.Location = new System.Drawing.Point(179, 6);
-            this.DPTextBox.Name = "DPTextBox";
-            this.DPTextBox.ReadOnly = true;
-            this.DPTextBox.Size = new System.Drawing.Size(181, 27);
-            this.DPTextBox.TabIndex = 45;
-            this.DPTextBox.Text = "0";
-            this.DPTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.DPTextBox.Visible = false;
             // 
             // cashierForm
             // 
