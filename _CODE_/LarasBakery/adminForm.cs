@@ -1539,18 +1539,18 @@ namespace AlphaSoft
 
         private void MENU_tutupToko_Click(object sender, EventArgs e)
         {
-            //if (DialogResult.Yes == MessageBox.Show("YAKIN TUTUP TOKO ?", "WARNING", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
-            //{
-            //    dailyStockTakeDetailForm displayedForm = new dailyStockTakeDetailForm();
-            //    displayedForm.ShowDialog(this);
+            if (DialogResult.Yes == MessageBox.Show("YAKIN TUTUP TOKO ?", "WARNING", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
+            {
+                dailyStockTakeDetailForm displayedForm = new dailyStockTakeDetailForm(true);
+                displayedForm.ShowDialog(this);
 
-            //    originForm.setCloseShop();
+                originForm.setCloseShop();
 
-            //    MENU_logOut.PerformClick();
-            //}
+                MENU_logOut.PerformClick();
+            }
 
-            globalCloseShopUtilities gClose = new globalCloseShopUtilities();
-            gClose.closeShopProcedure();
+            //globalCloseShopUtilities gClose = new globalCloseShopUtilities();
+            //gClose.closeShopProcedure();
 
             //tutupTokoForm displayedForm = new tutupTokoForm();
             //displayedForm.ShowDialog(this);

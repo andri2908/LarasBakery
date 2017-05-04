@@ -93,6 +93,7 @@
             this.ROinvoiceTextBox.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ROinvoiceTextBox.Location = new System.Drawing.Point(267, 13);
             this.ROinvoiceTextBox.Name = "ROinvoiceTextBox";
+            this.ROinvoiceTextBox.ReadOnly = true;
             this.ROinvoiceTextBox.Size = new System.Drawing.Size(166, 27);
             this.ROinvoiceTextBox.TabIndex = 43;
             this.ROinvoiceTextBox.TextChanged += new System.EventHandler(this.ROinvoiceTextBox_TextChanged);

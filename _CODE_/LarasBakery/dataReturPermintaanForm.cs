@@ -782,6 +782,8 @@ namespace AlphaSoft
 
         private void dataReturPermintaanForm_Load(object sender, EventArgs e)
         {
+            noReturTextBox.Text = GUTIL.getAutoGenerateID("RETURN_PURCHASE_HEADER", "RP", "-", "RP_ID");
+
             errorLabel.Text = "";
             detailReturDataGridView.EditingControlShowing += detailReturDataGridView_EditingControlShowing;
 
@@ -895,6 +897,7 @@ namespace AlphaSoft
             DateTime selectedReturDate;
             MySqlException internalEX = null;
 
+            noReturTextBox.Text = GUTIL.getAutoGenerateID("RETURN_PURCHASE_HEADER", "RP", "-", "RP_ID");
             returID = noReturTextBox.Text;
             supplierID = selectedSupplierID;
 

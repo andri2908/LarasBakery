@@ -373,7 +373,8 @@ namespace AlphaSoft
             bool result = false;
             string sqlCommand = "";
             MySqlException internalEX = null;
-            string HQIP = HQIP1.Text.Trim() + "." + HQIP2.Text.Trim() + "." + HQIP3.Text.Trim() + "." + HQIP4.Text.Trim(); ;
+            string HQIP = HQIP1.Text.Trim() + "." + HQIP2.Text.Trim() + "." + HQIP3.Text.Trim() + "." + HQIP4.Text.Trim();
+            string serverIP = serverIP1.Text.Trim() + "." + serverIP2.Text.Trim() + "." + serverIP3.Text.Trim() + "." + serverIP4.Text.Trim();
             String branchID = BranchIDTextbox.Text;
             //String no_faktur = "";
             String nama_toko = MySqlHelper.EscapeString(NamaTokoTextbox.Text);
@@ -391,8 +392,8 @@ namespace AlphaSoft
                 switch (mode)
                 {
                     case 1:
-                        sqlCommand = "INSERT INTO SYS_CONFIG (ID, NO_FAKTUR, BRANCH_ID, HQ_IP4, STORE_NAME, STORE_ADDRESS, STORE_PHONE, STORE_EMAIL, QUOTATION_REMINDER) " +
-                                            "VALUES (2, '', '" + branchID + "', '" + HQIP + "', '" + nama_toko + "', '" + alamat_toko + "', '" + telepon_toko + "', '" + email_toko + "', " + reminderValue + ")";
+                        sqlCommand = "INSERT INTO SYS_CONFIG (ID, NO_FAKTUR, BRANCH_ID, HQ_IP4, STORE_NAME, STORE_ADDRESS, STORE_PHONE, STORE_EMAIL, QUOTATION_REMINDER, SERVER_IP4) " +
+                                            "VALUES (2, '', '" + branchID + "', '" + HQIP + "', '" + nama_toko + "', '" + alamat_toko + "', '" + telepon_toko + "', '" + email_toko + "', " + reminderValue + ", " + serverIP + ")";
                         options = gutil.INS;
                         gutil.saveSystemDebugLog(0, "INSERT DATA ID 2 TO SYS_CONFIG");
 
@@ -405,7 +406,8 @@ namespace AlphaSoft
                                             "STORE_ADDRESS = '" + alamat_toko + "', " +
                                             "STORE_PHONE = '" + telepon_toko + "', " +
                                             "STORE_EMAIL = '" + email_toko + "', " +
-                                            "QUOTATION_REMINDER = '" + reminderValue + "' " +
+                                            "QUOTATION_REMINDER = '" + reminderValue + "', " +
+                                            "SERVER_IP4 = '" + serverIP + "' " +
                                             "WHERE ID = " + id;
                         options = gutil.UPD;
                         gutil.saveSystemDebugLog(0, "UPDATE DATA ID 2");
@@ -615,6 +617,56 @@ namespace AlphaSoft
         private void SetApplicationForm_Deactivate(object sender, EventArgs e)
         {
             unregisterGlobalHotkey();
+        }
+
+        private void serverIP1_Enter(object sender, EventArgs e)
+        {
+            BeginInvoke((Action)delegate
+            {
+                serverIP1.SelectAll();
+            });
+        }
+
+        private void serverIP2_Enter(object sender, EventArgs e)
+        {
+            BeginInvoke((Action)delegate
+            {
+                serverIP2.SelectAll();
+            });
+        }
+
+        private void serverIP3_Enter(object sender, EventArgs e)
+        {
+            BeginInvoke((Action)delegate
+            {
+                serverIP3.SelectAll();
+            });
+        }
+
+        private void serverIP4_Enter(object sender, EventArgs e)
+        {
+            BeginInvoke((Action)delegate
+            {
+                serverIP4.SelectAll();
+            });
+        }
+
+        private void serverIP1_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == '.')
+                serverIP2.Focus();
+        }
+
+        private void serverIP2_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == '.')
+                serverIP3.Focus();
+        }
+
+        private void serverIP3_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == '.')
+                serverIP4.Focus();
         }
 
         private void ip1Textbox_KeyPress(object sender, KeyPressEventArgs e)

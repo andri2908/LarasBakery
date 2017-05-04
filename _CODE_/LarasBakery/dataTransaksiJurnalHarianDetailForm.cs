@@ -125,25 +125,14 @@ namespace AlphaSoft
 
             DS.mySqlConnect();
 
-            using (rdr = DS.getData("SELECT BRANCH_ID AS 'ID', BRANCH_NAME AS 'NAME' FROM MASTER_BRANCH WHERE BRANCH_ACTIVE=1"))
+            using (rdr = DS.getData("SELECT '0' AS 'ID', 'PUSAT' AS 'NAME' UNION SELECT BRANCH_ID AS 'ID', BRANCH_NAME AS 'NAME' FROM MASTER_BRANCH WHERE BRANCH_ACTIVE=1"))
             {
                 if (rdr.HasRows)
                 {
                     dt.Load(rdr);
-                    DataRow workRow = dt.NewRow();
-                    workRow["ID"] = "0";
-                    workRow["NAME"] = "PUSAT";
-                    dt.Rows.Add(workRow);
                     branchCombobox.DataSource = dt;
                     branchCombobox.ValueMember = "ID";
                     branchCombobox.DisplayMember = "NAME";
-                }
-                else
-                {
-                    DataRow workRow = dt.NewRow();
-                    workRow["ID"] = "0";
-                    workRow["NAME"] = "PUSAT";
-                    dt.Rows.Add(workRow);
                 }
             }
             //branchCombobox.Items.Add(new { Text = "PUSAT", Value = "0" });
@@ -166,9 +155,10 @@ namespace AlphaSoft
                 string jamTrans = "";
                 //selectedDJID = 0;
                 DateTime selectedDate = TanggalTransaksi.Value;
-                String pembayaran = carabayarcombobox.GetItemText(carabayarcombobox.SelectedItem);
+                //String pembayaran = carabayarcombobox.GetItemText(carabayarcombobox.SelectedItem);
+                String pembayaran = "TUNAI";
                 String cabang = branchCombobox.GetItemText(branchCombobox.SelectedItem);
-                int pm_id = Int32.Parse(carabayarcombobox.SelectedValue.ToString());
+                int pm_id = 1;// Int32.Parse(carabayarcombobox.SelectedValue.ToString());
 
                 int branch_id = 0;// Int32.Parse(branchCombobox.SelectedValue.ToString());
 

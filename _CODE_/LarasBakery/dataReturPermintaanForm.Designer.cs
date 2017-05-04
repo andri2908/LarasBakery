@@ -191,6 +191,7 @@
             this.noReturTextBox.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.noReturTextBox.Location = new System.Drawing.Point(144, 13);
             this.noReturTextBox.Name = "noReturTextBox";
+            this.noReturTextBox.ReadOnly = true;
             this.noReturTextBox.Size = new System.Drawing.Size(161, 27);
             this.noReturTextBox.TabIndex = 16;
             this.noReturTextBox.TextChanged += new System.EventHandler(this.noReturTextBox_TextChanged);

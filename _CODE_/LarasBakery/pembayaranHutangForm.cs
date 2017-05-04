@@ -269,6 +269,9 @@ namespace AlphaSoft
             if (paymentNominal > globalTotalValue)
                 paymentNominal = globalTotalValue;
 
+            // LARAS : ALL TRANSACTIONS ARE IN CASH
+            paymentMethod = 0;
+
             if (paymentMethod < 3) //0, 1, 2
             { 
                 // TUNAI, KARTU DEBIT, KARTU KREDIT

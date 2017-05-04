@@ -53,20 +53,20 @@
             this.confirmBayar = new System.Windows.Forms.ToolStripMenuItem();
             this.invalidPayment = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.totalPaymentMaskedTextBox = new System.Windows.Forms.MaskedTextBox();
-            this.label7 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
             this.descriptionTextBox = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.label15 = new System.Windows.Forms.Label();
-            this.totalLabel = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
+            this.cairDTPicker = new System.Windows.Forms.DateTimePicker();
+            this.labelCair = new System.Windows.Forms.Label();
+            this.totalPaymentMaskedTextBox = new System.Windows.Forms.MaskedTextBox();
+            this.label7 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.paymentCombo = new System.Windows.Forms.ComboBox();
-            this.labelCair = new System.Windows.Forms.Label();
-            this.cairDTPicker = new System.Windows.Forms.DateTimePicker();
-            this.label12 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.totalLabel = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.detailPurchaseOrderDataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.detailPaymentDataGridView)).BeginInit();
@@ -336,6 +336,70 @@
             this.groupBox1.TabIndex = 58;
             this.groupBox1.TabStop = false;
             // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label12.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.label12.Location = new System.Drawing.Point(239, 222);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(14, 18);
+            this.label12.TabIndex = 68;
+            this.label12.Text = ":";
+            // 
+            // descriptionTextBox
+            // 
+            this.descriptionTextBox.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.descriptionTextBox.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.descriptionTextBox.Location = new System.Drawing.Point(264, 219);
+            this.descriptionTextBox.Name = "descriptionTextBox";
+            this.descriptionTextBox.Size = new System.Drawing.Size(615, 27);
+            this.descriptionTextBox.TabIndex = 58;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.label2.Location = new System.Drawing.Point(8, 222);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(107, 18);
+            this.label2.TabIndex = 58;
+            this.label2.Text = "DESKRIPSI";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label13.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.label13.Location = new System.Drawing.Point(239, 189);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(14, 18);
+            this.label13.TabIndex = 58;
+            this.label13.Text = ":";
+            // 
+            // cairDTPicker
+            // 
+            this.cairDTPicker.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cairDTPicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.cairDTPicker.Location = new System.Drawing.Point(706, 154);
+            this.cairDTPicker.Name = "cairDTPicker";
+            this.cairDTPicker.Size = new System.Drawing.Size(173, 27);
+            this.cairDTPicker.TabIndex = 59;
+            this.cairDTPicker.Visible = false;
+            // 
+            // labelCair
+            // 
+            this.labelCair.AutoSize = true;
+            this.labelCair.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelCair.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.labelCair.Location = new System.Drawing.Point(587, 157);
+            this.labelCair.Name = "labelCair";
+            this.labelCair.Size = new System.Drawing.Size(104, 18);
+            this.labelCair.TabIndex = 58;
+            this.labelCair.Text = "TGL CAIR :";
+            this.labelCair.Visible = false;
+            // 
             // totalPaymentMaskedTextBox
             // 
             this.totalPaymentMaskedTextBox.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -359,36 +423,44 @@
             this.label7.TabIndex = 53;
             this.label7.Text = "TOTAL PEMBAYARAN";
             // 
-            // descriptionTextBox
+            // label10
             // 
-            this.descriptionTextBox.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.descriptionTextBox.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.descriptionTextBox.Location = new System.Drawing.Point(264, 219);
-            this.descriptionTextBox.Name = "descriptionTextBox";
-            this.descriptionTextBox.Size = new System.Drawing.Size(615, 27);
-            this.descriptionTextBox.TabIndex = 58;
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.label10.Location = new System.Drawing.Point(8, 157);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(213, 18);
+            this.label10.TabIndex = 67;
+            this.label10.Text = "METODE PEMBAYARAN";
+            this.label10.Visible = false;
             // 
-            // label2
+            // paymentCombo
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label2.Location = new System.Drawing.Point(8, 222);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(107, 18);
-            this.label2.TabIndex = 58;
-            this.label2.Text = "DESKRIPSI";
+            this.paymentCombo.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.paymentCombo.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.paymentCombo.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.paymentCombo.FormattingEnabled = true;
+            this.paymentCombo.Location = new System.Drawing.Point(264, 154);
+            this.paymentCombo.Name = "paymentCombo";
+            this.paymentCombo.Size = new System.Drawing.Size(229, 26);
+            this.paymentCombo.TabIndex = 66;
+            this.paymentCombo.Visible = false;
+            this.paymentCombo.SelectedIndexChanged += new System.EventHandler(this.paymentCombo_SelectedIndexChanged);
+            this.paymentCombo.Enter += new System.EventHandler(this.genericControl_Enter);
+            this.paymentCombo.Leave += new System.EventHandler(this.genericControl_Leave);
             // 
-            // label15
+            // label8
             // 
-            this.label15.AutoSize = true;
-            this.label15.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label15.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label15.Location = new System.Drawing.Point(239, 121);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(14, 18);
-            this.label15.TabIndex = 60;
-            this.label15.Text = ":";
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.label8.Location = new System.Drawing.Point(239, 157);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(14, 18);
+            this.label8.TabIndex = 54;
+            this.label8.Text = ":";
+            this.label8.Visible = false;
             // 
             // totalLabel
             // 
@@ -412,85 +484,16 @@
             this.label3.TabIndex = 51;
             this.label3.Text = "TOTAL";
             // 
-            // label8
+            // label15
             // 
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label8.Location = new System.Drawing.Point(239, 157);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(14, 18);
-            this.label8.TabIndex = 54;
-            this.label8.Text = ":";
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label13.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label13.Location = new System.Drawing.Point(239, 189);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(14, 18);
-            this.label13.TabIndex = 58;
-            this.label13.Text = ":";
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label10.Location = new System.Drawing.Point(8, 157);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(213, 18);
-            this.label10.TabIndex = 67;
-            this.label10.Text = "METODE PEMBAYARAN";
-            // 
-            // paymentCombo
-            // 
-            this.paymentCombo.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.paymentCombo.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.paymentCombo.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.paymentCombo.FormattingEnabled = true;
-            this.paymentCombo.Location = new System.Drawing.Point(264, 154);
-            this.paymentCombo.Name = "paymentCombo";
-            this.paymentCombo.Size = new System.Drawing.Size(229, 26);
-            this.paymentCombo.TabIndex = 66;
-            this.paymentCombo.SelectedIndexChanged += new System.EventHandler(this.paymentCombo_SelectedIndexChanged);
-            this.paymentCombo.Enter += new System.EventHandler(this.genericControl_Enter);
-            this.paymentCombo.Leave += new System.EventHandler(this.genericControl_Leave);
-            // 
-            // labelCair
-            // 
-            this.labelCair.AutoSize = true;
-            this.labelCair.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelCair.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.labelCair.Location = new System.Drawing.Point(587, 157);
-            this.labelCair.Name = "labelCair";
-            this.labelCair.Size = new System.Drawing.Size(104, 18);
-            this.labelCair.TabIndex = 58;
-            this.labelCair.Text = "TGL CAIR :";
-            this.labelCair.Visible = false;
-            // 
-            // cairDTPicker
-            // 
-            this.cairDTPicker.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cairDTPicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.cairDTPicker.Location = new System.Drawing.Point(706, 154);
-            this.cairDTPicker.Name = "cairDTPicker";
-            this.cairDTPicker.Size = new System.Drawing.Size(173, 27);
-            this.cairDTPicker.TabIndex = 59;
-            this.cairDTPicker.Visible = false;
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label12.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label12.Location = new System.Drawing.Point(239, 222);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(14, 18);
-            this.label12.TabIndex = 68;
-            this.label12.Text = ":";
+            this.label15.AutoSize = true;
+            this.label15.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label15.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.label15.Location = new System.Drawing.Point(239, 121);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(14, 18);
+            this.label15.TabIndex = 60;
+            this.label15.Text = ":";
             // 
             // pembayaranHutangForm
             // 

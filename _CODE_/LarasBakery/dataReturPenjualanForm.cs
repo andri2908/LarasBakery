@@ -1071,6 +1071,7 @@ namespace AlphaSoft
             
             int selectedCreditID;
 
+            noReturTextBox.Text = gutil.getAutoGenerateID("RETURN_SALES_HEADER", "RS", "-", "RS_INVOICE");
             returID = MySqlHelper.EscapeString(noReturTextBox.Text);
             customerID = selectedCustomerID;
 
@@ -1630,6 +1631,8 @@ namespace AlphaSoft
         
         private void dataReturPenjualanForm_Load(object sender, EventArgs e)
         {
+            noReturTextBox.Text = gutil.getAutoGenerateID("RETURN_SALES_HEADER", "RS", "-", "RS_INVOICE");
+
             errorLabel.Text = "";
             rsDateTimePicker.CustomFormat = globalUtilities.CUSTOM_DATE_FORMAT;
 

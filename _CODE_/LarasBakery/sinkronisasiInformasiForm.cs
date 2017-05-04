@@ -269,8 +269,6 @@ namespace AlphaSoft
             proc.EnableRaisingEvents = true;
             gutil.saveSystemDebugLog(globalConstants.MENU_SINKRONISASI_INFORMASI, "SYNC INFORMATION PROCESS START");
             proc.Start();
-            
-
         }
 
         private bool updateLocalData()
@@ -477,7 +475,7 @@ namespace AlphaSoft
 
             // CREATE CONNECTION TO CENTRAL HQ DATABASE SERVER
             gutil.saveSystemDebugLog(globalConstants.MENU_SINKRONISASI_INFORMASI, "TRY TO CREATE CONNECTION TO CENTRAL HQ");
-            if (DS_HQ.HQ_mySQLConnect())
+            if (DS_HQ.HQ_mySQLConnect(true))
             {
                 gutil.saveSystemDebugLog(globalConstants.MENU_SINKRONISASI_INFORMASI, "CONNECTION TO CENTRAL HQ CREATED");
 

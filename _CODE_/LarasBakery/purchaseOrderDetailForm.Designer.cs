@@ -199,6 +199,7 @@
             this.POinvoiceTextBox.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.POinvoiceTextBox.Location = new System.Drawing.Point(262, 19);
             this.POinvoiceTextBox.Name = "POinvoiceTextBox";
+            this.POinvoiceTextBox.ReadOnly = true;
             this.POinvoiceTextBox.Size = new System.Drawing.Size(171, 27);
             this.POinvoiceTextBox.TabIndex = 16;
             this.POinvoiceTextBox.TextChanged += new System.EventHandler(this.POinvoiceTextBox_TextChanged);

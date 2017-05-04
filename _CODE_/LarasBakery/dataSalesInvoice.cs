@@ -180,9 +180,9 @@ namespace AlphaSoft
                 if (customerID > 0)
                 {
                     if (originModuleID == globalConstants.SALES_QUOTATION || originModuleID == globalConstants.SQ_TO_SO || originModuleID == globalConstants.COPY_NOTA_SQ)
-                        sqlCommand = sqlClause1 + whereClause1 + " AND AND SQ.CUSTOMER_ID = " + customerID;
+                        sqlCommand = sqlClause1 + whereClause1 + " AND SQ.CUSTOMER_ID = " + customerID;
                     else
-                        sqlCommand = sqlClause1 + whereClause1 + " AND AND SH.CUSTOMER_ID = " + customerID;
+                        sqlCommand = sqlClause1 + whereClause1 + " AND SH.CUSTOMER_ID = " + customerID;
                 }
                 else
                 {
@@ -204,7 +204,10 @@ namespace AlphaSoft
                     dataPenerimaanBarang.Columns["ID"].Visible = false;
 
                     if (originModuleID == globalConstants.SALES_QUOTATION || originModuleID == globalConstants.SQ_TO_SO || originModuleID == globalConstants.COPY_NOTA_SQ)
+                    {
                         dataPenerimaanBarang.Columns["SQ_APPROVED"].Visible = false;
+                        dataPenerimaanBarang.Columns["STATUS"].Visible = false;
+                    }
 
                     dataPenerimaanBarang.Columns["NO INVOICE"].Width = 200;
                     dataPenerimaanBarang.Columns["TGL INVOICE"].Width = 200;

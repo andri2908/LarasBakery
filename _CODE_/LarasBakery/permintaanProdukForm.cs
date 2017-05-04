@@ -959,6 +959,9 @@ namespace AlphaSoft
             int userAccessOption = 0;
             RODateTimePicker.CustomFormat = globalUtilities.CUSTOM_DATE_FORMAT;
 
+            ROinvoiceTextBox.Text = gUtil.getAutoGenerateID("REQUEST_ORDER_HEADER", "RO", "-", "RO_INVOICE");
+
+
             addColumnToDataGrid();
 
             // ALL REQUEST WILL GO TO PUSAT 
@@ -1162,6 +1165,7 @@ namespace AlphaSoft
             selectedRODate = RODateTimePicker.Value;
             expiredRODate = selectedRODate.AddDays(Convert.ToDouble(durationTextBox.Text));
 
+            ROinvoiceTextBox.Text = gUtil.getAutoGenerateID("REQUEST_ORDER_HEADER", "RO", "-", "RO_INVOICE");
             roInvoice = ROinvoiceTextBox.Text;
             branchIDFrom = selectedBranchFromID;
             branchIDTo = selectedBranchToID;

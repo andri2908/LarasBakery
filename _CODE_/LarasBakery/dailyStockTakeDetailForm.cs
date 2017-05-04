@@ -36,10 +36,13 @@ namespace AlphaSoft
         private Hotkeys.GlobalHotkey ghk_F7;
         private Hotkeys.GlobalHotkey ghk_F9;
         private Hotkeys.GlobalHotkey ghk_F10;
+        private bool closeShopFlag = false;
 
-        public dailyStockTakeDetailForm()
+
+        public dailyStockTakeDetailForm(bool closeShop = false)
         {
             InitializeComponent();
+            closeShopFlag = closeShop;
         }
 
         private void captureAll(Keys key)
@@ -109,6 +112,7 @@ namespace AlphaSoft
             DataGridViewTextBoxColumn noColumn = new DataGridViewTextBoxColumn();
             DataGridViewTextBoxColumn akhirRiilColumn = new DataGridViewTextBoxColumn();
             DataGridViewTextBoxColumn penyesuaianColumn = new DataGridViewTextBoxColumn();
+            DataGridViewTextBoxColumn originalAkhir = new DataGridViewTextBoxColumn();
 
             productIDColumn.Name = "productID";
             productIDColumn.Visible = false;
@@ -171,6 +175,13 @@ namespace AlphaSoft
             remarkColumn.DefaultCellStyle.BackColor = Color.AliceBlue;
             remarkColumn.Visible = false;
             detailDataGrid.Columns.Add(remarkColumn);
+
+            originalAkhir.Name = "originalAkhir";
+            originalAkhir.HeaderText = "ORI AKHIR";
+            originalAkhir.ReadOnly = true;
+            //            akhirColumn.Visible = false;
+            detailDataGrid.Columns.Add(originalAkhir);
+
         }
 
         private void loadDataStockTake()
@@ -178,7 +189,10 @@ namespace AlphaSoft
             string selectedDate = String.Format(culture, "{0:yyyyMMdd}", Convert.ToDateTime(stockTakeDateTimePicker.Value));
             string sqlCommand = "";
             MySqlDataReader rdr;
-            DataTable dt = new DataTable();
+            //DataTable dt = new DataTable();
+
+            if (detailDataGrid.ColumnCount <= 0)
+                return;
 
             // CHECK WHETHER DATA HAS BEEN SAVED BEFORE OR NOT
             sqlCommand = "SELECT COUNT(1) FROM PRODUCT_DAILY_ADJUSTMENT_HEADER WHERE DATE_FORMAT(PRODUCT_ADJUSTMENT_DATE, '%Y%m%d')  = '" + selectedDate + "'";
@@ -216,7 +230,8 @@ namespace AlphaSoft
             {
                 case NEW_DAILY_STOCK_TAKE:
                     sqlCommand = "SELECT MP.PRODUCT_ID, MP.PRODUCT_NAME AS ROTI, MP.PRODUCT_STOCK_AWAL AS AWAL, (IFNULL(TAB1.TOTAL_RECEIVED, 0)-IFNULL(TAB4.TOTAL_RECEIVED_RETURN, 0)) AS PRODUKSI, '' AS REMARK, '0' AS BS, MP.PRODUCT_STOCK_QTY AS AKHIR, (IFNULL(TAB2.TOTAL_SALES, 0)-IFNULL(TAB3.TOTAL_SALES_RETURN, 0)) AS LAKU, " +
-                                           "MP.PRODUCT_STOCK_QTY - (MP.PRODUCT_STOCK_AWAL+ (IFNULL(TAB1.TOTAL_RECEIVED, 0)-IFNULL(TAB4.TOTAL_RECEIVED_RETURN, 0)) - (IFNULL(TAB2.TOTAL_SALES, 0)-IFNULL(TAB3.TOTAL_SALES_RETURN, 0))) AS PENYESUAIAN, '0' AS RIILQTY " +
+                                           "IF(MP.PRODUCT_STOCK_AWAL > 0, MP.PRODUCT_STOCK_QTY - (MP.PRODUCT_STOCK_AWAL+ (IFNULL(TAB1.TOTAL_RECEIVED, 0)-IFNULL(TAB4.TOTAL_RECEIVED_RETURN, 0)) - (IFNULL(TAB2.TOTAL_SALES, 0)-IFNULL(TAB3.TOTAL_SALES_RETURN, 0))), '0') AS PENYESUAIAN, " +
+                                           "'0' AS RIILQTY " +
                                            "FROM MASTER_PRODUCT MP LEFT OUTER JOIN " +
                                            "(SELECT PRODUCT_ID, SUM(PRODUCT_ACTUAL_QTY) AS TOTAL_RECEIVED FROM PRODUCTS_RECEIVED_HEADER PRH, PRODUCTS_RECEIVED_DETAIL PRD WHERE PRD.PR_INVOICE = PRH.PR_INVOICE AND DATE_FORMAT(PRH.PR_DATE , '%Y%m%d')  = '" + selectedDate + "' GROUP BY PRODUCT_ID) TAB1 ON TAB1.PRODUCT_ID = MP.PRODUCT_ID " +
                                            "LEFT OUTER JOIN(SELECT PRODUCT_ID, SUM(PRODUCT_QTY) AS TOTAL_SALES FROM SALES_HEADER SH, SALES_DETAIL SD WHERE SD.SALES_INVOICE = SH.SALES_INVOICE AND DATE_FORMAT(SH.SALES_DATE, '%Y%m%d')  = '" + selectedDate + "' GROUP BY PRODUCT_ID) TAB2 ON TAB2.PRODUCT_ID = MP.PRODUCT_ID " +
@@ -234,7 +249,7 @@ namespace AlphaSoft
 
             using (rdr = DS.getData(sqlCommand))
             {
-                detailDataGrid.DataSource = null;
+                detailDataGrid.Rows.Clear();
                 if (rdr.HasRows)
                 {
                     while (rdr.Read())
@@ -249,7 +264,8 @@ namespace AlphaSoft
                             rdr.GetString("BS"), 
                             rdr.GetString("AKHIR"),
                             rdr.GetString("RIILQTY"),
-                            rdr.GetString("REMARK")
+                            rdr.GetString("REMARK"),
+                            rdr.GetString("AKHIR")
                             );
                         BSQty.Add(rdr.GetString("BS"));
                         //calculateAkhirValue(detailDataGrid.Rows.Count-1);
@@ -304,7 +320,7 @@ namespace AlphaSoft
             produksi = Convert.ToInt32(selectedRow.Cells["PRODUKSI"].Value);
             laku = Convert.ToInt32(selectedRow.Cells["LAKU"].Value);
             bs = Convert.ToInt32(BSQty[rowIndex]);
-            akhir = Convert.ToInt32(selectedRow.Cells["AKHIR"].Value);
+            akhir = Convert.ToInt32(selectedRow.Cells["originalAkhir"].Value);
 
             //            akhir = awal + produksi - bs - laku;
             akhir = akhir - bs;
@@ -455,9 +471,11 @@ namespace AlphaSoft
                 DS.mySqlConnect();
 
                 userID = gUtil.getUserID();
-                productAdjustmentDate = gUtil.getCustomStringFormatDate(DateTime.Now);
+                //productAdjustmentDate = gUtil.getCustomStringFormatDate(DateTime.Now);
+                // TEMP
+                productAdjustmentDate = gUtil.getCustomStringFormatDate(stockTakeDateTimePicker.Value);
 
-                switch(moduleID)
+                switch (moduleID)
                 {
                     case NEW_DAILY_STOCK_TAKE:
                         globalProductAdjustmentID = getProductAdjustmentID();
@@ -507,7 +525,7 @@ namespace AlphaSoft
                 // SAVE DATA DETAIL
                 for (int i =0;i<detailDataGrid.Rows.Count;i++)
                 {
-                    sqlCommand = "INSERT INTO PRODUCT_DAILY_ADJUSTMENT_DETAIL (PRODUCT_ADJUSTMENT_ID, PRODUCT_ID, PRODUCT_LAST_STOCK_QTY, PRODUCT_RECEIVED_QTY, PRODUCT_BS_QTY, PRODUCT_SOLD_QTY, PRODUCT_LEFTOVER_QTY, REMARKS, PRODUCT_RIIL_QTY, PRODUCT_ADJUSTMENT_QTY) VALUES (" +
+                    sqlCommand = "INSERT INTO PRODUCT_DAILY_ADJUSTMENT_DETAIL (PRODUCT_ADJUSTMENT_ID, PRODUCT_ID, PRODUCT_LAST_STOCK_QTY, PRODUCT_RECEIVED_QTY, PRODUCT_BS_QTY, PRODUCT_SOLD_QTY, PRODUCT_LEFTOVER_QTY, REMARKS, PRODUCT_ADJUSTMENT_QTY, PRODUCT_RIIL_QTY) VALUES (" +
                                             globalProductAdjustmentID + ", '" + 
                                             detailDataGrid.Rows[i].Cells["productID"].Value.ToString() + "', " +
                                             detailDataGrid.Rows[i].Cells["awal"].Value.ToString() + ", " +
@@ -564,7 +582,7 @@ namespace AlphaSoft
                 return;
 
             if (closeStockTake)
-                messageString = "SAVE DATA DAN PRINT OUT?";
+                messageString = "SAVE DATA, STOCK TAKE SUDAH FINAL?";
             else
                 messageString = "SAVE DATA?";
 
@@ -580,6 +598,7 @@ namespace AlphaSoft
 
                         if (closeStockTake)
                         {
+                            stockTakeCloseStatus = 1;
                             printOutDailyStockTake();
                         }
                     }
@@ -604,6 +623,23 @@ namespace AlphaSoft
         private void dailyStockTakeDetailForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             unregisterGlobalHotkey();
+        }
+
+        private void stockTakeDateTimePicker_ValueChanged(object sender, EventArgs e)
+        {
+            loadDataStockTake();
+        }
+
+        private void dailyStockTakeDetailForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (closeShopFlag)
+            {
+                if (stockTakeCloseStatus != 1)
+                {
+                    MessageBox.Show("STOCK TAKE HARUS SUDAH FINAL UNTUK TUTUP TOKO", "WARNING", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    e.Cancel = true;
+                }
+            }
         }
     }
 }

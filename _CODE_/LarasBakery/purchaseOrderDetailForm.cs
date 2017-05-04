@@ -790,6 +790,8 @@ namespace AlphaSoft
         {           
             int userAccessOption = 0;
 
+            POinvoiceTextBox.Text = gUtil.getAutoGenerateID("PURCHASE_HEADER", "PO", "-", "PURCHASE_INVOICE");
+
             errorLabel.Text = "";
             durationTextBox.Enabled = false;
 
@@ -939,6 +941,8 @@ namespace AlphaSoft
             bool addToTaxTable = false;
 
             roInvoice = selectedROInvoice; //ROInvoiceTextBox.Text;
+
+            POinvoiceTextBox.Text = gUtil.getAutoGenerateID("PURCHASE_HEADER", "PO", "-", "PURCHASE_INVOICE");
             POInvoice = POinvoiceTextBox.Text;
             supplierID = selectedSupplierID;
 

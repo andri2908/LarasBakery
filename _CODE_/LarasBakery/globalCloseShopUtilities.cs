@@ -25,6 +25,13 @@ namespace AlphaSoft
         private System.Windows.Forms.PrintPreviewDialog printPreviewDialog1 = new PrintPreviewDialog();
         private System.Windows.Forms.SaveFileDialog saveFileDialog1 = new SaveFileDialog();
 
+        private bool localSuccess = false;
+        private bool serverSuccess = false;
+        private bool firstTimeClose = false;
+
+        string localSuccessDate;
+        string serverSuccessDate;
+
         int paperLength = 500;
 
         private int calculatePaperLength()
@@ -93,28 +100,43 @@ namespace AlphaSoft
             Offset = Offset + add_offset;
             // =========================================================================
             Offset = Offset + add_offset;
+            Offset = Offset + add_offset;
+            // =========================================================================
+
+            Offset = Offset + add_offset;
+            Offset = Offset + add_offset;
+            // =========================================================================
+
+            Offset = Offset + add_offset;
 
             Offset = Offset + add_offset;
             Offset = Offset + add_offset;
 
-            DS.mySqlConnect();
+            Offset = Offset + add_offset;
+            Offset = Offset + add_offset;
+            Offset = Offset + add_offset;
+            Offset = Offset + add_offset;
+            Offset = Offset + add_offset;
+            Offset = Offset + add_offset;
 
-            sqlCommand = "SELECT DJ.JOURNAL_DESCRIPTION, IFNULL(DJ.JOURNAL_NOMINAL, 0) AS NOMINAL " +
-                                   "FROM DAILY_JOURNAL DJ, MASTER_ACCOUNT MA " +
-                                   "WHERE DATE_FORMAT(DJ.JOURNAL_DATETIME, '%Y%m%d')  = '" + dateFrom + "' AND DJ.ACCOUNT_ID > 3 AND MA.ACCOUNT_TYPE_ID = 2 AND DJ.ACCOUNT_ID = MA.ACCOUNT_ID";
+            //DS.mySqlConnect();
 
-            using (rdr = DS.getData(sqlCommand))
-            {
-                if (rdr.HasRows)
-                {
-                    int i = 0;
-                    while (rdr.Read())
-                    {
-                        Offset = Offset + add_offset;
-                    }
-                }
-            }
-            DS.mySqlClose();
+            //sqlCommand = "SELECT DJ.JOURNAL_DESCRIPTION, IFNULL(DJ.JOURNAL_NOMINAL, 0) AS NOMINAL " +
+            //                       "FROM DAILY_JOURNAL DJ, MASTER_ACCOUNT MA " +
+            //                       "WHERE DATE_FORMAT(DJ.JOURNAL_DATETIME, '%Y%m%d')  = '" + dateFrom + "' AND DJ.ACCOUNT_ID > 3 AND MA.ACCOUNT_TYPE_ID = 2 AND DJ.ACCOUNT_ID = MA.ACCOUNT_ID";
+
+            //using (rdr = DS.getData(sqlCommand))
+            //{
+            //    if (rdr.HasRows)
+            //    {
+            //        int i = 0;
+            //        while (rdr.Read())
+            //        {
+            //            Offset = Offset + add_offset;
+            //        }
+            //    }
+            //}
+            //DS.mySqlClose();
 
             Offset = Offset + add_offset;
 
@@ -147,6 +169,7 @@ namespace AlphaSoft
             int fontSize = 8;
             String underLine = "------------------------------";  //32 character
             string sqlCommand = "";
+            string whereClause = "";
 
             //set allignemnt
             StringFormat sf = new StringFormat();
@@ -159,7 +182,7 @@ namespace AlphaSoft
             System.Drawing.RectangleF rectright = new System.Drawing.RectangleF(totrowwidth - colxwidth - startX, startY + Offset, colxwidth, rowheight);
             //set middle print area
             System.Drawing.RectangleF rectcenter = new System.Drawing.RectangleF((startX + totrowwidth), startY + Offset, colxwidth, rowheight);
-            string dateFrom = String.Format(culture, "{0:yyyyMMdd}", DateTime.Now);
+            ///string dateFrom = String.Format(culture, "{0:yyyyMMdd}", DateTime.Now);
 
             ucapan = gUtil.getCustomStringFormatDate(DateTime.Now);
             graphics.DrawString(ucapan, new Font("Courier New", 9),
@@ -197,9 +220,14 @@ namespace AlphaSoft
 
             DS.mySqlConnect();
 
-            sqlCommand = "SELECT MP.PRODUCT_NAME, IFNULL(PD.PRODUCT_SOLD_QTY, 0) AS PRODUCT_SOLD_QTY, IFNULL((PRODUCT_LEFTOVER_QTY - PRODUCT_RIIL_QTY), 0) AS SELISIH " + 
+            sqlCommand = "SELECT MP.PRODUCT_NAME, IFNULL(SUM(PD.PRODUCT_SOLD_QTY), 0) AS PRODUCT_SOLD_QTY, IFNULL(SUM(PRODUCT_LEFTOVER_QTY - PRODUCT_RIIL_QTY), 0) AS SELISIH " +
                                     "FROM MASTER_PRODUCT MP, PRODUCT_DAILY_ADJUSTMENT_HEADER PH, PRODUCT_DAILY_ADJUSTMENT_DETAIL PD " +
-                                    "WHERE PD.PRODUCT_ID = MP.PRODUCT_ID AND DATE_FORMAT(PH.PRODUCT_ADJUSTMENT_DATE, '%Y%m%d')  = '" + dateFrom + "' AND PD.PRODUCT_ADJUSTMENT_ID = PH.PRODUCT_ADJUSTMENT_ID";
+                                    "WHERE PD.PRODUCT_ID = MP.PRODUCT_ID AND PD.PRODUCT_ADJUSTMENT_ID = PH.PRODUCT_ADJUSTMENT_ID";
+
+            if (!firstTimeClose)
+                whereClause = " AND DATE_FORMAT(PH.PRODUCT_ADJUSTMENT_DATE, '%Y%m%d')  > '" + localSuccessDate + "'";
+
+            sqlCommand = sqlCommand + " " + whereClause + " GROUP BY MP.PRODUCT_ID"; 
 
             using (rdr = DS.getData(sqlCommand))
             {
@@ -260,9 +288,18 @@ namespace AlphaSoft
             graphics.DrawString(ucapan, new Font("Courier New", 9),
                                 new SolidBrush(Color.Black), rect, sf);
 
-            sqlCommand = "SELECT IFNULL(SUM(SALES_TOTAL - SALES_DISCOUNT_FINAL), 0) AS TOTAL_SALES " +
-                                    "FROM SALES_HEADER " +
-                                    "WHERE DATE_FORMAT(SALES_DATE, '%Y%m%d')  = '" + dateFrom + "' AND SALES_TOP = 1 AND SALES_PAID = 1";
+            //sqlCommand = "SELECT IFNULL(SUM(SALES_TOTAL - SALES_DISCOUNT_FINAL), 0) AS TOTAL_SALES " +
+            //                        "FROM SALES_HEADER " +
+            //                        "WHERE SALES_TOP = 1 AND SALES_PAID = 1";
+            sqlCommand = "SELECT IFNULL(SUM(PAYMENT_NOMINAL), 0) AS TOTAL_CREDIT " +
+                                    "FROM PAYMENT_CREDIT " +
+                                    "WHERE PAYMENT_CONFIRMED = 1 AND PM_ID = 1 AND PAYMENT_IS_DP = 0";
+
+            if (!firstTimeClose)
+                //whereClause = " AND DATE_FORMAT(SALES_DATE, '%Y%m%d')  > '" + localSuccessDate + "'";
+                whereClause = " AND DATE_FORMAT(PAYMENT_DATE, '%Y%m%d')  > '" + localSuccessDate + "'";
+
+            sqlCommand = sqlCommand + " " + whereClause;
 
             double totalCashSales;
             totalCashSales = Convert.ToDouble(DS.getDataSingleValue(sqlCommand));
@@ -282,7 +319,12 @@ namespace AlphaSoft
 
             sqlCommand = "SELECT IFNULL(SUM(DJ.JOURNAL_NOMINAL), 0) AS TOTAL_NON_SALES " +
                                    "FROM DAILY_JOURNAL DJ, MASTER_ACCOUNT MA " +
-                                   "WHERE DATE_FORMAT(DJ.JOURNAL_DATETIME, '%Y%m%d')  = '" + dateFrom + "' AND DJ.ACCOUNT_ID > 3 AND MA.ACCOUNT_TYPE_ID = 1 AND DJ.ACCOUNT_ID = MA.ACCOUNT_ID";
+                                   "WHERE DJ.ACCOUNT_ID > 3 AND MA.ACCOUNT_TYPE_ID = 1 AND DJ.ACCOUNT_ID = MA.ACCOUNT_ID";
+
+            if (!firstTimeClose)
+                whereClause = " AND DATE_FORMAT(DJ.JOURNAL_DATETIME, '%Y%m%d')  > '" + localSuccessDate + "'";
+
+            sqlCommand = sqlCommand + " " + whereClause;
 
             double totalCashNonSales;
             totalCashNonSales = Convert.ToDouble(DS.getDataSingleValue(sqlCommand));
@@ -300,9 +342,18 @@ namespace AlphaSoft
             graphics.DrawString(ucapan, new Font("Courier New", 9),
                                 new SolidBrush(Color.Black), rect, sf);
 
-            sqlCommand = "SELECT IFNULL(SUM(SALES_PAYMENT), 0) AS TOTAL_DP " +
-                                    "FROM SALES_HEADER " +
-                                    "WHERE DATE_FORMAT(SALES_DATE, '%Y%m%d')  = '" + dateFrom + "' AND SALES_TOP = 1 AND SALES_PAID = 0";
+            //sqlCommand = "SELECT IFNULL(SUM(PAYMENT_NOMINAL), 0) AS TOTAL_DP " +
+            //                        "FROM PAYMENT_CREDIT " +
+            //                        "WHERE PAYMENT_CONFIRMED = 1 AND PM_ID = 1 AND PAYMENT_IS_DP = 1";
+
+            sqlCommand = "SELECT IFNULL(SUM(DJ.JOURNAL_NOMINAL), 0) AS NOMINAL " +
+                                 "FROM DAILY_JOURNAL DJ " +
+                                 "WHERE JOURNAL_DESCRIPTION LIKE '%PEMBAYARAN DP [%'";
+
+            if (!firstTimeClose)
+                whereClause = " AND DATE_FORMAT(DJ.JOURNAL_DATETIME, '%Y%m%d')  > '" + localSuccessDate + "'";
+
+            sqlCommand = sqlCommand + " " + whereClause;
 
             double totalDP;
             totalDP = Convert.ToDouble(DS.getDataSingleValue(sqlCommand));
@@ -314,14 +365,50 @@ namespace AlphaSoft
                                 new SolidBrush(Color.Black), rect, sf);
             // =========================================================================
 
+            Offset = Offset + add_offset;
+            rect.Y = startY + Offset;
+            ucapan = "Pendapatan Pesanan";
+            graphics.DrawString(ucapan, new Font("Courier New", 9),
+                                new SolidBrush(Color.Black), rect, sf);
+
+            sqlCommand = "SELECT IFNULL(SUM(PAYMENT_NOMINAL), 0) AS TOTAL_CREDIT " +
+                                    "FROM PAYMENT_CREDIT " +
+                                    "WHERE PAYMENT_CONFIRMED = 1 AND PM_ID = 1 AND PAYMENT_IS_DP = 0";
+
+            if (!firstTimeClose)
+                whereClause = " AND DATE_FORMAT(PAYMENT_CONFIRMED_DATE, '%Y%m%d')  > '" + localSuccessDate + "'";
+
+            sqlCommand = sqlCommand + " " + whereClause;
+
+            double totalCreditPayment = 0;
+            totalCreditPayment = Convert.ToDouble(DS.getDataSingleValue(sqlCommand));
+
+            Offset = Offset + add_offset;
+            rect.Y = startY + Offset;
+            ucapan = totalCreditPayment.ToString("C", culture);
+            graphics.DrawString(ucapan, new Font("Courier New", 9),
+                                new SolidBrush(Color.Black), rect, sf);
+            // =========================================================================
+
+            Offset = Offset + add_offset;
+            rect.Y = startY + Offset;
+            graphics.DrawString(underLine, new Font("Courier New", 9),
+                     new SolidBrush(Color.Black), rect, sf);
+
             double totalIncome;
-            totalIncome = totalCashSales + totalCashNonSales + totalDP;
+            totalIncome = totalCashSales + totalCashNonSales + totalDP + totalCreditPayment;
 
             Offset = Offset + add_offset;
             rect.Y = startY + Offset;
             ucapan = "TOTAL : " + totalIncome.ToString("C", culture); ;
             graphics.DrawString(ucapan, new Font("Courier New", 9),
                                 new SolidBrush(Color.Black), rect, sf);
+
+            Offset = Offset + add_offset;
+            rect.Y = startY + Offset;
+            graphics.DrawString(underLine, new Font("Courier New", 9),
+                     new SolidBrush(Color.Black), rect, sf);
+            // =========================================================================
 
             Offset = Offset + add_offset;
             Offset = Offset + add_offset;
@@ -331,46 +418,94 @@ namespace AlphaSoft
             graphics.DrawString(ucapan, new Font("Courier New", 9),
                                 new SolidBrush(Color.Black), rect, sf);
 
-            DS.mySqlConnect();
-
-            sqlCommand = "SELECT DJ.JOURNAL_DESCRIPTION, IFNULL(DJ.JOURNAL_NOMINAL, 0) AS NOMINAL " +
+            sqlCommand = "SELECT IFNULL(SUM(DJ.JOURNAL_NOMINAL), 0) AS NOMINAL " +
                                    "FROM DAILY_JOURNAL DJ, MASTER_ACCOUNT MA " +
-                                   "WHERE DATE_FORMAT(DJ.JOURNAL_DATETIME, '%Y%m%d')  = '" + dateFrom + "' AND DJ.ACCOUNT_ID > 3 AND MA.ACCOUNT_TYPE_ID = 2 AND DJ.ACCOUNT_ID = MA.ACCOUNT_ID";
+                                   "WHERE DJ.ACCOUNT_ID > 3 AND MA.ACCOUNT_TYPE_ID = 2 AND DJ.ACCOUNT_ID = MA.ACCOUNT_ID";
+
+            if (!firstTimeClose)
+                whereClause = " AND DATE_FORMAT(DJ.JOURNAL_DATETIME, '%Y%m%d')  > '" + localSuccessDate + "'";
+
+            sqlCommand = sqlCommand + " " + whereClause;
 
             double expenseAmt = 0;
+            expenseAmt = Convert.ToDouble(DS.getDataSingleValue(sqlCommand));
+
+            Offset = Offset + add_offset;
+            rect.Y = startY + Offset;
+            ucapan = expenseAmt.ToString("C", culture);
+            graphics.DrawString(ucapan, new Font("Courier New", 9),
+                                new SolidBrush(Color.Black), rect, sf);
+            // =========================================================================
+
+            Offset = Offset + add_offset;
+            rect.Y = startY + Offset;
+            ucapan = "Pembayaran Supplier";
+            graphics.DrawString(ucapan, new Font("Courier New", 9),
+                                new SolidBrush(Color.Black), rect, sf);
+
+            sqlCommand = "SELECT IFNULL(SUM(PAYMENT_NOMINAL), 0) AS TOTAL_PAYMENT_DEBT " +
+                                    "FROM PAYMENT_DEBT " +
+                                    "WHERE PAYMENT_CONFIRMED = 1 AND PM_ID = 1";
+
+            if (!firstTimeClose)
+                whereClause = " AND DATE_FORMAT(PAYMENT_CONFIRMED_DATE, '%Y%m%d')  > '" + localSuccessDate + "'";
+
+            sqlCommand = sqlCommand + " " + whereClause;
+
+            double totalDebtPayment;
+            totalDebtPayment = Convert.ToDouble(DS.getDataSingleValue(sqlCommand));
+
+            Offset = Offset + add_offset;
+            rect.Y = startY + Offset;
+            ucapan = totalDebtPayment.ToString("C", culture);
+            graphics.DrawString(ucapan, new Font("Courier New", 9),
+                                new SolidBrush(Color.Black), rect, sf);
+            // =========================================================================
+
+            //DS.mySqlConnect();
+
+            //sqlCommand = "SELECT DJ.JOURNAL_DESCRIPTION, IFNULL(DJ.JOURNAL_NOMINAL, 0) AS NOMINAL " +
+            //                       "FROM DAILY_JOURNAL DJ, MASTER_ACCOUNT MA " +
+            //                       "WHERE DATE_FORMAT(DJ.JOURNAL_DATETIME, '%Y%m%d')  = '" + dateFrom + "' AND DJ.ACCOUNT_ID > 3 AND MA.ACCOUNT_TYPE_ID = 2 AND DJ.ACCOUNT_ID = MA.ACCOUNT_ID";
+
+            //using (rdr = DS.getData(sqlCommand))
+            //{
+            //    if (rdr.HasRows)
+            //    {
+            //        int i = 0;
+            //        while (rdr.Read())
+            //        {
+            //            Offset = Offset + add_offset;
+            //            rect.Y = startY + Offset;
+
+            //            ucapan = rdr.GetString("JOURNAL_DESCRIPTION");
+            //            if (ucapan.Length > 20)
+            //            {
+            //                ucapan = ucapan.Substring(0, 20); //maximum 20 character
+            //            }
+            //            else
+            //                ucapan = ucapan.PadRight(20, ' ');
+
+            //            expenseAmt = rdr.GetDouble("JOURNAL_NOMINAL");
+            //            totalExpense = totalExpense + expenseAmt;
+
+            //            ucapan = ucapan + "|" + expenseAmt.ToString("C", culture);
+
+            //            //
+            //            graphics.DrawString(ucapan, new Font("Courier New", fontSize),
+            //                     new SolidBrush(Color.Black), rect, sf);
+            //        }
+            //    }
+            //}
+            //DS.mySqlClose();
+
+            Offset = Offset + add_offset;
+            rect.Y = startY + Offset;
+            graphics.DrawString(underLine, new Font("Courier New", 9),
+                     new SolidBrush(Color.Black), rect, sf);
+
             double totalExpense = 0;
-            using (rdr = DS.getData(sqlCommand))
-            {
-                if (rdr.HasRows)
-                {
-                    int i = 0;
-                    while (rdr.Read())
-                    {
-                        Offset = Offset + add_offset;
-                        rect.Y = startY + Offset;
-
-                        ucapan = rdr.GetString("JOURNAL_DESCRIPTION");
-                        if (ucapan.Length > 20)
-                        {
-                            ucapan = ucapan.Substring(0, 20); //maximum 20 character
-                        }
-                        else
-                            ucapan = ucapan.PadRight(20, ' ');
-
-                        expenseAmt = rdr.GetDouble("JOURNAL_NOMINAL");
-                        totalExpense = totalExpense + expenseAmt;
-
-                        ucapan = ucapan + "|" + expenseAmt.ToString("C", culture);
-
-                        //
-                        graphics.DrawString(ucapan, new Font("Courier New", fontSize),
-                                 new SolidBrush(Color.Black), rect, sf);
-                    }
-                }
-            }
-            DS.mySqlClose();
-
-
+            totalExpense = expenseAmt + totalDebtPayment;
 
             Offset = Offset + add_offset;
             rect.Y = startY + Offset;
@@ -378,19 +513,34 @@ namespace AlphaSoft
             graphics.DrawString(ucapan, new Font("Courier New", 9),
                                 new SolidBrush(Color.Black), rect, sf);
 
+            Offset = Offset + add_offset;
+            rect.Y = startY + Offset;
+            graphics.DrawString(underLine, new Font("Courier New", 9),
+                     new SolidBrush(Color.Black), rect, sf);
 
             double totalFinalCash = 0;
-            totalFinalCash = totalIncome - totalExpense;
+            totalFinalCash = totalIncome + totalExpense;
 
             Offset = Offset + add_offset;
             Offset = Offset + add_offset;
+
+            Offset = Offset + add_offset;
+            rect.Y = startY + Offset;
+            graphics.DrawString(underLine, new Font("Courier New", 9),
+                     new SolidBrush(Color.Black), rect, sf);
+
             Offset = Offset + add_offset;
             rect.Y = startY + Offset;
             ucapan = "KAS GRANDTOTAL : " + totalFinalCash.ToString("C", culture);
             graphics.DrawString(ucapan, new Font("Courier New", 9),
                                 new SolidBrush(Color.Black), rect, sf);
+
+            Offset = Offset + add_offset;
+            rect.Y = startY + Offset;
+            graphics.DrawString(underLine, new Font("Courier New", 9),
+                     new SolidBrush(Color.Black), rect, sf);
         }
-        
+
         private void printOutSummary()
         {
             printDocument1.PrintPage += new System.Drawing.Printing.PrintPageEventHandler(printDocument1_PrintPage);
@@ -411,7 +561,7 @@ namespace AlphaSoft
             }
         }
 
-        private void writeTableContentToInsertStatement(string tableName, StreamWriter sw, Data_Access DAccess, bool isHQConnection = false, bool skipFirstField = false, string sqlParam = "", string customTableName = "")
+        private void writeTableContentToInsertStatement(string tableName, StreamWriter sw, Data_Access DAccess, bool isHQConnection = false, bool skipFirstField = false, bool skipAddBranchID = false, string sqlParam = "", string customTableName = "")
         {
             string sqlCommand = "";
             MySqlDataReader rdr;
@@ -422,6 +572,10 @@ namespace AlphaSoft
             DateTime tempDateTime;
             string dateTimeValue;
             object DBValue = null;
+            int branchID = 0;
+            string namaCabang = "";
+
+            branchID = gUtil.loadbranchID(2, out namaCabang);
 
             if (sqlParam.Length <= 0)
                 sqlCommand = "SELECT * FROM " + tableName;
@@ -472,11 +626,19 @@ namespace AlphaSoft
                             }
                         }
 
-                        insertStatement = insertStatement.Substring(0, insertStatement.Length - 2);
-                        insertStatement = insertStatement + ") VALUES(";
+                        if (!skipAddBranchID)
+                        {
+                            insertStatement = insertStatement + "BRANCH_ID) VALUES(";
+                            valueStatement = valueStatement + branchID + ");";
+                        }
+                        else
+                        {
+                            insertStatement = insertStatement.Substring(0, insertStatement.Length - 2);
+                            insertStatement = insertStatement + ") VALUES(";
 
-                        valueStatement = valueStatement.Substring(0, valueStatement.Length - 2);
-                        valueStatement = valueStatement + ");";
+                            valueStatement = valueStatement.Substring(0, valueStatement.Length - 2);
+                            valueStatement = valueStatement + ");";
+                        }
 
                         insertStatement = insertStatement + valueStatement;
 
@@ -492,7 +654,7 @@ namespace AlphaSoft
         {
             StreamWriter sw = null;
             string sqlCommand = "";
-            string strCmdText = "USE 'sys_pos_larasbakery';";
+            string strCmdText = "USE 'sys_pos_larasbakery_server';";
             string dateFrom = String.Format(culture, "{0:yyyyMMdd}", DateTime.Now);
 
             if (!File.Exists(fileName))
@@ -502,56 +664,125 @@ namespace AlphaSoft
                 File.Delete(fileName);
                 sw = File.CreateText(fileName);
             }
-            sw.WriteLine(strCmdText);
+            //sw.WriteLine(strCmdText);
 
             // EXPORT SALES HEADER
             sqlCommand = "SELECT * FROM SALES_HEADER WHERE SALES_PAID = 1";
-            writeTableContentToInsertStatement("SALES_HEADER", sw, DAccess, false, false, sqlCommand);
+            writeTableContentToInsertStatement("SALES_HEADER", sw, DAccess, false, false, false, sqlCommand);
 
             // EXPORT SALES DETAIL
             sqlCommand = "SELECT SD.* FROM SALES_DETAIL SD, SALES_HEADER SH WHERE SH.SALES_PAID = 1 AND SD.SALES_INVOICE = SH.SALES_INVOICE";
-            writeTableContentToInsertStatement("SALES_DETAIL", sw, DAccess, false, false, sqlCommand);
+            writeTableContentToInsertStatement("SALES_DETAIL", sw, DAccess, false, false, false, sqlCommand);
 
             // EXPORT CREDIT
             sqlCommand = "SELECT C.* FROM CREDIT C, SALES_HEADER SH WHERE SH.SALES_PAID = 1 AND C.SALES_INVOICE = SH.SALES_INVOICE AND C.CREDIT_PAID = 1";
-            writeTableContentToInsertStatement("CREDIT", sw, DAccess, false, false, sqlCommand);
+            writeTableContentToInsertStatement("CREDIT", sw, DAccess, false, false, false, sqlCommand);
 
             // EXPORT PAYMENT_CREDIT
             sqlCommand = "SELECT PC.* FROM PAYMENT_CREDIT PC, CREDIT C, SALES_HEADER SH WHERE SH.SALES_PAID = 1 AND C.SALES_INVOICE = SH.SALES_INVOICE AND PC.CREDIT_ID = C.CREDIT_ID AND C.CREDIT_PAID  = 1";
-            writeTableContentToInsertStatement("PAYMENT_CREDIT", sw, DAccess, false, false, sqlCommand);
+            writeTableContentToInsertStatement("PAYMENT_CREDIT", sw, DAccess, false, false, false, sqlCommand);
 
             // EXPORT DAILY JOURNAL
-            sqlCommand = "SELECT * FROM DAILY_JOURNAL WHERE DATE_FORMAT(DJ.JOURNAL_DATETIME, '%Y%m%d')  = '" + dateFrom + "'";
-            writeTableContentToInsertStatement("DAILY_JOURNAL", sw, DAccess, false, false, sqlCommand);
+            sqlCommand = "SELECT * FROM DAILY_JOURNAL WHERE DATE_FORMAT(JOURNAL_DATETIME, '%Y%m%d')  = '" + dateFrom + "'";
+            writeTableContentToInsertStatement("DAILY_JOURNAL", sw, DAccess, false, false, false, sqlCommand);
+
+            // EXPORT DEBT
+            sqlCommand = "SELECT D.* FROM DEBT D, PURCHASE_HEADER PH WHERE PH.PURCHASE_PAID = 1 AND D.PURCHASE_INVOICE = PH.PURCHASE_INVOICE AND D.DEBT_PAID = 1";
+            writeTableContentToInsertStatement("DEBT", sw, DAccess, false, false, false, sqlCommand);
+
+            // EXPORT PAYMENT DEBT
+            sqlCommand = "SELECT PD.* FROM PAYMENT_DEBT PD, DEBT D, PURCHASE_HEADER PH WHERE PH.PURCHASE_PAID = 1 AND D.PURCHASE_INVOICE = PH.PURCHASE_INVOICE AND PD.DEBT_ID = D.DEBT_ID AND D.DEBT_PAID  = 1";
+            writeTableContentToInsertStatement("PAYMENT_DEBT", sw, DAccess, false, false, false, sqlCommand);
         }
 
-        private void exportData()
+        private void exportData(string fileName)
         {
-            string localDate = "";
-            string fileName = "";
+            //saveFileDialog1.FileName = fileName;
+            //saveFileDialog1.AddExtension = true;
+            //saveFileDialog1.DefaultExt = "sql";
+            //saveFileDialog1.Filter = "SQL File (.sql)|*.sql";
 
-            localDate = String.Format(culture, "{0:ddMMyyyy}", DateTime.Now);
-
-            fileName = "EXPORT_DATA_" + localDate + ".sql";
-
-            saveFileDialog1.FileName = fileName;
-            saveFileDialog1.AddExtension = true;
-            saveFileDialog1.DefaultExt = "sql";
-            saveFileDialog1.Filter = "SQL File (.sql)|*.sql";
-
-            if (DialogResult.OK == saveFileDialog1.ShowDialog())
+            //if (DialogResult.OK == saveFileDialog1.ShowDialog())
             {
                 smallPleaseWait pleaseWait = new smallPleaseWait();
                 pleaseWait.Show();
 
                 //  ALlow main UI thread to properly display please wait form.
                 Application.DoEvents();
-                startExportData(saveFileDialog1.FileName, DS);
+                startExportData(fileName, DS);
 
                 pleaseWait.Close();
 
-                gUtil.saveSystemDebugLog(globalConstants.MENU_SINKRONISASI_INFORMASI, "EXPORTED FILE NAME = " + saveFileDialog1.FileName);
+                //gUtil.saveSystemDebugLog(globalConstants.MENU_SINKRONISASI_INFORMASI, "EXPORTED FILE NAME = " + saveFileDialog1.FileName);
             }
+        }
+
+        private bool syncLocalDataToServer(Data_Access localDS, string fileName)
+        {
+            System.IO.StreamReader file = new System.IO.StreamReader(fileName);
+            string sqlCommand = "";
+            MySqlException internalEX = null;
+            bool result = false;
+
+            try
+            {
+                while ((sqlCommand = file.ReadLine()) != null)
+                {
+                    if (!localDS.executeNonQueryCommand(sqlCommand, ref internalEX))
+                        throw internalEX;
+                }
+
+                file.Close();
+
+                DS.commit();
+
+                result = true;
+            }
+            catch (Exception ex)
+            {
+                gUtil.saveSystemDebugLog(0, "[TUTUP TOKO] FAILED TO SYNC LOCAL DATA TO SERVER [" + ex.Message + "]");
+            }
+
+            return result;
+        }
+
+        private bool synchronizeDataToServer()
+        {
+            bool result = false;
+            Data_Access DS_HQ = new Data_Access();
+            string localDate = "";
+            string fileName = "";
+
+            localDate = String.Format(culture, "{0:ddMMyyyy}", DateTime.Now);
+            fileName = "EXPORT_DATA_" + localDate + ".sql";
+
+            // EXPORT LOCAL DATA
+            exportData(fileName);
+
+            if (DS_HQ.HQ_mySQLConnect(true))
+            {
+                gUtil.saveSystemDebugLog(0, "[TUTUP TOKO] CONNECTION TO CENTRAL HQ CREATED");
+
+                result = syncLocalDataToServer(DS_HQ, fileName);
+
+                try
+                {
+                    File.Delete(fileName);
+                }
+                catch (Exception ex)
+                {
+                    gUtil.saveSystemDebugLog(0, "[TUTUP TOKO] FAILED TO DELETE EXPORT FILE [" +ex.Message+ "]");
+                }
+            }
+            else
+            {
+                MessageBox.Show("KONEKSI KE PUSAT GAGAL");
+                gUtil.saveSystemDebugLog(0, "[TUTUP TOKO] FAILED TO CONNECT TO CENTRAL HQ");
+
+                result = false;
+            }
+
+            return result;
         }
 
         private void clearDailyTransaction()
@@ -561,6 +792,7 @@ namespace AlphaSoft
             MySqlDataReader rdr;
             MySqlException internalEX = null;
             int creditID = 0;
+            int debtID = 0;
             string salesInvoice = "";
 
             DS.beginTransaction();
@@ -594,6 +826,26 @@ namespace AlphaSoft
                 }
                 rdr.Close();
 
+                // GET A LIST OF DEBT_ID 
+                sqlCommand = "SELECT PH.PURCHASE_INVOICE, D.DEBT_ID FROM DEBT D, PURCHASE_HEADER PH WHERE D.PURCHASE_INVOICE = PH.PURCHASE_INVOICE AND PH.PURCHASE_PAID = 1 AND D.DEBT_PAID = 1";
+                using (rdr = DS.getData(sqlCommand))
+                {
+                    while (rdr.Read())
+                    {
+                        debtID = rdr.GetInt32("DEBT_ID");
+
+                        // CLEAR PAYMENT_CREDIT
+                        sqlCommand = "DELETE FROM PAYMENT_DEBT WHERE DEBT_ID = " + debtID;
+                        DS.executeNonQueryCommand(sqlCommand, ref internalEX);
+
+                        // CLEAR CREDIT
+                        sqlCommand = "DELETE FROM DEBT WHERE DEBT_ID = " + debtID;
+                        DS.executeNonQueryCommand(sqlCommand, ref internalEX);
+                    }
+                }
+                rdr.Close();
+
+
                 DS.commit();
             }
             catch (Exception ex)
@@ -622,21 +874,93 @@ namespace AlphaSoft
             }
         }
 
+        private void updateLastSuccessDate()
+        {
+            string sqlCommand= "";
+            string localDate = String.Format(culture, "{0:dd-MM-yyyy}", DateTime.Now);
+            MySqlException internalEX = null;
+
+            DS.beginTransaction();
+
+            try
+            {
+                if (firstTimeClose)
+                {
+                    if (serverSuccess)
+                    {
+                        sqlCommand = "INSERT INTO CLOSE_SHOP_HISTORY (LAST_SUCCESS_LOCAL_DATE, LAST_SUCCESS_SERVER_DATE) VALUES (" +
+                                               "STR_TO_DATE('" + localDate + "', '%d-%m-%Y'), STR_TO_DATE('" + localDate + "', '%d-%m-%Y'))"; 
+                    }
+                    else
+                    {
+                        sqlCommand = "INSERT INTO CLOSE_SHOP_HISTORY (LAST_SUCCESS_LOCAL_DATE) VALUES ("+
+                                            "STR_TO_DATE('" + localDate + "', '%d-%m-%Y'))";
+                    }
+                }
+                else
+                {
+                    if (serverSuccess)
+                        sqlCommand = "UPDATE CLOSE_SHOP_HISTORY SET LAST_SUCCESS_LOCAL_DATE = STR_TO_DATE('" + localDate + "', '%d-%m-%Y'), LAST_SUCCESS_SERVER_DATE = STR_TO_DATE('" + localDate + "', '%d-%m-%Y')";
+                    else
+                        sqlCommand = "UPDATE CLOSE_SHOP_HISTORY SET LAST_SUCCESS_LOCAL_DATE = STR_TO_DATE('" + localDate + "', '%d-%m-%Y')";
+                }
+
+                if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
+                     throw internalEX;
+
+                DS.commit();
+            }
+            catch (Exception ex)
+            {
+                gUtil.saveSystemDebugLog(0, "[TUTUP TOKO] FAILED TO UPDATE LAST SUCCESS DATE [" + ex.Message + "]");
+            }
+        }
+
         public void closeShopProcedure()
         {
+            string sqlCommand;
+            DateTime defaultSuccessDate = DateTime.Now;
+            defaultSuccessDate = defaultSuccessDate.AddDays(-1);
+
+            sqlCommand = "SELECT COUNT(1) FROM CLOSE_SHOP_HISTORY";
+            if (Convert.ToInt32(DS.getDataSingleValue(sqlCommand)) <= 0)
+                firstTimeClose = true;
+            else
+            {
+                sqlCommand = "SELECT IFNULL(DATE_FORMAT(LAST_SUCCESS_LOCAL_DATE, '%Y%m%d'), '') FROM CLOSE_SHOP_HISTORY LIMIT 1";
+                localSuccessDate = DS.getDataSingleValue(sqlCommand).ToString();
+                if (localSuccessDate.Length <= 0)
+                    localSuccessDate = String.Format(culture, "{0:yyyyMMdd}", defaultSuccessDate);
+
+                sqlCommand = "SELECT IFNULL(DATE_FORMAT(LAST_SUCCESS_SERVER_DATE, '%Y%m%d'), '') FROM CLOSE_SHOP_HISTORY LIMIT 1";
+                serverSuccessDate = DS.getDataSingleValue(sqlCommand).ToString();
+                if (serverSuccessDate.Length <= 0)
+                    serverSuccessDate = String.Format(culture, "{0:yyyyMMdd}", defaultSuccessDate);
+
+                firstTimeClose = false;
+            }
+
             // PRINT OUT SUMMARY
             printOutSummary();
 
+            localSuccess = true;
             // SYNCHRONIZE TO SERVER
+            if (synchronizeDataToServer())
+                serverSuccess = true;
 
             // EXPORT TO FILE
-            exportData();
+            //exportData();
 
-            // CLEAR DATA PENJUALAN TUNAI LUNAS
-            clearDailyTransaction();
+            if (serverSuccess)
+            {
+                // CLEAR DATA PENJUALAN TUNAI LUNAS
+                clearDailyTransaction();
 
-            // CLEAR DATA JURNAL HARIAN
-            clearDailyJournal();
+                // CLEAR DATA JURNAL HARIAN
+                clearDailyJournal();
+            }
+
+            updateLastSuccessDate();
         }
     }
 }

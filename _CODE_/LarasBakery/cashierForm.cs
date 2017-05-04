@@ -35,6 +35,7 @@ namespace AlphaSoft
         // private double discAmount = 0;
         private string discAmountText = "0";
         private bool forceUpOneLevel = false;
+        private double SQDPAmount = 0;
 
         private double sisaBayar = 0;
         private int originModuleID = 0;
@@ -948,7 +949,7 @@ namespace AlphaSoft
                 if (DialogResult.No == MessageBox.Show("PELANGGAN KOSONG, LANJUTKAN ?", "WARNING", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
                     return false;
 
-            if (originModuleID != globalConstants.SALES_QUOTATION && originModuleID != globalConstants.EDIT_SALES_QUOTATION && originModuleID != globalConstants.SQ_TO_SO)
+            if (originModuleID != globalConstants.SALES_QUOTATION && originModuleID != globalConstants.EDIT_SALES_QUOTATION )
             {
                 if (cashRadioButton.Checked)
                 {
@@ -1033,7 +1034,7 @@ namespace AlphaSoft
             {
                 salesTop = 1;
 
-                if (bayarAmount != globalTotalValue)
+                if (bayarAmount < globalTotalValue)
                     salesPaid = 0;
                 else
                     salesPaid = 1;
@@ -1111,6 +1112,8 @@ namespace AlphaSoft
 
             DS.beginTransaction();
 
+           // double realGlobalTotalValue = globalTotalValue + bayarAmount;
+
             try
             {
                 DS.mySqlConnect();
@@ -1155,41 +1158,41 @@ namespace AlphaSoft
                     // SAVE HEADER TABLE
                     sqlCommand = "INSERT INTO SALES_QUOTATION_HEADER (SQ_INVOICE, CUSTOMER_ID, SQ_DATE, SQ_TOTAL, SALES_DISCOUNT_FINAL, SQ_TOP, SQ_TOP_DATE, SQ_APPROVED, SALESPERSON_ID, SQ_ORDER_DATE, SQ_DP, SQ_ORDER_ADDRESS, DELIVERED) " +
                                         "VALUES " +
-                                        "('" + salesInvoice + "', " + selectedPelangganID + ", STR_TO_DATE('" + SODateTime + "', '%d-%m-%Y %H:%i'), " + gutil.validateDecimalNumericInput(globalTotalValue) + ", " + gutil.validateDecimalNumericInput(Convert.ToDouble(salesDiscountFinal)) + ", " + salesTop + ", STR_TO_DATE('" + SODueDateTime + "', '%d-%m-%Y'), 0, " + gutil.getUserID() + ", STR_TO_DATE('" + SQOrderDate + "', '%d-%m-%Y'), " + gutil.validateDecimalNumericInput(bayarAmount) + ", '" + addressTextBox.Text + "', " + delivered + ")";
+                                        "('" + salesInvoice + "', " + selectedPelangganID + ", STR_TO_DATE('" + SODateTime + "', '%d-%m-%Y %H:%i'), " + gutil.validateDecimalNumericInput(globalTotalValue) + ", " + gutil.validateDecimalNumericInput(Convert.ToDouble(salesDiscountFinal)) + ", " + salesTop + ", STR_TO_DATE('" + SODueDateTime + "', '%d-%m-%Y'), 1, " + gutil.getUserID() + ", STR_TO_DATE('" + SQOrderDate + "', '%d-%m-%Y'), " + gutil.validateDecimalNumericInput(bayarAmount) + ", '" + addressTextBox.Text + "', " + delivered + ")";
 
                     gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "INSERT INTO SALES QUOTATION HEADER [" + salesInvoice + "]");
                     if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
                         throw internalEX;
                 }
-                else if (originModuleID == globalConstants.EDIT_SALES_QUOTATION)
+                else if (originModuleID == globalConstants.EDIT_SALES_QUOTATION) 
                 {
-                    SQOrderDate = String.Format(culture, "{0:dd-MM-yyyy}", jobStartDateTimePicker.Value);
-                    salesInvoice = selectedsalesinvoice;
+                    //SQOrderDate = String.Format(culture, "{0:dd-MM-yyyy}", jobStartDateTimePicker.Value);
+                    //salesInvoice = selectedsalesinvoice;
 
-                    if (deliveredCheckbox.Checked)
-                        delivered = 1;
+                    //if (deliveredCheckbox.Checked)
+                    //    delivered = 1;
 
-                    // UPDATE HEADER TABLE
-                    sqlCommand = "UPDATE SALES_QUOTATION_HEADER SET CUSTOMER_ID = " + selectedPelangganID + ", " +
-                                            "SQ_TOTAL = " + gutil.validateDecimalNumericInput(globalTotalValue) + ", " +
-                                            "SALES_DISCOUNT_FINAL = " + gutil.validateDecimalNumericInput(Convert.ToDouble(salesDiscountFinal)) + ", " +
-                                            "SQ_TOP = " + salesTop + ", " +
-                                            "SQ_TOP_DATE = STR_TO_DATE('" + SODueDateTime + "', '%d-%m-%Y'), " +
-                                            "SQ_ORDER_DATE = STR_TO_DATE('" + SQOrderDate + "', '%d-%m-%Y'), " +
-                                            "SQ_DP = " + gutil.validateDecimalNumericInput(bayarAmount) + ", " +
-                                            "SQ_ORDER_ADDRESS = '" + addressTextBox.Text + "', " +
-                                            "DELIVERED = " + delivered + " " +
-                                            "WHERE SQ_INVOICE = '" + salesInvoice + "'";
+                    //// UPDATE HEADER TABLE
+                    //sqlCommand = "UPDATE SALES_QUOTATION_HEADER SET CUSTOMER_ID = " + selectedPelangganID + ", " +
+                    //                        "SQ_TOTAL = " + gutil.validateDecimalNumericInput(globalTotalValue) + ", " +
+                    //                        "SALES_DISCOUNT_FINAL = " + gutil.validateDecimalNumericInput(Convert.ToDouble(salesDiscountFinal)) + ", " +
+                    //                        "SQ_TOP = " + salesTop + ", " +
+                    //                        "SQ_TOP_DATE = STR_TO_DATE('" + SODueDateTime + "', '%d-%m-%Y'), " +
+                    //                        "SQ_ORDER_DATE = STR_TO_DATE('" + SQOrderDate + "', '%d-%m-%Y'), " +
+                    //                        "SQ_DP = " + gutil.validateDecimalNumericInput(bayarAmount) + ", " +
+                    //                        "SQ_ORDER_ADDRESS = '" + addressTextBox.Text + "', " +
+                    //                        "DELIVERED = " + delivered + " " +
+                    //                        "WHERE SQ_INVOICE = '" + salesInvoice + "'";
 
-                    gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "UPDATE SALES QUOTATION HEADER [" + salesInvoice + "]");
-                    if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
-                        throw internalEX;
+                    //gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "UPDATE SALES QUOTATION HEADER [" + salesInvoice + "]");
+                    //if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
+                    //    throw internalEX;
 
-                    // DELETE DETAIL TABLE CONTENT
-                    sqlCommand = "DELETE FROM SALES_QUOTATION_DETAIL WHERE SQ_INVOICE = '" + salesInvoice + "'";
-                    gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CLEAR SALES_QUOTATION_DETAIL [" + salesInvoice + "]");
-                    if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
-                        throw internalEX;
+                    //// DELETE DETAIL TABLE CONTENT
+                    //sqlCommand = "DELETE FROM SALES_QUOTATION_DETAIL WHERE SQ_INVOICE = '" + salesInvoice + "'";
+                    //gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CLEAR SALES_QUOTATION_DETAIL [" + salesInvoice + "]");
+                    //if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
+                    //    throw internalEX;
                 }
 
                 if (addToTaxTable)
@@ -1305,56 +1308,57 @@ namespace AlphaSoft
                     if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
                         throw internalEX;
 
-                    if (salesTop == 1 && selectedPaymentMethod == 0 && originModuleID == 0)
+                    if (salesTop == 1 && selectedPaymentMethod == 0 && (originModuleID == 0 || originModuleID == globalConstants.SQ_TO_SO))
                     {
                         // PAYMENT IN CASH THEREFORE ADDING THE AMOUNT OF CASH IN THE CASH REGISTER
                         // ADD A NEW ENTRY ON THE DAILY JOURNAL TO KEEP TRACK THE ADDITIONAL CASH AMOUNT 
                         sqlCommand = "INSERT INTO DAILY_JOURNAL (ACCOUNT_ID, JOURNAL_DATETIME, JOURNAL_NOMINAL, JOURNAL_DESCRIPTION, USER_ID, PM_ID) " +
-                                                       "VALUES (1, STR_TO_DATE('" + SODateTime + "', '%d-%m-%Y %H:%i')" + ", " + gutil.validateDecimalNumericInput(globalTotalValue) + ", 'PEMBAYARAN " + salesInvoice + "', '" + gutil.getUserID() + "', 1)";
-                        gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "INSERT TO DAILY JOURNAL TABLE [" + gutil.validateDecimalNumericInput(globalTotalValue) + "]");
+                                                       "VALUES (1, STR_TO_DATE('" + SODateTime + "', '%d-%m-%Y %H:%i')" + ", " + gutil.validateDecimalNumericInput(globalTotalValue - previousSQ_DP - discValue) + ", 'PEMBAYARAN " + salesInvoice + "', '" + gutil.getUserID() + "', 1)";
+                        gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "INSERT TO DAILY JOURNAL TABLE [" + gutil.validateDecimalNumericInput(globalTotalValue - previousSQ_DP - discValue) + "]");
 
                         if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
                             throw internalEX;
                     }
-                    else if (originModuleID == globalConstants.SQ_TO_SO)
-                    {
-                        // CALCULATE DIFFERENCE WITH PREVIOUS DP AMOUNT
-                        DPAmount = bayarAmount - previousSQ_DP;
+                    //else if (originModuleID == globalConstants.SQ_TO_SO)
+                    //{
 
-                        if (DPAmount != 0)
-                        {
-                            // ONLY SALES QUOTATION ABLE TO ADD DP TO JOURNAL
-                            sqlCommand = "INSERT INTO DAILY_JOURNAL (ACCOUNT_ID, JOURNAL_DATETIME, JOURNAL_NOMINAL, JOURNAL_DESCRIPTION, USER_ID, PM_ID) " +
-                                                           "VALUES (1, STR_TO_DATE('" + SODateTime + "', '%d-%m-%Y %H:%i')" + ", " + gutil.validateDecimalNumericInput(DPAmount) + ", 'PEMBAYARAN " + salesInvoice + "', '" + gutil.getUserID() + "', 1)";
-                            gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "INSERT TO DAILY JOURNAL TABLE [" + gutil.validateDecimalNumericInput(DPAmount) + "]");
+                    //    //// CALCULATE DIFFERENCE WITH PREVIOUS DP AMOUNT
+                    //    ////DPAmount = bayarAmount - previousSQ_DP;
 
-                            if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
-                                throw internalEX;
-                        }
-                    }
+                    //    //if (DPAmount != 0)
+                    //    //{
+                    //    //    // ONLY SALES QUOTATION ABLE TO ADD DP TO JOURNAL
+                    //    //    sqlCommand = "INSERT INTO DAILY_JOURNAL (ACCOUNT_ID, JOURNAL_DATETIME, JOURNAL_NOMINAL, JOURNAL_DESCRIPTION, USER_ID, PM_ID) " +
+                    //    //                                   "VALUES (1, STR_TO_DATE('" + SODateTime + "', '%d-%m-%Y %H:%i')" + ", " + gutil.validateDecimalNumericInput(DPAmount) + ", 'PEMBAYARAN " + salesInvoice + "', '" + gutil.getUserID() + "', 1)";
+                    //    //    gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "INSERT TO DAILY JOURNAL TABLE [" + gutil.validateDecimalNumericInput(DPAmount) + "]");
+
+                    //    //    if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
+                    //    //        throw internalEX;
+                    //    //}
+                    //}
                 }
                 else if (originModuleID == globalConstants.SALES_QUOTATION || originModuleID == globalConstants.EDIT_SALES_QUOTATION)
                 {
-                    string journalDate = "";
+                    //string journalDate = "";
 
-                    if (originModuleID == globalConstants.SALES_QUOTATION)   // JOURNAL DATE IS THE SAME AS SQ DATE IF NEW SALES QUOTATION
-                        journalDate = SODateTime;
-                    else if (originModuleID == globalConstants.EDIT_SALES_QUOTATION) // TAKE CURRENT DATE FOR EDIT SALES QUOTATION
-                        journalDate = String.Format(culture, "{0:dd-MM-yyyy}", DateTime.Now);
+                    //if (originModuleID == globalConstants.SALES_QUOTATION)   // JOURNAL DATE IS THE SAME AS SQ DATE IF NEW SALES QUOTATION
+                    //    journalDate = SODateTime;
+                    //else if (originModuleID == globalConstants.EDIT_SALES_QUOTATION) // TAKE CURRENT DATE FOR EDIT SALES QUOTATION
+                    //    journalDate = String.Format(culture, "{0:dd-MM-yyyy}", DateTime.Now);
 
-                    // CALCULATE DIFFERENCE WITH PREVIOUS DP AMOUNT
-                    DPAmount = bayarAmount - previousSQ_DP;
+                    //// CALCULATE DIFFERENCE WITH PREVIOUS DP AMOUNT
+                    //DPAmount = bayarAmount - previousSQ_DP;
 
-                    if (DPAmount != 0)
-                    {
-                        // ONLY SALES QUOTATION ABLE TO ADD DP TO JOURNAL
-                        sqlCommand = "INSERT INTO DAILY_JOURNAL (ACCOUNT_ID, JOURNAL_DATETIME, JOURNAL_NOMINAL, JOURNAL_DESCRIPTION, USER_ID, PM_ID) " +
-                                                       "VALUES (1, STR_TO_DATE('" + SODateTime + "', '%d-%m-%Y %H:%i')" + ", " + gutil.validateDecimalNumericInput(DPAmount) + ", 'PEMBAYARAN DP " + salesInvoice + "', '" + gutil.getUserID() + "', 1)";
-                        gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "INSERT TO DAILY JOURNAL TABLE [" + gutil.validateDecimalNumericInput(DPAmount) + "]");
+                    //if (DPAmount != 0)
+                    //{
+                    //    // ONLY SALES QUOTATION ABLE TO ADD DP TO JOURNAL
+                    //    sqlCommand = "INSERT INTO DAILY_JOURNAL (ACCOUNT_ID, JOURNAL_DATETIME, JOURNAL_NOMINAL, JOURNAL_DESCRIPTION, USER_ID, PM_ID) " +
+                    //                                   "VALUES (1, STR_TO_DATE('" + SODateTime + "', '%d-%m-%Y %H:%i')" + ", " + gutil.validateDecimalNumericInput(DPAmount) + ", 'PEMBAYARAN DP " + salesInvoice + "', '" + gutil.getUserID() + "', 1)";
+                    //    gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "INSERT TO DAILY JOURNAL TABLE [" + gutil.validateDecimalNumericInput(DPAmount) + "]");
 
-                        if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
-                            throw internalEX;
-                    }
+                    //    if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
+                    //        throw internalEX;
+                    //}
                 }
                 // ======================================================================================================
 
@@ -1412,53 +1416,178 @@ namespace AlphaSoft
         {
             bool result = false;
             string sqlCommand = "";
-            string creditID = "";
+            int creditID = 0;
             double DPAmount = 0;
+            //double prevDPAmount = 0;
             string paymentDate = String.Format(culture, "{0:dd-MM-yyyy}", DateTime.Now);
             MySqlException internalEX = null;
-            string SQCreatedDate = "";
+            //string SQCreatedDate = "";
+            string invoiceNo = "";
+
             DS.beginTransaction();
 
             try
             {
-                SQCreatedDate = gutil.getCustomStringFormatDate(Convert.ToDateTime(DS.getDataSingleValue("SELECT SQ_DATE FROM SALES_QUOTATION_HEADER WHERE SQ_INVOICE = '" + selectedSQInvoice + "'")));
+                // CHECK WHETHER JOURNAL ENTRY HAS BEEN CREATED
 
-                // GET CREDIT ID
-                sqlCommand = "SELECT IFNULL(CREDIT_ID, 0) FROM CREDIT WHERE SALES_INVOICE = '" + selectedsalesinvoice + "'";
-                creditID = DS.getDataSingleValue(sqlCommand).ToString();
-
-                if (creditID != "0")
+                if (originModuleID == globalConstants.SALES_QUOTATION || originModuleID == globalConstants.EDIT_SALES_QUOTATION)
                 {
-                    // CHECK WHETHER INVOICE HAS BEEN FULLY PAID
-                    sqlCommand = "SELECT CREDIT_PAID FROM CREDIT WHERE CREDIT_ID = " + creditID;
-                    if (DS.getDataSingleValue(sqlCommand).ToString() == "0")
+                    sqlCommand = "SELECT IFNULL(SQ_DP, 0) AS DP FROM SALES_QUOTATION_HEADER WHERE SQ_INVOICE = '" + selectedsalesinvoice + "'";
+                    DPAmount = Convert.ToDouble(DS.getDataSingleValue(sqlCommand));
+                    invoiceNo = selectedsalesinvoice;
+                }
+                else if (originModuleID == globalConstants.SQ_TO_SO)
+                {
+                    DPAmount = previousSQ_DP;
+                    invoiceNo = selectedSQInvoice;
+                }
+
+                if (originModuleID == globalConstants.SALES_QUOTATION || originModuleID == globalConstants.EDIT_SALES_QUOTATION || originModuleID == globalConstants.SQ_TO_SO)
+                { 
+                    sqlCommand = "SELECT COUNT(1) FROM DAILY_JOURNAL WHERE JOURNAL_DESCRIPTION = 'PEMBAYARAN DP [" + invoiceNo + "]' "; 
+
+                    if (Convert.ToInt32(DS.getDataSingleValue(sqlCommand)) > 0)
                     {
-                        sqlCommand = "SELECT IFNULL(SQ_DP, 0) AS DP FROM SALES_QUOTATION_HEADER WHERE SQ_INVOICE = '" + selectedSQInvoice + "'";
-                        DPAmount = Convert.ToDouble(DS.getDataSingleValue(sqlCommand));
+                        // UPDATE DAILY JOURNAL                                     
+                        sqlCommand = "UPDATE DAILY_JOURNAL SET " +
+                                                "ACCOUNT_ID = 1, " +
+                                                "JOURNAL_DATETIME = STR_TO_DATE('" + paymentDate + "', '%d-%m-%Y %H:%i'), " +
+                                                "JOURNAL_NOMINAL = " + gutil.validateDecimalNumericInput(DPAmount) + ", " +
+                                                "USER_ID = " + gutil.getUserID() + ", " +
+                                                "PM_ID = 1 " +
+                                                "WHERE JOURNAL_DESCRIPTION = 'PEMBAYARAN DP [" + invoiceNo + "]' ";
 
-                        if (DPAmount > 0)
+                        if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
+                            throw internalEX;
+                    }
+                    else
+                    {
+                        // INSERT INTO DAILY JOURNAL                                     
+                        sqlCommand = "INSERT INTO DAILY_JOURNAL (ACCOUNT_ID, JOURNAL_DATETIME, JOURNAL_NOMINAL, JOURNAL_DESCRIPTION, USER_ID, PM_ID) " +
+                                                "VALUES (1, STR_TO_DATE('" + paymentDate + "', '%d-%m-%Y %H:%i')" + ", " + gutil.validateDecimalNumericInput(DPAmount) + ", 'PEMBAYARAN DP [" + invoiceNo + "]'  , '" + gutil.getUserID() + "', 1)";
+
+                        if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
+                            throw internalEX;
+                    }
+                }
+
+                if (originModuleID == globalConstants.SQ_TO_SO || originModuleID == 0)
+                {
+                    int paymentMethod = 1;
+
+                    // GET CREDIT ID
+                    sqlCommand = "SELECT COUNT(1) FROM CREDIT WHERE SALES_INVOICE = '" + selectedsalesinvoice + "'";
+                    creditID = Convert.ToInt32(DS.getDataSingleValue(sqlCommand));
+
+                    if (creditID > 0)
+                    {
+                        sqlCommand = "SELECT CREDIT_ID FROM CREDIT WHERE SALES_INVOICE = '" + selectedsalesinvoice + "'";
+                        creditID = Convert.ToInt32(DS.getDataSingleValue(sqlCommand));
+
+                        if (originModuleID == globalConstants.SQ_TO_SO)                      
                         {
-                            int paymentMethod = 0;
-
-                            if (cashRadioButton.Checked == true) // CASH PAYMENT
-                            {
-                                paymentMethod = paymentComboBox.SelectedIndex + 1;
-                            }
-                            else
-                            {
-                                paymentMethod = 4;
-                            }
-
-                            // INSERT INTO PAYMENT CREDIT
-                            sqlCommand = "INSERT INTO PAYMENT_CREDIT (CREDIT_ID, PAYMENT_DATE, PM_ID, PAYMENT_NOMINAL, PAYMENT_DESCRIPTION, PAYMENT_CONFIRMED, PAYMENT_CONFIRMED_DATE, PAYMENT_DUE_DATE) " +
-                                                   "VALUES (" + creditID + ", STR_TO_DATE('" + paymentDate + "', '%d-%m-%Y %H:%i'), " + paymentMethod + ", " + DPAmount + ", 'DP', 1, STR_TO_DATE('" + SQCreatedDate + "', '%d-%m-%Y %H:%i'), STR_TO_DATE('" + SQCreatedDate + "', '%d-%m-%Y %H:%i'))";
+                            // INSERT INTO PAYMENT CREDIT FOR DP
+                            sqlCommand = "INSERT INTO PAYMENT_CREDIT (CREDIT_ID, PAYMENT_DATE, PM_ID, PAYMENT_NOMINAL, PAYMENT_DESCRIPTION, PAYMENT_CONFIRMED, PAYMENT_CONFIRMED_DATE, PAYMENT_DUE_DATE, PAYMENT_IS_DP) " +
+                                                    "VALUES (" + creditID + ", STR_TO_DATE('" + paymentDate + "', '%d-%m-%Y %H:%i'), " + paymentMethod + ", " + DPAmount + ", 'DP " + invoiceNo + "', 1, STR_TO_DATE('" + paymentDate + "', '%d-%m-%Y %H:%i'), STR_TO_DATE('" + paymentDate + "', '%d-%m-%Y %H:%i'), 1)";
 
                             if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
                                 throw internalEX;
                         }
-                    }
 
+                        //INSERT PAYMENT AMOUNT
+                        sqlCommand = "INSERT INTO PAYMENT_CREDIT (CREDIT_ID, PAYMENT_DATE, PM_ID, PAYMENT_NOMINAL, PAYMENT_DESCRIPTION, PAYMENT_CONFIRMED, PAYMENT_CONFIRMED_DATE, PAYMENT_DUE_DATE, PAYMENT_IS_DP) " +
+                                                "VALUES (" + creditID + ", STR_TO_DATE('" + paymentDate + "', '%d-%m-%Y %H:%i'), " + paymentMethod + ", " + (globalTotalValue - DPAmount - discValue) + ", 'PEMBAYARAN " + selectedsalesinvoice + "', 1, STR_TO_DATE('" + paymentDate + "', '%d-%m-%Y %H:%i'), STR_TO_DATE('" + paymentDate + "', '%d-%m-%Y %H:%i'), 0)";
+
+                        if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
+                            throw internalEX;
+                    }
                 }
+
+                //SQCreatedDate = gutil.getCustomStringFormatDate(Convert.ToDateTime(DS.getDataSingleValue("SELECT SQ_DATE FROM SALES_QUOTATION_HEADER WHERE SQ_INVOICE = '" + selectedSQInvoice + "'")));
+
+                //// GET CREDIT ID
+                //sqlCommand = "SELECT COUNT(1) FROM CREDIT WHERE SALES_INVOICE = '" + selectedsalesinvoice + "'";
+                //creditID = Convert.ToInt32(DS.getDataSingleValue(sqlCommand));
+
+                ////if (creditID > 0)
+                //{
+                //    //sqlCommand = "SELECT CREDIT_ID FROM CREDIT WHERE SALES_INVOICE = '" + selectedsalesinvoice + "'";
+                //    //creditID = Convert.ToInt32(DS.getDataSingleValue(sqlCommand));
+
+                //    //// CHECK WHETHER INVOICE HAS BEEN FULLY PAID
+                //    //sqlCommand = "SELECT CREDIT_PAID FROM CREDIT WHERE CREDIT_ID = " + creditID;
+                //   // if (DS.getDataSingleValue(sqlCommand).ToString() == "0")
+                //    {
+                //        sqlCommand = "SELECT IFNULL(SQ_DP, 0) AS DP FROM SALES_QUOTATION_HEADER WHERE SQ_INVOICE = '" + selectedSQInvoice + "'";
+                //        DPAmount = Convert.ToDouble(DS.getDataSingleValue(sqlCommand));
+
+                //        if (DPAmount > 0)
+                //        {
+                //            int paymentMethod = 0;
+
+                //            //if (cashRadioButton.Checked == true) // CASH PAYMENT
+                //            //{
+                //            //    paymentMethod = paymentComboBox.SelectedIndex + 1;
+                //            //}
+                //            //else
+                //            //{
+                //            //    paymentMethod = 4;
+                //            //}
+
+                //            sqlCommand = "SELECT IFNULL(PAYMENT_NOMINAL, -1) FROM PAYMENT_CREDIT WHERE CREDIT_ID = " + creditID + " AND PAYMENT_IS_DP = 1";
+
+                //            prevDPAmount = Convert.ToDouble(DS.getDataSingleValue(sqlCommand));
+
+                //            if (prevDPAmount > -1)
+                //            {
+                //                // UPDATE PAYMENT CREDIT
+                //                sqlCommand = "UPDATE PAYMENT_CREDIT SET " +
+                //                                       "PAYMENT_DATE = STR_TO_DATE('" + paymentDate + "', '%d-%m-%Y %H:%i'), " +
+                //                                       "PM_ID = " + paymentMethod + ", " +
+                //                                       "PAYMENT_NOMINAL = " + DPAmount + ", " +
+                //                                       "PAYMENT_DESCRIPTION = 'DP " + selectedSQInvoice + "', " +
+                //                                       "PAYMENT_CONFIRMED = 1, " +
+                //                                       "PAYMENT_CONFIRMED_DATE = STR_TO_DATE('" + SQCreatedDate + "', '%d-%m-%Y %H:%i'), " +
+                //                                       "PAYMENT_DUE_DATE = STR_TO_DATE('" + SQCreatedDate + "', '%d-%m-%Y %H:%i'), " +
+                //                                       "PAYMENT_IS_DP = 1 " +
+                //                                       "WHERE CREDIT_ID = " + creditID;
+
+                //                if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
+                //                    throw internalEX;
+
+                //                // UPDATE DAILY JOURNAL                                     
+                //                sqlCommand = "UPDATE DAILY_JOURNAL SET " +
+                //                                        "ACCOUNT_ID = 1, " +
+                //                                        "JOURNAL_DATETIME = STR_TO_DATE('" + paymentDate + "', '%d-%m-%Y %H:%i'), " +
+                //                                        "JOURNAL_NOMINAL = " + gutil.validateDecimalNumericInput(DPAmount) + ", " +
+                //                                        "USER_ID = " + gutil.getUserID() + ", " +
+                //                                        "PM_ID = 1 " +
+                //                                        "WHERE JOURNAL DESCRIPTION = 'PEMBAYARAN DP [" + selectedSQInvoice + "]' "; 
+
+                //                if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
+                //                    throw internalEX;
+                //            }
+                //            else
+                //            {
+                //                // INSERT INTO PAYMENT CREDIT
+                //                sqlCommand = "INSERT INTO PAYMENT_CREDIT (CREDIT_ID, PAYMENT_DATE, PM_ID, PAYMENT_NOMINAL, PAYMENT_DESCRIPTION, PAYMENT_CONFIRMED, PAYMENT_CONFIRMED_DATE, PAYMENT_DUE_DATE, PAYMENT_IS_DP) " +
+                //                                       "VALUES (" + creditID + ", STR_TO_DATE('" + paymentDate + "', '%d-%m-%Y %H:%i'), " + paymentMethod + ", " + DPAmount + ", 'DP " + selectedSQInvoice + "', 1, STR_TO_DATE('" + SQCreatedDate + "', '%d-%m-%Y %H:%i'), STR_TO_DATE('" + SQCreatedDate + "', '%d-%m-%Y %H:%i'), 1)";
+
+                //                if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
+                //                    throw internalEX;
+
+
+                //                // INSERT INTO DAILY JOURNAL                                     
+                //                sqlCommand = "INSERT INTO DAILY_JOURNAL (ACCOUNT_ID, JOURNAL_DATETIME, JOURNAL_NOMINAL, JOURNAL_DESCRIPTION, USER_ID, PM_ID) " +
+                //                                        "VALUES (1, STR_TO_DATE('" + paymentDate + "', '%d-%m-%Y %H:%i')" + ", " + gutil.validateDecimalNumericInput(DPAmount) + ", 'PEMBAYARAN DP [" + selectedSQInvoice + "]'  , '" + gutil.getUserID() + "', 1)";
+
+                //                if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
+                //                    throw internalEX;
+                //            }
+                //        }
+                //    }
+
+                //}
                 DS.commit();
                 result = true;
             }
@@ -1558,18 +1687,33 @@ namespace AlphaSoft
 
                     if (originModuleID == globalConstants.SQ_TO_SO)
                     {
-                        gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "SAVE DP PAYMENT TO PAYMENT CREDIT");
-                        if (!saveDPToPaymentCredit())
-                        {
-                            gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "SAVE DP PAYMENT TO PAYMENT CREDIT FAILED");
-                        }
-
                         if (DialogResult.Yes == MessageBox.Show("PESANAN SUDAH LENGKAP SEMUA?", "WARNING", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
                         {
                             if (!setQuotationToCompleted())
                                 gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "SQ [" + selectedSQInvoice + "] FAILED TO SET TO COMPLETE");
                             else
                                 gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "SQ [" + selectedSQInvoice + "] SET TO COMPLETE");
+                        }
+
+                        if (!saveDPToPaymentCredit())
+                        {
+                            gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "SAVE DP PAYMENT TO PAYMENT CREDIT FAILED");
+                        }
+                    }
+                    else if (originModuleID == globalConstants.SALES_QUOTATION || originModuleID == globalConstants.EDIT_SALES_QUOTATION)
+                    {
+                        gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "SAVE DP PAYMENT TO PAYMENT CREDIT");
+                        if (!saveDPToPaymentCredit())
+                        {
+                            gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "SAVE DP PAYMENT TO PAYMENT CREDIT FAILED");
+                        }
+                    }
+                    else if (originModuleID == 0)
+                    {
+                        gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "SAVE PAYMENT TO PAYMENT CREDIT");
+                        if (!saveDPToPaymentCredit())
+                        {
+                            gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "SAVE PAYMENT TO PAYMENT CREDIT FAILED");
                         }
                     }
 
@@ -1755,8 +1899,8 @@ namespace AlphaSoft
                 gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : calculateChangeValue, bayarTextBox.Text [" + bayarTextBox.Text + "]");
                 //bayarAmount = Convert.ToDouble(bayarTextBox.Text);
                 totalAfterDisc = globalTotalValue - discValue;
-                if (bayarAmount > totalAfterDisc)
-                    sisaBayar = bayarAmount - totalAfterDisc;
+                if (bayarAmount > totalAfterDisc - previousSQ_DP)
+                    sisaBayar = bayarAmount - totalAfterDisc + previousSQ_DP;
                 else
                     sisaBayar = 0;
 
@@ -1940,14 +2084,14 @@ namespace AlphaSoft
             if (isProductID)
                 numRow = Convert.ToInt32(DS.getDataSingleValue("SELECT COUNT(1) FROM MASTER_PRODUCT WHERE PRODUCT_ID = '" + currentValue + "'"));
             else
-                numRow = Convert.ToInt32(DS.getDataSingleValue("SELECT COUNT(1) FROM MASTER_PRODUCT WHERE PRODUCT_NAME = '" + currentValue + "'"));
+                numRow = Convert.ToInt32(DS.getDataSingleValue("SELECT COUNT(1) FROM MASTER_PRODUCT WHERE PRODUCT_NAME = '" + MySqlHelper.EscapeString(currentValue) + "'"));
 
             if (numRow > 0)
             {
                 if (isProductID)
                 {
                     selectedProductID = currentValue;
-                    selectedProductName = DS.getDataSingleValue("SELECT IFNULL(PRODUCT_NAME,'') FROM MASTER_PRODUCT WHERE PRODUCT_ID = '" + currentValue + "'").ToString();
+                    selectedProductName = DS.getDataSingleValue("SELECT IFNULL(PRODUCT_NAME,'') FROM MASTER_PRODUCT WHERE PRODUCT_ID = '" + MySqlHelper.EscapeString(currentValue) + "'").ToString();
                 }
                 else
                 {
@@ -2136,6 +2280,7 @@ namespace AlphaSoft
                 tempoMaskedTextBox.Visible = true;
                 bayarTextBox.Enabled = false;
                 labelCaraBayar.Text = "Tempo            :";
+                labelCaraBayar.Visible = true;
             }
         }
 
@@ -2208,17 +2353,18 @@ namespace AlphaSoft
                             discValue = rdr.GetDouble("DISC_FINAL");
                             discJualMaskedTextBox.Text = discValue.ToString();
 
-                            bayarAmount = rdr.GetDouble("SQ_DP");
+                            SQDPAmount = rdr.GetDouble("SQ_DP");
                             previousSQ_DP = rdr.GetDouble("SQ_DP");
 
                             if (originModuleID == globalConstants.SQ_TO_SO)
                                 DPTextBox.Text = previousSQ_DP.ToString("C2", culture);
                             else
+                            {
                                 bayarTextBox.Text = previousSQ_DP.ToString("C2", culture);
-
+                                bayarAmount = previousSQ_DP;
+                            }
                             globalTotalValue = rdr.GetDouble("TOTAL");
-                            totalLabel.Text = globalTotalValue.ToString("C2", culture);
-                            totalPenjualanTextBox.Text = globalTotalValue.ToString("C2", culture);
+                            totalPenjualanTextBox.Text = (globalTotalValue).ToString("C2", culture);
 
                             calculateChangeValue();
 
@@ -2250,6 +2396,7 @@ namespace AlphaSoft
                                 tempoMaskedTextBox.Text = TOPDuration.ToString();
                             }
                             totalAfterDiscTextBox.Text = (globalTotalValue - discValue).ToString("C2", culture);
+                            totalLabel.Text = (globalTotalValue - previousSQ_DP - discValue).ToString("C2", culture);
 
                             addressTextBox.Text = rdr.GetString("SQ_ORDER_ADDRESS").ToString();
 
@@ -2672,12 +2819,33 @@ namespace AlphaSoft
             if (cashRadioButton.Checked)
             {
                 tempoMaskedTextBox.Visible = false;
-                labelCaraBayar.Text = "Cara Bayar       :";
-                paymentComboBox.Visible = true;
-                paymentComboBox.SelectedIndex = 0;
-                paymentComboBox.Text = paymentComboBox.Items[0].ToString();
+                labelCaraBayar.Visible = false;
+                //labelCaraBayar.Text = "Cara Bayar       :";
+                //paymentComboBox.Visible = true;
+                //paymentComboBox.SelectedIndex = 0;
+                //paymentComboBox.Text = paymentComboBox.Items[0].ToString();
                 bayarTextBox.Enabled = true;
             }
+        }
+
+        private void calculateTotalAfterDP()
+        {
+            double totalAfterDP = globalTotalValue;
+            double localChangeValue = 0;
+
+            if (bayarAmount > 0)
+            {
+                if (bayarAmount <= globalTotalValue - discValue)
+                    totalAfterDP = globalTotalValue - bayarAmount - discValue;
+                else
+                {
+                    totalAfterDP = 0;
+                    localChangeValue = bayarAmount - (globalTotalValue - discValue);
+                }
+            }
+            
+            totalLabel.Text = (totalAfterDP).ToString("C0", culture);
+            uangKembaliTextBox.Text = localChangeValue.ToString("C0", culture);
         }
 
         private void bayarTextBox_TextChanged(object sender, EventArgs e)
@@ -2716,7 +2884,10 @@ namespace AlphaSoft
             bayarAmount = Convert.ToDouble(bayarTextBox.Text);
 
             //if (originModuleID == 0)
-            calculateChangeValue();
+            if (originModuleID == globalConstants.EDIT_SALES_QUOTATION)
+                calculateTotalAfterDP();
+            else
+                calculateChangeValue();
         }
 
         private void paymentComboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -3001,6 +3172,11 @@ namespace AlphaSoft
 
             Offset = Offset + add_offset;
 
+            if (originModuleID == globalConstants.SQ_TO_SO)
+            {
+                Offset = Offset + add_offset;
+            }
+            
             //DETAIL PENJUALAN
             //read sales_detail
 
@@ -3062,6 +3238,8 @@ namespace AlphaSoft
             //eNd of content
 
             //FOOTER
+
+            Offset = Offset + add_offset;
 
             Offset = Offset + add_offset;
 
@@ -3408,6 +3586,36 @@ namespace AlphaSoft
             //graphics.DrawString(ucapan, new Font("Courier New", fontSize),
             //         new SolidBrush(Color.Black), rectright, sf);
 
+            Offset = Offset + add_offset;
+            rect.Y = startY + Offset;
+            //rectcenter.X = rectcenter.X + 15;
+            //rectcenter.Width = colxwidth;
+            sf.LineAlignment = StringAlignment.Near;
+            sf.Alignment = StringAlignment.Near;
+            ucapan = "Disc    : (" + discValue.ToString("C2", culture) + ")";
+
+            graphics.DrawString(ucapan, new Font("Courier New", fontSize),
+                     new SolidBrush(Color.Black), rect, sf);
+            sf.LineAlignment = StringAlignment.Far;
+            sf.Alignment = StringAlignment.Far;
+
+            if (originModuleID == globalConstants.SQ_TO_SO)
+            {
+                Offset = Offset + add_offset;
+                rect.Y = startY + Offset;
+                //rectcenter.X = rectcenter.X + 15;
+                //rectcenter.Width = colxwidth;
+                sf.LineAlignment = StringAlignment.Near;
+                sf.Alignment = StringAlignment.Near;
+                ucapan = "DP      : (" + previousSQ_DP.ToString("C2", culture) + ")";
+
+                graphics.DrawString(ucapan, new Font("Courier New", fontSize),
+                         new SolidBrush(Color.Black), rect, sf);
+                sf.LineAlignment = StringAlignment.Far;
+                sf.Alignment = StringAlignment.Far;
+            }
+
+
             if (cashRadioButton.Checked == true)
             {
                 Offset = Offset + add_offset;
@@ -3416,12 +3624,18 @@ namespace AlphaSoft
                 //rectcenter.Width = colxwidth;
                 sf.LineAlignment = StringAlignment.Near;
                 sf.Alignment = StringAlignment.Near;
-                double jumlahBayar = Convert.ToDouble(bayarAmount);
+
+                double jumlahBayar = 0;
+
+                if (originModuleID == globalConstants.EDIT_SALES_QUOTATION)
+                    jumlahBayar = Convert.ToDouble(bayarAmount);
+                else
+                    jumlahBayar = Convert.ToDouble(bayarAmount);
 
                 if (originModuleID == globalConstants.SALES_QUOTATION || originModuleID == globalConstants.EDIT_SALES_QUOTATION)
-                    ucapan = "DP      : " + jumlahBayar.ToString("C2", culture);
+                    ucapan = "DP      : (" + jumlahBayar.ToString("C2", culture) + ")";
                 else
-                    ucapan = "TUNAI   : " + jumlahBayar.ToString("C2", culture);
+                    ucapan = "TUNAI   : (" + jumlahBayar.ToString("C2", culture) + ")";
                 //rectcenter.Y = rect.Y;
                 graphics.DrawString(ucapan, new Font("Courier New", fontSize),
                          new SolidBrush(Color.Black), rect, sf);
@@ -3541,26 +3755,41 @@ namespace AlphaSoft
 
         private void cashierDataGridView_CellValidated(object sender, DataGridViewCellEventArgs e)
         {
-            //var cell = cashierDataGridView[e.ColumnIndex, e.RowIndex];
-            //DataGridViewRow selectedRow = cashierDataGridView.Rows[e.RowIndex];
+            var cell = cashierDataGridView[e.ColumnIndex, e.RowIndex];
+            DataGridViewRow selectedRow = cashierDataGridView.Rows[e.RowIndex];
 
-            //if (isLoading)
-            //    return;
+            if (isLoading)
+                return;
 
-            //if (cell.OwningColumn.Name == "productID")
-            //{
-            //    if (null != cell.Value)
-            //    {
-            //        if (cell.Value.ToString().Length > 0)
-            //        {
-            //            updateSomeRowContents(selectedRow, e.RowIndex, cell.Value.ToString());
-            //        }
-            //        else
-            //        {
-            //            clearUpSomeRowContents(selectedRow, e.RowIndex);
-            //        }
-            //    }
-            //}
+            if (cell.OwningColumn.Name == "productID")
+            {
+                if (null != cell.Value)
+                {
+                    if (cell.Value.ToString().Length > 0)
+                    {
+                        updateSomeRowContents(selectedRow, e.RowIndex, cell.Value.ToString());
+                    }
+                    else
+                    {
+                        clearUpSomeRowContents(selectedRow, e.RowIndex);
+                    }
+                }
+            }
+            else if (cell.OwningColumn.Name == "productName")
+            {
+                if (null != cell.Value)
+                {
+                    if (cell.Value.ToString().Length > 0)
+                    {
+                        updateSomeRowContents(selectedRow, e.RowIndex, cell.Value.ToString(), false);
+                    }
+                    else
+                    {
+                        clearUpSomeRowContents(selectedRow, e.RowIndex);
+                    }
+                }
+            }
+
         }
 
         private void cashierDataGridView_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
@@ -3663,13 +3892,13 @@ namespace AlphaSoft
             {
                 totalAfterDisc = globalTotalValue - Convert.ToDouble(discJualMaskedTextBox.Text);
                 discValue = Convert.ToDouble(discJualMaskedTextBox.Text);
-                totalLabel.Text = (globalTotalValue - discValue).ToString("C0", culture);
+                totalLabel.Text = (globalTotalValue - discValue - bayarAmount).ToString("C0", culture);
             }
             else
             {
                 totalAfterDisc = globalTotalValue;
                 discValue = 0;
-                totalLabel.Text = (globalTotalValue - discValue).ToString("C0", culture);
+                totalLabel.Text = (globalTotalValue - discValue - bayarAmount).ToString("C0", culture);
             }
 
             gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : discJualMaskedTextBox_Validating, totalAfterDisc [" + totalAfterDisc + "]");
@@ -3750,7 +3979,7 @@ namespace AlphaSoft
             if (isLoading)
                 return;
 
-            columnName = cell.OwningColumn.Name;
+           columnName = cell.OwningColumn.Name;
             gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : cashierDataGridView_CellValueChanged [" + columnName + "]");
 
             if (null != selectedRow.Cells[columnName].Value)
@@ -3758,11 +3987,11 @@ namespace AlphaSoft
             else
                 cellValue = "";
 
-            if (cell.OwningColumn.Name == "productName")
+            if (columnName == "productName")
             {
                 if (cellValue.Length > 0)
                 {
-                    updateSomeRowContents(selectedRow, rowSelectedIndex, cellValue, false);
+                    //updateSomeRowContents(selectedRow, rowSelectedIndex, cellValue, false);
                     //int pos = cashierDataGridView.CurrentCell.RowIndex;
 
                     //if (pos > 0)
@@ -3771,8 +4000,8 @@ namespace AlphaSoft
                     //forceUpOneLevel = true;
                 }
             }
-            else if (cell.OwningColumn.Name == "qty" || cell.OwningColumn.Name == "productPrice" ||
-                    cell.OwningColumn.Name == "disc1" || cell.OwningColumn.Name == "disc2" || cell.OwningColumn.Name == "discRP"
+            else if (columnName == "qty" || columnName == "productPrice" ||
+                    columnName == "disc1" || columnName == "disc2" || columnName == "discRP"
                     )
             {
                 if (cellValue.Length <= 0)
@@ -3973,7 +4202,11 @@ namespace AlphaSoft
         private void approveSQ(string selectedSO)
         {
             if (saveAndPrintOutInvoice()) // SAVE ALL THE LATEST CHANGES
+            { 
                 setQuotationToApproved(selectedSO);
+                approvalButton.Enabled = false;
+                rejectButton.Enabled = false;
+            }
         }
 
         private void approvalButton_Click(object sender, EventArgs e)
@@ -3984,6 +4217,8 @@ namespace AlphaSoft
         private void rejectButton_Click(object sender, EventArgs e)
         {
             rejectSQ(selectedsalesinvoice);
+            approvalButton.Enabled = false;
+            rejectButton.Enabled = false;
         }
 
         private void selfCollectCheckbox_CheckedChanged(object sender, EventArgs e)
@@ -3992,6 +4227,11 @@ namespace AlphaSoft
                 addressTextBox.Visible = true;
             else
                 addressTextBox.Visible = false;
+        }
+
+        private void DPTextBox_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

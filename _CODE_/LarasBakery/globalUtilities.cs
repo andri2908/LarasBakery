@@ -628,5 +628,38 @@ namespace AlphaSoft
             }
             return rslt;
         }
+
+        public string getAutoGenerateID(string tableName, string prefix, string valueDelimiter, string fieldName)
+        {
+            string newID = "";
+            DateTime localDate = DateTime.Now;
+            string maxID = "";
+            double maxIDValue = 0;
+            string idPrefix;
+            string sqlCommand = "";
+
+            idPrefix = prefix;
+
+            sqlCommand = "SELECT IFNULL(MAX(CONVERT(SUBSTRING(" + fieldName + ", INSTR(" + fieldName + ",'" + valueDelimiter + "')+1), UNSIGNED INTEGER)),'0') AS " + fieldName + " FROM " + tableName + " WHERE " + fieldName + " LIKE '" + idPrefix + "%'";
+
+            maxID = DS.getDataSingleValue(sqlCommand).ToString();
+            saveSystemDebugLog(0, "GUTIL : MAX " + fieldName + " [" + maxID + "]");
+
+            maxIDValue = Convert.ToInt32(maxID);
+            if (maxIDValue > 0)
+            {
+                maxIDValue += 1;
+                maxID = maxIDValue.ToString();
+            }
+            else
+            {
+                maxID = "1";
+            }
+
+            newID = prefix + valueDelimiter + maxID;
+            saveSystemDebugLog(0, "GUTIL : " + fieldName + " [" + newID + "]");
+
+            return newID;
+        }
     }
 }

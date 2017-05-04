@@ -16,6 +16,7 @@ namespace AlphaSoft
         private string userName = "SYS_POS_ADMIN";
         private string password = "pass123";
         private string databaseName = "SYS_POS_LARASBAKERY";
+        private string serverDatabaseName = "SYS_POS_LARASBAKERY_SERVER";
         public const int LOCAL_SERVER = 0;
         public const int HQ_SERVER = 1;
         public const int BRANCH_SERVER = 2;
@@ -79,14 +80,17 @@ namespace AlphaSoft
             return HQ_Ip;
         }
 
-        public bool HQ_mySQLConnect()
+        public bool HQ_mySQLConnect(bool connectToSyncServer = false)
         {
             string HQconnectionString = "";
             string HQ_IP = getHQ_IPServer(); 
 
             if (HQ_IP.Length > 0)
             { 
-                HQconnectionString = "server=" + HQ_IP + ";uid="+userName+";pwd="+password+";database="+databaseName+";";
+                if (!connectToSyncServer)
+                    HQconnectionString = "server=" + HQ_IP + ";uid="+userName+";pwd="+password+";database="+databaseName+";";
+                else
+                    HQconnectionString = "server=" + HQ_IP + ";uid=" + userName + ";pwd=" + password + ";database=" + serverDatabaseName + ";";
 
                 try
                 {

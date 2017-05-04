@@ -43,6 +43,10 @@
             this.errorLabel = new System.Windows.Forms.Label();
             this.saveButton = new System.Windows.Forms.Button();
             this.AppModeBox = new System.Windows.Forms.GroupBox();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.labelCaraBayar = new System.Windows.Forms.Label();
+            this.reminderTextBox = new System.Windows.Forms.MaskedTextBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.EmailTextbox = new System.Windows.Forms.TextBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
@@ -61,21 +65,26 @@
             this.label7 = new System.Windows.Forms.Label();
             this.branchIDBox = new System.Windows.Forms.GroupBox();
             this.BranchIDTextbox = new System.Windows.Forms.MaskedTextBox();
-            this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.reminderTextBox = new System.Windows.Forms.MaskedTextBox();
-            this.labelCaraBayar = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.serverIP3 = new System.Windows.Forms.MaskedTextBox();
+            this.serverIP1 = new System.Windows.Forms.MaskedTextBox();
+            this.serverIP4 = new System.Windows.Forms.MaskedTextBox();
+            this.serverIP2 = new System.Windows.Forms.MaskedTextBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
             this.ConModeBox.SuspendLayout();
             this.ipServerBox.SuspendLayout();
             this.panel1.SuspendLayout();
             this.AppModeBox.SuspendLayout();
+            this.groupBox5.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.HQIPBox.SuspendLayout();
             this.branchIDBox.SuspendLayout();
-            this.groupBox5.SuspendLayout();
+            this.groupBox6.SuspendLayout();
             this.SuspendLayout();
             // 
             // ip1Textbox
@@ -126,7 +135,7 @@
             this.ConModeBox.Controls.Add(this.serverIPRadioButton);
             this.ConModeBox.Controls.Add(this.localhostRadioButton);
             this.ConModeBox.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ConModeBox.Location = new System.Drawing.Point(9, 335);
+            this.ConModeBox.Location = new System.Drawing.Point(6, 417);
             this.ConModeBox.Name = "ConModeBox";
             this.ConModeBox.Size = new System.Drawing.Size(219, 138);
             this.ConModeBox.TabIndex = 23;
@@ -247,7 +256,7 @@
             // 
             this.saveButton.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.saveButton.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.saveButton.Location = new System.Drawing.Point(175, 532);
+            this.saveButton.Location = new System.Drawing.Point(163, 604);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(108, 37);
             this.saveButton.TabIndex = 21;
@@ -257,6 +266,7 @@
             // 
             // AppModeBox
             // 
+            this.AppModeBox.Controls.Add(this.groupBox6);
             this.AppModeBox.Controls.Add(this.groupBox5);
             this.AppModeBox.Controls.Add(this.groupBox4);
             this.AppModeBox.Controls.Add(this.ConModeBox);
@@ -268,16 +278,63 @@
             this.AppModeBox.Font = new System.Drawing.Font("Verdana", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.AppModeBox.Location = new System.Drawing.Point(9, 36);
             this.AppModeBox.Name = "AppModeBox";
-            this.AppModeBox.Size = new System.Drawing.Size(441, 489);
+            this.AppModeBox.Size = new System.Drawing.Size(441, 562);
             this.AppModeBox.TabIndex = 24;
             this.AppModeBox.TabStop = false;
             this.AppModeBox.Text = "Pengaturan Aplikasi";
+            // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.label2);
+            this.groupBox5.Controls.Add(this.labelCaraBayar);
+            this.groupBox5.Controls.Add(this.reminderTextBox);
+            this.groupBox5.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox5.Location = new System.Drawing.Point(238, 417);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(188, 70);
+            this.groupBox5.TabIndex = 30;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Reminder";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.ForeColor = System.Drawing.Color.Black;
+            this.label2.Location = new System.Drawing.Point(140, 24);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(42, 18);
+            this.label2.TabIndex = 33;
+            this.label2.Text = "hari";
+            // 
+            // labelCaraBayar
+            // 
+            this.labelCaraBayar.AutoSize = true;
+            this.labelCaraBayar.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelCaraBayar.ForeColor = System.Drawing.Color.Black;
+            this.labelCaraBayar.Location = new System.Drawing.Point(6, 24);
+            this.labelCaraBayar.Name = "labelCaraBayar";
+            this.labelCaraBayar.Size = new System.Drawing.Size(84, 18);
+            this.labelCaraBayar.TabIndex = 32;
+            this.labelCaraBayar.Text = "Pesanan";
+            // 
+            // reminderTextBox
+            // 
+            this.reminderTextBox.CutCopyMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
+            this.reminderTextBox.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.reminderTextBox.Location = new System.Drawing.Point(96, 20);
+            this.reminderTextBox.Mask = "000";
+            this.reminderTextBox.Name = "reminderTextBox";
+            this.reminderTextBox.Size = new System.Drawing.Size(38, 27);
+            this.reminderTextBox.TabIndex = 31;
+            this.reminderTextBox.Text = "1";
+            this.reminderTextBox.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
             // 
             // groupBox4
             // 
             this.groupBox4.Controls.Add(this.EmailTextbox);
             this.groupBox4.Font = new System.Drawing.Font("Verdana", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox4.Location = new System.Drawing.Point(9, 275);
+            this.groupBox4.Location = new System.Drawing.Point(6, 357);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(426, 54);
             this.groupBox4.TabIndex = 29;
@@ -296,7 +353,7 @@
             // 
             this.groupBox3.Controls.Add(this.TeleponTextbox);
             this.groupBox3.Font = new System.Drawing.Font("Verdana", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox3.Location = new System.Drawing.Point(9, 215);
+            this.groupBox3.Location = new System.Drawing.Point(6, 297);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(426, 54);
             this.groupBox3.TabIndex = 28;
@@ -317,7 +374,7 @@
             // 
             this.groupBox2.Controls.Add(this.AlamatTextbox);
             this.groupBox2.Font = new System.Drawing.Font("Verdana", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox2.Location = new System.Drawing.Point(9, 155);
+            this.groupBox2.Location = new System.Drawing.Point(6, 237);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(426, 54);
             this.groupBox2.TabIndex = 27;
@@ -337,7 +394,7 @@
             // 
             this.groupBox1.Controls.Add(this.NamaTokoTextbox);
             this.groupBox1.Font = new System.Drawing.Font("Verdana", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox1.Location = new System.Drawing.Point(9, 95);
+            this.groupBox1.Location = new System.Drawing.Point(6, 177);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(426, 54);
             this.groupBox1.TabIndex = 26;
@@ -471,59 +528,110 @@
             this.BranchIDTextbox.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
             this.BranchIDTextbox.Enter += new System.EventHandler(this.BranchIDTextbox_Enter);
             // 
-            // groupBox5
+            // groupBox6
             // 
-            this.groupBox5.Controls.Add(this.label2);
-            this.groupBox5.Controls.Add(this.labelCaraBayar);
-            this.groupBox5.Controls.Add(this.reminderTextBox);
-            this.groupBox5.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox5.Location = new System.Drawing.Point(241, 335);
-            this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(188, 70);
-            this.groupBox5.TabIndex = 30;
-            this.groupBox5.TabStop = false;
-            this.groupBox5.Text = "Reminder";
+            this.groupBox6.Controls.Add(this.serverIP3);
+            this.groupBox6.Controls.Add(this.serverIP1);
+            this.groupBox6.Controls.Add(this.serverIP4);
+            this.groupBox6.Controls.Add(this.serverIP2);
+            this.groupBox6.Controls.Add(this.label8);
+            this.groupBox6.Controls.Add(this.label9);
+            this.groupBox6.Controls.Add(this.label10);
+            this.groupBox6.Font = new System.Drawing.Font("Verdana", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox6.Location = new System.Drawing.Point(9, 95);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(200, 59);
+            this.groupBox6.TabIndex = 31;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "IP Server";
             // 
-            // reminderTextBox
+            // serverIP3
             // 
-            this.reminderTextBox.CutCopyMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
-            this.reminderTextBox.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.reminderTextBox.Location = new System.Drawing.Point(96, 20);
-            this.reminderTextBox.Mask = "000";
-            this.reminderTextBox.Name = "reminderTextBox";
-            this.reminderTextBox.Size = new System.Drawing.Size(38, 27);
-            this.reminderTextBox.TabIndex = 31;
-            this.reminderTextBox.Text = "1";
-            this.reminderTextBox.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
+            this.serverIP3.CutCopyMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
+            this.serverIP3.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.serverIP3.Location = new System.Drawing.Point(106, 18);
+            this.serverIP3.Mask = "000";
+            this.serverIP3.Name = "serverIP3";
+            this.serverIP3.Size = new System.Drawing.Size(38, 27);
+            this.serverIP3.TabIndex = 24;
+            this.serverIP3.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
+            this.serverIP3.Enter += new System.EventHandler(this.serverIP3_Enter);
+            this.serverIP3.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.serverIP3_KeyPress);
             // 
-            // labelCaraBayar
+            // serverIP1
             // 
-            this.labelCaraBayar.AutoSize = true;
-            this.labelCaraBayar.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelCaraBayar.ForeColor = System.Drawing.Color.Black;
-            this.labelCaraBayar.Location = new System.Drawing.Point(6, 24);
-            this.labelCaraBayar.Name = "labelCaraBayar";
-            this.labelCaraBayar.Size = new System.Drawing.Size(84, 18);
-            this.labelCaraBayar.TabIndex = 32;
-            this.labelCaraBayar.Text = "Pesanan";
+            this.serverIP1.CutCopyMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
+            this.serverIP1.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.serverIP1.Location = new System.Drawing.Point(6, 19);
+            this.serverIP1.Mask = "000";
+            this.serverIP1.Name = "serverIP1";
+            this.serverIP1.Size = new System.Drawing.Size(38, 27);
+            this.serverIP1.TabIndex = 20;
+            this.serverIP1.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
+            this.serverIP1.Enter += new System.EventHandler(this.serverIP1_Enter);
+            this.serverIP1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.serverIP1_KeyPress);
             // 
-            // label2
+            // serverIP4
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.ForeColor = System.Drawing.Color.Black;
-            this.label2.Location = new System.Drawing.Point(140, 24);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(42, 18);
-            this.label2.TabIndex = 33;
-            this.label2.Text = "hari";
+            this.serverIP4.CutCopyMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
+            this.serverIP4.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.serverIP4.Location = new System.Drawing.Point(156, 18);
+            this.serverIP4.Mask = "000";
+            this.serverIP4.Name = "serverIP4";
+            this.serverIP4.Size = new System.Drawing.Size(38, 27);
+            this.serverIP4.TabIndex = 26;
+            this.serverIP4.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
+            this.serverIP4.Enter += new System.EventHandler(this.serverIP4_Enter);
+            // 
+            // serverIP2
+            // 
+            this.serverIP2.CutCopyMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
+            this.serverIP2.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.serverIP2.Location = new System.Drawing.Point(56, 18);
+            this.serverIP2.Mask = "000";
+            this.serverIP2.Name = "serverIP2";
+            this.serverIP2.Size = new System.Drawing.Size(38, 27);
+            this.serverIP2.TabIndex = 22;
+            this.serverIP2.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
+            this.serverIP2.Enter += new System.EventHandler(this.serverIP2_Enter);
+            this.serverIP2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.serverIP2_KeyPress);
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Verdana", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.Location = new System.Drawing.Point(40, 20);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(22, 25);
+            this.label8.TabIndex = 21;
+            this.label8.Text = "-";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Verdana", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.Location = new System.Drawing.Point(140, 20);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(22, 25);
+            this.label9.TabIndex = 25;
+            this.label9.Text = "-";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("Verdana", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.Location = new System.Drawing.Point(90, 20);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(22, 25);
+            this.label10.TabIndex = 23;
+            this.label10.Text = "-";
             // 
             // SetApplicationForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FloralWhite;
-            this.ClientSize = new System.Drawing.Size(458, 583);
+            this.ClientSize = new System.Drawing.Size(458, 653);
             this.Controls.Add(this.AppModeBox);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.saveButton);
@@ -543,6 +651,8 @@
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.AppModeBox.ResumeLayout(false);
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
             this.groupBox3.ResumeLayout(false);
@@ -555,8 +665,8 @@
             this.HQIPBox.PerformLayout();
             this.branchIDBox.ResumeLayout(false);
             this.branchIDBox.PerformLayout();
-            this.groupBox5.ResumeLayout(false);
-            this.groupBox5.PerformLayout();
+            this.groupBox6.ResumeLayout(false);
+            this.groupBox6.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -599,5 +709,13 @@
         private System.Windows.Forms.MaskedTextBox reminderTextBox;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label labelCaraBayar;
+        private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.MaskedTextBox serverIP3;
+        private System.Windows.Forms.MaskedTextBox serverIP1;
+        private System.Windows.Forms.MaskedTextBox serverIP4;
+        private System.Windows.Forms.MaskedTextBox serverIP2;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label10;
     }
 }

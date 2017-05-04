@@ -1,0 +1,17 @@
+
+INSERT INTO SALES_HEADER(ID, SALES_INVOICE, CUSTOMER_ID, SALES_DATE, SALES_TOTAL, SALES_DISCOUNT_FINAL, SALES_TOP, SALES_TOP_DATE, SALES_PAID, SALES_PAYMENT, SALES_PAYMENT_CHANGE, SALES_PAYMENT_METHOD, SALES_VOID, SALES_ACTIVE, BRANCH_ID) VALUES('1', 'SLO001-1', '1', STR_TO_DATE('02-05-2017 13:59', '%d-%m-%Y %H:%i'), '30000', '500', '1', STR_TO_DATE('02-05-2017', '%d-%m-%Y'), '1', '100000', '70500', '0', '0', '1', 0);
+
+
+INSERT INTO SALES_DETAIL(ID, SALES_INVOICE, PRODUCT_ID, PRODUCT_PRICE, PRODUCT_SALES_PRICE, PRODUCT_QTY, PRODUCT_DISC1, PRODUCT_DISC2, PRODUCT_DISC_RP, SALES_SUBTOTAL, BRANCH_ID) VALUES('1', 'SLO001-1', 'RT001', '10', '1000', '20', '0', '0', '0', '20000', 0);
+INSERT INTO SALES_DETAIL(ID, SALES_INVOICE, PRODUCT_ID, PRODUCT_PRICE, PRODUCT_SALES_PRICE, PRODUCT_QTY, PRODUCT_DISC1, PRODUCT_DISC2, PRODUCT_DISC_RP, SALES_SUBTOTAL, BRANCH_ID) VALUES('2', 'SLO001-1', 'RT002', '200', '2000', '5', '0', '0', '0', '10000', 0);
+
+
+INSERT INTO CREDIT(CREDIT_ID, SALES_INVOICE, CREDIT_DUE_DATE, CREDIT_NOMINAL, CREDIT_PAID, BRANCH_ID) VALUES('1', 'SLO001-1', STR_TO_DATE('02-05-2017', '%d-%m-%Y'), '30000', '1', 0);
+
+
+
+
+INSERT INTO DAILY_JOURNAL(journal_id, account_id, journal_datetime, journal_nominal, branch_id, journal_description, user_id, pm_id, BRANCH_ID) VALUES('1', '1', STR_TO_DATE('02-05-2017 13:59', '%d-%m-%Y %H:%i'), '30000', '0', 'PEMBAYARAN SLO001-1', '1', '1', 0);
+INSERT INTO DAILY_JOURNAL(journal_id, account_id, journal_datetime, journal_nominal, branch_id, journal_description, user_id, pm_id, BRANCH_ID) VALUES('2', '7', STR_TO_DATE('02-05-2017 14:32', '%d-%m-%Y %H:%i'), '1000', '0', 'PENJUALAN TAS KRESEK', '1', '1', 0);
+INSERT INTO DAILY_JOURNAL(journal_id, account_id, journal_datetime, journal_nominal, branch_id, journal_description, user_id, pm_id, BRANCH_ID) VALUES('3', '7', STR_TO_DATE('02-05-2017 14:32', '%d-%m-%Y %H:%i'), '2000', '0', 'PENJUALAN KARUNG', '1', '1', 0);
+INSERT INTO DAILY_JOURNAL(journal_id, account_id, journal_datetime, journal_nominal, branch_id, journal_descripti

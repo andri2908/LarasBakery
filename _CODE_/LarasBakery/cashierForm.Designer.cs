@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(cashierForm));
             this.panel1 = new System.Windows.Forms.Panel();
             this.titleLabel = new System.Windows.Forms.Label();
@@ -165,42 +165,42 @@
             // 
             this.cashierDataGridView.AllowUserToDeleteRows = false;
             this.cashierDataGridView.AllowUserToResizeRows = false;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FloralWhite;
-            this.cashierDataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle5.BackColor = System.Drawing.Color.FloralWhite;
+            this.cashierDataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle5;
             this.cashierDataGridView.BackgroundColor = System.Drawing.Color.FloralWhite;
             this.cashierDataGridView.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.SteelBlue;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Verdana", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.FloralWhite;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.cashierDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = System.Drawing.Color.SteelBlue;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Verdana", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.Color.FloralWhite;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.cashierDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle6;
             this.cashierDataGridView.ColumnHeadersHeight = 50;
             this.cashierDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.cashierDataGridView.Cursor = System.Windows.Forms.Cursors.Default;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FloralWhite;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.cashierDataGridView.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle7.BackColor = System.Drawing.Color.FloralWhite;
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.cashierDataGridView.DefaultCellStyle = dataGridViewCellStyle7;
             this.cashierDataGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.cashierDataGridView.EnableHeadersVisualStyles = false;
             this.cashierDataGridView.GridColor = System.Drawing.Color.Black;
             this.cashierDataGridView.Location = new System.Drawing.Point(2, 130);
             this.cashierDataGridView.MultiSelect = false;
             this.cashierDataGridView.Name = "cashierDataGridView";
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.cashierDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.cashierDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle8;
             this.cashierDataGridView.RowHeadersVisible = false;
             this.cashierDataGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.cashierDataGridView.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
@@ -376,6 +376,7 @@
             this.paymentComboBox.Size = new System.Drawing.Size(142, 26);
             this.paymentComboBox.TabIndex = 7;
             this.paymentComboBox.Text = "Cash";
+            this.paymentComboBox.Visible = false;
             this.paymentComboBox.SelectedIndexChanged += new System.EventHandler(this.paymentComboBox_SelectedIndexChanged);
             this.paymentComboBox.Enter += new System.EventHandler(this.paymentComboBox_Enter);
             this.paymentComboBox.Leave += new System.EventHandler(this.paymentComboBox_Leave);
@@ -390,6 +391,7 @@
             this.labelCaraBayar.Size = new System.Drawing.Size(146, 18);
             this.labelCaraBayar.TabIndex = 6;
             this.labelCaraBayar.Text = "Cara Bayar       :";
+            this.labelCaraBayar.Visible = false;
             // 
             // creditRadioButton
             // 
@@ -401,6 +403,7 @@
             this.creditRadioButton.TabIndex = 5;
             this.creditRadioButton.Text = "&Kredit";
             this.creditRadioButton.UseVisualStyleBackColor = true;
+            this.creditRadioButton.Visible = false;
             this.creditRadioButton.CheckedChanged += new System.EventHandler(this.creditRadioButton_CheckedChanged);
             // 
             // cashRadioButton
@@ -415,6 +418,7 @@
             this.cashRadioButton.TabStop = true;
             this.cashRadioButton.Text = "Tuna&i";
             this.cashRadioButton.UseVisualStyleBackColor = true;
+            this.cashRadioButton.Visible = false;
             this.cashRadioButton.CheckedChanged += new System.EventHandler(this.cashRadioButton_CheckedChanged);
             // 
             // label4
@@ -427,6 +431,7 @@
             this.label4.Size = new System.Drawing.Size(145, 18);
             this.label4.TabIndex = 3;
             this.label4.Text = "Pembayaran     :";
+            this.label4.Visible = false;
             // 
             // customerComboBox
             // 
@@ -491,6 +496,7 @@
             this.DPTextBox.Text = "0";
             this.DPTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.DPTextBox.Visible = false;
+            this.DPTextBox.TextChanged += new System.EventHandler(this.DPTextBox_TextChanged);
             // 
             // jobStartDateTimePicker
             // 
@@ -519,7 +525,7 @@
             // discJualMaskedTextBox
             // 
             this.discJualMaskedTextBox.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.discJualMaskedTextBox.Location = new System.Drawing.Point(179, 74);
+            this.discJualMaskedTextBox.Location = new System.Drawing.Point(178, 74);
             this.discJualMaskedTextBox.Name = "discJualMaskedTextBox";
             this.discJualMaskedTextBox.Size = new System.Drawing.Size(181, 27);
             this.discJualMaskedTextBox.TabIndex = 19;

@@ -102,6 +102,7 @@
             this.paymentCombo.Name = "paymentCombo";
             this.paymentCombo.Size = new System.Drawing.Size(229, 26);
             this.paymentCombo.TabIndex = 66;
+            this.paymentCombo.Visible = false;
             this.paymentCombo.SelectedIndexChanged += new System.EventHandler(this.paymentCombo_SelectedIndexChanged);
             this.paymentCombo.Enter += new System.EventHandler(this.genericControl_Enter);
             this.paymentCombo.Leave += new System.EventHandler(this.genericControl_Leave);
@@ -140,6 +141,7 @@
             this.label4.Size = new System.Drawing.Size(213, 18);
             this.label4.TabIndex = 66;
             this.label4.Text = "METODE PEMBAYARAN";
+            this.label4.Visible = false;
             // 
             // cabangNameTextBox
             // 
@@ -182,6 +184,7 @@
             this.label13.Size = new System.Drawing.Size(14, 18);
             this.label13.TabIndex = 58;
             this.label13.Text = ":";
+            this.label13.Visible = false;
             // 
             // totalLabel
             // 

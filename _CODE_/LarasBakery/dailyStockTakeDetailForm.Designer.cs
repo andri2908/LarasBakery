@@ -121,6 +121,7 @@
             this.stockTakeDateTimePicker.Name = "stockTakeDateTimePicker";
             this.stockTakeDateTimePicker.Size = new System.Drawing.Size(144, 27);
             this.stockTakeDateTimePicker.TabIndex = 56;
+            this.stockTakeDateTimePicker.ValueChanged += new System.EventHandler(this.stockTakeDateTimePicker_ValueChanged);
             // 
             // label2
             // 
@@ -173,6 +174,7 @@
             this.Text = "STOCK TAKE HARIAN";
             this.Activated += new System.EventHandler(this.dailyStockTakeDetailForm_Activated);
             this.Deactivate += new System.EventHandler(this.dailyStockTakeDetailForm_Deactivate);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.dailyStockTakeDetailForm_FormClosing);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.dailyStockTakeDetailForm_FormClosed);
             this.Load += new System.EventHandler(this.dailyStockTakeDetailForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.detailDataGrid)).EndInit();

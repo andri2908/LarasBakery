@@ -208,6 +208,87 @@
             this.TransaksiAccountGridView.Enter += new System.EventHandler(this.TransaksiAccountGridView_Enter);
             this.TransaksiAccountGridView.Leave += new System.EventHandler(this.TransaksiAccountGridView_Leave);
             // 
+            // journal_id
+            // 
+            this.journal_id.HeaderText = "KODE JOURNAL";
+            this.journal_id.Name = "journal_id";
+            this.journal_id.Visible = false;
+            this.journal_id.Width = 141;
+            // 
+            // isDeleted
+            // 
+            this.isDeleted.HeaderText = "HAPUS";
+            this.isDeleted.Name = "isDeleted";
+            this.isDeleted.Width = 69;
+            // 
+            // Tanggal
+            // 
+            this.Tanggal.HeaderText = "TANGGAL";
+            this.Tanggal.MinimumWidth = 90;
+            this.Tanggal.Name = "Tanggal";
+            this.Tanggal.Width = 109;
+            // 
+            // Kode_akun
+            // 
+            this.Kode_akun.HeaderText = "KODE AKUN";
+            this.Kode_akun.Name = "Kode_akun";
+            this.Kode_akun.Visible = false;
+            this.Kode_akun.Width = 131;
+            // 
+            // Nama_Akun
+            // 
+            this.Nama_Akun.HeaderText = "NAMA AKUN";
+            this.Nama_Akun.MinimumWidth = 160;
+            this.Nama_Akun.Name = "Nama_Akun";
+            this.Nama_Akun.ReadOnly = true;
+            this.Nama_Akun.Width = 160;
+            // 
+            // branch_id
+            // 
+            this.branch_id.HeaderText = "KODE CABANG";
+            this.branch_id.Name = "branch_id";
+            this.branch_id.Visible = false;
+            this.branch_id.Width = 153;
+            // 
+            // branch_name
+            // 
+            this.branch_name.HeaderText = "CABANG";
+            this.branch_name.Name = "branch_name";
+            this.branch_name.Width = 101;
+            // 
+            // PaymentMethodID
+            // 
+            this.PaymentMethodID.HeaderText = "KODE BAYAR";
+            this.PaymentMethodID.Name = "PaymentMethodID";
+            this.PaymentMethodID.Visible = false;
+            this.PaymentMethodID.Width = 138;
+            // 
+            // PaymentMethod
+            // 
+            this.PaymentMethod.HeaderText = "PEMBAYARAN";
+            this.PaymentMethod.MinimumWidth = 125;
+            this.PaymentMethod.Name = "PaymentMethod";
+            this.PaymentMethod.Width = 142;
+            // 
+            // debet
+            // 
+            this.debet.HeaderText = "DEBET";
+            this.debet.MinimumWidth = 100;
+            this.debet.Name = "debet";
+            // 
+            // kredit
+            // 
+            this.kredit.HeaderText = "KREDIT";
+            this.kredit.MinimumWidth = 100;
+            this.kredit.Name = "kredit";
+            // 
+            // deskripsi_akun
+            // 
+            this.deskripsi_akun.HeaderText = "DESKRIPSI";
+            this.deskripsi_akun.Name = "deskripsi_akun";
+            this.deskripsi_akun.Visible = false;
+            this.deskripsi_akun.Width = 121;
+            // 
             // searchButton
             // 
             this.searchButton.Anchor = System.Windows.Forms.AnchorStyles.Left;
@@ -255,6 +336,7 @@
             this.carabayarcombobox.Name = "carabayarcombobox";
             this.carabayarcombobox.Size = new System.Drawing.Size(384, 26);
             this.carabayarcombobox.TabIndex = 22;
+            this.carabayarcombobox.Visible = false;
             this.carabayarcombobox.Enter += new System.EventHandler(this.genericControl_Enter);
             this.carabayarcombobox.Leave += new System.EventHandler(this.genericControl_Leave);
             // 
@@ -290,6 +372,7 @@
             this.label3.Size = new System.Drawing.Size(150, 18);
             this.label3.TabIndex = 2;
             this.label3.Text = "METODE BAYAR";
+            this.label3.Visible = false;
             // 
             // label4
             // 
@@ -334,6 +417,7 @@
             this.label9.Size = new System.Drawing.Size(14, 18);
             this.label9.TabIndex = 6;
             this.label9.Text = ":";
+            this.label9.Visible = false;
             // 
             // label10
             // 
@@ -415,87 +499,6 @@
             this.NominalTextbox.Size = new System.Drawing.Size(384, 27);
             this.NominalTextbox.TabIndex = 50;
             this.NominalTextbox.Enter += new System.EventHandler(this.NominalTextbox_Enter);
-            // 
-            // journal_id
-            // 
-            this.journal_id.HeaderText = "KODE JOURNAL";
-            this.journal_id.Name = "journal_id";
-            this.journal_id.Visible = false;
-            this.journal_id.Width = 141;
-            // 
-            // isDeleted
-            // 
-            this.isDeleted.HeaderText = "HAPUS";
-            this.isDeleted.Name = "isDeleted";
-            this.isDeleted.Width = 69;
-            // 
-            // Tanggal
-            // 
-            this.Tanggal.HeaderText = "TANGGAL";
-            this.Tanggal.MinimumWidth = 90;
-            this.Tanggal.Name = "Tanggal";
-            this.Tanggal.Width = 109;
-            // 
-            // Kode_akun
-            // 
-            this.Kode_akun.HeaderText = "KODE AKUN";
-            this.Kode_akun.Name = "Kode_akun";
-            this.Kode_akun.Visible = false;
-            this.Kode_akun.Width = 131;
-            // 
-            // Nama_Akun
-            // 
-            this.Nama_Akun.HeaderText = "NAMA AKUN";
-            this.Nama_Akun.MinimumWidth = 160;
-            this.Nama_Akun.Name = "Nama_Akun";
-            this.Nama_Akun.ReadOnly = true;
-            this.Nama_Akun.Width = 160;
-            // 
-            // branch_id
-            // 
-            this.branch_id.HeaderText = "KODE CABANG";
-            this.branch_id.Name = "branch_id";
-            this.branch_id.Visible = false;
-            this.branch_id.Width = 153;
-            // 
-            // branch_name
-            // 
-            this.branch_name.HeaderText = "CABANG";
-            this.branch_name.Name = "branch_name";
-            this.branch_name.Width = 101;
-            // 
-            // PaymentMethodID
-            // 
-            this.PaymentMethodID.HeaderText = "KODE BAYAR";
-            this.PaymentMethodID.Name = "PaymentMethodID";
-            this.PaymentMethodID.Visible = false;
-            this.PaymentMethodID.Width = 138;
-            // 
-            // PaymentMethod
-            // 
-            this.PaymentMethod.HeaderText = "PEMBAYARAN";
-            this.PaymentMethod.MinimumWidth = 125;
-            this.PaymentMethod.Name = "PaymentMethod";
-            this.PaymentMethod.Width = 142;
-            // 
-            // debet
-            // 
-            this.debet.HeaderText = "DEBET";
-            this.debet.MinimumWidth = 100;
-            this.debet.Name = "debet";
-            // 
-            // kredit
-            // 
-            this.kredit.HeaderText = "KREDIT";
-            this.kredit.MinimumWidth = 100;
-            this.kredit.Name = "kredit";
-            // 
-            // deskripsi_akun
-            // 
-            this.deskripsi_akun.HeaderText = "DESKRIPSI";
-            this.deskripsi_akun.Name = "deskripsi_akun";
-            this.deskripsi_akun.Visible = false;
-            this.deskripsi_akun.Width = 121;
             // 
             // dataTransaksiJurnalHarianDetailForm
             // 

@@ -425,6 +425,9 @@ namespace AlphaSoft
                 paymentNominal = globalTotalValue;
             }
 
+            // LARAS : ALL TRANSACTIONS ARE IN CASH
+            paymentCombo.SelectedIndex = 0;
+
             if (paymentCombo.SelectedIndex < 3) //0, 1, 2
             {
                 // TUNAI, KARTU KREDIT, KARTU DEBIT
@@ -1109,17 +1112,18 @@ namespace AlphaSoft
 
         private void paymentCombo_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (paymentCombo.SelectedIndex > 3)
-            {
-                labelCair.Visible = true;
-                cairDTPicker.Visible = true;
-                cairDTPicker.Value = DateTime.Now;
-            }
-            else
-            {
-                labelCair.Visible = false;
-                cairDTPicker.Visible = false;
-            }
+            // LARAS : ALL TRANSACTIONS ARE IN CASH
+            //if (paymentCombo.SelectedIndex > 3)
+            //{
+            //    labelCair.Visible = true;
+            //    cairDTPicker.Visible = true;
+            //    cairDTPicker.Value = DateTime.Now;
+            //}
+            //else
+            //{
+            //    labelCair.Visible = false;
+            //    cairDTPicker.Visible = false;
+            //}
         }
 
         private void pembayaranLumpSumForm_Activated(object sender, EventArgs e)
