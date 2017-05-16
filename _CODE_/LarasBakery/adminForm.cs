@@ -364,8 +364,23 @@ namespace AlphaSoft
             }
         }
 
+        public void updateStatusLabel()
+        {
+            string namaCabang = "";
+
+            int branchID = 0;
+
+            branchID = gutil.loadbranchID(2, out namaCabang);
+
+            if (branchID > 0)
+                welcomeLabel.Text = "WELCOME " + DS.getDataSingleValue("SELECT IFNULL(USER_FULL_NAME, 0) FROM MASTER_USER WHERE ID = " + selectedUserID).ToString() + " | CAB : " + namaCabang;
+            else
+                welcomeLabel.Text = "WELCOME " + DS.getDataSingleValue("SELECT IFNULL(USER_FULL_NAME, 0) FROM MASTER_USER WHERE ID = " + selectedUserID).ToString();
+        }
+
         private void adminForm_Load(object sender, EventArgs e)
         {
+            string namaCabang = "";
             gutil.saveSystemDebugLog(0, "adminForm Load");
 
             if (!System.IO.Directory.Exists(appPath + "\\PRODUCT_PHOTO"))
@@ -377,12 +392,18 @@ namespace AlphaSoft
             //updateLabel();
             //timer1.Start();
 
-            welcomeLabel.Text = "WELCOME " + DS.getDataSingleValue("SELECT IFNULL(USER_FULL_NAME, 0) FROM MASTER_USER WHERE ID = " + selectedUserID).ToString();
+            //welcomeLabel.Text = "WELCOME " + DS.getDataSingleValue("SELECT IFNULL(USER_FULL_NAME, 0) FROM MASTER_USER WHERE ID = " + selectedUserID).ToString();
+            updateStatusLabel();
             MAINMENU_Strip.Renderer = new MyRenderer();
             gutil.reArrangeTabOrder(this);
 
+            if (gutil.loadbranchID(2, out namaCabang) == 0)
+            {
+                MessageBox.Show("CABANG BELUM DISET");
 
-            //load last known paper size settings from DB
+                SetApplicationForm displayForm = new SetApplicationForm(this);
+                displayForm.ShowDialog(this);
+            }
 
             activateUserAccessRight();
 
@@ -1088,6 +1109,17 @@ namespace AlphaSoft
             // SUB MENU PENGATURAN LIMIT PAJAK
             setAccessibility(globalConstants.MENU_PENGATURAN_LIMIT_PAJAK, MENU_pengaturanLimitPajak);
             setAccessibility(globalConstants.MENU_TAX_MODULE, DUMMY_TaxModule);
+
+            // SPECIAL CONDITION
+            // LARAS : ONLY PABRIK APPLICATION HAS ACCESS TO DELIVERY ORDER
+            if (gutil.isServerApp() == 1)
+            {
+                MENU_pengirimanPesanan.Visible = true;
+            }
+            else
+            {
+                MENU_pengirimanPesanan.Visible = false;
+            }
         }
 
         private void toolStripMenuItem1_Click_1(object sender, EventArgs e)
@@ -1190,7 +1222,7 @@ namespace AlphaSoft
         private void pengaturanSistemAplikasiToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (null == displaySetApplicationForm || displaySetApplicationForm.IsDisposed)
-                displaySetApplicationForm = new SetApplicationForm();
+                displaySetApplicationForm = new SetApplicationForm(this);
 
             displaySetApplicationForm.Show();
             displaySetApplicationForm.WindowState = FormWindowState.Normal;
@@ -1527,7 +1559,8 @@ namespace AlphaSoft
 
         private void toolStripMenuItem2_Click_1(object sender, EventArgs e)
         {
-            dataSalesInvoice displayedForm = new dataSalesInvoice(globalConstants.SQ_TO_SO);
+            //dataSalesInvoice displayedForm = new dataSalesInvoice(globalConstants.SQ_TO_SO);
+            dataSalesInvoice displayedForm = new dataSalesInvoice(globalConstants.EDIT_SALES_ORDER);
             displayedForm.ShowDialog(this);
         }
 
@@ -1554,6 +1587,37 @@ namespace AlphaSoft
 
             //tutupTokoForm displayedForm = new tutupTokoForm();
             //displayedForm.ShowDialog(this);
+        }
+
+        private void toolStripMenuItem4_Click_2(object sender, EventArgs e)
+        {
+            dataSalesInvoice displayedForm = new dataSalesInvoice(globalConstants.DELIVERY_ORDER);
+            displayedForm.ShowDialog(this);
+        }
+
+        private void MENU_pemenuhanSebagian_Click(object sender, EventArgs e)
+        {
+            dataSalesInvoice displayedForm = new dataSalesInvoice(globalConstants.SO_FULFILLMENT);
+            displayedForm.ShowDialog(this);
+        }
+
+        private void MENU_sendOrderToServer_Click(object sender, EventArgs e)
+        {
+            globalSynchronizeLib gSync = new globalSynchronizeLib();
+
+            if (DialogResult.Yes == MessageBox.Show("KIRIM DATA PESANAN KE PABRIK ?", "WARNING", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
+            {
+                if (gSync.sendDataToServer("SALES_HEADER"))
+                    gSync.updateSyncFlag("SALES_HEADER");
+
+                if (gSync.sendDataToServer("SALES_DETAIL"))
+                    gSync.updateSyncFlag("SALES_DETAIL");
+
+                if (gSync.sendDataToServer("SALES_DETAIL_FULFILLMENT"))
+                    gSync.updateSyncFlag("SALES_DETAIL_FULFILLMENT");
+
+                MessageBox.Show("DONE");
+            }
         }
     }
 }

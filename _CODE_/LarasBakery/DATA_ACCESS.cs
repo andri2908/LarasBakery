@@ -16,14 +16,17 @@ namespace AlphaSoft
         private string userName = "SYS_POS_ADMIN";
         private string password = "pass123";
         private string databaseName = "SYS_POS_LARASBAKERY";
-        private string serverDatabaseName = "SYS_POS_LARASBAKERY_SERVER";
+        private string serverDatabaseName = "SYS_POS_LARASBAKERY_SS";
+        private string SSDatabaseName = "SYS_POS_LARASBAKERY_SS";
         public const int LOCAL_SERVER = 0;
         public const int HQ_SERVER = 1;
         public const int BRANCH_SERVER = 2;
+        public const int SS_SERVER = 3;
 
         private MySqlConnection conn = new MySql.Data.MySqlClient.MySqlConnection();
         private MySqlConnection HQ_conn = new MySql.Data.MySqlClient.MySqlConnection();
         private MySqlConnection Branch_conn = new MySql.Data.MySqlClient.MySqlConnection();
+        private MySqlConnection SS_conn = new MySql.Data.MySqlClient.MySqlConnection();
 
         private MySqlTransaction myTrans;
         private MySqlCommand myTransCommand;
@@ -31,6 +34,7 @@ namespace AlphaSoft
         private static string configFileConnectionString = "";
         private static string HQconfigFileConnectionString = "";
         private static string BranchconfigFileConnectionString = "";
+        private static string SSconfigFileConnectionString = "";
 
         private static string ipServer = "";
         //private string myConnectionString = "server=127.0.0.1;uid=SYS_POS_ADMIN;pwd=pass123;database=SYS_POS;";
@@ -80,6 +84,20 @@ namespace AlphaSoft
             return HQ_Ip;
         }
 
+        public string getSS_IPServer()
+        {
+            string HQ_Ip = "";
+            int dataExist = 0;
+
+            dataExist = Convert.ToInt32(getDataSingleValue("SELECT COUNT(1) FROM SYS_CONFIG WHERE ID = 2"));
+
+            if (dataExist > 0)
+                HQ_Ip = getDataSingleValue("SELECT IFNULL(SERVER_IP4, '') FROM SYS_CONFIG WHERE ID = 2").ToString();
+
+            return HQ_Ip;
+        }
+
+
         public bool HQ_mySQLConnect(bool connectToSyncServer = false)
         {
             string HQconnectionString = "";
@@ -115,6 +133,44 @@ namespace AlphaSoft
             if (null != HQ_conn)
             {
                 HQ_conn.Close();
+            }
+        }
+
+        public bool SS_mySQLConnect(bool connectToSyncServer = false)
+        {
+            string SSconnectionString = "";
+            string SS_IP = getSS_IPServer();
+
+            if (SS_IP.Length > 0)
+            {
+                if (!connectToSyncServer)
+                    SSconnectionString = "server=" + SS_IP + ";uid=" + userName + ";pwd=" + password + ";database=" + databaseName + ";";
+                else
+                    SSconnectionString = "server=" + SS_IP + ";uid=" + userName + ";pwd=" + password + ";database=" + SSDatabaseName + ";";
+
+                try
+                {
+                    SS_conn.ConnectionString = SSconnectionString;//myConnectionString;
+                    SS_conn.Open();
+
+                    SSconfigFileConnectionString = SSconnectionString;
+                    return true;
+                }
+                catch (MySql.Data.MySqlClient.MySqlException ex)
+                {
+                    //MessageBox.Show(ex.Message);
+                    return false;
+                }
+            }
+
+            return false;
+        }
+
+        public void SS_mySqlClose()
+        {
+            if (null != SS_conn)
+            {
+                SS_conn.Close();
             }
         }
 
@@ -394,6 +450,8 @@ namespace AlphaSoft
                 transConnection = new MySqlConnection(HQconfigFileConnectionString);
             else if (serverToConnect == BRANCH_SERVER)
                 transConnection = new MySqlConnection(BranchconfigFileConnectionString);
+            else if (serverToConnect == SS_SERVER)
+                transConnection = new MySqlConnection(SSconfigFileConnectionString);
 
             transConnection.Open();
 

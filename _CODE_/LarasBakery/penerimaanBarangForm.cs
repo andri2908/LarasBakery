@@ -301,7 +301,7 @@ namespace AlphaSoft
             detailGridView.CurrentCell = detailGridView.Rows[newRowIndex].Cells["productID"];
         }
 
-        public void addNewRowFromBarcode(string productID, string productName)
+        public void addNewRowFromBarcode(string productID, string productName, int rowIndex = -1)
         {
             int i = 0;
             bool found = false;
@@ -315,42 +315,52 @@ namespace AlphaSoft
             if (detailGridView.ReadOnly == true)
                 return;
 
-            // CHECK FOR EXISTING SELECTED ITEM
-            for (i = 0; i < detailGridView.Rows.Count && !found && !foundEmptyRow; i++)
+            if (rowIndex >= 0)
             {
-                if (null != detailGridView.Rows[i].Cells["productName"].Value &&
-                    null != detailGridView.Rows[i].Cells["productID"].Value &&
-                    gUtil.isProductIDExist(detailGridView.Rows[i].Cells["productID"].Value.ToString()))
-                { 
-                    if (detailGridView.Rows[i].Cells["productName"].Value.ToString() == productName)
+                rowSelectedIndex = rowIndex;
+            }
+            else
+            {
+                // CHECK FOR EXISTING SELECTED ITEM
+                for (i = 0; i < detailGridView.Rows.Count && !found && !foundEmptyRow; i++)
+                {
+                    if (null != detailGridView.Rows[i].Cells["productName"].Value &&
+                        null != detailGridView.Rows[i].Cells["productID"].Value &&
+                        gUtil.isProductIDExist(detailGridView.Rows[i].Cells["productID"].Value.ToString()))
                     {
-                        found = true;
-                        rowSelectedIndex = i;
+                        if (detailGridView.Rows[i].Cells["productName"].Value.ToString() == productName)
+                        {
+                            found = true;
+                            rowSelectedIndex = i;
+                        }
+                    }
+                    else
+                    {
+                        foundEmptyRow = true;
+                        emptyRowIndex = i;
                     }
                 }
-                else
-                {
-                    foundEmptyRow = true;
-                    emptyRowIndex = i;
-                }
-            }
 
-            if (!found)
-            {
-                if (foundEmptyRow)
+                if (!found)
                 {
-                    detailRequestQty[emptyRowIndex] = "0";
-                    detailHpp[emptyRowIndex] = "0";
-                    subtotalList[emptyRowIndex] = "0";
-                    rowSelectedIndex = emptyRowIndex;
-                }
-                else
-                { 
-                    detailGridView.Rows.Add();
-                    detailRequestQty.Add("0");
-                    detailHpp.Add("0");
-                    subtotalList.Add("0");
-                    rowSelectedIndex = detailGridView.Rows.Count - 1;
+                    if (foundEmptyRow)
+                    {
+                        if (detailGridView.Rows.Count <= 1)
+                            detailGridView.Rows.Add();
+
+                        detailRequestQty[emptyRowIndex] = "0";
+                        detailHpp[emptyRowIndex] = "0";
+                        subtotalList[emptyRowIndex] = "0";
+                        rowSelectedIndex = emptyRowIndex;
+                    }
+                    else
+                    {
+                        detailGridView.Rows.Add();
+                        detailRequestQty.Add("0");
+                        detailHpp.Add("0");
+                        subtotalList.Add("0");
+                        rowSelectedIndex = detailGridView.Rows.Count - 1;
+                    }
                 }
             }
 
@@ -650,7 +660,6 @@ namespace AlphaSoft
             productID_textBox.Name = "productID";
             productID_textBox.HeaderText = "KODE PRODUK";
             productID_textBox.Width = 150;
-            productID_textBox.Visible = false;
             productID_textBox.DefaultCellStyle.BackColor = Color.LightBlue;
             detailGridView.Columns.Add(productID_textBox);
 
@@ -791,7 +800,8 @@ namespace AlphaSoft
             if ((detailGridView.CurrentCell.OwningColumn.Name == "productID") && e.Control is TextBox)
             {
                 TextBox productIDTextBox = e.Control as TextBox;
-//                productIDTextBox.TextChanged -= TextBox_TextChanged;
+                //                productIDTextBox.TextChanged -= TextBox_TextChanged;
+                productIDTextBox.PreviewKeyDown -= TextBox_previewKeyDown;
                 productIDTextBox.PreviewKeyDown += TextBox_previewKeyDown;
                 productIDTextBox.CharacterCasing = CharacterCasing.Upper;
                 productIDTextBox.AutoCompleteMode = AutoCompleteMode.None;
@@ -801,11 +811,12 @@ namespace AlphaSoft
             {
                 TextBox productIDTextBox = e.Control as TextBox;
 //                productIDTextBox.TextChanged -= TextBox_TextChanged;
+                productIDTextBox.PreviewKeyDown -= productName_previewKeyDown;
                 productIDTextBox.PreviewKeyDown += productName_previewKeyDown;
                 productIDTextBox.CharacterCasing = CharacterCasing.Upper;
-                productIDTextBox.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
-                productIDTextBox.AutoCompleteSource = AutoCompleteSource.CustomSource;
-                setTextBoxCustomSource(productIDTextBox);
+                productIDTextBox.AutoCompleteMode = AutoCompleteMode.None;
+                //productIDTextBox.AutoCompleteSource = AutoCompleteSource.CustomSource;
+                //setTextBoxCustomSource(productIDTextBox);
             }
         }
 
@@ -916,13 +927,18 @@ namespace AlphaSoft
 
                 if (currentValue.Length > 0)
                 {
-                    updateSomeRowContents(selectedRow, rowSelectedIndex, currentValue);
-                    detailGridView.CurrentCell = selectedRow.Cells["qtyReceived"];
+                    //updateSomeRowContents(selectedRow, rowSelectedIndex, currentValue);
+                    //detailGridView.CurrentCell = selectedRow.Cells["qtyReceived"];
+                    
+                    // CALL DATA PRODUK FORM WITH PARAMETER 
+                    dataProdukForm browseProduk = new dataProdukForm(globalConstants.PENERIMAAN_BARANG, this, currentValue, "",rowSelectedIndex);
+                    browseProduk.ShowDialog(this);
+
                     forceUpOneLevel = true;
                 }
                 else
                 {
-                    clearUpSomeRowContents(selectedRow, rowSelectedIndex);
+                    //clearUpSomeRowContents(selectedRow, rowSelectedIndex);
                 }
             }
         }
@@ -944,25 +960,32 @@ namespace AlphaSoft
 
                 if (currentValue.Length > 0)
                 {
-                    updateSomeRowContents(selectedRow, rowSelectedIndex, currentValue, false);
-                    detailGridView.CurrentCell = selectedRow.Cells["qtyReceived"];
+                    //updateSomeRowContents(selectedRow, rowSelectedIndex, currentValue, false);
+                    //detailGridView.CurrentCell = selectedRow.Cells["qtyReceived"];
+
+                    // CALL DATA PRODUK FORM WITH PARAMETER 
+                    dataProdukForm browseProduk = new dataProdukForm(globalConstants.PENERIMAAN_BARANG, this, "", currentValue, rowSelectedIndex);
+                    browseProduk.ShowDialog(this);
+
                     forceUpOneLevel = true;
                 }
                 else
                 {
-                    clearUpSomeRowContents(selectedRow, rowSelectedIndex);
+                    //clearUpSomeRowContents(selectedRow, rowSelectedIndex);
                 }
             }
         }
 
         private void Textbox_KeyUp(object sender, KeyEventArgs e)
         {
-            if (forceUpOneLevel)
-            {
-                int pos = detailGridView.CurrentCell.RowIndex;
-                detailGridView.CurrentCell = detailGridView.Rows[pos - 1].Cells["qtyReceived"];
-                forceUpOneLevel = false;
-            }
+            //if (forceUpOneLevel)
+            //{
+            //    int pos = detailGridView.CurrentCell.RowIndex;
+
+            //    if (pos > 0)
+            //        detailGridView.CurrentCell = detailGridView.Rows[pos - 1].Cells["qtyReceived"];
+            //    forceUpOneLevel = false;
+            //}
         }
 
         private void TextBox_TextChanged(object sender, EventArgs e)

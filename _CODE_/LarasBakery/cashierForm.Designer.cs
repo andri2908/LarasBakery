@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(cashierForm));
             this.panel1 = new System.Windows.Forms.Panel();
             this.titleLabel = new System.Windows.Forms.Label();
@@ -41,6 +41,8 @@
             this.noFakturLabel = new System.Windows.Forms.Label();
             this.cashierDataGridView = new System.Windows.Forms.DataGridView();
             this.panel5 = new System.Windows.Forms.Panel();
+            this.refSOTextBox = new System.Windows.Forms.TextBox();
+            this.refSOLabel = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
             this.addressTextBox = new System.Windows.Forms.TextBox();
             this.deliveredCheckbox = new System.Windows.Forms.CheckBox();
@@ -48,18 +50,12 @@
             this.ChangePrinterButton = new System.Windows.Forms.Button();
             this.approvalButton = new System.Windows.Forms.Button();
             this.errorLabel = new System.Windows.Forms.Label();
-            this.tempoMaskedTextBox = new System.Windows.Forms.MaskedTextBox();
             this.pelangganTextBox = new System.Windows.Forms.TextBox();
-            this.printoutCheckBox = new System.Windows.Forms.CheckBox();
-            this.paymentComboBox = new System.Windows.Forms.ComboBox();
-            this.labelCaraBayar = new System.Windows.Forms.Label();
-            this.creditRadioButton = new System.Windows.Forms.RadioButton();
-            this.cashRadioButton = new System.Windows.Forms.RadioButton();
-            this.label4 = new System.Windows.Forms.Label();
             this.customerComboBox = new System.Windows.Forms.ComboBox();
+            this.printoutCheckBox = new System.Windows.Forms.CheckBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.panel6 = new System.Windows.Forms.Panel();
-            this.DPTextBox = new System.Windows.Forms.TextBox();
             this.jobStartDateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.labelTglOrder = new System.Windows.Forms.Label();
             this.discJualMaskedTextBox = new System.Windows.Forms.TextBox();
@@ -74,6 +70,12 @@
             this.label11 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
+            this.DPTextBox = new System.Windows.Forms.TextBox();
+            this.creditRadioButton = new System.Windows.Forms.RadioButton();
+            this.cashRadioButton = new System.Windows.Forms.RadioButton();
+            this.tempoMaskedTextBox = new System.Windows.Forms.MaskedTextBox();
+            this.paymentComboBox = new System.Windows.Forms.ComboBox();
+            this.labelCaraBayar = new System.Windows.Forms.Label();
             this.panel9 = new System.Windows.Forms.Panel();
             this.totalLabel = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -165,42 +167,42 @@
             // 
             this.cashierDataGridView.AllowUserToDeleteRows = false;
             this.cashierDataGridView.AllowUserToResizeRows = false;
-            dataGridViewCellStyle5.BackColor = System.Drawing.Color.FloralWhite;
-            this.cashierDataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FloralWhite;
+            this.cashierDataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.cashierDataGridView.BackgroundColor = System.Drawing.Color.FloralWhite;
             this.cashierDataGridView.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.Color.SteelBlue;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Verdana", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.Color.FloralWhite;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.cashierDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.SteelBlue;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Verdana", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.FloralWhite;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.cashierDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.cashierDataGridView.ColumnHeadersHeight = 50;
             this.cashierDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.cashierDataGridView.Cursor = System.Windows.Forms.Cursors.Default;
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle7.BackColor = System.Drawing.Color.FloralWhite;
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.cashierDataGridView.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FloralWhite;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.cashierDataGridView.DefaultCellStyle = dataGridViewCellStyle3;
             this.cashierDataGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.cashierDataGridView.EnableHeadersVisualStyles = false;
             this.cashierDataGridView.GridColor = System.Drawing.Color.Black;
             this.cashierDataGridView.Location = new System.Drawing.Point(2, 130);
             this.cashierDataGridView.MultiSelect = false;
             this.cashierDataGridView.Name = "cashierDataGridView";
-            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.cashierDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.cashierDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
             this.cashierDataGridView.RowHeadersVisible = false;
             this.cashierDataGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.cashierDataGridView.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
@@ -221,6 +223,8 @@
             // panel5
             // 
             this.panel5.BackColor = System.Drawing.Color.SteelBlue;
+            this.panel5.Controls.Add(this.refSOTextBox);
+            this.panel5.Controls.Add(this.refSOLabel);
             this.panel5.Controls.Add(this.panel3);
             this.panel5.Controls.Add(this.addressTextBox);
             this.panel5.Controls.Add(this.deliveredCheckbox);
@@ -228,23 +232,45 @@
             this.panel5.Controls.Add(this.ChangePrinterButton);
             this.panel5.Controls.Add(this.approvalButton);
             this.panel5.Controls.Add(this.errorLabel);
-            this.panel5.Controls.Add(this.tempoMaskedTextBox);
             this.panel5.Controls.Add(this.pelangganTextBox);
-            this.panel5.Controls.Add(this.printoutCheckBox);
-            this.panel5.Controls.Add(this.paymentComboBox);
-            this.panel5.Controls.Add(this.labelCaraBayar);
-            this.panel5.Controls.Add(this.creditRadioButton);
-            this.panel5.Controls.Add(this.cashRadioButton);
-            this.panel5.Controls.Add(this.label4);
             this.panel5.Controls.Add(this.customerComboBox);
+            this.panel5.Controls.Add(this.printoutCheckBox);
+            this.panel5.Controls.Add(this.label4);
             this.panel5.Controls.Add(this.label3);
             this.panel5.Controls.Add(this.panel6);
+            this.panel5.Controls.Add(this.creditRadioButton);
+            this.panel5.Controls.Add(this.cashRadioButton);
+            this.panel5.Controls.Add(this.tempoMaskedTextBox);
+            this.panel5.Controls.Add(this.paymentComboBox);
+            this.panel5.Controls.Add(this.labelCaraBayar);
             this.panel5.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.panel5.ForeColor = System.Drawing.Color.AntiqueWhite;
             this.panel5.Location = new System.Drawing.Point(2, 421);
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(982, 218);
             this.panel5.TabIndex = 9;
+            // 
+            // refSOTextBox
+            // 
+            this.refSOTextBox.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.refSOTextBox.Location = new System.Drawing.Point(154, 12);
+            this.refSOTextBox.Name = "refSOTextBox";
+            this.refSOTextBox.ReadOnly = true;
+            this.refSOTextBox.Size = new System.Drawing.Size(221, 27);
+            this.refSOTextBox.TabIndex = 45;
+            this.refSOTextBox.Visible = false;
+            // 
+            // refSOLabel
+            // 
+            this.refSOLabel.AutoSize = true;
+            this.refSOLabel.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.refSOLabel.ForeColor = System.Drawing.Color.FloralWhite;
+            this.refSOLabel.Location = new System.Drawing.Point(10, 18);
+            this.refSOLabel.Name = "refSOLabel";
+            this.refSOLabel.Size = new System.Drawing.Size(142, 18);
+            this.refSOLabel.TabIndex = 44;
+            this.refSOLabel.Text = "Ref. SO           :";
+            this.refSOLabel.Visible = false;
             // 
             // panel3
             // 
@@ -258,10 +284,10 @@
             // 
             // addressTextBox
             // 
-            this.addressTextBox.Location = new System.Drawing.Point(343, 114);
+            this.addressTextBox.Location = new System.Drawing.Point(362, 114);
             this.addressTextBox.Multiline = true;
             this.addressTextBox.Name = "addressTextBox";
-            this.addressTextBox.Size = new System.Drawing.Size(253, 102);
+            this.addressTextBox.Size = new System.Drawing.Size(234, 102);
             this.addressTextBox.TabIndex = 43;
             this.addressTextBox.Visible = false;
             // 
@@ -270,7 +296,7 @@
             this.deliveredCheckbox.AutoSize = true;
             this.deliveredCheckbox.FlatAppearance.BorderColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.deliveredCheckbox.ForeColor = System.Drawing.Color.FloralWhite;
-            this.deliveredCheckbox.Location = new System.Drawing.Point(343, 91);
+            this.deliveredCheckbox.Location = new System.Drawing.Point(362, 91);
             this.deliveredCheckbox.Name = "deliveredCheckbox";
             this.deliveredCheckbox.Size = new System.Drawing.Size(84, 22);
             this.deliveredCheckbox.TabIndex = 42;
@@ -330,27 +356,30 @@
             this.errorLabel.TabIndex = 36;
             this.errorLabel.Text = "   ";
             // 
-            // tempoMaskedTextBox
-            // 
-            this.tempoMaskedTextBox.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tempoMaskedTextBox.Location = new System.Drawing.Point(154, 108);
-            this.tempoMaskedTextBox.Mask = "00000";
-            this.tempoMaskedTextBox.Name = "tempoMaskedTextBox";
-            this.tempoMaskedTextBox.Size = new System.Drawing.Size(71, 27);
-            this.tempoMaskedTextBox.TabIndex = 18;
-            this.tempoMaskedTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.tempoMaskedTextBox.ValidatingType = typeof(int);
-            this.tempoMaskedTextBox.Visible = false;
-            this.tempoMaskedTextBox.Enter += new System.EventHandler(this.tempoMaskedTextBox_Enter);
-            // 
             // pelangganTextBox
             // 
             this.pelangganTextBox.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.pelangganTextBox.Location = new System.Drawing.Point(154, 16);
+            this.pelangganTextBox.Location = new System.Drawing.Point(154, 45);
             this.pelangganTextBox.Name = "pelangganTextBox";
             this.pelangganTextBox.ReadOnly = true;
             this.pelangganTextBox.Size = new System.Drawing.Size(183, 27);
             this.pelangganTextBox.TabIndex = 17;
+            // 
+            // customerComboBox
+            // 
+            this.customerComboBox.FormattingEnabled = true;
+            this.customerComboBox.Items.AddRange(new object[] {
+            "P-UMUM [ECER]",
+            "P-PARTAI",
+            "P-GROSIR"});
+            this.customerComboBox.Location = new System.Drawing.Point(155, 78);
+            this.customerComboBox.Name = "customerComboBox";
+            this.customerComboBox.Size = new System.Drawing.Size(183, 26);
+            this.customerComboBox.TabIndex = 2;
+            this.customerComboBox.Text = "P-UMUM [ECER]";
+            this.customerComboBox.SelectedIndexChanged += new System.EventHandler(this.customerComboBox_SelectedIndexChanged);
+            this.customerComboBox.Enter += new System.EventHandler(this.customerComboBox_Enter);
+            this.customerComboBox.Leave += new System.EventHandler(this.customerComboBox_Leave);
             // 
             // printoutCheckBox
             // 
@@ -364,97 +393,23 @@
             this.printoutCheckBox.Text = "Tanpa Cetak &Struk - Nota";
             this.printoutCheckBox.UseVisualStyleBackColor = true;
             // 
-            // paymentComboBox
-            // 
-            this.paymentComboBox.FormattingEnabled = true;
-            this.paymentComboBox.Items.AddRange(new object[] {
-            "Cash",
-            "Kartu Kredit",
-            "Kartu Debit"});
-            this.paymentComboBox.Location = new System.Drawing.Point(157, 109);
-            this.paymentComboBox.Name = "paymentComboBox";
-            this.paymentComboBox.Size = new System.Drawing.Size(142, 26);
-            this.paymentComboBox.TabIndex = 7;
-            this.paymentComboBox.Text = "Cash";
-            this.paymentComboBox.Visible = false;
-            this.paymentComboBox.SelectedIndexChanged += new System.EventHandler(this.paymentComboBox_SelectedIndexChanged);
-            this.paymentComboBox.Enter += new System.EventHandler(this.paymentComboBox_Enter);
-            this.paymentComboBox.Leave += new System.EventHandler(this.paymentComboBox_Leave);
-            // 
-            // labelCaraBayar
-            // 
-            this.labelCaraBayar.AutoSize = true;
-            this.labelCaraBayar.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelCaraBayar.ForeColor = System.Drawing.Color.FloralWhite;
-            this.labelCaraBayar.Location = new System.Drawing.Point(8, 111);
-            this.labelCaraBayar.Name = "labelCaraBayar";
-            this.labelCaraBayar.Size = new System.Drawing.Size(146, 18);
-            this.labelCaraBayar.TabIndex = 6;
-            this.labelCaraBayar.Text = "Cara Bayar       :";
-            this.labelCaraBayar.Visible = false;
-            // 
-            // creditRadioButton
-            // 
-            this.creditRadioButton.AutoSize = true;
-            this.creditRadioButton.ForeColor = System.Drawing.Color.FloralWhite;
-            this.creditRadioButton.Location = new System.Drawing.Point(229, 81);
-            this.creditRadioButton.Name = "creditRadioButton";
-            this.creditRadioButton.Size = new System.Drawing.Size(75, 22);
-            this.creditRadioButton.TabIndex = 5;
-            this.creditRadioButton.Text = "&Kredit";
-            this.creditRadioButton.UseVisualStyleBackColor = true;
-            this.creditRadioButton.Visible = false;
-            this.creditRadioButton.CheckedChanged += new System.EventHandler(this.creditRadioButton_CheckedChanged);
-            // 
-            // cashRadioButton
-            // 
-            this.cashRadioButton.AutoSize = true;
-            this.cashRadioButton.Checked = true;
-            this.cashRadioButton.ForeColor = System.Drawing.Color.FloralWhite;
-            this.cashRadioButton.Location = new System.Drawing.Point(154, 81);
-            this.cashRadioButton.Name = "cashRadioButton";
-            this.cashRadioButton.Size = new System.Drawing.Size(69, 22);
-            this.cashRadioButton.TabIndex = 4;
-            this.cashRadioButton.TabStop = true;
-            this.cashRadioButton.Text = "Tuna&i";
-            this.cashRadioButton.UseVisualStyleBackColor = true;
-            this.cashRadioButton.Visible = false;
-            this.cashRadioButton.CheckedChanged += new System.EventHandler(this.cashRadioButton_CheckedChanged);
-            // 
             // label4
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.Color.FloralWhite;
-            this.label4.Location = new System.Drawing.Point(9, 82);
+            this.label4.Location = new System.Drawing.Point(10, 111);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(145, 18);
             this.label4.TabIndex = 3;
             this.label4.Text = "Pembayaran     :";
-            this.label4.Visible = false;
-            // 
-            // customerComboBox
-            // 
-            this.customerComboBox.FormattingEnabled = true;
-            this.customerComboBox.Items.AddRange(new object[] {
-            "P-UMUM [ECER]",
-            "P-PARTAI",
-            "P-GROSIR"});
-            this.customerComboBox.Location = new System.Drawing.Point(154, 50);
-            this.customerComboBox.Name = "customerComboBox";
-            this.customerComboBox.Size = new System.Drawing.Size(183, 26);
-            this.customerComboBox.TabIndex = 2;
-            this.customerComboBox.Text = "P-UMUM [ECER]";
-            this.customerComboBox.SelectedIndexChanged += new System.EventHandler(this.customerComboBox_SelectedIndexChanged);
-            this.customerComboBox.Enter += new System.EventHandler(this.customerComboBox_Enter);
-            this.customerComboBox.Leave += new System.EventHandler(this.customerComboBox_Leave);
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.Color.FloralWhite;
-            this.label3.Location = new System.Drawing.Point(9, 19);
+            this.label3.Location = new System.Drawing.Point(7, 48);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(151, 18);
             this.label3.TabIndex = 1;
@@ -465,7 +420,6 @@
             this.panel6.BackColor = System.Drawing.Color.FloralWhite;
             this.panel6.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.panel6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel6.Controls.Add(this.DPTextBox);
             this.panel6.Controls.Add(this.jobStartDateTimePicker);
             this.panel6.Controls.Add(this.labelTglOrder);
             this.panel6.Controls.Add(this.discJualMaskedTextBox);
@@ -480,23 +434,11 @@
             this.panel6.Controls.Add(this.label11);
             this.panel6.Controls.Add(this.label10);
             this.panel6.Controls.Add(this.label9);
+            this.panel6.Controls.Add(this.DPTextBox);
             this.panel6.Location = new System.Drawing.Point(608, 11);
             this.panel6.Name = "panel6";
             this.panel6.Size = new System.Drawing.Size(367, 204);
             this.panel6.TabIndex = 0;
-            // 
-            // DPTextBox
-            // 
-            this.DPTextBox.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.DPTextBox.Location = new System.Drawing.Point(179, 6);
-            this.DPTextBox.Name = "DPTextBox";
-            this.DPTextBox.ReadOnly = true;
-            this.DPTextBox.Size = new System.Drawing.Size(181, 27);
-            this.DPTextBox.TabIndex = 45;
-            this.DPTextBox.Text = "0";
-            this.DPTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.DPTextBox.Visible = false;
-            this.DPTextBox.TextChanged += new System.EventHandler(this.DPTextBox_TextChanged);
             // 
             // jobStartDateTimePicker
             // 
@@ -539,7 +481,7 @@
             // bayarTextBox
             // 
             this.bayarTextBox.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bayarTextBox.Location = new System.Drawing.Point(179, 139);
+            this.bayarTextBox.Location = new System.Drawing.Point(178, 140);
             this.bayarTextBox.Name = "bayarTextBox";
             this.bayarTextBox.Size = new System.Drawing.Size(181, 27);
             this.bayarTextBox.TabIndex = 18;
@@ -571,6 +513,7 @@
             this.totalAfterDiscTextBox.TabIndex = 14;
             this.totalAfterDiscTextBox.Text = "0";
             this.totalAfterDiscTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.totalAfterDiscTextBox.TextChanged += new System.EventHandler(this.totalAfterDiscTextBox_TextChanged);
             // 
             // totalPenjualanTextBox
             // 
@@ -667,6 +610,87 @@
             this.label9.TabIndex = 2;
             this.label9.Text = "Total Penjualan";
             this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // DPTextBox
+            // 
+            this.DPTextBox.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DPTextBox.Location = new System.Drawing.Point(180, 6);
+            this.DPTextBox.Name = "DPTextBox";
+            this.DPTextBox.ReadOnly = true;
+            this.DPTextBox.Size = new System.Drawing.Size(181, 27);
+            this.DPTextBox.TabIndex = 45;
+            this.DPTextBox.Text = "0";
+            this.DPTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.DPTextBox.Visible = false;
+            this.DPTextBox.TextChanged += new System.EventHandler(this.DPTextBox_TextChanged);
+            // 
+            // creditRadioButton
+            // 
+            this.creditRadioButton.AutoSize = true;
+            this.creditRadioButton.ForeColor = System.Drawing.Color.FloralWhite;
+            this.creditRadioButton.Location = new System.Drawing.Point(230, 110);
+            this.creditRadioButton.Name = "creditRadioButton";
+            this.creditRadioButton.Size = new System.Drawing.Size(95, 22);
+            this.creditRadioButton.TabIndex = 5;
+            this.creditRadioButton.Text = "&Pesanan";
+            this.creditRadioButton.UseVisualStyleBackColor = true;
+            this.creditRadioButton.CheckedChanged += new System.EventHandler(this.creditRadioButton_CheckedChanged);
+            // 
+            // cashRadioButton
+            // 
+            this.cashRadioButton.AutoSize = true;
+            this.cashRadioButton.Checked = true;
+            this.cashRadioButton.ForeColor = System.Drawing.Color.FloralWhite;
+            this.cashRadioButton.Location = new System.Drawing.Point(155, 110);
+            this.cashRadioButton.Name = "cashRadioButton";
+            this.cashRadioButton.Size = new System.Drawing.Size(69, 22);
+            this.cashRadioButton.TabIndex = 4;
+            this.cashRadioButton.TabStop = true;
+            this.cashRadioButton.Text = "Tuna&i";
+            this.cashRadioButton.UseVisualStyleBackColor = true;
+            this.cashRadioButton.CheckedChanged += new System.EventHandler(this.cashRadioButton_CheckedChanged);
+            // 
+            // tempoMaskedTextBox
+            // 
+            this.tempoMaskedTextBox.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tempoMaskedTextBox.Location = new System.Drawing.Point(154, 108);
+            this.tempoMaskedTextBox.Mask = "00000";
+            this.tempoMaskedTextBox.Name = "tempoMaskedTextBox";
+            this.tempoMaskedTextBox.Size = new System.Drawing.Size(71, 27);
+            this.tempoMaskedTextBox.TabIndex = 18;
+            this.tempoMaskedTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.tempoMaskedTextBox.ValidatingType = typeof(int);
+            this.tempoMaskedTextBox.Visible = false;
+            this.tempoMaskedTextBox.Enter += new System.EventHandler(this.tempoMaskedTextBox_Enter);
+            // 
+            // paymentComboBox
+            // 
+            this.paymentComboBox.FormattingEnabled = true;
+            this.paymentComboBox.Items.AddRange(new object[] {
+            "Cash",
+            "Kartu Kredit",
+            "Kartu Debit"});
+            this.paymentComboBox.Location = new System.Drawing.Point(157, 109);
+            this.paymentComboBox.Name = "paymentComboBox";
+            this.paymentComboBox.Size = new System.Drawing.Size(142, 26);
+            this.paymentComboBox.TabIndex = 7;
+            this.paymentComboBox.Text = "Cash";
+            this.paymentComboBox.Visible = false;
+            this.paymentComboBox.SelectedIndexChanged += new System.EventHandler(this.paymentComboBox_SelectedIndexChanged);
+            this.paymentComboBox.Enter += new System.EventHandler(this.paymentComboBox_Enter);
+            this.paymentComboBox.Leave += new System.EventHandler(this.paymentComboBox_Leave);
+            // 
+            // labelCaraBayar
+            // 
+            this.labelCaraBayar.AutoSize = true;
+            this.labelCaraBayar.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelCaraBayar.ForeColor = System.Drawing.Color.FloralWhite;
+            this.labelCaraBayar.Location = new System.Drawing.Point(8, 111);
+            this.labelCaraBayar.Name = "labelCaraBayar";
+            this.labelCaraBayar.Size = new System.Drawing.Size(146, 18);
+            this.labelCaraBayar.TabIndex = 6;
+            this.labelCaraBayar.Text = "Cara Bayar       :";
+            this.labelCaraBayar.Visible = false;
             // 
             // panel9
             // 
@@ -933,6 +957,8 @@
         private System.Windows.Forms.Label labelTglNota;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.TextBox DPTextBox;
+        private System.Windows.Forms.Label refSOLabel;
+        private System.Windows.Forms.TextBox refSOTextBox;
     }
 }
 

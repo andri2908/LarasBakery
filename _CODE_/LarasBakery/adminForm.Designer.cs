@@ -89,8 +89,11 @@
             this.MENU_transaksiPenjualan = new System.Windows.Forms.ToolStripMenuItem();
             this.MENU_SalesQuotation = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.MENU_modulKasir = new System.Windows.Forms.ToolStripMenuItem();
+            this.MENU_editPesanan = new System.Windows.Forms.ToolStripMenuItem();
+            this.MENU_pemenuhanSebagian = new System.Windows.Forms.ToolStripMenuItem();
+            this.MENU_pengirimanPesanan = new System.Windows.Forms.ToolStripMenuItem();
+            this.MENU_sendOrderToServer = new System.Windows.Forms.ToolStripMenuItem();
             this.MENU_setNoFaktur = new System.Windows.Forms.ToolStripMenuItem();
             this.MENU_CopyNota = new System.Windows.Forms.ToolStripMenuItem();
             this.MENU_returPenjualan = new System.Windows.Forms.ToolStripMenuItem();
@@ -779,8 +782,11 @@
             this.MENU_transaksiPenjualan.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.MENU_SalesQuotation,
             this.toolStripMenuItem3,
-            this.toolStripMenuItem2,
             this.MENU_modulKasir,
+            this.MENU_editPesanan,
+            this.MENU_pemenuhanSebagian,
+            this.MENU_pengirimanPesanan,
+            this.MENU_sendOrderToServer,
             this.MENU_setNoFaktur,
             this.MENU_CopyNota});
             this.MENU_transaksiPenjualan.ForeColor = System.Drawing.Color.FloralWhite;
@@ -793,8 +799,9 @@
             this.MENU_SalesQuotation.BackColor = System.Drawing.Color.SteelBlue;
             this.MENU_SalesQuotation.ForeColor = System.Drawing.Color.FloralWhite;
             this.MENU_SalesQuotation.Name = "MENU_SalesQuotation";
-            this.MENU_SalesQuotation.Size = new System.Drawing.Size(227, 22);
-            this.MENU_SalesQuotation.Text = "Sales Quotation";
+            this.MENU_SalesQuotation.Size = new System.Drawing.Size(299, 22);
+            this.MENU_SalesQuotation.Text = "Sales Quotation [HIDDEN]";
+            this.MENU_SalesQuotation.Visible = false;
             this.MENU_SalesQuotation.Click += new System.EventHandler(this.MENU_SalesQuotation_Click);
             // 
             // toolStripMenuItem3
@@ -802,34 +809,63 @@
             this.toolStripMenuItem3.BackColor = System.Drawing.Color.SteelBlue;
             this.toolStripMenuItem3.ForeColor = System.Drawing.Color.FloralWhite;
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(227, 22);
-            this.toolStripMenuItem3.Text = "Copy Nota Quotation";
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(299, 22);
+            this.toolStripMenuItem3.Text = "Copy Nota Quotation [HIDDEN]";
+            this.toolStripMenuItem3.Visible = false;
             this.toolStripMenuItem3.Click += new System.EventHandler(this.toolStripMenuItem3_Click_2);
-            // 
-            // toolStripMenuItem2
-            // 
-            this.toolStripMenuItem2.BackColor = System.Drawing.Color.SteelBlue;
-            this.toolStripMenuItem2.ForeColor = System.Drawing.Color.FloralWhite;
-            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(227, 22);
-            this.toolStripMenuItem2.Text = "Sales Order";
-            this.toolStripMenuItem2.Click += new System.EventHandler(this.toolStripMenuItem2_Click_1);
             // 
             // MENU_modulKasir
             // 
             this.MENU_modulKasir.BackColor = System.Drawing.Color.SteelBlue;
             this.MENU_modulKasir.ForeColor = System.Drawing.Color.FloralWhite;
             this.MENU_modulKasir.Name = "MENU_modulKasir";
-            this.MENU_modulKasir.Size = new System.Drawing.Size(227, 22);
+            this.MENU_modulKasir.Size = new System.Drawing.Size(299, 22);
             this.MENU_modulKasir.Text = "Modul Kasir";
             this.MENU_modulKasir.Click += new System.EventHandler(this.toolStripMenuItem18_Click);
+            // 
+            // MENU_editPesanan
+            // 
+            this.MENU_editPesanan.BackColor = System.Drawing.Color.SteelBlue;
+            this.MENU_editPesanan.ForeColor = System.Drawing.Color.FloralWhite;
+            this.MENU_editPesanan.Name = "MENU_editPesanan";
+            this.MENU_editPesanan.Size = new System.Drawing.Size(299, 22);
+            this.MENU_editPesanan.Text = "Edit Pesanan";
+            this.MENU_editPesanan.Click += new System.EventHandler(this.toolStripMenuItem2_Click_1);
+            // 
+            // MENU_pemenuhanSebagian
+            // 
+            this.MENU_pemenuhanSebagian.BackColor = System.Drawing.Color.SteelBlue;
+            this.MENU_pemenuhanSebagian.ForeColor = System.Drawing.Color.FloralWhite;
+            this.MENU_pemenuhanSebagian.Name = "MENU_pemenuhanSebagian";
+            this.MENU_pemenuhanSebagian.Size = new System.Drawing.Size(299, 22);
+            this.MENU_pemenuhanSebagian.Text = "Pemenuhan Sebagian Pesanan";
+            this.MENU_pemenuhanSebagian.Click += new System.EventHandler(this.MENU_pemenuhanSebagian_Click);
+            // 
+            // MENU_pengirimanPesanan
+            // 
+            this.MENU_pengirimanPesanan.BackColor = System.Drawing.Color.SteelBlue;
+            this.MENU_pengirimanPesanan.ForeColor = System.Drawing.Color.FloralWhite;
+            this.MENU_pengirimanPesanan.Name = "MENU_pengirimanPesanan";
+            this.MENU_pengirimanPesanan.Size = new System.Drawing.Size(299, 22);
+            this.MENU_pengirimanPesanan.Text = "Pengiriman Pesanan";
+            this.MENU_pengirimanPesanan.Visible = false;
+            this.MENU_pengirimanPesanan.Click += new System.EventHandler(this.toolStripMenuItem4_Click_2);
+            // 
+            // MENU_sendOrderToServer
+            // 
+            this.MENU_sendOrderToServer.BackColor = System.Drawing.Color.SteelBlue;
+            this.MENU_sendOrderToServer.ForeColor = System.Drawing.Color.FloralWhite;
+            this.MENU_sendOrderToServer.Name = "MENU_sendOrderToServer";
+            this.MENU_sendOrderToServer.Size = new System.Drawing.Size(299, 22);
+            this.MENU_sendOrderToServer.Text = "Kirim Data Pesanan ke Pabrik";
+            this.MENU_sendOrderToServer.Click += new System.EventHandler(this.MENU_sendOrderToServer_Click);
             // 
             // MENU_setNoFaktur
             // 
             this.MENU_setNoFaktur.BackColor = System.Drawing.Color.SteelBlue;
             this.MENU_setNoFaktur.ForeColor = System.Drawing.Color.FloralWhite;
             this.MENU_setNoFaktur.Name = "MENU_setNoFaktur";
-            this.MENU_setNoFaktur.Size = new System.Drawing.Size(227, 22);
+            this.MENU_setNoFaktur.Size = new System.Drawing.Size(299, 22);
             this.MENU_setNoFaktur.Text = "Set No Faktur";
             this.MENU_setNoFaktur.Click += new System.EventHandler(this.toolStripMenuItem19_Click);
             // 
@@ -838,7 +874,7 @@
             this.MENU_CopyNota.BackColor = System.Drawing.Color.SteelBlue;
             this.MENU_CopyNota.ForeColor = System.Drawing.Color.FloralWhite;
             this.MENU_CopyNota.Name = "MENU_CopyNota";
-            this.MENU_CopyNota.Size = new System.Drawing.Size(227, 22);
+            this.MENU_CopyNota.Size = new System.Drawing.Size(299, 22);
             this.MENU_CopyNota.Text = "Copy Nota";
             this.MENU_CopyNota.Click += new System.EventHandler(this.toolStripMenuItem11_Click_1);
             // 
@@ -1980,9 +2016,12 @@
         private System.Windows.Forms.ToolStripMenuItem stokProdukToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem MENU_SalesQuotation;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
+        private System.Windows.Forms.ToolStripMenuItem MENU_editPesanan;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem3;
         private System.Windows.Forms.ToolStripMenuItem MENU_tutupToko;
+        private System.Windows.Forms.ToolStripMenuItem MENU_pengirimanPesanan;
+        private System.Windows.Forms.ToolStripMenuItem MENU_pemenuhanSebagian;
+        private System.Windows.Forms.ToolStripMenuItem MENU_sendOrderToServer;
         //private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
     }
 }

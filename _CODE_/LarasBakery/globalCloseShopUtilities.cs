@@ -19,6 +19,7 @@ namespace AlphaSoft
     class globalCloseShopUtilities
     {
         private globalUtilities gUtil = new globalUtilities();
+        private globalSynchronizeLib gSync = new globalSynchronizeLib();
         private Data_Access DS = new Data_Access();
         private CultureInfo culture = new CultureInfo("id-ID");
         private System.Drawing.Printing.PrintDocument printDocument1 = new System.Drawing.Printing.PrintDocument();
@@ -683,7 +684,7 @@ namespace AlphaSoft
             writeTableContentToInsertStatement("PAYMENT_CREDIT", sw, DAccess, false, false, false, sqlCommand);
 
             // EXPORT DAILY JOURNAL
-            sqlCommand = "SELECT * FROM DAILY_JOURNAL WHERE DATE_FORMAT(JOURNAL_DATETIME, '%Y%m%d')  = '" + dateFrom + "'";
+            sqlCommand = "SELECT * FROM DAILY_JOURNAL";// WHERE DATE_FORMAT(JOURNAL_DATETIME, '%Y%m%d')  = '" + dateFrom + "'";
             writeTableContentToInsertStatement("DAILY_JOURNAL", sw, DAccess, false, false, false, sqlCommand);
 
             // EXPORT DEBT
@@ -693,6 +694,8 @@ namespace AlphaSoft
             // EXPORT PAYMENT DEBT
             sqlCommand = "SELECT PD.* FROM PAYMENT_DEBT PD, DEBT D, PURCHASE_HEADER PH WHERE PH.PURCHASE_PAID = 1 AND D.PURCHASE_INVOICE = PH.PURCHASE_INVOICE AND PD.DEBT_ID = D.DEBT_ID AND D.DEBT_PAID  = 1";
             writeTableContentToInsertStatement("PAYMENT_DEBT", sw, DAccess, false, false, false, sqlCommand);
+
+            sw.Close();
         }
 
         private void exportData(string fileName)
@@ -724,17 +727,20 @@ namespace AlphaSoft
             MySqlException internalEX = null;
             bool result = false;
 
+            localDS.beginTransaction(Data_Access.HQ_SERVER);
+
             try
             {
                 while ((sqlCommand = file.ReadLine()) != null)
                 {
-                    if (!localDS.executeNonQueryCommand(sqlCommand, ref internalEX))
-                        throw internalEX;
+                    if (sqlCommand.Length > 0)
+                        if (!localDS.executeNonQueryCommand(sqlCommand, ref internalEX))
+                            throw internalEX;
                 }
 
                 file.Close();
 
-                DS.commit();
+                localDS.commit();
 
                 result = true;
             }
@@ -749,38 +755,38 @@ namespace AlphaSoft
         private bool synchronizeDataToServer()
         {
             bool result = false;
-            Data_Access DS_HQ = new Data_Access();
-            string localDate = "";
-            string fileName = "";
+            //Data_Access DS_HQ = new Data_Access();
+            //string localDate = "";
+            //string fileName = "";
 
-            localDate = String.Format(culture, "{0:ddMMyyyy}", DateTime.Now);
-            fileName = "EXPORT_DATA_" + localDate + ".sql";
+            //localDate = String.Format(culture, "{0:ddMMyyyy}", DateTime.Now);
+            //fileName = "EXPORT_DATA_" + localDate + ".sql";
 
-            // EXPORT LOCAL DATA
-            exportData(fileName);
+            //// EXPORT LOCAL DATA
+            //exportData(fileName);
 
-            if (DS_HQ.HQ_mySQLConnect(true))
-            {
-                gUtil.saveSystemDebugLog(0, "[TUTUP TOKO] CONNECTION TO CENTRAL HQ CREATED");
+            //if (DS_HQ.HQ_mySQLConnect(true))
+            //{
+            //    gUtil.saveSystemDebugLog(0, "[TUTUP TOKO] CONNECTION TO CENTRAL HQ CREATED");
 
-                result = syncLocalDataToServer(DS_HQ, fileName);
+            //    result = syncLocalDataToServer(DS_HQ, fileName);
 
-                try
-                {
-                    File.Delete(fileName);
-                }
-                catch (Exception ex)
-                {
-                    gUtil.saveSystemDebugLog(0, "[TUTUP TOKO] FAILED TO DELETE EXPORT FILE [" +ex.Message+ "]");
-                }
-            }
-            else
-            {
-                MessageBox.Show("KONEKSI KE PUSAT GAGAL");
-                gUtil.saveSystemDebugLog(0, "[TUTUP TOKO] FAILED TO CONNECT TO CENTRAL HQ");
+            //    try
+            //    {
+            //        File.Delete(fileName);
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        gUtil.saveSystemDebugLog(0, "[TUTUP TOKO] FAILED TO DELETE EXPORT FILE [" +ex.Message+ "]");
+            //    }
+            //}
+            //else
+            //{
+            //    MessageBox.Show("KONEKSI KE PUSAT GAGAL");
+            //    gUtil.saveSystemDebugLog(0, "[TUTUP TOKO] FAILED TO CONNECT TO CENTRAL HQ");
 
-                result = false;
-            }
+            //    result = false;
+            //}
 
             return result;
         }
@@ -863,7 +869,7 @@ namespace AlphaSoft
             DS.beginTransaction();
             try
             {
-                sqlCommand = "DELETE FROM DAILY_JOURNAL WHERE DATE_FORMAT(DJ.JOURNAL_DATETIME, '%Y%m%d')  = '" + dateFrom + "'";
+                sqlCommand = "DELETE FROM DAILY_JOURNAL WHERE DATE_FORMAT(JOURNAL_DATETIME, '%Y%m%d')  = '" + dateFrom + "'";
                 DS.executeNonQueryCommand(sqlCommand, ref internalEX);
 
                 DS.commit();
@@ -944,8 +950,22 @@ namespace AlphaSoft
             printOutSummary();
 
             localSuccess = true;
+
+            // SEND DATA PESANAN TO PABRIK 
+            // ===================================================
+            if (gSync.sendDataToServer("SALES_HEADER"))
+                gSync.updateSyncFlag("SALES_HEADER");
+
+            if (gSync.sendDataToServer("SALES_DETAIL"))
+                gSync.updateSyncFlag("SALES_DETAIL");
+
+            if (gSync.sendDataToServer("SALES_DETAIL_FULFILLMENT"))
+                gSync.updateSyncFlag("SALES_DETAIL_FULFILLMENT");
+            // ===================================================
+
             // SYNCHRONIZE TO SERVER
-            if (synchronizeDataToServer())
+            //if (synchronizeDataToServer())
+            if (gSync.syncDataForCloseShop())
                 serverSuccess = true;
 
             // EXPORT TO FILE

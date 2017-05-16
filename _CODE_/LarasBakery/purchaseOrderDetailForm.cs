@@ -304,7 +304,7 @@ namespace AlphaSoft
             detailPODataGridView.CurrentCell = detailPODataGridView.Rows[newRowIndex].Cells["productID"];
         }
 
-        public void addNewRowFromBarcode(string productID, string productName)
+        public void addNewRowFromBarcode(string productID, string productName, int rowIndex = -1)
         {
             int i = 0;
             bool found = false;
@@ -322,41 +322,48 @@ namespace AlphaSoft
 
             detailPODataGridView.Focus();
 
-            // CHECK FOR EXISTING SELECTED ITEM
-            for (i = 0; i < detailPODataGridView.Rows.Count && !found && !foundEmptyRow; i++)
+            if (rowIndex >= 0)
             {
-                if (null != detailPODataGridView.Rows[i].Cells["productName"].Value && 
-                    null != detailPODataGridView.Rows[i].Cells["productID"].Value && gUtil.isProductIDExist(detailPODataGridView.Rows[i].Cells["productID"].Value.ToString()))
+                rowSelectedIndex = rowIndex;
+            }
+            else
+            {
+                // CHECK FOR EXISTING SELECTED ITEM
+                for (i = 0; i < detailPODataGridView.Rows.Count && !found && !foundEmptyRow; i++)
                 {
-                    if (detailPODataGridView.Rows[i].Cells["productName"].Value.ToString() == productName)
+                    if (null != detailPODataGridView.Rows[i].Cells["productName"].Value &&
+                        null != detailPODataGridView.Rows[i].Cells["productID"].Value && gUtil.isProductIDExist(detailPODataGridView.Rows[i].Cells["productID"].Value.ToString()))
                     {
-                        found = true;
-                        rowSelectedIndex = i;
+                        if (detailPODataGridView.Rows[i].Cells["productName"].Value.ToString() == productName)
+                        {
+                            found = true;
+                            rowSelectedIndex = i;
+                        }
+                    }
+                    else
+                    {
+                        foundEmptyRow = true;
+                        emptyRowIndex = i;
                     }
                 }
-                else
-                {
-                    foundEmptyRow = true;
-                    emptyRowIndex = i;
-                }
-            }
 
-            if (!found)
-            {
-                if (foundEmptyRow)
+                if (!found)
                 {
-                    detailQty[emptyRowIndex] = "0";
-                    detailHpp[emptyRowIndex] = "0";
-                    subtotalList[emptyRowIndex] = "0";
-                    rowSelectedIndex = emptyRowIndex;
-                }
-                else
-                {
-                    detailPODataGridView.Rows.Add();
-                    detailQty.Add("0");
-                    detailHpp.Add("0");
-                    subtotalList.Add("0");
-                    rowSelectedIndex = detailPODataGridView.Rows.Count - 1;
+                    if (foundEmptyRow)
+                    {
+                        detailQty[emptyRowIndex] = "0";
+                        detailHpp[emptyRowIndex] = "0";
+                        subtotalList[emptyRowIndex] = "0";
+                        rowSelectedIndex = emptyRowIndex;
+                    }
+                    else
+                    {
+                        detailPODataGridView.Rows.Add();
+                        detailQty.Add("0");
+                        detailHpp.Add("0");
+                        subtotalList.Add("0");
+                        rowSelectedIndex = detailPODataGridView.Rows.Count - 1;
+                    }
                 }
             }
 
@@ -398,7 +405,7 @@ namespace AlphaSoft
             MySqlDataReader rdr;
             string sqlCommand = "";
 
-            sqlCommand = "SELECT SUPPLIER_ID, SUPPLIER_FULL_NAME FROM MASTER_SUPPLIER WHERE SUPPLIER_ACTIVE = 1";
+            sqlCommand = "SELECT SUPPLIER_ID, SUPPLIER_FULL_NAME FROM MASTER_SUPPLIER WHERE SUPPLIER_ACTIVE = 1 ORDER BY SUPPLIER_FULL_NAME ASC";
 
             using (rdr = DS.getData(sqlCommand))
             {
@@ -468,32 +475,6 @@ namespace AlphaSoft
             
         }
 
-        private void setTextBoxCustomSource(TextBox textBox)
-        {
-            MySqlDataReader rdr;
-            string sqlCommand = "";
-            string[] arr = null;
-            List<string> arrList = new List<string>();
-
-            sqlCommand = "SELECT PRODUCT_NAME FROM MASTER_PRODUCT WHERE PRODUCT_ACTIVE = 1";
-            rdr = DS.getData(sqlCommand);
-
-            if (rdr.HasRows)
-            {
-                while (rdr.Read())
-                {
-                    arrList.Add(rdr.GetString("PRODUCT_NAME"));
-                }
-                AutoCompleteStringCollection collection = new AutoCompleteStringCollection();
-                arr = arrList.ToArray();
-                collection.AddRange(arr);
-
-                textBox.AutoCompleteCustomSource = collection;
-            }
-
-            rdr.Close();
-        }
-
         private void detailPODataGridView_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
         {           
             if ((detailPODataGridView.CurrentCell.OwningColumn.Name == "HPP" || detailPODataGridView.CurrentCell.OwningColumn.Name == "qty")
@@ -509,7 +490,9 @@ namespace AlphaSoft
             {
                 TextBox productIDTextBox = e.Control as TextBox;
                 //productIDTextBox.TextChanged -= TextBox_TextChanged;
+                productIDTextBox.PreviewKeyDown -= TextBox_previewKeyDown;
                 productIDTextBox.PreviewKeyDown += TextBox_previewKeyDown;
+
                 productIDTextBox.CharacterCasing = CharacterCasing.Upper;
                 productIDTextBox.AutoCompleteMode = AutoCompleteMode.None;
                 //productIDTextBox.AutoCompleteSource = AutoCompleteSource.CustomSource;
@@ -520,11 +503,14 @@ namespace AlphaSoft
             {
                 TextBox productIDTextBox = e.Control as TextBox;
                 //productIDTextBox.TextChanged -= TextBox_TextChanged;
+                productIDTextBox.PreviewKeyDown -= productName_previewKeyDown;
                 productIDTextBox.PreviewKeyDown += productName_previewKeyDown;
+
                 productIDTextBox.CharacterCasing = CharacterCasing.Upper;
-                productIDTextBox.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
-                productIDTextBox.AutoCompleteSource = AutoCompleteSource.CustomSource;
-                setTextBoxCustomSource(productIDTextBox);
+                productIDTextBox.AutoCompleteMode = AutoCompleteMode.None;
+                //productIDTextBox.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+                //productIDTextBox.AutoCompleteSource = AutoCompleteSource.CustomSource;
+                //setTextBoxCustomSource(productIDTextBox);
             }
         }
 
@@ -583,7 +569,7 @@ namespace AlphaSoft
             if (isProductID)
                 numRow = Convert.ToInt32(DS.getDataSingleValue("SELECT COUNT(1) FROM MASTER_PRODUCT WHERE PRODUCT_ID = '" + currentValue + "'"));
             else
-                numRow = Convert.ToInt32(DS.getDataSingleValue("SELECT COUNT(1) FROM MASTER_PRODUCT WHERE PRODUCT_NAME = '" + currentValue + "'"));
+                numRow = Convert.ToInt32(DS.getDataSingleValue("SELECT COUNT(1) FROM MASTER_PRODUCT WHERE PRODUCT_NAME = '" + MySqlHelper.EscapeString(currentValue) + "'"));
 
             if (numRow > 0)
             {
@@ -595,7 +581,7 @@ namespace AlphaSoft
                 else
                 {
                     selectedProductName = currentValue;
-                    selectedProductID = DS.getDataSingleValue("SELECT IFNULL(PRODUCT_ID,'') FROM MASTER_PRODUCT WHERE PRODUCT_NAME = '" + currentValue + "'").ToString();
+                    selectedProductID = DS.getDataSingleValue("SELECT IFNULL(PRODUCT_ID,'') FROM MASTER_PRODUCT WHERE PRODUCT_NAME = '" + MySqlHelper.EscapeString(currentValue) + "'").ToString();
                 }
 
                 if (null != selectedRow.Cells["productID"].Value)
@@ -654,12 +640,16 @@ namespace AlphaSoft
 
                 if (currentValue.Length > 0)
                 {
-                    updateSomeRowContents(selectedRow, rowSelectedIndex, currentValue);
-                    detailPODataGridView.CurrentCell = selectedRow.Cells["qty"];
+                    //updateSomeRowContents(selectedRow, rowSelectedIndex, currentValue);
+                    //detailPODataGridView.CurrentCell = selectedRow.Cells["qty"];
+                    // CALL DATA PRODUK FORM WITH PARAMETER 
+                    dataProdukForm browseProduk = new dataProdukForm(globalConstants.NEW_PURCHASE_ORDER, this, currentValue, "", rowSelectedIndex);
+                    browseProduk.ShowDialog(this);
+
                 }
                 else
                 {
-                    clearUpSomeRowContents(selectedRow, rowSelectedIndex);
+                    //clearUpSomeRowContents(selectedRow, rowSelectedIndex);
                 }
             }
         }
@@ -681,99 +671,17 @@ namespace AlphaSoft
 
                 if (currentValue.Length > 0)
                 {
-                    updateSomeRowContents(selectedRow, rowSelectedIndex, currentValue, false);
-                    detailPODataGridView.CurrentCell = selectedRow.Cells["qty"];
+                    //updateSomeRowContents(selectedRow, rowSelectedIndex, currentValue, false);
+                    //detailPODataGridView.CurrentCell = selectedRow.Cells["qty"];
+                    // CALL DATA PRODUK FORM WITH PARAMETER 
+                    dataProdukForm browseProduk = new dataProdukForm(globalConstants.NEW_PURCHASE_ORDER, this, "", currentValue, rowSelectedIndex);
+                    browseProduk.ShowDialog(this);
                 }
                 else
                 {
-                    clearUpSomeRowContents(selectedRow, rowSelectedIndex);
+                    //clearUpSomeRowContents(selectedRow, rowSelectedIndex);
                 }
             }
-        }
-
-        private void TextBox_TextChanged(object sender, EventArgs e)
-        {
-            int rowSelectedIndex = 0;
-            double productQty = 0;
-            double hppValue = 0;
-            double subTotal = 0;
-            string tempString = "";
-
-            if (isLoading)
-                return;
-
-            if (detailPODataGridView.CurrentCell.OwningColumn.Name != "HPP" && detailPODataGridView.CurrentCell.OwningColumn.Name != "qty")
-                return;
-
-            DataGridViewTextBoxEditingControl dataGridViewTextBoxEditingControl = sender as DataGridViewTextBoxEditingControl;
-
-            rowSelectedIndex = detailPODataGridView.SelectedCells[0].RowIndex;
-            DataGridViewRow selectedRow = detailPODataGridView.Rows[rowSelectedIndex];
-
-            if (dataGridViewTextBoxEditingControl.Text.Length <= 0)
-            {
-                // IF TEXTBOX IS EMPTY, DEFAULT THE VALUE TO 0 AND EXIT THE CHECKING
-                isLoading = true;
-                // reset subTotal Value and recalculate total
-                selectedRow.Cells["subtotal"].Value = 0;
-                subtotalList[rowSelectedIndex] = "0";
-
-                if (detailPODataGridView.CurrentCell.OwningColumn.Name == "qty")
-                    detailQty[rowSelectedIndex] = "0";
-                else
-                    detailHpp[rowSelectedIndex] = "0";
-
-                dataGridViewTextBoxEditingControl.Text = "0";
-
-                calculateTotal();
-
-                dataGridViewTextBoxEditingControl.SelectionStart = dataGridViewTextBoxEditingControl.Text.Length;
-
-                isLoading = false;
-                return;
-            }
-
-            if (detailPODataGridView.CurrentCell.OwningColumn.Name == "qty")
-                previousInput = detailQty[rowSelectedIndex];
-            else
-                previousInput = detailHpp[rowSelectedIndex];
-
-            isLoading = true;
-            if (previousInput == "0")
-            {
-                tempString = dataGridViewTextBoxEditingControl.Text;
-                if (tempString.IndexOf('0') == 0 && tempString.Length > 1 && tempString.IndexOf("0.") < 0)
-                    dataGridViewTextBoxEditingControl.Text = tempString.Remove(tempString.IndexOf('0'), 1);
-            }
-
-            if (gUtil.matchRegEx(dataGridViewTextBoxEditingControl.Text, globalUtilities.REGEX_NUMBER_WITH_2_DECIMAL)
-                && (dataGridViewTextBoxEditingControl.Text.Length > 0))
-            {
-                if (detailPODataGridView.CurrentCell.OwningColumn.Name == "qty")
-                {
-                    detailQty[rowSelectedIndex] = dataGridViewTextBoxEditingControl.Text;
-                }
-                else
-                {
-                    detailHpp[rowSelectedIndex] = dataGridViewTextBoxEditingControl.Text;
-                }
-            }
-            else
-            {
-                dataGridViewTextBoxEditingControl.Text = previousInput;
-            }
-
-            hppValue = Convert.ToDouble(detailHpp[rowSelectedIndex]);
-            productQty = Convert.ToDouble(detailQty[rowSelectedIndex]);
-            subTotal = Math.Round((hppValue * productQty), 2);
-
-            selectedRow.Cells["subtotal"].Value = subTotal.ToString();
-            subtotalList[rowSelectedIndex] = subTotal.ToString();
-
-            calculateTotal();
-
-            dataGridViewTextBoxEditingControl.SelectionStart = dataGridViewTextBoxEditingControl.Text.Length;
-            isLoading = false;
         }
 
         private bool isPOSent()

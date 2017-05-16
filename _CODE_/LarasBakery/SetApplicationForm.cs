@@ -23,13 +23,17 @@ namespace AlphaSoft
         private string ip1, ip2, ip3, ip4;
         private int options = 0;
         private Data_Access DS = new Data_Access();
+        private bool navKeyRegistered = false;
 
         private Hotkeys.GlobalHotkey ghk_UP;
         private Hotkeys.GlobalHotkey ghk_DOWN;
 
-        public SetApplicationForm()
+        adminForm originForm;
+
+        public SetApplicationForm(adminForm parentForm)
         {
             InitializeComponent();
+            originForm = parentForm;
         }
 
         private void captureAll(Keys key)
@@ -66,12 +70,19 @@ namespace AlphaSoft
 
             ghk_DOWN = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.Down, this);
             ghk_DOWN.Register();
+
+            navKeyRegistered = true;
         }
 
         private void unregisterGlobalHotkey()
         {
-            ghk_UP.Unregister();
-            ghk_DOWN.Unregister();
+            if (navKeyRegistered)
+            {
+                ghk_UP.Unregister();
+                ghk_DOWN.Unregister();
+
+                navKeyRegistered = false;
+            }
         }
 
         private void serverIPRadioButton_Click(object sender, EventArgs e)
@@ -129,16 +140,24 @@ namespace AlphaSoft
 
             DS.mySqlConnect();
             //1 load default 2 setting user
-            using (rdr = DS.getData("SELECT IFNULL(BRANCH_ID,0) AS 'BRANCH_ID', IFNULL(HQ_IP4,'') AS 'IP', IFNULL(STORE_NAME,'') AS 'NAME', IFNULL(STORE_ADDRESS,'') AS 'ADDRESS', IFNULL(STORE_PHONE,'') AS 'PHONE', IFNULL(STORE_EMAIL,'') AS 'EMAIL' FROM SYS_CONFIG WHERE ID =  " + opt))
+            using (rdr = DS.getData("SELECT IFNULL(BRANCH_ID,0) AS 'BRANCH_ID', IFNULL(HQ_IP4,'') AS 'IP', IFNULL(STORE_NAME,'') AS 'NAME', IFNULL(STORE_ADDRESS,'') AS 'ADDRESS', IFNULL(STORE_PHONE,'') AS 'PHONE', IFNULL(STORE_EMAIL,'') AS 'EMAIL', SERVER_IP4 FROM SYS_CONFIG WHERE ID =  " + opt))
             {
                 if (rdr.HasRows)
                 {                    
                     while (rdr.Read())
                     {
-                        BranchIDTextbox.Text = rdr.GetString("BRANCH_ID");
-                        string tmp = rdr.GetString("IP");
-                        int pos = tmp.IndexOf(".");
-                        string tmp2 = tmp.Substring(0, pos);
+                    //    if (rdr.GetInt32("BRANCH_ID") > 0)
+                        { 
+                            BranchIDTextbox.Text = rdr.GetString("BRANCH_ID");
+                            branchCombo.SelectedIndex = rdr.GetInt32("BRANCH_ID");
+                        }
+
+                        string tmp, tmp2;
+                        int pos;
+
+                        tmp = rdr.GetString("IP");
+                        pos = tmp.IndexOf(".");
+                        tmp2 = tmp.Substring(0, pos);
                         ip1 = tmp2;
                         HQIP1.Text = ip1;
                         tmp = tmp.Substring(pos + 1);
@@ -154,6 +173,27 @@ namespace AlphaSoft
                         tmp = tmp.Substring(pos + 1);
                         ip4 = tmp;
                         HQIP4.Text = ip4;
+
+                        tmp = rdr.GetString("SERVER_IP4");
+                        pos = tmp.IndexOf(".");
+                        tmp2 = tmp.Substring(0, pos);
+                        ip1 = tmp2;
+                        serverIP1.Text = ip1;
+                        tmp = tmp.Substring(pos + 1);
+                        pos = tmp.IndexOf(".");
+                        tmp2 = tmp.Substring(0, pos);
+                        ip2 = tmp2;
+                        serverIP2.Text = ip2;
+                        tmp = tmp.Substring(pos + 1);
+                        pos = tmp.IndexOf(".");
+                        tmp2 = tmp.Substring(0, pos);
+                        ip3 = tmp2;
+                        serverIP3.Text = ip3;
+                        tmp = tmp.Substring(pos + 1);
+                        ip4 = tmp;
+                        serverIP4.Text = ip4;
+
+
                         if (!String.IsNullOrEmpty(rdr.GetString("NAME")))
                         {
                             NamaTokoTextbox.Text = rdr.GetString("NAME");
@@ -175,9 +215,60 @@ namespace AlphaSoft
             }
         }
 
+        //private void fillInLocationCombo()
+        //{
+        //    MySqlDataReader rdr;
+        //    string sqlCommand = "";
+        //    DataTable dt = new DataTable();
+
+        //    sqlCommand = "SELECT ID, LOCATION_NAME FROM MASTER_LOCATION WHERE LOCATION_ACTIVE = 1";
+
+        //    locationCombo.Items.Clear();
+        //    locationComboHidden.Items.Clear();
+        //    using (rdr = DS.getData(sqlCommand))
+        //    {
+        //        if (rdr.HasRows)
+        //        {
+        //            while (rdr.Read())
+        //            {
+        //                locationCombo.Items.Add(rdr.GetString("LOCATION_NAME"));
+        //                locationComboHidden.Items.Add(rdr.GetString("ID"));
+        //            }
+        //        }
+        //    }
+        //}
+
+        private void fillInBranchCombo()
+        {
+            MySqlDataReader rdr;
+            string sqlCommand = "";
+            DataTable dt = new DataTable();
+
+            sqlCommand = "SELECT BRANCH_ID, BRANCH_NAME FROM MASTER_BRANCH WHERE BRANCH_ACTIVE = 1";
+
+            branchCombo.Items.Clear();
+            branchComboHidden.Items.Clear();
+
+            branchCombo.Items.Add("PUSAT");
+            branchComboHidden.Items.Add("0");
+
+            using (rdr = DS.getData(sqlCommand))
+            {
+                if (rdr.HasRows)
+                {
+                    while (rdr.Read())
+                    {
+                        branchCombo.Items.Add(rdr.GetString("BRANCH_NAME"));
+                        branchComboHidden.Items.Add(rdr.GetString("BRANCH_ID"));
+                    }
+                }
+            }
+        }
+
         private void setDatabaseLocationForm_Load(object sender, EventArgs e)
         {
             gutil.reArrangeTabOrder(this);
+            fillInBranchCombo();
 
             errorLabel.Text = "";
             if (checkconfig())
@@ -222,6 +313,8 @@ namespace AlphaSoft
                 MessageBox.Show("Default Setting Loaded");
                 loadSettingDB(1);
             }
+
+            gutil.reArrangeTabOrder(this);
         }
 
         private void createConfig(String inp1,String inp2,String inp3,String inp4)
@@ -375,7 +468,7 @@ namespace AlphaSoft
             MySqlException internalEX = null;
             string HQIP = HQIP1.Text.Trim() + "." + HQIP2.Text.Trim() + "." + HQIP3.Text.Trim() + "." + HQIP4.Text.Trim();
             string serverIP = serverIP1.Text.Trim() + "." + serverIP2.Text.Trim() + "." + serverIP3.Text.Trim() + "." + serverIP4.Text.Trim();
-            String branchID = BranchIDTextbox.Text;
+            String branchID = branchComboHidden.Text;//BranchIDTextbox.Text;
             //String no_faktur = "";
             String nama_toko = MySqlHelper.EscapeString(NamaTokoTextbox.Text);
             String alamat_toko = MySqlHelper.EscapeString(AlamatTextbox.Text);
@@ -393,7 +486,7 @@ namespace AlphaSoft
                 {
                     case 1:
                         sqlCommand = "INSERT INTO SYS_CONFIG (ID, NO_FAKTUR, BRANCH_ID, HQ_IP4, STORE_NAME, STORE_ADDRESS, STORE_PHONE, STORE_EMAIL, QUOTATION_REMINDER, SERVER_IP4) " +
-                                            "VALUES (2, '', '" + branchID + "', '" + HQIP + "', '" + nama_toko + "', '" + alamat_toko + "', '" + telepon_toko + "', '" + email_toko + "', " + reminderValue + ", " + serverIP + ")";
+                                            "VALUES (2, '', '" + branchID + "', '" + HQIP + "', '" + nama_toko + "', '" + alamat_toko + "', '" + telepon_toko + "', '" + email_toko + "', " + reminderValue + ", '" + serverIP + "')";
                         options = gutil.INS;
                         gutil.saveSystemDebugLog(0, "INSERT DATA ID 2 TO SYS_CONFIG");
 
@@ -504,6 +597,8 @@ namespace AlphaSoft
             {
                 gutil.saveUserChangeLog(globalConstants.MENU_SINKRONISASI_INFORMASI, globalConstants.CHANGE_LOG_UPDATE, "UPDATE DATA APLIKASI");
                 gutil.showSuccess(options);
+
+                originForm.updateStatusLabel();
             } else
             {
                 if (success1 == false)
@@ -619,12 +714,27 @@ namespace AlphaSoft
             unregisterGlobalHotkey();
         }
 
+        private void branchCombo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            branchComboHidden.Text = branchComboHidden.Items[branchCombo.SelectedIndex].ToString();
+        }
+
         private void serverIP1_Enter(object sender, EventArgs e)
         {
             BeginInvoke((Action)delegate
             {
                 serverIP1.SelectAll();
             });
+        }
+
+        private void branchCombo_Enter(object sender, EventArgs e)
+        {
+            unregisterGlobalHotkey();
+        }
+
+        private void branchCombo_Leave(object sender, EventArgs e)
+        {
+            registerGlobalHotkey();
         }
 
         private void serverIP2_Enter(object sender, EventArgs e)

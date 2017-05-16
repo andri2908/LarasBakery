@@ -72,6 +72,7 @@ namespace AlphaSoft
                     //reprintButton.Visible = false;
                     exportButton.Visible = false;
                     acceptedButton.Visible = false;
+                    directMutasiBarang = true;
                     break;
 
                 case globalConstants.REPRINT_PERMINTAAN_BARANG:
@@ -299,10 +300,13 @@ namespace AlphaSoft
 
         private void unregisterNavigationKey()
         {
-            ghk_UP.Unregister();
-            ghk_DOWN.Unregister();
+            if (navKeyRegistered)
+            { 
+                ghk_UP.Unregister();
+                ghk_DOWN.Unregister();
 
-            navKeyRegistered = false;
+                navKeyRegistered = false;
+            }
         }
 
         private void registerDelKey()
@@ -371,7 +375,7 @@ namespace AlphaSoft
             detailRequestOrderDataGridView.CurrentCell = detailRequestOrderDataGridView.Rows[newRowIndex].Cells["productID"];
         }
 
-        public void addNewRowFromBarcode(string productID, string productName)
+        public void addNewRowFromBarcode(string productID, string productName, int rowIndex = -1)
         {
             int i = 0;
             bool found = false;
@@ -385,42 +389,51 @@ namespace AlphaSoft
             if (detailRequestOrderDataGridView.ReadOnly == true)
                 return;
 
+            isLoading = true;
+
             detailRequestOrderDataGridView.Focus();
 
             detailRequestOrderDataGridView.AllowUserToAddRows = false;
 
-            // CHECK FOR EXISTING SELECTED ITEM
-            for (i = 0; i < detailRequestOrderDataGridView.Rows.Count && !found && !foundEmptyRow; i++)
+            if (rowIndex >= 0)
             {
-                if (null != detailRequestOrderDataGridView.Rows[i].Cells["productName"].Value && null != detailRequestOrderDataGridView.Rows[i].Cells["productID"].Value && productIDValid(detailRequestOrderDataGridView.Rows[i].Cells["productID"].Value.ToString()))
+                rowSelectedIndex = rowIndex;
+            }
+            else
+            {
+                // CHECK FOR EXISTING SELECTED ITEM
+                for (i = 0; i < detailRequestOrderDataGridView.Rows.Count && !found && !foundEmptyRow; i++)
                 {
-                    if (detailRequestOrderDataGridView.Rows[i].Cells["productName"].Value.ToString() == productName)
+                    if (null != detailRequestOrderDataGridView.Rows[i].Cells["productName"].Value && null != detailRequestOrderDataGridView.Rows[i].Cells["productID"].Value && productIDValid(detailRequestOrderDataGridView.Rows[i].Cells["productID"].Value.ToString()))
                     {
-                        found = true;
-                        rowSelectedIndex = i;
+                        if (detailRequestOrderDataGridView.Rows[i].Cells["productName"].Value.ToString() == productName)
+                        {
+                            found = true;
+                            rowSelectedIndex = i;
+                        }
+                    }
+                    else
+                    {
+                        foundEmptyRow = true;
+                        emptyRowIndex = i;
                     }
                 }
-                else
-                {
-                    foundEmptyRow = true;
-                    emptyRowIndex = i;
-                }
-            }
 
-            if (!found)
-            {
-                if (foundEmptyRow)
+                if (!found)
                 {
-                    detailRequestQtyApproved[emptyRowIndex] = "0";
-                    rowSelectedIndex = emptyRowIndex;
-                }
-                else
-                {
-                    detailRequestOrderDataGridView.Rows.Add();
-                    detailRequestQtyApproved.Add("0");
-                    productPriceList.Add("0");
-                    subtotalList.Add("0");
-                    rowSelectedIndex = detailRequestOrderDataGridView.Rows.Count - 1;
+                    if (foundEmptyRow)
+                    {
+                        detailRequestQtyApproved[emptyRowIndex] = "0";
+                        rowSelectedIndex = emptyRowIndex;
+                    }
+                    else
+                    {
+                        detailRequestOrderDataGridView.Rows.Add();
+                        detailRequestQtyApproved.Add("0");
+                        productPriceList.Add("0");
+                        subtotalList.Add("0");
+                        rowSelectedIndex = detailRequestOrderDataGridView.Rows.Count - 1;
+                    }
                 }
             }
 
@@ -451,8 +464,11 @@ namespace AlphaSoft
 
             detailRequestOrderDataGridView.CurrentCell = selectedRow.Cells["qty"];
             detailRequestOrderDataGridView.AllowUserToAddRows = true;
+            detailRequestOrderDataGridView.BeginEdit(true);
 
             detailRequestOrderDataGridView.Select();
+
+            isLoading = false;
         }
 
         private void calculateTotal()
@@ -525,7 +541,10 @@ namespace AlphaSoft
             {
                 TextBox productIDTextBox = e.Control as TextBox;
                 //productIDTextBox.TextChanged -= TextBox_TextChanged;
+                productIDTextBox.PreviewKeyDown -= TextBox_previewKeyDown;
                 productIDTextBox.PreviewKeyDown += TextBox_previewKeyDown;
+                productIDTextBox.KeyUp -= TextBox_KeyUp;
+                productIDTextBox.KeyUp += TextBox_KeyUp;
                 productIDTextBox.CharacterCasing = CharacterCasing.Upper;
                 productIDTextBox.AutoCompleteMode = AutoCompleteMode.None;
             }
@@ -534,11 +553,15 @@ namespace AlphaSoft
             {
                 TextBox productNameTextBox = e.Control as TextBox;
                 //productIDTextBox.TextChanged -= TextBox_TextChanged;
+                productNameTextBox.PreviewKeyDown -= productName_previewKeyDown;
                 productNameTextBox.PreviewKeyDown += productName_previewKeyDown;
+                productNameTextBox.KeyUp -= TextBox_KeyUp;
+                productNameTextBox.KeyUp += TextBox_KeyUp;
                 productNameTextBox.CharacterCasing = CharacterCasing.Upper;
-                productNameTextBox.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
-                productNameTextBox.AutoCompleteSource = AutoCompleteSource.CustomSource;
-                setTextBoxCustomSource(productNameTextBox);
+                productNameTextBox.AutoCompleteMode = AutoCompleteMode.None;
+                //productNameTextBox.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+                //productNameTextBox.AutoCompleteSource = AutoCompleteSource.CustomSource;
+                //setTextBoxCustomSource(productNameTextBox);
             }
 
             if (detailRequestOrderDataGridView.CurrentCell.OwningColumn.Name == "qty" && e.Control is TextBox)
@@ -584,7 +607,7 @@ namespace AlphaSoft
             if (isProductID)
                 numRow = Convert.ToInt32(DS.getDataSingleValue("SELECT COUNT(1) FROM MASTER_PRODUCT WHERE PRODUCT_ID = '" + currentValue + "'"));
             else
-                numRow = Convert.ToInt32(DS.getDataSingleValue("SELECT COUNT(1) FROM MASTER_PRODUCT WHERE PRODUCT_NAME = '" + currentValue + "'"));
+                numRow = Convert.ToInt32(DS.getDataSingleValue("SELECT COUNT(1) FROM MASTER_PRODUCT WHERE PRODUCT_NAME = '" + MySqlHelper.EscapeString(currentValue) + "'"));
 
             if (numRow > 0)
             {
@@ -596,7 +619,7 @@ namespace AlphaSoft
                 else
                 {
                     selectedProductName = currentValue;
-                    selectedProductID = DS.getDataSingleValue("SELECT IFNULL(PRODUCT_ID,'') FROM MASTER_PRODUCT WHERE PRODUCT_NAME = '" + currentValue + "'").ToString();
+                    selectedProductID = DS.getDataSingleValue("SELECT IFNULL(PRODUCT_ID,'') FROM MASTER_PRODUCT WHERE PRODUCT_NAME = '" + MySqlHelper.EscapeString(currentValue) + "'").ToString();
                 }
 
                 if (null != selectedRow.Cells["productID"].Value)
@@ -655,12 +678,16 @@ namespace AlphaSoft
 
                 if (currentValue.Length > 0)
                 {
-                    updateSomeRowContents(selectedRow, rowSelectedIndex, currentValue);
-                    detailRequestOrderDataGridView.CurrentCell = selectedRow.Cells["qty"];
+                    //updateSomeRowContents(selectedRow, rowSelectedIndex, currentValue);
+                    //detailRequestOrderDataGridView.CurrentCell = selectedRow.Cells["qty"];
+
+                    // CALL DATA PRODUK FORM WITH PARAMETER 
+                    dataProdukForm browseProduk = new dataProdukForm(globalConstants.MUTASI_BARANG, this, currentValue, "", rowSelectedIndex);
+                    browseProduk.ShowDialog(this);
                 }
                 else
                 {
-                    clearUpSomeRowContents(selectedRow, rowSelectedIndex);
+//                    clearUpSomeRowContents(selectedRow, rowSelectedIndex);
                 }
             }
         }
@@ -682,132 +709,33 @@ namespace AlphaSoft
 
                 if (currentValue.Length > 0)
                 {
-                    updateSomeRowContents(selectedRow, rowSelectedIndex, currentValue, false);
-                    detailRequestOrderDataGridView.CurrentCell = selectedRow.Cells["qty"];
+                    //updateSomeRowContents(selectedRow, rowSelectedIndex, currentValue, false);
+                    //detailRequestOrderDataGridView.CurrentCell = selectedRow.Cells["qty"];
+
+                    // CALL DATA PRODUK FORM WITH PARAMETER 
+                    dataProdukForm browseProduk = new dataProdukForm(globalConstants.MUTASI_BARANG, this, "", currentValue, rowSelectedIndex);
+                    browseProduk.ShowDialog(this);
                 }
                 else
                 {
-                    clearUpSomeRowContents(selectedRow, rowSelectedIndex);
+                    //clearUpSomeRowContents(selectedRow, rowSelectedIndex);
                 }
             }
         }
 
-        private void TextBox_TextChanged(object sender, EventArgs e)
+        private void TextBox_KeyUp(object sender, KeyEventArgs e)
         {
-            int rowSelectedIndex = 0;
-            double productQty = 0;
-            double hppValue = 0;
-            double subTotal = 0;
-            bool validInput = false;
-            string tempString = "";
+            //gUtil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "MUTASI FORM : Combobox_KeyUp, cashierDataGridView.CurrentCell.OwningColumn.Name  [" + detailRequestOrderDataGridView.CurrentCell.OwningColumn.Name + "]");
 
-            if (isLoading)
-                return;
+            //if (forceUpOneLevel)
+            //{
+            //    int pos = detailRequestOrderDataGridView.CurrentCell.RowIndex;
 
-            if (detailRequestOrderDataGridView.CurrentCell.OwningColumn.Name != "qty")
-                return;
+            //    if (pos > 0)
+            //        detailRequestOrderDataGridView.CurrentCell = detailRequestOrderDataGridView.Rows[pos - 1].Cells["qty"];
 
-            DataGridViewTextBoxEditingControl dataGridViewTextBoxEditingControl = sender as DataGridViewTextBoxEditingControl;
-
-            rowSelectedIndex = detailRequestOrderDataGridView.SelectedCells[0].RowIndex;
-            DataGridViewRow selectedRow = detailRequestOrderDataGridView.Rows[rowSelectedIndex];
-
-            // Condition to check
-            // - empty string
-            // - non numeric input
-            if (dataGridViewTextBoxEditingControl.Text.Length <= 0)
-            {
-                // IF TEXTBOX IS EMPTY, DEFAULT THE VALUE TO 0 AND EXIT THE CHECKING
-
-                isLoading = true;
-                // reset subTotal Value and recalculate total
-                selectedRow.Cells["subTotal"].Value = 0;
-                subtotalList[rowSelectedIndex] = "0";
-
-                if (detailRequestQtyApproved.Count >= rowSelectedIndex + 1)
-                    detailRequestQtyApproved[rowSelectedIndex] = "0";
-
-                dataGridViewTextBoxEditingControl.Text = "0";
-
-                calculateTotal();
-
-                dataGridViewTextBoxEditingControl.SelectionStart = dataGridViewTextBoxEditingControl.Text.Length;
-
-                isLoading = false;
-                return;
-            }
-
-            isLoading = true;
-            // get value for previous input
-            if (detailRequestQtyApproved.Count >= rowSelectedIndex + 1)
-            {
-                previousInput = detailRequestQtyApproved[rowSelectedIndex];
-            }
-            else
-                previousInput = "0";
-
-            if (previousInput == "0")
-            {
-                tempString = dataGridViewTextBoxEditingControl.Text;
-                if (tempString.IndexOf('0') == 0 && tempString.Length > 1 && tempString.IndexOf("0.") < 0)
-                    dataGridViewTextBoxEditingControl.Text = tempString.Remove(tempString.IndexOf('0'), 1);
-            }
-
-            if (gUtil.matchRegEx(dataGridViewTextBoxEditingControl.Text, globalUtilities.REGEX_NUMBER_WITH_2_DECIMAL))
-            {
-                // if input match RegEx
-                try
-                {
-                    productQty = Convert.ToDouble(dataGridViewTextBoxEditingControl.Text);
-
-                    // check if there's a product ID for that particular row
-                    if (null != selectedRow.Cells["productID"].Value)
-                        if (stockIsEnough(selectedRow.Cells["productID"].Value.ToString(), productQty))
-                            validInput = true;
-
-                    // input match RegEx, and Stock is enough
-                    if (validInput)
-                    {
-                        errorLabel.Text = "";
-                        // check whether it's a new row or not
-                        if (detailRequestQtyApproved.Count < rowSelectedIndex + 1)
-                            detailRequestQtyApproved.Add(dataGridViewTextBoxEditingControl.Text); // NEW ROW
-                        else
-                            detailRequestQtyApproved[rowSelectedIndex] = dataGridViewTextBoxEditingControl.Text; // EXISTING ROW
-
-                        previousInput = dataGridViewTextBoxEditingControl.Text;
-
-                        hppValue = Convert.ToDouble(productPriceList[rowSelectedIndex]);
-                        subTotal = Math.Round((hppValue * productQty), 2);
-
-                        selectedRow.Cells["subTotal"].Value = subTotal.ToString();
-                        subtotalList[rowSelectedIndex] = subTotal.ToString();
-
-
-                        calculateTotal();
-                    }
-                    else
-                    {
-                        // if stock is not enough
-                        dataGridViewTextBoxEditingControl.Text = previousInput;
-                        if (null != selectedRow.Cells["productID"].Value)
-                            errorLabel.Text = "JUMLAH STOK TIDAK MENCUKUPI";
-                    }
-                }
-                catch (Exception ex)
-                {
-                    dataGridViewTextBoxEditingControl.Text = previousInput;
-                }
-            }
-            else
-            {
-                // if input doesn't match RegEx
-                dataGridViewTextBoxEditingControl.Text = previousInput;
-            }
-
-            dataGridViewTextBoxEditingControl.SelectionStart = dataGridViewTextBoxEditingControl.Text.Length;
-
-            isLoading = false;
+            //    forceUpOneLevel = false;
+            //}
         }
 
         private void loadDataHeaderRO()
@@ -1057,6 +985,15 @@ namespace AlphaSoft
                 productNameColumn.HeaderText = "NAMA PRODUK";
                 productNameColumn.Width = 300;
                 detailRequestOrderDataGridView.Columns.Add(productNameColumn);
+
+                if (originModuleID == globalConstants.CEK_DATA_MUTASI)
+                { 
+                    qtyReqColumn.Name = "qtyRequest";
+                    qtyReqColumn.HeaderText = "QTY REQ";
+                    qtyReqColumn.ReadOnly = true;
+                    qtyReqColumn.Width = 150;
+                    detailRequestOrderDataGridView.Columns.Add(qtyReqColumn);
+                }
             }
 
             qtyColumn.Name = "qty";
@@ -1086,6 +1023,7 @@ namespace AlphaSoft
             PMDateTimePicker.CustomFormat = globalUtilities.CUSTOM_DATE_FORMAT;
             RODateTimePicker.CustomFormat = globalUtilities.CUSTOM_DATE_FORMAT;
             ROExpiredDateTimePicker.CustomFormat = globalUtilities.CUSTOM_DATE_FORMAT;
+            errorLabel.Text = "";
 
             isLoading = true;
             selectedBranchFromID = 0;
@@ -1245,10 +1183,17 @@ namespace AlphaSoft
                                 gUtil.saveSystemDebugLog(globalConstants.MENU_MUTASI_BARANG, "ADD DETAIL NEW MUTASI [" + detailRequestOrderDataGridView.Rows[i].Cells["productID"].Value.ToString() + ", " + qtyApproved + "]");
                                 if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
                                     throw internalEX;
+
+                                // REDUCE GLOBAL STOCK
+                                sqlCommand = "UPDATE MASTER_PRODUCT SET PRODUCT_STOCK_QTY = PRODUCT_STOCK_QTY - " + qtyApproved + " WHERE PRODUCT_ID = '" + detailRequestOrderDataGridView.Rows[i].Cells["productID"].Value.ToString() + "'";
+
+                                gUtil.saveSystemDebugLog(globalConstants.MENU_MUTASI_BARANG, "REDUCE MASTER PRODUCT [" + detailRequestOrderDataGridView.Rows[i].Cells["productID"].Value.ToString() + ", " + qtyApproved + "]");
+                                if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
+                                    throw internalEX;
                             }
                         }
 
-                        if (!directMutasiBarang)
+                        if (originModuleID == globalConstants.CEK_DATA_MUTASI)//(!directMutasiBarang)
                         { 
                             // UPDATE REQUEST ORDER HEADER TABLE
                             sqlCommand = "UPDATE REQUEST_ORDER_HEADER SET RO_ACTIVE = 0 WHERE RO_INVOICE = '" + roInvoice + "'";
@@ -1916,6 +1861,11 @@ namespace AlphaSoft
             rowSelectedIndex = e.RowIndex;
             DataGridViewRow selectedRow = detailRequestOrderDataGridView.Rows[rowSelectedIndex];
 
+            if (isLoading)
+                return;
+
+            isLoading = true;
+
             if (null != selectedRow.Cells[columnName].Value)
                 cellValue = selectedRow.Cells[columnName].Value.ToString();
             else
@@ -1952,6 +1902,8 @@ namespace AlphaSoft
                     selectedRow.Cells["qty"].Value = "0";
 
                     calculateTotal();
+
+                    isLoading = false;
 
                     return;
                 }
@@ -2023,6 +1975,8 @@ namespace AlphaSoft
                     selectedRow.Cells["qty"].Value = previousInput;
                 }
             }
+
+            isLoading = false;
         }
 
         private void detailRequestOrderDataGridView_CurrentCellDirtyStateChanged(object sender, EventArgs e)

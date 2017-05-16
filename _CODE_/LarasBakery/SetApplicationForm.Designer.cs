@@ -43,6 +43,16 @@
             this.errorLabel = new System.Windows.Forms.Label();
             this.saveButton = new System.Windows.Forms.Button();
             this.AppModeBox = new System.Windows.Forms.GroupBox();
+            this.branchComboHidden = new System.Windows.Forms.ComboBox();
+            this.BranchIDTextbox = new System.Windows.Forms.MaskedTextBox();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.serverIP3 = new System.Windows.Forms.MaskedTextBox();
+            this.serverIP1 = new System.Windows.Forms.MaskedTextBox();
+            this.serverIP4 = new System.Windows.Forms.MaskedTextBox();
+            this.serverIP2 = new System.Windows.Forms.MaskedTextBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.label2 = new System.Windows.Forms.Label();
             this.labelCaraBayar = new System.Windows.Forms.Label();
@@ -64,19 +74,12 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.branchIDBox = new System.Windows.Forms.GroupBox();
-            this.BranchIDTextbox = new System.Windows.Forms.MaskedTextBox();
-            this.groupBox6 = new System.Windows.Forms.GroupBox();
-            this.serverIP3 = new System.Windows.Forms.MaskedTextBox();
-            this.serverIP1 = new System.Windows.Forms.MaskedTextBox();
-            this.serverIP4 = new System.Windows.Forms.MaskedTextBox();
-            this.serverIP2 = new System.Windows.Forms.MaskedTextBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
+            this.branchCombo = new System.Windows.Forms.ComboBox();
             this.ConModeBox.SuspendLayout();
             this.ipServerBox.SuspendLayout();
             this.panel1.SuspendLayout();
             this.AppModeBox.SuspendLayout();
+            this.groupBox6.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -84,7 +87,6 @@
             this.groupBox1.SuspendLayout();
             this.HQIPBox.SuspendLayout();
             this.branchIDBox.SuspendLayout();
-            this.groupBox6.SuspendLayout();
             this.SuspendLayout();
             // 
             // ip1Textbox
@@ -266,6 +268,8 @@
             // 
             // AppModeBox
             // 
+            this.AppModeBox.Controls.Add(this.branchComboHidden);
+            this.AppModeBox.Controls.Add(this.BranchIDTextbox);
             this.AppModeBox.Controls.Add(this.groupBox6);
             this.AppModeBox.Controls.Add(this.groupBox5);
             this.AppModeBox.Controls.Add(this.groupBox4);
@@ -282,6 +286,130 @@
             this.AppModeBox.TabIndex = 24;
             this.AppModeBox.TabStop = false;
             this.AppModeBox.Text = "Pengaturan Aplikasi";
+            // 
+            // branchComboHidden
+            // 
+            this.branchComboHidden.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.branchComboHidden.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.branchComboHidden.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.branchComboHidden.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.branchComboHidden.FormattingEnabled = true;
+            this.branchComboHidden.Location = new System.Drawing.Point(241, 3);
+            this.branchComboHidden.Name = "branchComboHidden";
+            this.branchComboHidden.Size = new System.Drawing.Size(186, 26);
+            this.branchComboHidden.TabIndex = 49;
+            this.branchComboHidden.Visible = false;
+            // 
+            // BranchIDTextbox
+            // 
+            this.BranchIDTextbox.CutCopyMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
+            this.BranchIDTextbox.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BranchIDTextbox.Location = new System.Drawing.Point(339, 12);
+            this.BranchIDTextbox.Mask = "000";
+            this.BranchIDTextbox.Name = "BranchIDTextbox";
+            this.BranchIDTextbox.Size = new System.Drawing.Size(38, 27);
+            this.BranchIDTextbox.TabIndex = 30;
+            this.BranchIDTextbox.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
+            this.BranchIDTextbox.Visible = false;
+            this.BranchIDTextbox.Enter += new System.EventHandler(this.BranchIDTextbox_Enter);
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.serverIP3);
+            this.groupBox6.Controls.Add(this.serverIP1);
+            this.groupBox6.Controls.Add(this.serverIP4);
+            this.groupBox6.Controls.Add(this.serverIP2);
+            this.groupBox6.Controls.Add(this.label8);
+            this.groupBox6.Controls.Add(this.label9);
+            this.groupBox6.Controls.Add(this.label10);
+            this.groupBox6.Font = new System.Drawing.Font("Verdana", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox6.Location = new System.Drawing.Point(9, 95);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(200, 59);
+            this.groupBox6.TabIndex = 31;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "IP Sync Server";
+            // 
+            // serverIP3
+            // 
+            this.serverIP3.CutCopyMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
+            this.serverIP3.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.serverIP3.Location = new System.Drawing.Point(106, 18);
+            this.serverIP3.Mask = "000";
+            this.serverIP3.Name = "serverIP3";
+            this.serverIP3.Size = new System.Drawing.Size(38, 27);
+            this.serverIP3.TabIndex = 24;
+            this.serverIP3.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
+            this.serverIP3.Enter += new System.EventHandler(this.serverIP3_Enter);
+            this.serverIP3.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.serverIP3_KeyPress);
+            // 
+            // serverIP1
+            // 
+            this.serverIP1.CutCopyMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
+            this.serverIP1.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.serverIP1.Location = new System.Drawing.Point(6, 19);
+            this.serverIP1.Mask = "000";
+            this.serverIP1.Name = "serverIP1";
+            this.serverIP1.Size = new System.Drawing.Size(38, 27);
+            this.serverIP1.TabIndex = 20;
+            this.serverIP1.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
+            this.serverIP1.Enter += new System.EventHandler(this.serverIP1_Enter);
+            this.serverIP1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.serverIP1_KeyPress);
+            // 
+            // serverIP4
+            // 
+            this.serverIP4.CutCopyMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
+            this.serverIP4.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.serverIP4.Location = new System.Drawing.Point(156, 18);
+            this.serverIP4.Mask = "000";
+            this.serverIP4.Name = "serverIP4";
+            this.serverIP4.Size = new System.Drawing.Size(38, 27);
+            this.serverIP4.TabIndex = 26;
+            this.serverIP4.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
+            this.serverIP4.Enter += new System.EventHandler(this.serverIP4_Enter);
+            // 
+            // serverIP2
+            // 
+            this.serverIP2.CutCopyMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
+            this.serverIP2.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.serverIP2.Location = new System.Drawing.Point(56, 18);
+            this.serverIP2.Mask = "000";
+            this.serverIP2.Name = "serverIP2";
+            this.serverIP2.Size = new System.Drawing.Size(38, 27);
+            this.serverIP2.TabIndex = 22;
+            this.serverIP2.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
+            this.serverIP2.Enter += new System.EventHandler(this.serverIP2_Enter);
+            this.serverIP2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.serverIP2_KeyPress);
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Verdana", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.Location = new System.Drawing.Point(40, 20);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(22, 25);
+            this.label8.TabIndex = 21;
+            this.label8.Text = "-";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Verdana", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.Location = new System.Drawing.Point(140, 20);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(22, 25);
+            this.label9.TabIndex = 25;
+            this.label9.Text = "-";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("Verdana", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.Location = new System.Drawing.Point(90, 20);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(22, 25);
+            this.label10.TabIndex = 23;
+            this.label10.Text = "-";
             // 
             // groupBox5
             // 
@@ -425,7 +553,7 @@
             this.HQIPBox.Size = new System.Drawing.Size(200, 59);
             this.HQIPBox.TabIndex = 27;
             this.HQIPBox.TabStop = false;
-            this.HQIPBox.Text = "IP Gudang Pusat";
+            this.HQIPBox.Text = "IP Pabrik";
             // 
             // HQIP3
             // 
@@ -507,124 +635,29 @@
             // 
             // branchIDBox
             // 
-            this.branchIDBox.Controls.Add(this.BranchIDTextbox);
+            this.branchIDBox.Controls.Add(this.branchCombo);
             this.branchIDBox.Font = new System.Drawing.Font("Verdana", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.branchIDBox.Location = new System.Drawing.Point(235, 35);
+            this.branchIDBox.Location = new System.Drawing.Point(235, 29);
             this.branchIDBox.Name = "branchIDBox";
             this.branchIDBox.Size = new System.Drawing.Size(200, 54);
             this.branchIDBox.TabIndex = 25;
             this.branchIDBox.TabStop = false;
-            this.branchIDBox.Text = "Branch ID";
+            this.branchIDBox.Text = "Branch";
             // 
-            // BranchIDTextbox
+            // branchCombo
             // 
-            this.BranchIDTextbox.CutCopyMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
-            this.BranchIDTextbox.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BranchIDTextbox.Location = new System.Drawing.Point(6, 18);
-            this.BranchIDTextbox.Mask = "000";
-            this.BranchIDTextbox.Name = "BranchIDTextbox";
-            this.BranchIDTextbox.Size = new System.Drawing.Size(38, 27);
-            this.BranchIDTextbox.TabIndex = 30;
-            this.BranchIDTextbox.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
-            this.BranchIDTextbox.Enter += new System.EventHandler(this.BranchIDTextbox_Enter);
-            // 
-            // groupBox6
-            // 
-            this.groupBox6.Controls.Add(this.serverIP3);
-            this.groupBox6.Controls.Add(this.serverIP1);
-            this.groupBox6.Controls.Add(this.serverIP4);
-            this.groupBox6.Controls.Add(this.serverIP2);
-            this.groupBox6.Controls.Add(this.label8);
-            this.groupBox6.Controls.Add(this.label9);
-            this.groupBox6.Controls.Add(this.label10);
-            this.groupBox6.Font = new System.Drawing.Font("Verdana", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox6.Location = new System.Drawing.Point(9, 95);
-            this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(200, 59);
-            this.groupBox6.TabIndex = 31;
-            this.groupBox6.TabStop = false;
-            this.groupBox6.Text = "IP Server";
-            // 
-            // serverIP3
-            // 
-            this.serverIP3.CutCopyMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
-            this.serverIP3.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.serverIP3.Location = new System.Drawing.Point(106, 18);
-            this.serverIP3.Mask = "000";
-            this.serverIP3.Name = "serverIP3";
-            this.serverIP3.Size = new System.Drawing.Size(38, 27);
-            this.serverIP3.TabIndex = 24;
-            this.serverIP3.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
-            this.serverIP3.Enter += new System.EventHandler(this.serverIP3_Enter);
-            this.serverIP3.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.serverIP3_KeyPress);
-            // 
-            // serverIP1
-            // 
-            this.serverIP1.CutCopyMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
-            this.serverIP1.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.serverIP1.Location = new System.Drawing.Point(6, 19);
-            this.serverIP1.Mask = "000";
-            this.serverIP1.Name = "serverIP1";
-            this.serverIP1.Size = new System.Drawing.Size(38, 27);
-            this.serverIP1.TabIndex = 20;
-            this.serverIP1.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
-            this.serverIP1.Enter += new System.EventHandler(this.serverIP1_Enter);
-            this.serverIP1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.serverIP1_KeyPress);
-            // 
-            // serverIP4
-            // 
-            this.serverIP4.CutCopyMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
-            this.serverIP4.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.serverIP4.Location = new System.Drawing.Point(156, 18);
-            this.serverIP4.Mask = "000";
-            this.serverIP4.Name = "serverIP4";
-            this.serverIP4.Size = new System.Drawing.Size(38, 27);
-            this.serverIP4.TabIndex = 26;
-            this.serverIP4.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
-            this.serverIP4.Enter += new System.EventHandler(this.serverIP4_Enter);
-            // 
-            // serverIP2
-            // 
-            this.serverIP2.CutCopyMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
-            this.serverIP2.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.serverIP2.Location = new System.Drawing.Point(56, 18);
-            this.serverIP2.Mask = "000";
-            this.serverIP2.Name = "serverIP2";
-            this.serverIP2.Size = new System.Drawing.Size(38, 27);
-            this.serverIP2.TabIndex = 22;
-            this.serverIP2.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
-            this.serverIP2.Enter += new System.EventHandler(this.serverIP2_Enter);
-            this.serverIP2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.serverIP2_KeyPress);
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("Verdana", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(40, 20);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(22, 25);
-            this.label8.TabIndex = 21;
-            this.label8.Text = "-";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("Verdana", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(140, 20);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(22, 25);
-            this.label9.TabIndex = 25;
-            this.label9.Text = "-";
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Font = new System.Drawing.Font("Verdana", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.Location = new System.Drawing.Point(90, 20);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(22, 25);
-            this.label10.TabIndex = 23;
-            this.label10.Text = "-";
+            this.branchCombo.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.branchCombo.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.branchCombo.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.branchCombo.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.branchCombo.FormattingEnabled = true;
+            this.branchCombo.Location = new System.Drawing.Point(8, 21);
+            this.branchCombo.Name = "branchCombo";
+            this.branchCombo.Size = new System.Drawing.Size(186, 26);
+            this.branchCombo.TabIndex = 48;
+            this.branchCombo.SelectedIndexChanged += new System.EventHandler(this.branchCombo_SelectedIndexChanged);
+            this.branchCombo.Enter += new System.EventHandler(this.branchCombo_Enter);
+            this.branchCombo.Leave += new System.EventHandler(this.branchCombo_Leave);
             // 
             // SetApplicationForm
             // 
@@ -651,6 +684,9 @@
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.AppModeBox.ResumeLayout(false);
+            this.AppModeBox.PerformLayout();
+            this.groupBox6.ResumeLayout(false);
+            this.groupBox6.PerformLayout();
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
             this.groupBox4.ResumeLayout(false);
@@ -664,9 +700,6 @@
             this.HQIPBox.ResumeLayout(false);
             this.HQIPBox.PerformLayout();
             this.branchIDBox.ResumeLayout(false);
-            this.branchIDBox.PerformLayout();
-            this.groupBox6.ResumeLayout(false);
-            this.groupBox6.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -709,6 +742,8 @@
         private System.Windows.Forms.MaskedTextBox reminderTextBox;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label labelCaraBayar;
+        private System.Windows.Forms.ComboBox branchCombo;
+        private System.Windows.Forms.ComboBox branchComboHidden;
         private System.Windows.Forms.GroupBox groupBox6;
         private System.Windows.Forms.MaskedTextBox serverIP3;
         private System.Windows.Forms.MaskedTextBox serverIP1;

@@ -87,6 +87,9 @@ namespace AlphaSoft
         public const int COPY_NOTA_SQ = 509;
         public const int VIEW_SALES_QUOTATION = 510;
         public const int DELETE_DJ = 511;
+        public const int EDIT_SALES_ORDER = 510;
+        public const int DELIVERY_ORDER = 511;
+        public const int SO_FULFILLMENT = 512;
 
         // THESE CONSTANTS ARE USED TO CHECK GROUP ACCESS MODULE
         // THE VALUES MUST BE TIED TO THE VALUES INSIDE THE DATABASE TABLE
@@ -265,6 +268,8 @@ namespace AlphaSoft
 
         public const string dailyStockTakeXML = "DailyStockTake.xml";
         public const string salesQuotationReceiptXML = "SalesQuotation.xml";
+
+        public const string deliveryOrderXML = "deliveryOrder.xml";
 
     }
 }

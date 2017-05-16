@@ -20,6 +20,7 @@ namespace AlphaSoft
         private int selectedProductID = 0;
         private string selectedkodeProduct = "";
         private string selectedProductName = "";
+        private int selectedRowIndex = -1;
 
         private stokPecahBarangForm parentForm;
         private cashierForm parentCashierForm;
@@ -154,6 +155,119 @@ namespace AlphaSoft
             newButton.Visible = false;
         }
 
+        public dataProdukForm(int moduleID, cashierForm thisParentForm, string productID = "", string productName = "", int rowIndex = -1)
+        {
+            InitializeComponent();
+
+            originModuleID = moduleID;
+            parentCashierForm = thisParentForm;
+
+            // accessed from other form other than Master -> Data Produk
+            // it means that this form is only displayed for browsing / searching purpose only
+            newButton.Visible = false;
+
+            namaProdukTextBox.Text = productName;
+            kodeProductTextBox.Text = productID;
+            selectedRowIndex = rowIndex;
+        }
+
+        public dataProdukForm(int moduleID, dataMutasiBarangDetailForm thisParentForm, string productID = "", string productName = "", int rowIndex = -1)
+        {
+            InitializeComponent();
+
+            originModuleID = moduleID;
+            parentMutasiForm = thisParentForm;
+
+            // accessed from other form other than Master -> Data Produk
+            // it means that this form is only displayed for browsing / searching purpose only
+            newButton.Visible = false;
+
+            namaProdukTextBox.Text = productName;
+            kodeProductTextBox.Text = productID;
+            selectedRowIndex = rowIndex;
+        }
+
+        public dataProdukForm(int moduleID, dataReturPenjualanForm thisParentForm, string productID = "", string productName = "", int rowIndex = -1, string searchParam = "")
+        {
+            InitializeComponent();
+
+            originModuleID = moduleID;
+            parentReturJualForm = thisParentForm;
+
+            // accessed from other form other than Master -> Data Produk
+            // it means that this form is only displayed for browsing / searching purpose only
+            newButton.Visible = false;
+            returJualSearchParam = searchParam;
+
+            namaProdukTextBox.Text = productName;
+            kodeProductTextBox.Text = productID;
+            selectedRowIndex = rowIndex;
+        }
+
+        public dataProdukForm(int moduleID, dataReturPermintaanForm thisParentForm, string productID = "", string productName = "", int rowIndex = -1)
+        {
+            InitializeComponent();
+
+            originModuleID = moduleID;
+            parentReturBeliForm = thisParentForm;
+
+            // accessed from other form other than Master -> Data Produk
+            // it means that this form is only displayed for browsing / searching purpose only
+            newButton.Visible = false;
+
+            namaProdukTextBox.Text = productName;
+            kodeProductTextBox.Text = productID;
+            selectedRowIndex = rowIndex;
+        }
+
+        public dataProdukForm(int moduleID, penerimaanBarangForm thisParentForm, string productID = "", string productName = "", int rowIndex = -1)
+        {
+            InitializeComponent();
+
+            originModuleID = moduleID;
+            parentPenerimaanBarangForm = thisParentForm;
+
+            // accessed from other form other than Master -> Data Produk
+            // it means that this form is only displayed for browsing / searching purpose only
+            newButton.Visible = false;
+
+            namaProdukTextBox.Text = productName;
+            kodeProductTextBox.Text = productID;
+            selectedRowIndex = rowIndex;
+        }
+
+        public dataProdukForm(int moduleID, purchaseOrderDetailForm thisParentForm, string productID = "", string productName = "", int rowIndex = -1)
+        {
+            InitializeComponent();
+
+            originModuleID = moduleID;
+            parentPOForm = thisParentForm;
+
+            // accessed from other form other than Master -> Data Produk
+            // it means that this form is only displayed for browsing / searching purpose only
+            newButton.Visible = false;
+
+            namaProdukTextBox.Text = productName;
+            kodeProductTextBox.Text = productID;
+            selectedRowIndex = rowIndex;
+        }
+
+        public dataProdukForm(int moduleID, permintaanProdukForm thisParentForm, string productID = "", string productName = "", int rowIndex = -1)
+        {
+            InitializeComponent();
+
+            originModuleID = moduleID;
+            parentRequestForm = thisParentForm;
+
+            // accessed from other form other than Master -> Data Produk
+            // it means that this form is only displayed for browsing / searching purpose only
+            newButton.Visible = false;
+
+            namaProdukTextBox.Text = productName;
+            kodeProductTextBox.Text = productID;
+            selectedRowIndex = rowIndex;
+        }
+
         private void captureAll(Keys key)
         {
             switch (key)
@@ -226,39 +340,39 @@ namespace AlphaSoft
                     break;
 
                 case globalConstants.CASHIER_MODULE:
-                    parentCashierForm.addNewRowFromBarcode(selectedkodeProduct, selectedProductName);
+                    parentCashierForm.addNewRowFromBarcode(selectedkodeProduct, selectedProductName, selectedRowIndex);
                     this.Close();
                     break;
 
                 case globalConstants.PENERIMAAN_BARANG:
-                    parentPenerimaanBarangForm.addNewRowFromBarcode(selectedkodeProduct, selectedProductName);
+                    parentPenerimaanBarangForm.addNewRowFromBarcode(selectedkodeProduct, selectedProductName, selectedRowIndex);
                     this.Close();
                     break;
 
                 case globalConstants.NEW_PURCHASE_ORDER:
-                    parentPOForm.addNewRowFromBarcode(selectedkodeProduct, selectedProductName);
+                    parentPOForm.addNewRowFromBarcode(selectedkodeProduct, selectedProductName, selectedRowIndex);
                     this.Close();
                     break;
 
                 case globalConstants.MUTASI_BARANG:
-                    parentMutasiForm.addNewRowFromBarcode(selectedkodeProduct, selectedProductName);
+                        parentMutasiForm.addNewRowFromBarcode(selectedkodeProduct, selectedProductName, selectedRowIndex);
                     this.Close();
                     break;
 
                 case globalConstants.NEW_REQUEST_ORDER:
-                    parentRequestForm.addNewRowFromBarcode(selectedkodeProduct, selectedProductName);
+                    parentRequestForm.addNewRowFromBarcode(selectedkodeProduct, selectedProductName, selectedRowIndex);
                     this.Close();
                     break;
 
                 case globalConstants.RETUR_PENJUALAN:
                 case globalConstants.RETUR_PENJUALAN_STOCK_ADJUSTMENT:
-                    parentReturJualForm.addNewRowFromBarcode(selectedkodeProduct, selectedProductName);
+                    parentReturJualForm.addNewRowFromBarcode(selectedkodeProduct, selectedProductName, selectedRowIndex);
                     this.Close();
                     break;
 
                 case globalConstants.RETUR_PEMBELIAN_KE_PUSAT:
                 case globalConstants.RETUR_PEMBELIAN_KE_SUPPLIER:
-                    parentReturBeliForm.addNewRowFromBarcode(selectedkodeProduct, selectedProductName);
+                    parentReturBeliForm.addNewRowFromBarcode(selectedkodeProduct, selectedProductName, selectedRowIndex, selectedProductID);
                     this.Close();
                     break;
 
@@ -296,13 +410,18 @@ namespace AlphaSoft
             string sqlCommand = "";
             string namaProductParam = "";
             string kodeProductParam = "";
-
+            string showactive = "";
             DS.mySqlConnect();
 
             //if (namaProdukTextBox.Text.Equals(""))
             //    return;
             namaProductParam = MySqlHelper.EscapeString(namaProdukTextBox.Text);
-            kodeProductParam = MySqlHelper.EscapeString(textBox1.Text);
+            kodeProductParam = MySqlHelper.EscapeString(kodeProductTextBox.Text);
+
+            if (produknonactiveoption.Checked == false)
+            {
+                showactive = "AND MP.PRODUCT_ACTIVE = 1 ";
+            }
 
             if (originModuleID == globalConstants.RETUR_PENJUALAN)
             {
@@ -440,7 +559,7 @@ namespace AlphaSoft
 
             gutil.reArrangeTabOrder(this);
 
-            textBox1.Select();
+            kodeProductTextBox.Select();
         }
 
         private void textBox1_TextChanged_1(object sender, EventArgs e)

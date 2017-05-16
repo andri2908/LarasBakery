@@ -57,11 +57,13 @@ namespace AlphaSoft
                     break;
 
                 case Keys.F9:
-                    saveData();
+                    if (stockTakeCloseStatus == 0)
+                        saveData();
                     break;
 
                 case Keys.F10:
-                    saveData(true);
+                    if (stockTakeCloseStatus == 0)
+                        saveData(true);
                     break;
             }
         }
@@ -179,7 +181,7 @@ namespace AlphaSoft
             originalAkhir.Name = "originalAkhir";
             originalAkhir.HeaderText = "ORI AKHIR";
             originalAkhir.ReadOnly = true;
-            //            akhirColumn.Visible = false;
+            originalAkhir.Visible = false;
             detailDataGrid.Columns.Add(originalAkhir);
 
         }
@@ -214,6 +216,8 @@ namespace AlphaSoft
                     {
                         allowToEdit = false;
                         detailDataGrid.ReadOnly = true;
+                        label3.Text = "CLOSED";
+                        label3.Visible = true;
                     }
                     else
                         allowToEdit = true;
@@ -229,13 +233,24 @@ namespace AlphaSoft
             switch (moduleID)
             {
                 case NEW_DAILY_STOCK_TAKE:
-                    sqlCommand = "SELECT MP.PRODUCT_ID, MP.PRODUCT_NAME AS ROTI, MP.PRODUCT_STOCK_AWAL AS AWAL, (IFNULL(TAB1.TOTAL_RECEIVED, 0)-IFNULL(TAB4.TOTAL_RECEIVED_RETURN, 0)) AS PRODUKSI, '' AS REMARK, '0' AS BS, MP.PRODUCT_STOCK_QTY AS AKHIR, (IFNULL(TAB2.TOTAL_SALES, 0)-IFNULL(TAB3.TOTAL_SALES_RETURN, 0)) AS LAKU, " +
+                    sqlCommand = "SELECT MP.PRODUCT_ID, MP.PRODUCT_NAME AS ROTI, MP.PRODUCT_STOCK_AWAL AS AWAL, (IFNULL(TAB1.TOTAL_RECEIVED, 0)-IFNULL(TAB4.TOTAL_RECEIVED_RETURN, 0)) AS PRODUKSI, '' AS REMARK, '0' AS BS, MP.PRODUCT_STOCK_QTY AS AKHIR, (IFNULL(TAB2.TOTAL_SALES, 0) + IFNULL(TAB_DO.TOTAL_DELIVERED, 0) - IFNULL(TAB3.TOTAL_SALES_RETURN, 0)) AS LAKU, " +
                                            "IF(MP.PRODUCT_STOCK_AWAL > 0, MP.PRODUCT_STOCK_QTY - (MP.PRODUCT_STOCK_AWAL+ (IFNULL(TAB1.TOTAL_RECEIVED, 0)-IFNULL(TAB4.TOTAL_RECEIVED_RETURN, 0)) - (IFNULL(TAB2.TOTAL_SALES, 0)-IFNULL(TAB3.TOTAL_SALES_RETURN, 0))), '0') AS PENYESUAIAN, " +
                                            "'0' AS RIILQTY " +
                                            "FROM MASTER_PRODUCT MP LEFT OUTER JOIN " +
-                                           "(SELECT PRODUCT_ID, SUM(PRODUCT_ACTUAL_QTY) AS TOTAL_RECEIVED FROM PRODUCTS_RECEIVED_HEADER PRH, PRODUCTS_RECEIVED_DETAIL PRD WHERE PRD.PR_INVOICE = PRH.PR_INVOICE AND DATE_FORMAT(PRH.PR_DATE , '%Y%m%d')  = '" + selectedDate + "' GROUP BY PRODUCT_ID) TAB1 ON TAB1.PRODUCT_ID = MP.PRODUCT_ID " +
-                                           "LEFT OUTER JOIN(SELECT PRODUCT_ID, SUM(PRODUCT_QTY) AS TOTAL_SALES FROM SALES_HEADER SH, SALES_DETAIL SD WHERE SD.SALES_INVOICE = SH.SALES_INVOICE AND DATE_FORMAT(SH.SALES_DATE, '%Y%m%d')  = '" + selectedDate + "' GROUP BY PRODUCT_ID) TAB2 ON TAB2.PRODUCT_ID = MP.PRODUCT_ID " +
-                                           "LEFT OUTER JOIN(SELECT PRODUCT_ID, SUM(PRODUCT_RETURN_QTY) AS TOTAL_SALES_RETURN FROM RETURN_SALES_HEADER RSH, RETURN_SALES_DETAIL RSD WHERE RSD.RS_INVOICE = RSH.RS_INVOICE AND DATE_FORMAT(RSH.RS_DATETIME, '%Y%m%d')  = '" + selectedDate + "' GROUP BY PRODUCT_ID) TAB3 ON TAB3.PRODUCT_ID = MP.PRODUCT_ID " +
+                                           "(SELECT PRODUCT_ID, SUM(PRODUCT_ACTUAL_QTY) AS TOTAL_RECEIVED FROM PRODUCTS_RECEIVED_HEADER PRH, PRODUCTS_RECEIVED_DETAIL PRD WHERE PRD.PR_INVOICE = PRH.PR_INVOICE AND DATE_FORMAT(PRH.PR_DATE , '%Y%m%d')  = '" + selectedDate + "' GROUP BY PRODUCT_ID) TAB1 ON TAB1.PRODUCT_ID = MP.PRODUCT_ID ";
+
+                    if (gUtil.isServerApp() == 0)
+                    {
+                        sqlCommand = sqlCommand + "LEFT OUTER JOIN (SELECT PRODUCT_ID, SUM(PRODUCT_QTY) AS TOTAL_SALES FROM SALES_HEADER SH, SALES_DETAIL SD WHERE SH.SALES_TOP = 1 AND SD.SALES_INVOICE = SH.SALES_INVOICE AND DATE_FORMAT(SH.SALES_DATE, '%Y%m%d')  = '" + selectedDate + "' GROUP BY PRODUCT_ID) TAB2 ON TAB2.PRODUCT_ID = MP.PRODUCT_ID " +
+                                                                      "LEFT OUTER JOIN (SELECT '0' AS PRODUCT_ID, 0 AS TOTAL_DELIVERED) TAB_DO ON TAB_DO.PRODUCT_ID = MP.PRODUCT_ID ";
+                    }
+                    else
+                    {
+                        sqlCommand = sqlCommand + "LEFT OUTER JOIN(SELECT PRODUCT_ID, SUM(PRODUCT_QTY) AS TOTAL_SALES FROM SALES_HEADER SH, SALES_DETAIL SD WHERE SH.SALES_TOP = 1 AND SD.SALES_INVOICE = SH.SALES_INVOICE AND DATE_FORMAT(SH.SALES_DATE, '%Y%m%d') = '" + selectedDate + "' GROUP BY PRODUCT_ID) TAB2 ON TAB2.PRODUCT_ID = MP.PRODUCT_ID " +
+                                                                      "LEFT OUTER JOIN(SELECT DD.PRODUCT_ID, SUM(DD.PRODUCT_QTY) AS TOTAL_DELIVERED FROM DELIVERY_ORDER_HEADER DH, DELIVERY_ORDER_DETAIL DD WHERE DATE_FORMAT(DH.DO_DATE, '%Y%m%d') = '" + selectedDate + "' GROUP BY PRODUCT_ID) TAB_DO ON TAB_DO.PRODUCT_ID = MP.PRODUCT_ID ";
+                    }
+
+                    sqlCommand = sqlCommand + "LEFT OUTER JOIN(SELECT PRODUCT_ID, SUM(PRODUCT_RETURN_QTY) AS TOTAL_SALES_RETURN FROM RETURN_SALES_HEADER RSH, RETURN_SALES_DETAIL RSD WHERE RSD.RS_INVOICE = RSH.RS_INVOICE AND DATE_FORMAT(RSH.RS_DATETIME, '%Y%m%d')  = '" + selectedDate + "' GROUP BY PRODUCT_ID) TAB3 ON TAB3.PRODUCT_ID = MP.PRODUCT_ID " +
                                            "LEFT OUTER JOIN(SELECT PRODUCT_ID, SUM(PRODUCT_QTY) AS TOTAL_RECEIVED_RETURN FROM RETURN_PURCHASE_HEADER RPH, RETURN_PURCHASE_DETAIL RPD WHERE RPD.RP_ID = RPH.RP_ID AND DATE_FORMAT(RPH.RP_DATE, '%Y%m%d')  = '" + selectedDate + "' GROUP BY PRODUCT_ID) TAB4 ON TAB4.PRODUCT_ID = MP.PRODUCT_ID " +
                                            "WHERE MP.PRODUCT_ACTIVE = 1";
                     break;
@@ -543,7 +558,7 @@ namespace AlphaSoft
                     if (closeStockTake)
                     {
                         // UPDATE STOCK AWAL WITH AKHIR RIIL VALUE
-                        sqlCommand = "UPDATE MASTER_PRODUCT SET PRODUCT_STOCK_QTY = " + detailDataGrid.Rows[i].Cells["akhir"].Value.ToString() + ", PRODUCT_STOCK_AWAL = " + detailDataGrid.Rows[i].Cells["akhir"].Value.ToString() + " WHERE PRODUCT_ID = '" + detailDataGrid.Rows[i].Cells["productID"].Value.ToString() + "'";
+                        sqlCommand = "UPDATE MASTER_PRODUCT SET PRODUCT_STOCK_QTY = " + detailDataGrid.Rows[i].Cells["akhirRiil"].Value.ToString() + ", PRODUCT_STOCK_AWAL = " + detailDataGrid.Rows[i].Cells["akhirRiil"].Value.ToString() + " WHERE PRODUCT_ID = '" + detailDataGrid.Rows[i].Cells["productID"].Value.ToString() + "'";
 
                         if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
                             throw internalEX;

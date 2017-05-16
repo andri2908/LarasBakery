@@ -264,10 +264,13 @@ namespace AlphaSoft
 
         private void unregisterNavigationKey()
         {
-            ghk_UP.Unregister();
-            ghk_DOWN.Unregister();
+            if (navKeyRegistered)
+            { 
+                ghk_UP.Unregister();
+                ghk_DOWN.Unregister();
 
-            navKeyRegistered = false;
+                navKeyRegistered = false;
+            }
         }
 
         private void registerDelKey()
@@ -280,9 +283,12 @@ namespace AlphaSoft
 
         private void unregisterDelKey()
         {
-            ghk_DEL.Unregister();
+            if (delKeyRegistered)
+            { 
+                ghk_DEL.Unregister();
 
-            delKeyRegistered = false;
+                delKeyRegistered = false;
+            }
         }
 
         public void addNewRow()
@@ -322,7 +328,7 @@ namespace AlphaSoft
             detailReturDataGridView.CurrentCell = detailReturDataGridView.Rows[newRowIndex].Cells["productID"];
         }
 
-        public void addNewRowFromBarcode(string productID, string productName)
+        public void addNewRowFromBarcode(string productID, string productName, int rowIndex = -1)
         {
             int i = 0;
             bool found = false;
@@ -338,40 +344,47 @@ namespace AlphaSoft
 
             detailReturDataGridView.Focus();
 
-            // CHECK FOR EXISTING SELECTED ITEM
-            for (i = 0; i < detailReturDataGridView.Rows.Count && !found && !foundEmptyRow; i++)
+            if (rowIndex > 0)
             {
-                if (
-                    null != detailReturDataGridView.Rows[i].Cells["productName"].Value && 
-                    null != detailReturDataGridView.Rows[i].Cells["productID"].Value && 
-                    gutil.isProductIDExist(detailReturDataGridView.Rows[i].Cells["productID"].Value.ToString())
-                    )
+                rowSelectedIndex = rowIndex;
+            }
+            else
+            { 
+                // CHECK FOR EXISTING SELECTED ITEM
+                for (i = 0; i < detailReturDataGridView.Rows.Count && !found && !foundEmptyRow; i++)
                 {
-                    if (detailReturDataGridView.Rows[i].Cells["productName"].Value.ToString() == productName)
+                    if (
+                        null != detailReturDataGridView.Rows[i].Cells["productName"].Value && 
+                        null != detailReturDataGridView.Rows[i].Cells["productID"].Value && 
+                        gutil.isProductIDExist(detailReturDataGridView.Rows[i].Cells["productID"].Value.ToString())
+                        )
                     {
-                        found = true;
-                        rowSelectedIndex = i;
+                        if (detailReturDataGridView.Rows[i].Cells["productName"].Value.ToString() == productName)
+                        {
+                            found = true;
+                            rowSelectedIndex = i;
+                        }
+                    }
+                    else
+                    {
+                        foundEmptyRow = true;
+                        emptyRowIndex = i;
                     }
                 }
-                else
-                {
-                    foundEmptyRow = true;
-                    emptyRowIndex = i;
-                }
-            }
 
-            if (!found)
-            {
-                if (foundEmptyRow)
+                if (!found)
                 {
-                    returnQty[emptyRowIndex] = "0";
-                    rowSelectedIndex = emptyRowIndex;
-                }
-                else
-                {
-                    detailReturDataGridView.Rows.Add();
-                    returnQty.Add("0");
-                    rowSelectedIndex = detailReturDataGridView.Rows.Count - 1;
+                    if (foundEmptyRow)
+                    {
+                        returnQty[emptyRowIndex] = "0";
+                        rowSelectedIndex = emptyRowIndex;
+                    }
+                    else
+                    {
+                        detailReturDataGridView.Rows.Add();
+                        returnQty.Add("0");
+                        rowSelectedIndex = detailReturDataGridView.Rows.Count - 1;
+                    }
                 }
             }
 
@@ -584,7 +597,10 @@ namespace AlphaSoft
             if ((detailReturDataGridView.CurrentCell.OwningColumn.Name == "productID") && e.Control is TextBox)
             {
                 TextBox productIDTextBox = e.Control as TextBox;
+
+                productIDTextBox.PreviewKeyDown -= TextBox_previewKeyDown;
                 productIDTextBox.PreviewKeyDown += TextBox_previewKeyDown;
+
                 productIDTextBox.CharacterCasing = CharacterCasing.Upper;
                 productIDTextBox.AutoCompleteMode = AutoCompleteMode.None;
             }
@@ -592,20 +608,20 @@ namespace AlphaSoft
             if ((detailReturDataGridView.CurrentCell.OwningColumn.Name == "productName") && e.Control is TextBox)
             {
                 TextBox productIDTextBox = e.Control as TextBox;
+                productIDTextBox.PreviewKeyDown -= productName_previewKeyDown;
                 productIDTextBox.PreviewKeyDown += productName_previewKeyDown;
+
                 productIDTextBox.CharacterCasing = CharacterCasing.Upper;
-                productIDTextBox.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
-                productIDTextBox.AutoCompleteSource = AutoCompleteSource.CustomSource;
-                setTextBoxCustomSource(productIDTextBox);
+                productIDTextBox.AutoCompleteMode = AutoCompleteMode.None;
             }
 
-            if (detailReturDataGridView.CurrentCell.OwningColumn.Name == "qty" && e.Control is TextBox)
-            {
-                TextBox textBox = e.Control as TextBox;
-           //     textBox.TextChanged += TextBox_TextChanged;
-           //     textBox.PreviewKeyDown -= TextBox_previewKeyDown;
-                textBox.AutoCompleteMode = AutoCompleteMode.None;
-            }
+           // if (detailReturDataGridView.CurrentCell.OwningColumn.Name == "qty" && e.Control is TextBox)
+           // {
+           //     TextBox textBox = e.Control as TextBox;
+           ////     textBox.TextChanged += TextBox_TextChanged;
+           ////     textBox.PreviewKeyDown -= TextBox_previewKeyDown;
+           //     textBox.AutoCompleteMode = AutoCompleteMode.None;
+           // }
         }
 
         private void clearUpSomeRowContents(DataGridViewRow selectedRow, int rowSelectedIndex)
@@ -654,7 +670,7 @@ namespace AlphaSoft
             if (isProductID)
                 numRow = Convert.ToInt32(DS.getDataSingleValue("SELECT COUNT(1) FROM MASTER_PRODUCT WHERE PRODUCT_ID = '" + currentValue + "'"));
             else
-                numRow = Convert.ToInt32(DS.getDataSingleValue("SELECT COUNT(1) FROM MASTER_PRODUCT WHERE PRODUCT_NAME = '" + currentValue + "'"));
+                numRow = Convert.ToInt32(DS.getDataSingleValue("SELECT COUNT(1) FROM MASTER_PRODUCT WHERE PRODUCT_NAME = '" + MySqlHelper.EscapeString(currentValue) + "'"));
 
             if (numRow > 0)
             {
@@ -666,7 +682,7 @@ namespace AlphaSoft
                 else
                 {
                     selectedProductName = currentValue;
-                    selectedProductID = DS.getDataSingleValue("SELECT IFNULL(PRODUCT_ID,'') FROM MASTER_PRODUCT WHERE PRODUCT_NAME = '" + currentValue + "'").ToString();
+                    selectedProductID = DS.getDataSingleValue("SELECT IFNULL(PRODUCT_ID,'') FROM MASTER_PRODUCT WHERE PRODUCT_NAME = '" + MySqlHelper.EscapeString(currentValue) + "'").ToString();
                 }
 
                 if (null != selectedRow.Cells["productID"].Value)
@@ -727,6 +743,7 @@ namespace AlphaSoft
         {
             string currentValue = "";
             int rowSelectedIndex = 0;
+            string searchParam = "";
             DataGridViewTextBoxEditingControl dataGridViewComboBoxEditingControl = sender as DataGridViewTextBoxEditingControl;
 
             if (detailReturDataGridView.CurrentCell.OwningColumn.Name != "productID")
@@ -740,12 +757,21 @@ namespace AlphaSoft
 
                 if (currentValue.Length > 0)
                 {
-                    updateSomeRowContents(selectedRow, rowSelectedIndex, currentValue);
-                    detailReturDataGridView.CurrentCell = selectedRow.Cells["qty"];
+                    //updateSomeRowContents(selectedRow, rowSelectedIndex, currentValue);
+                    //detailReturDataGridView.CurrentCell = selectedRow.Cells["qty"];
+                    if (originModuleID == globalConstants.RETUR_PENJUALAN)
+                        searchParam = selectedSalesInvoice;
+                    else if (originModuleID == globalConstants.RETUR_PENJUALAN_STOCK_ADJUSTMENT)
+                        searchParam = selectedCustomerID.ToString();
+
+                    // CALL DATA PRODUK FORM WITH PARAMETER 
+                    dataProdukForm browseProduk = new dataProdukForm(originModuleID, this, currentValue, "", rowSelectedIndex, searchParam);
+                    browseProduk.ShowDialog(this);
+
                 }
                 else
                 {
-                    clearUpSomeRowContents(selectedRow, rowSelectedIndex);
+                //    clearUpSomeRowContents(selectedRow, rowSelectedIndex);
                 }
             }
         }
@@ -753,7 +779,9 @@ namespace AlphaSoft
         private void productName_previewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
             string currentValue = "";
+            string searchParam = "";
             int rowSelectedIndex = 0;
+
             DataGridViewTextBoxEditingControl dataGridViewComboBoxEditingControl = sender as DataGridViewTextBoxEditingControl;
 
             if (detailReturDataGridView.CurrentCell.OwningColumn.Name != "productName")
@@ -767,12 +795,23 @@ namespace AlphaSoft
 
                 if (currentValue.Length > 0)
                 {
-                    updateSomeRowContents(selectedRow, rowSelectedIndex, currentValue, false);
-                    detailReturDataGridView.CurrentCell = selectedRow.Cells["qty"];
+                    //updateSomeRowContents(selectedRow, rowSelectedIndex, currentValue, false);
+                    //detailReturDataGridView.CurrentCell = selectedRow.Cells["qty"];
+                    // CALL DATA PRODUK FORM WITH PARAMETER 
+
+                    if (originModuleID == globalConstants.RETUR_PENJUALAN)
+                        searchParam = selectedSalesInvoice;
+                    else if (originModuleID == globalConstants.RETUR_PENJUALAN_STOCK_ADJUSTMENT)
+                        searchParam = selectedCustomerID.ToString();
+
+
+                    dataProdukForm browseProduk = new dataProdukForm(originModuleID, this, "", currentValue, rowSelectedIndex, searchParam);
+                    browseProduk.ShowDialog(this);
+
                 }
                 else
                 {
-                    clearUpSomeRowContents(selectedRow, rowSelectedIndex);
+                    //clearUpSomeRowContents(selectedRow, rowSelectedIndex);
                 }
             }
         }

@@ -91,10 +91,15 @@ namespace AlphaSoft
 
         public bool matchRegEx(string textToMatch, string regExValue)
         {
-            Regex r = new Regex(regExValue); // This is the main part, can be altered to match any desired form or limitations
-            Match m = r.Match(textToMatch);
+            if (textToMatch.Length > 0)
+            {
+                Regex r = new Regex(regExValue); // This is the main part, can be altered to match any desired form or limitations
+                Match m = r.Match(textToMatch);
 
-            return m.Success;
+                return m.Success;
+            }
+            else
+                return false;
         }
 
         public int loadbranchID(int opt,out string namacabang)
@@ -563,7 +568,7 @@ namespace AlphaSoft
             return result;
         }
 
-        public string getCustomStringFormatDate(DateTime inputDateTime)
+        public string getCustomStringFormatDate(DateTime inputDateTime, bool dateOnly = false)
         {
             string result = "";
 
@@ -575,7 +580,10 @@ namespace AlphaSoft
             hourInput = String.Format(culture, "{0:HH}", inputDateTime);
             minuteInput = String.Format(culture, "{0:mm}", inputDateTime);
 
-            result = dateInput + " " + hourInput + ":" + minuteInput;
+            result = dateInput;
+
+            if (!dateOnly)
+                result = result + " " + hourInput + ":" + minuteInput;
 
             return result;
         }
@@ -661,5 +669,12 @@ namespace AlphaSoft
 
             return newID;
         }
+
+        public int isServerApp()
+        {
+            return globalFeatureList.COMPILED_AS_PABRIK_APP;
+        }
+
+       
     }
 }
