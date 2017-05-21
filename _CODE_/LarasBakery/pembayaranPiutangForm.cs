@@ -366,8 +366,17 @@ namespace AlphaSoft
                     if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
                         throw internalEX;
 
+                    int syncFlag, editedFlag;
+
+                    syncFlag = Convert.ToInt32(DS.getDataSingleValue("SELECT SYNCHRONIZED FROM SALES_HEADER WHERE SALES_INVOICE = '" + selectedSOInvoice + "'"));
+
+                    if (syncFlag == 0) // NEW DATA THAT HAS NOT BEEN SYNCHRONIZED
+                        editedFlag = 1;
+                    else
+                        editedFlag = 2;
+
                     // UPDATE SALES HEADER TABLE
-                    sqlCommand = "UPDATE SALES_HEADER SET SALES_PAID = 1 WHERE SALES_INVOICE = '" + selectedSOInvoice + "'";
+                    sqlCommand = "UPDATE SALES_HEADER SET SALES_PAID = 1, EDITED = "+ editedFlag + " WHERE SALES_INVOICE = '" + selectedSOInvoice + "'";
 
                     gutil.saveSystemDebugLog(globalConstants.MENU_PEMBAYARAN_PIUTANG, "UPDATE SALES HEADER SET TO FULLY PAID [" + selectedSOInvoice + "]");
                     if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
@@ -459,6 +468,14 @@ namespace AlphaSoft
             }
         }
 
+        private void sendDataSOToPabrik()
+        {
+            globalSynchronizeLib gSync = new globalSynchronizeLib();
+
+            if (gSync.sendDataToServer("SALES_HEADER", "SALES_INVOICE", selectedSOInvoice))
+                gSync.updateSyncFlag("SALES_HEADER", "SALES_INVOICE", selectedSOInvoice);
+        }
+
         private void saveButton_Click(object sender, EventArgs e)
         {
             gutil.saveSystemDebugLog(globalConstants.MENU_PEMBAYARAN_PIUTANG, "ATTEMPT TO SAVE PAYMENT CREDIT");
@@ -468,6 +485,8 @@ namespace AlphaSoft
                 gutil.saveSystemDebugLog(globalConstants.MENU_PEMBAYARAN_PIUTANG, "PAYMENT CREDIT DATA SAVED");
                 gutil.saveUserChangeLog(globalConstants.MENU_PEMBAYARAN_PIUTANG, globalConstants.CHANGE_LOG_PAYMENT_CREDIT, "PEMBAYARAN PIUTANG [" + invoiceNoTextBox.Text + "]");
                 gutil.showSuccess(gutil.INS);
+
+                sendDataSOToPabrik();
 
                 if (isPaymentExceed)
                 {

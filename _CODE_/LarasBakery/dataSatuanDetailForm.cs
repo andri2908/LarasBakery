@@ -135,6 +135,7 @@ namespace AlphaSoft
             bool result = false;
             string sqlCommand = "";
             MySqlException internalEX = null;
+            string unitID = "";
 
             string unitName = MySqlHelper.EscapeString(unitNameTextBox.Text.Trim());
             string unitDesc = MySqlHelper.EscapeString(unitDescriptionTextBox.Text.Trim());
@@ -145,6 +146,9 @@ namespace AlphaSoft
             else
                 unitStatus = 1;
 
+            if (gutil.isSS_ServerApp() == 1)
+                unitID = gutil.getAutoGenerateID("MASTER_UNIT", "", "", "UNIT_ID");
+
             DS.beginTransaction();
 
             try
@@ -154,7 +158,10 @@ namespace AlphaSoft
                 switch (originModuleID)
                 {
                     case globalConstants.NEW_UNIT:
-                        sqlCommand = "INSERT INTO MASTER_UNIT (UNIT_NAME, UNIT_DESCRIPTION, UNIT_ACTIVE) VALUES ('" + unitName+ "', '" + unitDesc+ "', " + unitStatus+ ")";
+                        //if (gutil.isSS_ServerApp() == 1)
+                        //    sqlCommand = "INSERT INTO MASTER_UNIT (UNIT_ID, UNIT_NAME, UNIT_DESCRIPTION, UNIT_ACTIVE) VALUES ('" + unitID + "', '" + unitName + "', '" + unitDesc + "', " + unitStatus + ")";
+                        //else
+                            sqlCommand = "INSERT INTO MASTER_UNIT (UNIT_NAME, UNIT_DESCRIPTION, UNIT_ACTIVE) VALUES ('" + unitName + "', '" + unitDesc + "', " + unitStatus + ")";
                         gutil.saveSystemDebugLog(globalConstants.MENU_SATUAN, "ADD NEW UNIT [" + unitName + "]");
                         break;
                     case globalConstants.EDIT_UNIT:

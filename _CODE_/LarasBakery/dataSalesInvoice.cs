@@ -158,7 +158,7 @@ namespace AlphaSoft
             //                           "FROM SALES_QUOTATION_HEADER SQ " +
             //                           "WHERE SQ.CUSTOMER_ID = 0 AND SQ_APPROVED = 1 AND SQ.COMPLETED = 0";
             //}
-            if (originModuleID == globalConstants.EDIT_SALES_ORDER || originModuleID == globalConstants.DELIVERY_ORDER || originModuleID == globalConstants.SO_FULFILLMENT)
+            if (originModuleID == globalConstants.EDIT_SALES_ORDER || originModuleID == globalConstants.SO_FULFILLMENT)
             {
                 sqlClause1 = "SELECT ID, SALES_INVOICE AS 'NO INVOICE', CUSTOMER_FULL_NAME AS 'CUSTOMER', DATE_FORMAT(SALES_DATE, '%d-%M-%Y')  AS 'TGL INVOICE', (SALES_TOTAL - SALES_DISCOUNT_FINAL) AS 'TOTAL' " +
                                            "FROM SALES_HEADER SH, MASTER_CUSTOMER MC " +
@@ -179,6 +179,12 @@ namespace AlphaSoft
                 sqlClause1 = "SELECT ID, SALES_INVOICE AS 'NO INVOICE', CUSTOMER_FULL_NAME AS 'CUSTOMER', DATE_FORMAT(SALES_DATE, '%d-%M-%Y')  AS 'TGL INVOICE', (SALES_TOTAL - SALES_DISCOUNT_FINAL) AS 'TOTAL', SALES_ORDER_DELIVERED_ADDRESS AS 'ALAMAT KIRIM' " +
                                            "FROM SALES_HEADER SH, MASTER_CUSTOMER MC " +
                                            "WHERE SH.CUSTOMER_ID = MC.CUSTOMER_ID AND SALES_TOP = 0 AND SALES_ORDER_COMPLETED = 0";
+            }
+            else if (originModuleID == globalConstants.DELIVERY_ORDER)
+            {
+                sqlClause1 = "SELECT SH.BRANCH_ID, SH.ID, IFNULL(BRANCH_NAME, 'PABRIK') AS 'CABANG', SALES_INVOICE AS 'NO INVOICE', CUSTOMER_FULL_NAME AS 'CUSTOMER', DATE_FORMAT(SALES_DATE, '%d-%M-%Y')  AS 'TGL INVOICE', (SALES_TOTAL - SALES_DISCOUNT_FINAL) AS 'TOTAL' " +
+                                           "FROM SALES_HEADER SH LEFT OUTER JOIN MASTER_BRANCH MB ON (SH.BRANCH_ID = MB.BRANCH_ID), MASTER_CUSTOMER MC " +
+                                           "WHERE SH.CUSTOMER_ID = MC.CUSTOMER_ID AND SALES_ORDER_COMPLETED = 0 AND SALES_TOP = 0";
             }
 
             if (!showAllCheckBox.Checked)
@@ -238,6 +244,9 @@ namespace AlphaSoft
                     //    dataPenerimaanBarang.Columns["SQ_APPROVED"].Visible = false;
                     //    dataPenerimaanBarang.Columns["STATUS"].Visible = false;
                     //}
+
+                    if (originModuleID == globalConstants.DELIVERY_ORDER)
+                        dataPenerimaanBarang.Columns["BRANCH_ID"].Visible = false;
 
                     dataPenerimaanBarang.Columns["NO INVOICE"].Width = 200;
                     dataPenerimaanBarang.Columns["TGL INVOICE"].Width = 200;
@@ -417,7 +426,7 @@ namespace AlphaSoft
                     //    if (processSalesOrderToDO(noInvoice, salesActiveStatus))
                     //        printOutDeliveryOrder(noInvoice, salesActiveStatus);
                     //}
-                    deliveryOrderForm displayDeliveryOrderForm = new deliveryOrderForm();
+                    deliveryOrderForm displayDeliveryOrderForm = new deliveryOrderForm(noInvoice, status.ToString());
                     displayDeliveryOrderForm.ShowDialog(this);
                     break;
             }
@@ -438,7 +447,11 @@ namespace AlphaSoft
             //if (originModuleID == globalConstants.SALES_QUOTATION || originModuleID == globalConstants.COPY_NOTA_SQ || originModuleID == globalConstants.SQ_TO_SO)
             //    status = Convert.ToInt32(selectedRow.Cells["SQ_APPROVED"].Value);
 
-            displaySpecificForm(noInvoice, status);
+            if (originModuleID == globalConstants.DELIVERY_ORDER)
+                status = Convert.ToInt32(selectedRow.Cells["BRANCH_ID"].Value);
+
+
+                displaySpecificForm(noInvoice, status);
         }
 
         private void dataPenerimaanBarang_KeyDown(object sender, KeyEventArgs e)
@@ -455,8 +468,11 @@ namespace AlphaSoft
                 DataGridViewRow selectedRow = dataPenerimaanBarang.Rows[rowSelectedIndex];
                 noInvoice = selectedRow.Cells["NO INVOICE"].Value.ToString();
 
-                if (originModuleID == globalConstants.SALES_QUOTATION || originModuleID == globalConstants.COPY_NOTA_SQ || originModuleID == globalConstants.SQ_TO_SO)
-                    status = Convert.ToInt32(selectedRow.Cells["SQ_APPROVED"].Value);
+                //if (originModuleID == globalConstants.SALES_QUOTATION || originModuleID == globalConstants.COPY_NOTA_SQ || originModuleID == globalConstants.SQ_TO_SO)
+                //    status = Convert.ToInt32(selectedRow.Cells["SQ_APPROVED"].Value);
+
+                if (originModuleID == globalConstants.DELIVERY_ORDER)
+                    status = Convert.ToInt32(selectedRow.Cells["BRANCH_ID"].Value);
 
                 displaySpecificForm(noInvoice, status);
             }

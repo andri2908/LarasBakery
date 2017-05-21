@@ -165,6 +165,7 @@ namespace AlphaSoft
             bool result = false;
             string sqlCommand = "";
             MySqlException internalEX = null;
+            string categoryID = "";
 
             string categoryName = MySqlHelper.EscapeString(categoryNameTextBox.Text.Trim());
             string categoryDesc = MySqlHelper.EscapeString(categoryDescriptionTextBox.Text.Trim());           
@@ -185,7 +186,14 @@ namespace AlphaSoft
                 switch (originModuleID)
                 {
                     case globalConstants.NEW_CATEGORY:
-                        sqlCommand = "INSERT INTO MASTER_CATEGORY (CATEGORY_NAME, CATEGORY_DESCRIPTION, CATEGORY_ACTIVE) " +
+                        //if (gutil.isSS_ServerApp() == 1)
+                        //{
+                        //    categoryID = gutil.getAutoGenerateID("MASTER_CATEGORY", "", "", "CATEGORY_ID");
+                        //    sqlCommand = "INSERT INTO MASTER_CATEGORY (CATEGORY_ID, CATEGORY_NAME, CATEGORY_DESCRIPTION, CATEGORY_ACTIVE) " +
+                        //                "VALUES ('" + categoryID + "', '" + categoryName + "', '" + categoryDesc + "', " + categoryStatus + ")";
+                        //}
+                        //else
+                            sqlCommand = "INSERT INTO MASTER_CATEGORY (CATEGORY_NAME, CATEGORY_DESCRIPTION, CATEGORY_ACTIVE) " +
                                             "VALUES ('" + categoryName + "', '" + categoryDesc + "', " + categoryStatus + ")";
                         gutil.saveSystemDebugLog(globalConstants.MENU_KATEGORI, "ADD NEW CATEGORY [" + categoryName + "]");
                         break;

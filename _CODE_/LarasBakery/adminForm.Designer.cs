@@ -42,6 +42,7 @@
             this.MENU_tambahUser = new System.Windows.Forms.ToolStripMenuItem();
             this.MENU_manajemenCabang = new System.Windows.Forms.ToolStripMenuItem();
             this.MENU_tambahCabang = new System.Windows.Forms.ToolStripMenuItem();
+            this.MENU_kirimDataCabang = new System.Windows.Forms.ToolStripMenuItem();
             this.MENU_sinkronisasiInformasi = new System.Windows.Forms.ToolStripMenuItem();
             this.Separator_2 = new System.Windows.Forms.ToolStripSeparator();
             this.MENU_backUpRestoreDatabaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -60,6 +61,7 @@
             this.MENU_pengaturanKategoriProduk = new System.Windows.Forms.ToolStripMenuItem();
             this.MENU_pecahSatuanProduk = new System.Windows.Forms.ToolStripMenuItem();
             this.MENU_pengaturanNomorRak = new System.Windows.Forms.ToolStripMenuItem();
+            this.MENU_kirimDataProdukKeToko = new System.Windows.Forms.ToolStripMenuItem();
             this.MENU_kategori = new System.Windows.Forms.ToolStripMenuItem();
             this.MENU_tambahKategori = new System.Windows.Forms.ToolStripMenuItem();
             this.MENU_satuan = new System.Windows.Forms.ToolStripMenuItem();
@@ -191,6 +193,7 @@
             this.SHORTCUT_returBeli = new System.Windows.Forms.ToolStripButton();
             this.SHORTCUT_returJual = new System.Windows.Forms.ToolStripButton();
             this.timerMessage = new System.Windows.Forms.Timer(this.components);
+            this.timerPesanan = new System.Windows.Forms.Timer(this.components);
             this.MAINMENU_Strip.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.MAINMENU_ShortCut.SuspendLayout();
@@ -321,7 +324,8 @@
             // 
             this.MENU_manajemenCabang.BackColor = System.Drawing.Color.SteelBlue;
             this.MENU_manajemenCabang.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.MENU_tambahCabang});
+            this.MENU_tambahCabang,
+            this.MENU_kirimDataCabang});
             this.MENU_manajemenCabang.ForeColor = System.Drawing.Color.FloralWhite;
             this.MENU_manajemenCabang.Name = "MENU_manajemenCabang";
             this.MENU_manajemenCabang.Size = new System.Drawing.Size(274, 22);
@@ -332,9 +336,18 @@
             this.MENU_tambahCabang.BackColor = System.Drawing.Color.SteelBlue;
             this.MENU_tambahCabang.ForeColor = System.Drawing.Color.FloralWhite;
             this.MENU_tambahCabang.Name = "MENU_tambahCabang";
-            this.MENU_tambahCabang.Size = new System.Drawing.Size(256, 22);
+            this.MENU_tambahCabang.Size = new System.Drawing.Size(269, 22);
             this.MENU_tambahCabang.Text = "Tambah / Hapus Cabang";
             this.MENU_tambahCabang.Click += new System.EventHandler(this.toolStripMenuItem48_Click);
+            // 
+            // MENU_kirimDataCabang
+            // 
+            this.MENU_kirimDataCabang.BackColor = System.Drawing.Color.SteelBlue;
+            this.MENU_kirimDataCabang.ForeColor = System.Drawing.Color.FloralWhite;
+            this.MENU_kirimDataCabang.Name = "MENU_kirimDataCabang";
+            this.MENU_kirimDataCabang.Size = new System.Drawing.Size(269, 22);
+            this.MENU_kirimDataCabang.Text = "Kirim Data Cabang ke Toko";
+            this.MENU_kirimDataCabang.Click += new System.EventHandler(this.MENU_kirimDataCabang_Click_2);
             // 
             // MENU_sinkronisasiInformasi
             // 
@@ -446,7 +459,8 @@
             this.MENU_pengaturanLimitStok,
             this.MENU_pengaturanKategoriProduk,
             this.MENU_pecahSatuanProduk,
-            this.MENU_pengaturanNomorRak});
+            this.MENU_pengaturanNomorRak,
+            this.MENU_kirimDataProdukKeToko});
             this.MENU_produk.ForeColor = System.Drawing.Color.FloralWhite;
             this.MENU_produk.Name = "MENU_produk";
             this.MENU_produk.Size = new System.Drawing.Size(213, 22);
@@ -505,6 +519,15 @@
             this.MENU_pengaturanNomorRak.Size = new System.Drawing.Size(279, 22);
             this.MENU_pengaturanNomorRak.Text = "Pengaturan Nomor Rak";
             this.MENU_pengaturanNomorRak.Click += new System.EventHandler(this.toolStripMenuItem54_Click);
+            // 
+            // MENU_kirimDataProdukKeToko
+            // 
+            this.MENU_kirimDataProdukKeToko.BackColor = System.Drawing.Color.SteelBlue;
+            this.MENU_kirimDataProdukKeToko.ForeColor = System.Drawing.Color.FloralWhite;
+            this.MENU_kirimDataProdukKeToko.Name = "MENU_kirimDataProdukKeToko";
+            this.MENU_kirimDataProdukKeToko.Size = new System.Drawing.Size(279, 22);
+            this.MENU_kirimDataProdukKeToko.Text = "Kirim Data Produk ke Toko";
+            this.MENU_kirimDataProdukKeToko.Click += new System.EventHandler(this.MENU_kirimDataProdukKeToko_Click);
             // 
             // MENU_kategori
             // 
@@ -1823,6 +1846,11 @@
             this.timerMessage.Interval = 3600000;
             this.timerMessage.Tick += new System.EventHandler(this.timerMessage_Tick);
             // 
+            // timerPesanan
+            // 
+            this.timerPesanan.Interval = 60000;
+            this.timerPesanan.Tick += new System.EventHandler(this.timerPesanan_Tick);
+            // 
             // adminForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -2022,6 +2050,9 @@
         private System.Windows.Forms.ToolStripMenuItem MENU_pengirimanPesanan;
         private System.Windows.Forms.ToolStripMenuItem MENU_pemenuhanSebagian;
         private System.Windows.Forms.ToolStripMenuItem MENU_sendOrderToServer;
+        private System.Windows.Forms.ToolStripMenuItem MENU_kirimDataCabang;
+        private System.Windows.Forms.ToolStripMenuItem MENU_kirimDataProdukKeToko;
+        private System.Windows.Forms.Timer timerPesanan;
         //private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
     }
 }

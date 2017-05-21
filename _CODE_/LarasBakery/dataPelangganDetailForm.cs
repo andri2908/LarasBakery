@@ -38,6 +38,8 @@ namespace AlphaSoft
 
         bool isNavKeyRegistered = false;
 
+        private string custID = "";
+
         public dataPelangganDetailForm()
         {
             InitializeComponent();
@@ -56,6 +58,7 @@ namespace AlphaSoft
 
             originModuleID = moduleID;
             selectedCustomerID = customerID;
+            custID = selectedCustomerID.ToString();
         }
 
         private void captureAll(Keys key)
@@ -268,12 +271,22 @@ namespace AlphaSoft
                 switch (originModuleID)
                 {
                     case globalConstants.NEW_CUSTOMER:
+                        custID = gUtil.getAutoGenerateID("MASTER_CUSTOMER", "", "", "CUSTOMER_ID");
+
                         sqlCommand = "INSERT INTO MASTER_CUSTOMER " +
-                                            "(CUSTOMER_FULL_NAME, CUSTOMER_ADDRESS1, CUSTOMER_ADDRESS2, CUSTOMER_ADDRESS_CITY, CUSTOMER_PHONE, CUSTOMER_FAX, CUSTOMER_EMAIL, CUSTOMER_ACTIVE, CUSTOMER_JOINED_DATE, CUSTOMER_TOTAL_SALES_COUNT, CUSTOMER_GROUP) " +
-                                            "VALUES ('" + custName + "', '" + custAddress1 + "', '" + custAddress2 + "', '" + custAddressCity+ "', '" + custPhone + "', '" + custFax + "', '" + custEmail + "', "+custStatus+", STR_TO_DATE('"+custJoinedDate+"', '%d-%m-%Y'), "+custTotalSales+", "+custGroup+")";
+                                            "(CUSTOMER_ID, CUSTOMER_FULL_NAME, CUSTOMER_ADDRESS1, CUSTOMER_ADDRESS2, CUSTOMER_ADDRESS_CITY, CUSTOMER_PHONE, CUSTOMER_FAX, CUSTOMER_EMAIL, CUSTOMER_ACTIVE, CUSTOMER_JOINED_DATE, CUSTOMER_TOTAL_SALES_COUNT, CUSTOMER_GROUP, SYNCHRONIZED, EDITED) " +
+                                            "VALUES ('" + custID + "', '" + custName + "', '" + custAddress1 + "', '" + custAddress2 + "', '" + custAddressCity + "', '" + custPhone + "', '" + custFax + "', '" + custEmail + "', " + custStatus + ", STR_TO_DATE('" + custJoinedDate + "', '%d-%m-%Y'), " + custTotalSales + ", " + custGroup + ", 0, 1)";
                         gUtil.saveSystemDebugLog(globalConstants.MENU_PELANGGAN, "INSERT NEW CUSTOMER DATA [" + custName + "]");
                         break;
                     case globalConstants.EDIT_CUSTOMER:
+                        int syncFlag, editedFlag;
+
+                        syncFlag = Convert.ToInt32(DS.getDataSingleValue("SELECT SYNCHRONIZED FROM MASTER_CUSTOMER WHERE CUSTOMER_ID = '" + selectedCustomerID + "'"));
+
+                        if (syncFlag == 0) // NEW DATA THAT HAS NOT BEEN SYNCHRONIZED
+                            editedFlag = 1;
+                        else
+                            editedFlag = 2;
 
                         sqlCommand = "UPDATE MASTER_CUSTOMER SET " +
                                             "CUSTOMER_FULL_NAME = '" + custName + "', " +
@@ -286,7 +299,8 @@ namespace AlphaSoft
                                             "CUSTOMER_ACTIVE = " + custStatus + ", " +
                                             "CUSTOMER_JOINED_DATE = STR_TO_DATE('" + custJoinedDate + "', '%d-%m-%Y'), " +
                                             "CUSTOMER_TOTAL_SALES_COUNT = " + custTotalSales + ", " +
-                                            "CUSTOMER_GROUP = " + custGroup + " " +
+                                            "CUSTOMER_GROUP = " + custGroup + ", " +
+                                            "EDITED = " + editedFlag + " " +
                                             "WHERE CUSTOMER_ID = " + selectedCustomerID;
                         gUtil.saveSystemDebugLog(globalConstants.MENU_PELANGGAN, "EDIT CUSTOMER DATA [" + selectedCustomerID + "]");
                         break;
@@ -346,6 +360,14 @@ namespace AlphaSoft
 
         }
 
+        private void sendDataCustomerToPabrik()
+        {
+            globalSynchronizeLib gSync = new globalSynchronizeLib();
+
+            if (gSync.sendDataToServer("MASTER_CUSTOMER", "CUSTOMER_ID", custID))
+                gSync.updateSyncFlag("MASTER_CUSTOMER", "CUSTOMER_ID", custID);
+        }
+
         private void saveButton_Click(object sender, EventArgs e)
         {
             gUtil.saveSystemDebugLog(globalConstants.MENU_PELANGGAN, "ATTEMPT TO SAVE DATA");
@@ -353,7 +375,9 @@ namespace AlphaSoft
             {
                 gUtil.saveSystemDebugLog(globalConstants.MENU_PELANGGAN, "DATA SAVED");
                 if (originModuleID == globalConstants.NEW_CUSTOMER)
+                { 
                     gUtil.saveUserChangeLog(globalConstants.MENU_PELANGGAN, globalConstants.CHANGE_LOG_INSERT, "INSERT NEW PELANGGAN [" + custNameTextBox.Text + "]");
+                }
                 else
                 {
                     if (nonAktifCheckbox.Checked == true) 
@@ -361,6 +385,9 @@ namespace AlphaSoft
                     else
                         gUtil.saveUserChangeLog(globalConstants.MENU_PELANGGAN, globalConstants.CHANGE_LOG_UPDATE, "UPDATE PELANGGAN [" + custNameTextBox.Text + "] STATUS AKTIF");
                 }
+
+                sendDataCustomerToPabrik();
+
                 gUtil.showSuccess(options);
                 gUtil.ResetAllControls(this);
             }

@@ -566,8 +566,17 @@ namespace AlphaSoft
                                 noInvoice = DS.getDataSingleValue("SELECT IFNULL(SALES_INVOICE, '') FROM CREDIT WHERE CREDIT_ID = " + currentCreditID).ToString();
                                 if (noInvoice.Length > 0)
                                 {
+                                    int syncFlag, editedFlag;
+
+                                    syncFlag = Convert.ToInt32(DS.getDataSingleValue("SELECT SYNCHRONIZED FROM SALES_HEADER WHERE SALES_INVOICE = '" + noInvoice + "'"));
+
+                                    if (syncFlag == 0) // NEW DATA THAT HAS NOT BEEN SYNCHRONIZED
+                                        editedFlag = 1;
+                                    else
+                                        editedFlag = 2;
+
                                     // UPDATE SALES HEADER TABLE
-                                    sqlCommand = "UPDATE SALES_HEADER SET SALES_PAID = 1 WHERE SALES_INVOICE = '" + noInvoice + "'";
+                                    sqlCommand = "UPDATE SALES_HEADER SET SALES_PAID = 1, EDITED = " + editedFlag + " WHERE SALES_INVOICE = '" + noInvoice + "'";
 
                                     gutil.saveSystemDebugLog(0, "PEMBAYARAN LUMPSUM : UPDATE SALES HEADER SET FULLY PAID [" + noInvoice + "]");
                                     if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
@@ -677,7 +686,15 @@ namespace AlphaSoft
 
             return result;
         }
-        
+
+        private void sendDataToPabrik()
+        {
+            globalSynchronizeLib gSync = new globalSynchronizeLib();
+
+            if (gSync.sendDataToServer("SALES_HEADER"))
+                gSync.updateSyncFlag("SALES_HEADER");
+        }
+
         private void saveButton_Click(object sender, EventArgs e)
         {
             gutil.saveSystemDebugLog(0, "PEMBAYARAN LUMPSUM : ATTEMPT TO SAVE DATA PAYMENT");
@@ -706,6 +723,8 @@ namespace AlphaSoft
                     gutil.saveUserChangeLog(globalConstants.MENU_PEMBAYARAN_HUTANG_SUPPLIER, globalConstants.CHANGE_LOG_PAYMENT_DEBT, "PEMBAYARAN HUTANG SEBESAR " + paymentMaskedTextBox.Text);
                     loadDataPO();
                 }
+
+                sendDataToPabrik();
 
                 calculateGlobalOutstandingCredit();
                 detailPaymentInfoDataGrid.DataSource = null;

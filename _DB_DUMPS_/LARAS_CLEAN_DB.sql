@@ -460,7 +460,7 @@ DROP TABLE IF EXISTS `master_customer`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `master_customer` (
-  `CUSTOMER_ID` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
+  `CUSTOMER_ID` smallint(5) unsigned NOT NULL,
   `CUSTOMER_FULL_NAME` varchar(50) DEFAULT NULL,
   `CUSTOMER_ADDRESS1` varchar(50) DEFAULT NULL,
   `CUSTOMER_ADDRESS2` varchar(50) DEFAULT NULL,
@@ -472,6 +472,8 @@ CREATE TABLE `master_customer` (
   `CUSTOMER_JOINED_DATE` date DEFAULT NULL,
   `CUSTOMER_TOTAL_SALES_COUNT` int(11) DEFAULT NULL,
   `CUSTOMER_GROUP` tinyint(3) unsigned DEFAULT NULL,
+  `SYNCHRONIZED` tinyint(3) DEFAULT '0',
+  `EDITED` tinyint(3) DEFAULT '0',  
   PRIMARY KEY (`CUSTOMER_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -1476,6 +1478,7 @@ CREATE TABLE `sales_header` (
   `REFERENCE_SO` varchar(30) DEFAULT NULL,
   `SYNCHRONIZED` tinyint(3) DEFAULT '0',
   `EDITED` tinyint(3) DEFAULT '0',
+  `USER_NAME` varchar(45) DEFAULT '',
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -1781,6 +1784,22 @@ LOCK TABLES `user_change_log` WRITE;
 /*!40000 ALTER TABLE `user_change_log` DISABLE KEYS */;
 /*!40000 ALTER TABLE `user_change_log` ENABLE KEYS */;
 UNLOCK TABLES;
+
+
+CREATE TABLE `notif_table` (
+  `ID` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `NEW_ORDER` tinyint(3) DEFAULT '0',
+  `EDITED` tinyint(3) DEFAULT '0',
+  `SYNCHRONIZED` tinyint(3) DEFAULT '1',  
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+LOCK TABLES `notif_table` WRITE;
+/*!40000 ALTER TABLE `notif_table` DISABLE KEYS */;
+INSERT INTO `notif_table` VALUES (1,0,0,1);
+/*!40000 ALTER TABLE `notif_table` ENABLE KEYS */;
+UNLOCK TABLES;
+
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -1792,3 +1811,4 @@ UNLOCK TABLES;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2017-05-11 10:51:27
+

@@ -18,6 +18,7 @@ namespace AlphaSoft
     {
         private string selectedSalesInvoice = "";
         private string salesRevNo = "";
+        private string branchID = "";
         private Data_Access DS = new Data_Access();
         private CultureInfo culture = new CultureInfo("id-ID");
         private globalUtilities gUtil = new globalUtilities();
@@ -30,12 +31,12 @@ namespace AlphaSoft
             InitializeComponent();
         }
 
-        public deliveryOrderForm(string invoiceNo, string revNo = "")
+        public deliveryOrderForm(string invoiceNo, string branchIDParam = "")
         {
             InitializeComponent();
 
             selectedSalesInvoice = invoiceNo;
-            salesRevNo = revNo;
+            branchID = branchIDParam;
         }
 
         private void loadInvoiceData()
@@ -46,7 +47,7 @@ namespace AlphaSoft
             DataGridViewTextBoxColumn qtyColumn = new DataGridViewTextBoxColumn();
 
             // LOAD DATA HEADER
-            sqlCommand = "SELECT SH.SALES_INVOICE, IFNULL(MC.CUSTOMER_FULL_NAME, 'P-UMUM') AS CUSTOMER_NAME FROM SALES_HEADER SH LEFT OUTER JOIN MASTER_CUSTOMER MC ON (SH.CUSTOMER_ID = MC.CUSTOMER_ID) WHERE SH.SALES_INVOICE = '" + selectedSalesInvoice + "'";
+            sqlCommand = "SELECT SH.SALES_INVOICE, IFNULL(MC.CUSTOMER_FULL_NAME, 'P-UMUM') AS CUSTOMER_NAME FROM SALES_HEADER SH LEFT OUTER JOIN MASTER_CUSTOMER MC ON (SH.CUSTOMER_ID = MC.CUSTOMER_ID) WHERE SH.SALES_INVOICE = '" + selectedSalesInvoice + "' AND SH.BRANCH_ID = " + branchID;
 
             using (rdr = DS.getData(sqlCommand))
             {
@@ -62,11 +63,12 @@ namespace AlphaSoft
             rdr.Close();
 
             // LOAD DATA DETAIL
-            sqlCommand = "SELECT SD.ID, SD.PRODUCT_ID, SD.IS_COMPLETED, IF(SD.IS_COMPLETED = 1, 'COMPLETED', 'PENDING') AS STATUS, MP.PRODUCT_NAME AS 'NAMA PRODUK', SD.PRODUCT_QTY AS 'ORDER QTY', IFNULL(TAB1.QTY, 0) AS 'DELIVERED QTY' " +
+            sqlCommand = "SELECT SD.ID, SD.PRODUCT_ID, SD.IS_COMPLETED, IF(SD.IS_COMPLETED = 1, 'COMPLETED', 'PENDING') AS STATUS, MP.PRODUCT_NAME AS 'NAMA PRODUK', SD.PRODUCT_QTY AS 'ORDER QTY', IFNULL(TAB1.QTY, 0) + IFNULL(TAB2.QTY, 0) AS 'DELIVERED QTY' " +
                                     "FROM SALES_DETAIL SD LEFT OUTER JOIN " +
                                     "(SELECT DH.SALES_INVOICE, DD.PRODUCT_ID, SUM(DD.PRODUCT_QTY) AS QTY FROM DELIVERY_ORDER_HEADER DH, DELIVERY_ORDER_DETAIL DD WHERE DD.DO_ID = DH.DO_ID AND DH.SALES_INVOICE = '" + selectedSalesInvoice + "' GROUP BY DD.PRODUCT_ID) TAB1 ON (TAB1.PRODUCT_ID = SD.PRODUCT_ID) " +
+                                    "LEFT OUTER JOIN (SELECT SH.BRANCH_ID, SH.REFERENCE_SO, SDF.PRODUCT_ID, SUM(SDF.PRODUCT_QTY) AS QTY FROM SALES_DETAIL_FULFILLMENT SDF, SALES_HEADER SH WHERE SDF.SALES_INVOICE = SH.SALES_INVOICE AND SH.REFERENCE_SO = '" +selectedSalesInvoice+ "' GROUP BY SH.BRANCH_ID, SH.REFERENCE_SO, SDF.PRODUCT_ID) TAB2 ON (TAB2.PRODUCT_ID = SD.PRODUCT_ID) " +
                                     ", MASTER_PRODUCT MP " +
-                                    "WHERE SD.PRODUCT_ID = MP.PRODUCT_ID AND SD.SALES_INVOICE = '" + selectedSalesInvoice + "'";
+                                    "WHERE SD.PRODUCT_ID = MP.PRODUCT_ID AND SD.SALES_INVOICE = '" + selectedSalesInvoice + "' AND SD.BRANCH_ID = " + branchID;
 
             isLoading = true;
             using (rdr = DS.getData(sqlCommand))
@@ -443,10 +445,10 @@ namespace AlphaSoft
 
         private void reprintButton_Click(object sender, EventArgs e)
         {
-            printOutDeliveryOrder(selectedSalesInvoice, salesRevNo, "0");
+            printOutDeliveryOrder(selectedSalesInvoice, salesRevNo, "1");
         }
 
-        private void printOutDeliveryOrder(string SONo, string revNo, string salesStatus = "1")
+        private void printOutDeliveryOrder(string SONo, string revNo, string salesStatus = "0")
         {
             string sqlCommandx = "SELECT DH.DO_ID, '"+ salesStatus + "' AS 'SALES_STATUS', DH.DO_DATE AS 'TGL', DH.SALES_INVOICE AS 'INVOICE', IFNULL(MC.CUSTOMER_FULL_NAME, '') AS 'CUSTOMER_NAME', MP.PRODUCT_NAME AS 'PRODUK', DD.PRODUCT_QTY AS 'QTY' " +
                                         "FROM DELIVERY_ORDER_HEADER DH, DELIVERY_ORDER_DETAIL DD, SALES_HEADER SH LEFT OUTER JOIN MASTER_CUSTOMER MC ON (SH.CUSTOMER_ID = MC.CUSTOMER_ID) , MASTER_PRODUCT MP " +

@@ -21,6 +21,7 @@ namespace AlphaSoft
         public const string REGEX_ALPHANUMERIC_ONLY = @"^[0-9A-Za-z]*$";
         public const string CUSTOM_DATE_FORMAT = "dd MMM yyyy";
         public const string CUSTOM_MONTH_FORMAT = "MMMM yyyy";
+        public const string CUSTOM_DATE_TIME_FORMAT = "dd MMM yyyy HH:mm";
         public const string CELL_FORMATTING_NUMERIC_FORMAT = "#,0.##";
         private const string logFileName = "system.log";
 
@@ -36,6 +37,7 @@ namespace AlphaSoft
         private static string userName = "";
         private static int papermode = 0; //0 = cashier mode, 1 = 1/2 kwarto, 2 = kwarto
         private static StreamWriter sw = null;
+        private static bool orderExist = false;
 
         private CultureInfo culture = new CultureInfo("id-ID");
 
@@ -588,6 +590,26 @@ namespace AlphaSoft
             return result;
         }
 
+        public string getCustomStringFormatDate(DateTime inputDate, DateTime inputTime, bool dateOnly = false)
+        {
+            string result = "";
+
+            string dateInput = "";
+            string hourInput = "";
+            string minuteInput = "";
+
+            dateInput = String.Format(culture, "{0:dd-MM-yyyy}", inputDate);
+            hourInput = String.Format(culture, "{0:HH}", inputTime);
+            minuteInput = String.Format(culture, "{0:mm}", inputTime);
+
+            result = dateInput;
+
+            if (!dateOnly)
+                result = result + " " + hourInput + ":" + minuteInput;
+
+            return result;
+        }
+
         public string getCustomStringFormatTime(DateTime inputDateTime)
         {
             string result = "";
@@ -648,7 +670,10 @@ namespace AlphaSoft
 
             idPrefix = prefix;
 
-            sqlCommand = "SELECT IFNULL(MAX(CONVERT(SUBSTRING(" + fieldName + ", INSTR(" + fieldName + ",'" + valueDelimiter + "')+1), UNSIGNED INTEGER)),'0') AS " + fieldName + " FROM " + tableName + " WHERE " + fieldName + " LIKE '" + idPrefix + "%'";
+            if (valueDelimiter.Length > 0 || prefix.Length > 0)
+                sqlCommand = "SELECT IFNULL(MAX(CONVERT(SUBSTRING(" + fieldName + ", INSTR(" + fieldName + ",'" + valueDelimiter + "')+1), UNSIGNED INTEGER)),'0') AS " + fieldName + " FROM " + tableName + " WHERE " + fieldName + " LIKE '" + idPrefix + "%'";
+            else
+                sqlCommand = "SELECT IFNULL(MAX(CONVERT(" + fieldName + ", UNSIGNED INTEGER)),'0') AS " + fieldName + " FROM " + tableName;// + " WHERE " + fieldName + " LIKE '" + idPrefix + "%'";
 
             maxID = DS.getDataSingleValue(sqlCommand).ToString();
             saveSystemDebugLog(0, "GUTIL : MAX " + fieldName + " [" + maxID + "]");
@@ -675,6 +700,38 @@ namespace AlphaSoft
             return globalFeatureList.COMPILED_AS_PABRIK_APP;
         }
 
-       
+        public int isSS_ServerApp()
+        {
+            return globalFeatureList.COMPILED_AS_SS_APP;
+        }
+
+        public void sleep(int seconds)
+        {
+            for (int i = 0; i < seconds; i++)
+                for (int j = 0; j < 1000; j++) ;
+        }
+
+        public void checkOrder()
+        {
+            int newOrderValue = Convert.ToInt32(DS.getDataSingleValue("SELECT NEW_ORDER FROM NOTIF_TABLE"));
+
+            if (newOrderValue == 1)
+            {
+                System.Media.SoundPlayer player = new System.Media.SoundPlayer(@"chime.wav");
+                player.Play();
+
+                DS.beginTransaction();
+                try
+                {
+                    DS.executeNonQueryCommand("UPDATE NOTIF_TABLE SET NEW_ORDER = 0");
+                    DS.commit();
+                }
+                catch(Exception ex)
+                {
+                    saveSystemDebugLog(0, "[NOTIF] FAILED TO UPDATE NOTIF TABLE [" + ex.Message + "]");
+                }
+            }
+        }
+
     }
 }

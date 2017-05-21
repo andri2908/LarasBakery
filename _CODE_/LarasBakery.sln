@@ -9,14 +9,23 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		CABANG|Any CPU = CABANG|Any CPU
 		Debug|Any CPU = Debug|Any CPU
+		PABRIK|Any CPU = PABRIK|Any CPU
 		Release|Any CPU = Release|Any CPU
+		SS_SERVER|Any CPU = SS_SERVER|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B7CCBEB5-CB55-4300-A4A6-B5B8D945B242}.CABANG|Any CPU.ActiveCfg = CABANG|Any CPU
+		{B7CCBEB5-CB55-4300-A4A6-B5B8D945B242}.CABANG|Any CPU.Build.0 = CABANG|Any CPU
 		{B7CCBEB5-CB55-4300-A4A6-B5B8D945B242}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B7CCBEB5-CB55-4300-A4A6-B5B8D945B242}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7CCBEB5-CB55-4300-A4A6-B5B8D945B242}.PABRIK|Any CPU.ActiveCfg = PABRIK|Any CPU
+		{B7CCBEB5-CB55-4300-A4A6-B5B8D945B242}.PABRIK|Any CPU.Build.0 = PABRIK|Any CPU
 		{B7CCBEB5-CB55-4300-A4A6-B5B8D945B242}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B7CCBEB5-CB55-4300-A4A6-B5B8D945B242}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7CCBEB5-CB55-4300-A4A6-B5B8D945B242}.SS_SERVER|Any CPU.ActiveCfg = SS_SERVER|Any CPU
+		{B7CCBEB5-CB55-4300-A4A6-B5B8D945B242}.SS_SERVER|Any CPU.Build.0 = SS_SERVER|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

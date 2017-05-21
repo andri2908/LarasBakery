@@ -43,7 +43,6 @@
             this.panel5 = new System.Windows.Forms.Panel();
             this.refSOTextBox = new System.Windows.Forms.TextBox();
             this.refSOLabel = new System.Windows.Forms.Label();
-            this.panel3 = new System.Windows.Forms.Panel();
             this.addressTextBox = new System.Windows.Forms.TextBox();
             this.deliveredCheckbox = new System.Windows.Forms.CheckBox();
             this.rejectButton = new System.Windows.Forms.Button();
@@ -56,8 +55,9 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.panel6 = new System.Windows.Forms.Panel();
+            this.labelTglKirim = new System.Windows.Forms.Label();
             this.jobStartDateTimePicker = new System.Windows.Forms.DateTimePicker();
-            this.labelTglOrder = new System.Windows.Forms.Label();
+            this.panel3 = new System.Windows.Forms.Panel();
             this.discJualMaskedTextBox = new System.Windows.Forms.TextBox();
             this.bayarTextBox = new System.Windows.Forms.TextBox();
             this.uangKembaliTextBox = new System.Windows.Forms.TextBox();
@@ -207,7 +207,7 @@
             this.cashierDataGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.cashierDataGridView.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.cashierDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.cashierDataGridView.Size = new System.Drawing.Size(983, 285);
+            this.cashierDataGridView.Size = new System.Drawing.Size(983, 277);
             this.cashierDataGridView.TabIndex = 8;
             this.cashierDataGridView.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.cashierDataGridView_CellBeginEdit);
             this.cashierDataGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.cashierDataGridView_CellEndEdit);
@@ -225,7 +225,6 @@
             this.panel5.BackColor = System.Drawing.Color.SteelBlue;
             this.panel5.Controls.Add(this.refSOTextBox);
             this.panel5.Controls.Add(this.refSOLabel);
-            this.panel5.Controls.Add(this.panel3);
             this.panel5.Controls.Add(this.addressTextBox);
             this.panel5.Controls.Add(this.deliveredCheckbox);
             this.panel5.Controls.Add(this.rejectButton);
@@ -245,15 +244,15 @@
             this.panel5.Controls.Add(this.labelCaraBayar);
             this.panel5.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.panel5.ForeColor = System.Drawing.Color.AntiqueWhite;
-            this.panel5.Location = new System.Drawing.Point(2, 421);
+            this.panel5.Location = new System.Drawing.Point(2, 417);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(982, 218);
+            this.panel5.Size = new System.Drawing.Size(982, 222);
             this.panel5.TabIndex = 9;
             // 
             // refSOTextBox
             // 
             this.refSOTextBox.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.refSOTextBox.Location = new System.Drawing.Point(154, 12);
+            this.refSOTextBox.Location = new System.Drawing.Point(154, 9);
             this.refSOTextBox.Name = "refSOTextBox";
             this.refSOTextBox.ReadOnly = true;
             this.refSOTextBox.Size = new System.Drawing.Size(221, 27);
@@ -265,26 +264,16 @@
             this.refSOLabel.AutoSize = true;
             this.refSOLabel.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.refSOLabel.ForeColor = System.Drawing.Color.FloralWhite;
-            this.refSOLabel.Location = new System.Drawing.Point(10, 18);
+            this.refSOLabel.Location = new System.Drawing.Point(10, 15);
             this.refSOLabel.Name = "refSOLabel";
             this.refSOLabel.Size = new System.Drawing.Size(142, 18);
             this.refSOLabel.TabIndex = 44;
             this.refSOLabel.Text = "Ref. SO           :";
             this.refSOLabel.Visible = false;
             // 
-            // panel3
-            // 
-            this.panel3.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.panel3.BackColor = System.Drawing.Color.Black;
-            this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel3.Location = new System.Drawing.Point(607, 48);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(366, 5);
-            this.panel3.TabIndex = 20;
-            // 
             // addressTextBox
             // 
-            this.addressTextBox.Location = new System.Drawing.Point(362, 114);
+            this.addressTextBox.Location = new System.Drawing.Point(362, 111);
             this.addressTextBox.Multiline = true;
             this.addressTextBox.Name = "addressTextBox";
             this.addressTextBox.Size = new System.Drawing.Size(234, 102);
@@ -296,7 +285,7 @@
             this.deliveredCheckbox.AutoSize = true;
             this.deliveredCheckbox.FlatAppearance.BorderColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.deliveredCheckbox.ForeColor = System.Drawing.Color.FloralWhite;
-            this.deliveredCheckbox.Location = new System.Drawing.Point(362, 91);
+            this.deliveredCheckbox.Location = new System.Drawing.Point(362, 88);
             this.deliveredCheckbox.Name = "deliveredCheckbox";
             this.deliveredCheckbox.Size = new System.Drawing.Size(84, 22);
             this.deliveredCheckbox.TabIndex = 42;
@@ -309,7 +298,7 @@
             // 
             this.rejectButton.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rejectButton.ForeColor = System.Drawing.Color.Black;
-            this.rejectButton.Location = new System.Drawing.Point(471, 53);
+            this.rejectButton.Location = new System.Drawing.Point(471, 50);
             this.rejectButton.Name = "rejectButton";
             this.rejectButton.Size = new System.Drawing.Size(95, 34);
             this.rejectButton.TabIndex = 41;
@@ -322,7 +311,7 @@
             // 
             this.ChangePrinterButton.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ChangePrinterButton.ForeColor = System.Drawing.Color.Black;
-            this.ChangePrinterButton.Location = new System.Drawing.Point(389, 16);
+            this.ChangePrinterButton.Location = new System.Drawing.Point(389, 13);
             this.ChangePrinterButton.Name = "ChangePrinterButton";
             this.ChangePrinterButton.Size = new System.Drawing.Size(158, 34);
             this.ChangePrinterButton.TabIndex = 37;
@@ -334,7 +323,7 @@
             // 
             this.approvalButton.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.approvalButton.ForeColor = System.Drawing.Color.Black;
-            this.approvalButton.Location = new System.Drawing.Point(362, 53);
+            this.approvalButton.Location = new System.Drawing.Point(362, 50);
             this.approvalButton.Name = "approvalButton";
             this.approvalButton.Size = new System.Drawing.Size(103, 34);
             this.approvalButton.TabIndex = 40;
@@ -350,7 +339,7 @@
             this.errorLabel.BackColor = System.Drawing.Color.White;
             this.errorLabel.Font = new System.Drawing.Font("Verdana", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.errorLabel.ForeColor = System.Drawing.Color.Red;
-            this.errorLabel.Location = new System.Drawing.Point(8, 174);
+            this.errorLabel.Location = new System.Drawing.Point(8, 173);
             this.errorLabel.Name = "errorLabel";
             this.errorLabel.Size = new System.Drawing.Size(23, 18);
             this.errorLabel.TabIndex = 36;
@@ -359,7 +348,7 @@
             // pelangganTextBox
             // 
             this.pelangganTextBox.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.pelangganTextBox.Location = new System.Drawing.Point(154, 45);
+            this.pelangganTextBox.Location = new System.Drawing.Point(154, 42);
             this.pelangganTextBox.Name = "pelangganTextBox";
             this.pelangganTextBox.ReadOnly = true;
             this.pelangganTextBox.Size = new System.Drawing.Size(183, 27);
@@ -372,7 +361,7 @@
             "P-UMUM [ECER]",
             "P-PARTAI",
             "P-GROSIR"});
-            this.customerComboBox.Location = new System.Drawing.Point(155, 78);
+            this.customerComboBox.Location = new System.Drawing.Point(155, 75);
             this.customerComboBox.Name = "customerComboBox";
             this.customerComboBox.Size = new System.Drawing.Size(183, 26);
             this.customerComboBox.TabIndex = 2;
@@ -386,7 +375,7 @@
             this.printoutCheckBox.AutoSize = true;
             this.printoutCheckBox.FlatAppearance.BorderColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.printoutCheckBox.ForeColor = System.Drawing.Color.FloralWhite;
-            this.printoutCheckBox.Location = new System.Drawing.Point(11, 141);
+            this.printoutCheckBox.Location = new System.Drawing.Point(11, 138);
             this.printoutCheckBox.Name = "printoutCheckBox";
             this.printoutCheckBox.Size = new System.Drawing.Size(234, 22);
             this.printoutCheckBox.TabIndex = 8;
@@ -398,7 +387,7 @@
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.Color.FloralWhite;
-            this.label4.Location = new System.Drawing.Point(10, 111);
+            this.label4.Location = new System.Drawing.Point(10, 108);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(145, 18);
             this.label4.TabIndex = 3;
@@ -409,7 +398,7 @@
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.Color.FloralWhite;
-            this.label3.Location = new System.Drawing.Point(7, 48);
+            this.label3.Location = new System.Drawing.Point(7, 45);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(151, 18);
             this.label3.TabIndex = 1;
@@ -420,8 +409,9 @@
             this.panel6.BackColor = System.Drawing.Color.FloralWhite;
             this.panel6.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.panel6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel6.Controls.Add(this.labelTglKirim);
             this.panel6.Controls.Add(this.jobStartDateTimePicker);
-            this.panel6.Controls.Add(this.labelTglOrder);
+            this.panel6.Controls.Add(this.panel3);
             this.panel6.Controls.Add(this.discJualMaskedTextBox);
             this.panel6.Controls.Add(this.bayarTextBox);
             this.panel6.Controls.Add(this.uangKembaliTextBox);
@@ -435,39 +425,51 @@
             this.panel6.Controls.Add(this.label10);
             this.panel6.Controls.Add(this.label9);
             this.panel6.Controls.Add(this.DPTextBox);
-            this.panel6.Location = new System.Drawing.Point(608, 11);
+            this.panel6.Location = new System.Drawing.Point(608, 9);
             this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(367, 204);
+            this.panel6.Size = new System.Drawing.Size(367, 210);
             this.panel6.TabIndex = 0;
+            // 
+            // labelTglKirim
+            // 
+            this.labelTglKirim.AutoSize = true;
+            this.labelTglKirim.BackColor = System.Drawing.Color.FloralWhite;
+            this.labelTglKirim.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelTglKirim.ForeColor = System.Drawing.Color.Black;
+            this.labelTglKirim.Location = new System.Drawing.Point(18, 11);
+            this.labelTglKirim.Name = "labelTglKirim";
+            this.labelTglKirim.Size = new System.Drawing.Size(128, 18);
+            this.labelTglKirim.TabIndex = 47;
+            this.labelTglKirim.Text = "Tanggal Kirim";
+            this.labelTglKirim.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.labelTglKirim.Visible = false;
             // 
             // jobStartDateTimePicker
             // 
+            this.jobStartDateTimePicker.CustomFormat = "dd MMM yyyy HH:mm";
             this.jobStartDateTimePicker.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.jobStartDateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.jobStartDateTimePicker.Location = new System.Drawing.Point(179, 6);
+            this.jobStartDateTimePicker.Location = new System.Drawing.Point(164, 8);
             this.jobStartDateTimePicker.Name = "jobStartDateTimePicker";
-            this.jobStartDateTimePicker.Size = new System.Drawing.Size(152, 27);
+            this.jobStartDateTimePicker.Size = new System.Drawing.Size(198, 27);
             this.jobStartDateTimePicker.TabIndex = 44;
             this.jobStartDateTimePicker.Visible = false;
+            this.jobStartDateTimePicker.ValueChanged += new System.EventHandler(this.jobStartDateTimePicker_ValueChanged);
             // 
-            // labelTglOrder
+            // panel3
             // 
-            this.labelTglOrder.AutoSize = true;
-            this.labelTglOrder.BackColor = System.Drawing.Color.FloralWhite;
-            this.labelTglOrder.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelTglOrder.ForeColor = System.Drawing.Color.Black;
-            this.labelTglOrder.Location = new System.Drawing.Point(37, 9);
-            this.labelTglOrder.Name = "labelTglOrder";
-            this.labelTglOrder.Size = new System.Drawing.Size(128, 18);
-            this.labelTglOrder.TabIndex = 43;
-            this.labelTglOrder.Text = "Tanggal Kirim";
-            this.labelTglOrder.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.labelTglOrder.Visible = false;
+            this.panel3.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.panel3.BackColor = System.Drawing.Color.Black;
+            this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel3.Location = new System.Drawing.Point(-1, 36);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(366, 5);
+            this.panel3.TabIndex = 20;
             // 
             // discJualMaskedTextBox
             // 
             this.discJualMaskedTextBox.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.discJualMaskedTextBox.Location = new System.Drawing.Point(178, 74);
+            this.discJualMaskedTextBox.Location = new System.Drawing.Point(181, 75);
             this.discJualMaskedTextBox.Name = "discJualMaskedTextBox";
             this.discJualMaskedTextBox.Size = new System.Drawing.Size(181, 27);
             this.discJualMaskedTextBox.TabIndex = 19;
@@ -481,7 +483,7 @@
             // bayarTextBox
             // 
             this.bayarTextBox.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bayarTextBox.Location = new System.Drawing.Point(178, 140);
+            this.bayarTextBox.Location = new System.Drawing.Point(181, 139);
             this.bayarTextBox.Name = "bayarTextBox";
             this.bayarTextBox.Size = new System.Drawing.Size(181, 27);
             this.bayarTextBox.TabIndex = 18;
@@ -495,7 +497,7 @@
             // uangKembaliTextBox
             // 
             this.uangKembaliTextBox.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.uangKembaliTextBox.Location = new System.Drawing.Point(180, 173);
+            this.uangKembaliTextBox.Location = new System.Drawing.Point(181, 176);
             this.uangKembaliTextBox.Name = "uangKembaliTextBox";
             this.uangKembaliTextBox.ReadOnly = true;
             this.uangKembaliTextBox.Size = new System.Drawing.Size(181, 27);
@@ -506,7 +508,7 @@
             // totalAfterDiscTextBox
             // 
             this.totalAfterDiscTextBox.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.totalAfterDiscTextBox.Location = new System.Drawing.Point(179, 104);
+            this.totalAfterDiscTextBox.Location = new System.Drawing.Point(181, 105);
             this.totalAfterDiscTextBox.Name = "totalAfterDiscTextBox";
             this.totalAfterDiscTextBox.ReadOnly = true;
             this.totalAfterDiscTextBox.Size = new System.Drawing.Size(181, 27);
@@ -518,7 +520,7 @@
             // totalPenjualanTextBox
             // 
             this.totalPenjualanTextBox.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.totalPenjualanTextBox.Location = new System.Drawing.Point(180, 44);
+            this.totalPenjualanTextBox.Location = new System.Drawing.Point(181, 45);
             this.totalPenjualanTextBox.Name = "totalPenjualanTextBox";
             this.totalPenjualanTextBox.ReadOnly = true;
             this.totalPenjualanTextBox.Size = new System.Drawing.Size(181, 27);
@@ -531,7 +533,7 @@
             this.panel8.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.panel8.BackColor = System.Drawing.Color.Black;
             this.panel8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel8.Location = new System.Drawing.Point(0, 167);
+            this.panel8.Location = new System.Drawing.Point(1, 167);
             this.panel8.Name = "panel8";
             this.panel8.Size = new System.Drawing.Size(371, 5);
             this.panel8.TabIndex = 11;
@@ -541,7 +543,7 @@
             this.panel7.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.panel7.BackColor = System.Drawing.Color.Black;
             this.panel7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel7.Location = new System.Drawing.Point(0, 133);
+            this.panel7.Location = new System.Drawing.Point(1, 134);
             this.panel7.Name = "panel7";
             this.panel7.Size = new System.Drawing.Size(371, 5);
             this.panel7.TabIndex = 10;
@@ -552,7 +554,7 @@
             this.label13.BackColor = System.Drawing.Color.FloralWhite;
             this.label13.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label13.ForeColor = System.Drawing.Color.Black;
-            this.label13.Location = new System.Drawing.Point(45, 178);
+            this.label13.Location = new System.Drawing.Point(46, 181);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(128, 18);
             this.label13.TabIndex = 6;
@@ -565,7 +567,7 @@
             this.labelBayar.BackColor = System.Drawing.Color.FloralWhite;
             this.labelBayar.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelBayar.ForeColor = System.Drawing.Color.Black;
-            this.labelBayar.Location = new System.Drawing.Point(52, 144);
+            this.labelBayar.Location = new System.Drawing.Point(53, 143);
             this.labelBayar.Name = "labelBayar";
             this.labelBayar.Size = new System.Drawing.Size(121, 18);
             this.labelBayar.TabIndex = 5;
@@ -578,7 +580,7 @@
             this.label11.BackColor = System.Drawing.Color.FloralWhite;
             this.label11.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label11.ForeColor = System.Drawing.Color.Black;
-            this.label11.Location = new System.Drawing.Point(30, 107);
+            this.label11.Location = new System.Drawing.Point(31, 108);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(143, 18);
             this.label11.TabIndex = 4;
@@ -591,7 +593,7 @@
             this.label10.BackColor = System.Drawing.Color.FloralWhite;
             this.label10.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label10.ForeColor = System.Drawing.Color.Black;
-            this.label10.Location = new System.Drawing.Point(6, 77);
+            this.label10.Location = new System.Drawing.Point(7, 78);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(167, 18);
             this.label10.TabIndex = 3;
@@ -604,7 +606,7 @@
             this.label9.BackColor = System.Drawing.Color.FloralWhite;
             this.label9.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label9.ForeColor = System.Drawing.Color.Black;
-            this.label9.Location = new System.Drawing.Point(27, 47);
+            this.label9.Location = new System.Drawing.Point(28, 48);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(146, 18);
             this.label9.TabIndex = 2;
@@ -614,7 +616,7 @@
             // DPTextBox
             // 
             this.DPTextBox.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.DPTextBox.Location = new System.Drawing.Point(180, 6);
+            this.DPTextBox.Location = new System.Drawing.Point(181, 8);
             this.DPTextBox.Name = "DPTextBox";
             this.DPTextBox.ReadOnly = true;
             this.DPTextBox.Size = new System.Drawing.Size(181, 27);
@@ -628,7 +630,7 @@
             // 
             this.creditRadioButton.AutoSize = true;
             this.creditRadioButton.ForeColor = System.Drawing.Color.FloralWhite;
-            this.creditRadioButton.Location = new System.Drawing.Point(230, 110);
+            this.creditRadioButton.Location = new System.Drawing.Point(230, 107);
             this.creditRadioButton.Name = "creditRadioButton";
             this.creditRadioButton.Size = new System.Drawing.Size(95, 22);
             this.creditRadioButton.TabIndex = 5;
@@ -641,7 +643,7 @@
             this.cashRadioButton.AutoSize = true;
             this.cashRadioButton.Checked = true;
             this.cashRadioButton.ForeColor = System.Drawing.Color.FloralWhite;
-            this.cashRadioButton.Location = new System.Drawing.Point(155, 110);
+            this.cashRadioButton.Location = new System.Drawing.Point(155, 107);
             this.cashRadioButton.Name = "cashRadioButton";
             this.cashRadioButton.Size = new System.Drawing.Size(69, 22);
             this.cashRadioButton.TabIndex = 4;
@@ -653,7 +655,7 @@
             // tempoMaskedTextBox
             // 
             this.tempoMaskedTextBox.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tempoMaskedTextBox.Location = new System.Drawing.Point(154, 108);
+            this.tempoMaskedTextBox.Location = new System.Drawing.Point(154, 105);
             this.tempoMaskedTextBox.Mask = "00000";
             this.tempoMaskedTextBox.Name = "tempoMaskedTextBox";
             this.tempoMaskedTextBox.Size = new System.Drawing.Size(71, 27);
@@ -670,7 +672,7 @@
             "Cash",
             "Kartu Kredit",
             "Kartu Debit"});
-            this.paymentComboBox.Location = new System.Drawing.Point(157, 109);
+            this.paymentComboBox.Location = new System.Drawing.Point(157, 106);
             this.paymentComboBox.Name = "paymentComboBox";
             this.paymentComboBox.Size = new System.Drawing.Size(142, 26);
             this.paymentComboBox.TabIndex = 7;
@@ -685,7 +687,7 @@
             this.labelCaraBayar.AutoSize = true;
             this.labelCaraBayar.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelCaraBayar.ForeColor = System.Drawing.Color.FloralWhite;
-            this.labelCaraBayar.Location = new System.Drawing.Point(8, 111);
+            this.labelCaraBayar.Location = new System.Drawing.Point(8, 108);
             this.labelCaraBayar.Name = "labelCaraBayar";
             this.labelCaraBayar.Size = new System.Drawing.Size(146, 18);
             this.labelCaraBayar.TabIndex = 6;
@@ -697,7 +699,7 @@
             this.panel9.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.panel9.BackColor = System.Drawing.Color.Black;
             this.panel9.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel9.Location = new System.Drawing.Point(1, 416);
+            this.panel9.Location = new System.Drawing.Point(2, 408);
             this.panel9.Name = "panel9";
             this.panel9.Size = new System.Drawing.Size(983, 10);
             this.panel9.TabIndex = 10;
@@ -950,7 +952,6 @@
         private System.Windows.Forms.Button rejectButton;
         private System.Windows.Forms.Button approvalButton;
         private System.Windows.Forms.DateTimePicker jobStartDateTimePicker;
-        private System.Windows.Forms.Label labelTglOrder;
         private System.Windows.Forms.CheckBox deliveredCheckbox;
         private System.Windows.Forms.TextBox addressTextBox;
         private System.Windows.Forms.DateTimePicker SODateTimePicker;
@@ -959,6 +960,7 @@
         private System.Windows.Forms.TextBox DPTextBox;
         private System.Windows.Forms.Label refSOLabel;
         private System.Windows.Forms.TextBox refSOTextBox;
+        private System.Windows.Forms.Label labelTglKirim;
     }
 }
 

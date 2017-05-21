@@ -16,7 +16,7 @@ namespace AlphaSoft
         private string userName = "SYS_POS_ADMIN";
         private string password = "pass123";
         private string databaseName = "SYS_POS_LARASBAKERY";
-        private string serverDatabaseName = "SYS_POS_LARASBAKERY_SS";
+        private string serverDatabaseName = "SYS_POS_LARASBAKERY_PABRIK";
         private string SSDatabaseName = "SYS_POS_LARASBAKERY_SS";
         public const int LOCAL_SERVER = 0;
         public const int HQ_SERVER = 1;
@@ -53,7 +53,13 @@ namespace AlphaSoft
                     {
                         if ((s = sr.ReadLine()) != null)
                         {
-                            configFileConnectionString = "server=" + s + ";uid=SYS_POS_ADMIN;pwd=pass123;database=SYS_POS_LARASBAKERY;";
+                            if (globalFeatureList.COMPILED_AS_PABRIK_APP == 1)
+                                configFileConnectionString = "server=" + s + ";uid=" + userName + ";pwd=" + password + ";database=" + serverDatabaseName + ";";
+                            else if (globalFeatureList.COMPILED_AS_SS_APP == 1)
+                                configFileConnectionString = "server=" + s + ";uid=" + userName + ";pwd=" + password + ";database=" + SSDatabaseName + ";";
+                            else
+                                configFileConnectionString = "server=" + s + ";uid=" + userName + ";pwd=" + password + ";database=" + databaseName + ";";
+
                             ipServer = s;
                         }
                     }
@@ -96,7 +102,6 @@ namespace AlphaSoft
 
             return HQ_Ip;
         }
-
 
         public bool HQ_mySQLConnect(bool connectToSyncServer = false)
         {
@@ -183,14 +188,22 @@ namespace AlphaSoft
             return Branch_Ip;
         }
 
-        public bool Branch_mySQLConnect(int branchID)
+        public bool Branch_mySQLConnect(int branchID, string ipBranch = "")
         {
             string BranchconnectionString = "";
-            string Branch_IP = getBranch_IPServer(branchID);
+            string Branch_IP = "";
+
+            if (branchID > 0)
+                Branch_IP = getBranch_IPServer(branchID);
+            else
+                Branch_IP = ipBranch;
 
             if (Branch_IP.Length > 0)
             {
-                BranchconnectionString = "server=" + Branch_IP + ";uid=" + userName + ";pwd=" + password + ";database=" + databaseName + ";";
+                if (branchID > 0)
+                    BranchconnectionString = "server=" + Branch_IP + ";uid=" + userName + ";pwd=" + password + ";database=" + databaseName + ";";
+                else
+                    BranchconnectionString = "server=" + Branch_IP + ";uid=" + userName + ";pwd=" + password + ";database=" + serverDatabaseName + ";";
 
                 try
                 {
@@ -325,24 +338,28 @@ namespace AlphaSoft
             return rslt;
         }
 
-        public MySqlDataReader getData(string sqlCommand, bool isHQConnection = false)
+        public MySqlDataReader getData(string sqlCommand, bool isHQConnection = false, bool isBranchConnection = false)
         {
-            MySqlCommand cmd;
+            MySqlCommand cmd = null;
             MySqlDataReader rdr;
 
-            if (!isHQConnection)
-            {
-                if (conn.State.ToString() != "Open")
-                    mySqlConnect();
-
-                cmd = new MySqlCommand(sqlCommand, conn);
-            }
-            else
+            if (isHQConnection)
             {
                 if (HQ_conn.State.ToString() != "Open")
                     HQ_mySQLConnect();
 
                 cmd = new MySqlCommand(sqlCommand, HQ_conn);
+            }
+            else if (isBranchConnection)
+            {
+                cmd = new MySqlCommand(sqlCommand, Branch_conn);
+            }
+            else
+            {
+                if (conn.State.ToString() != "Open")
+                    mySqlConnect();
+
+                cmd = new MySqlCommand(sqlCommand, conn);
             }
 
             rdr = cmd.ExecuteReader();

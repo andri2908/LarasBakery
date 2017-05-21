@@ -571,7 +571,7 @@ namespace AlphaSoft
             deliveredCheckbox.Visible = false;
             addressTextBox.Visible = false;
 
-            labelTglOrder.Visible = false;
+            //labelJamKirim.Visible = false;
             jobStartDateTimePicker.Visible = false;
             DPTextBox.Visible = false;
         }
@@ -1061,9 +1061,11 @@ namespace AlphaSoft
             string SOOrderDate = "";
             int delivered = 0;
             double DPAmount = 0;
+            string userName = "";
 
             int editedFlag = 0;
             int syncFlag = 0;
+            string tempSalesID = "";
 
             //SODateTime = String.Format(culture, "{0:dd-MM-yyyy HH:mm}", DateTime.Now);
             //SODateTime = gutil.getCustomStringFormatDate(DateTime.Now);
@@ -1097,9 +1099,9 @@ namespace AlphaSoft
             {
                 salesTop = 0;
                 SOisPesanan = true;
-
+                userName = DS.getDataSingleValue("SELECT IFNULL(USER_FULL_NAME, 0) FROM MASTER_USER WHERE ID = " + gutil.getUserID()).ToString();
                 SODueDateTimeValue = jobStartDateTimePicker.Value;
-                SOOrderDate = gutil.getCustomStringFormatDate(jobStartDateTimePicker.Value, true);
+                SOOrderDate = gutil.getCustomStringFormatDate(jobStartDateTimePicker.Value);
 
                 if (deliveredCheckbox.Checked)
                     delivered = 1;
@@ -1186,15 +1188,32 @@ namespace AlphaSoft
                     //SAVE HEADER TABLE
                     if (!SOisPesanan && originModuleID != globalConstants.SO_FULFILLMENT)
                     {
-                        sqlCommand = "INSERT INTO SALES_HEADER (SALES_INVOICE, CUSTOMER_ID, SALES_DATE, SALES_TOTAL, SALES_DISCOUNT_FINAL, SALES_TOP, SALES_TOP_DATE, SALES_PAID, SALES_PAYMENT, SALES_PAYMENT_CHANGE, SALES_PAYMENT_METHOD, REFERENCE_SO) " +
+                        //if (gutil.isServerApp() == 0)
+                            sqlCommand = "INSERT INTO SALES_HEADER (SALES_INVOICE, CUSTOMER_ID, SALES_DATE, SALES_TOTAL, SALES_DISCOUNT_FINAL, SALES_TOP, SALES_TOP_DATE, SALES_PAID, SALES_PAYMENT, SALES_PAYMENT_CHANGE, SALES_PAYMENT_METHOD, REFERENCE_SO) " +
                                                 "VALUES " +
                                                 "('" + salesInvoice + "', " + selectedPelangganID + ", STR_TO_DATE('" + SODateTime + "', '%d-%m-%Y %H:%i'), " + gutil.validateDecimalNumericInput(globalTotalValue) + ", " + gutil.validateDecimalNumericInput(Convert.ToDouble(salesDiscountFinal)) + ", " + salesTop + ", STR_TO_DATE('" + SODueDateTime + "', '%d-%m-%Y'), " + salesPaid + ", " + gutil.validateDecimalNumericInput(bayarAmount) + ", " + gutil.validateDecimalNumericInput(sisaBayar) + ", " + selectedPaymentMethod + ", '" + referenceSO + "')";
+                        //else
+                        //{
+                        //    tempSalesID = gutil.getAutoGenerateID("SALES_HEADER", "", "", "ID");
+
+                        //    sqlCommand = "INSERT INTO SALES_HEADER (ID, SALES_INVOICE, CUSTOMER_ID, SALES_DATE, SALES_TOTAL, SALES_DISCOUNT_FINAL, SALES_TOP, SALES_TOP_DATE, SALES_PAID, SALES_PAYMENT, SALES_PAYMENT_CHANGE, SALES_PAYMENT_METHOD, REFERENCE_SO) " +
+                        //                            "VALUES " +
+                        //                            "('" + tempSalesID + "', '" + salesInvoice + "', " + selectedPelangganID + ", STR_TO_DATE('" + SODateTime + "', '%d-%m-%Y %H:%i'), " + gutil.validateDecimalNumericInput(globalTotalValue) + ", " + gutil.validateDecimalNumericInput(Convert.ToDouble(salesDiscountFinal)) + ", " + salesTop + ", STR_TO_DATE('" + SODueDateTime + "', '%d-%m-%Y'), " + salesPaid + ", " + gutil.validateDecimalNumericInput(bayarAmount) + ", " + gutil.validateDecimalNumericInput(sisaBayar) + ", " + selectedPaymentMethod + ", '" + referenceSO + "')";
+                        //}
                     }
                     else
                     {
-                        sqlCommand = "INSERT INTO SALES_HEADER (SALES_INVOICE, CUSTOMER_ID, SALES_DATE, SALES_TOTAL, SALES_DISCOUNT_FINAL, SALES_TOP, SALES_TOP_DATE, SALES_PAID, SALES_PAYMENT, SALES_PAYMENT_CHANGE, SALES_PAYMENT_METHOD, SALES_ORDER_DATE, SALES_ORDER_DELIVERED, SALES_ORDER_DELIVERED_ADDRESS, REFERENCE_SO, SYNCHRONIZED, EDITED) " +
-                                                    "VALUES " +
-                                                    "('" + salesInvoice + "', " + selectedPelangganID + ", STR_TO_DATE('" + SODateTime + "', '%d-%m-%Y %H:%i'), " + gutil.validateDecimalNumericInput(globalTotalValue) + ", " + gutil.validateDecimalNumericInput(Convert.ToDouble(salesDiscountFinal)) + ", " + salesTop + ", STR_TO_DATE('" + SODueDateTime + "', '%d-%m-%Y'), " + salesPaid + ", " + gutil.validateDecimalNumericInput(bayarAmount) + ", " + gutil.validateDecimalNumericInput(sisaBayar) + ", " + selectedPaymentMethod + ", STR_TO_DATE('" + SOOrderDate + "', '%d-%m-%Y'), " + delivered + ", '" + addressTextBox.Text + "', '" + referenceSO + "', 0, 1)";
+                        //if (gutil.isServerApp() == 0)
+                        sqlCommand = "INSERT INTO SALES_HEADER (SALES_INVOICE, CUSTOMER_ID, SALES_DATE, SALES_TOTAL, SALES_DISCOUNT_FINAL, SALES_TOP, SALES_TOP_DATE, SALES_PAID, SALES_PAYMENT, SALES_PAYMENT_CHANGE, SALES_PAYMENT_METHOD, SALES_ORDER_DATE, SALES_ORDER_DELIVERED, SALES_ORDER_DELIVERED_ADDRESS, REFERENCE_SO, SYNCHRONIZED, EDITED, USER_NAME) " +
+                                                "VALUES " +
+                                                "('" + salesInvoice + "', " + selectedPelangganID + ", STR_TO_DATE('" + SODateTime + "', '%d-%m-%Y %H:%i'), " + gutil.validateDecimalNumericInput(globalTotalValue) + ", " + gutil.validateDecimalNumericInput(Convert.ToDouble(salesDiscountFinal)) + ", " + salesTop + ", STR_TO_DATE('" + SODueDateTime + "', '%d-%m-%Y'), " + salesPaid + ", " + gutil.validateDecimalNumericInput(bayarAmount) + ", " + gutil.validateDecimalNumericInput(sisaBayar) + ", " + selectedPaymentMethod + ", STR_TO_DATE('" + SOOrderDate + "', '%d-%m-%Y %H:%i'), " + delivered + ", '" + addressTextBox.Text + "', '" + referenceSO + "', 0, 1, '" + userName + "')";
+                        //else
+                        //{
+                        //    tempSalesID = gutil.getAutoGenerateID("SALES_HEADER", "", "", "ID");
+                        //    sqlCommand = "INSERT INTO SALES_HEADER (ID, SALES_INVOICE, CUSTOMER_ID, SALES_DATE, SALES_TOTAL, SALES_DISCOUNT_FINAL, SALES_TOP, SALES_TOP_DATE, SALES_PAID, SALES_PAYMENT, SALES_PAYMENT_CHANGE, SALES_PAYMENT_METHOD, SALES_ORDER_DATE, SALES_ORDER_DELIVERED, SALES_ORDER_DELIVERED_ADDRESS, REFERENCE_SO, SYNCHRONIZED, EDITED) " +
+                        //                            "VALUES " +
+                        //                            "('" + tempSalesID + "', '" + salesInvoice + "', " + selectedPelangganID + ", STR_TO_DATE('" + SODateTime + "', '%d-%m-%Y %H:%i'), " + gutil.validateDecimalNumericInput(globalTotalValue) + ", " + gutil.validateDecimalNumericInput(Convert.ToDouble(salesDiscountFinal)) + ", " + salesTop + ", STR_TO_DATE('" + SODueDateTime + "', '%d-%m-%Y'), " + salesPaid + ", " + gutil.validateDecimalNumericInput(bayarAmount) + ", " + gutil.validateDecimalNumericInput(sisaBayar) + ", " + selectedPaymentMethod + ", STR_TO_DATE('" + SOOrderDate + "', '%d-%m-%Y'), " + delivered + ", '" + addressTextBox.Text + "', '" + referenceSO + "', 0, 1)";
+                        //}
                     }
 
                     syncFlag = 0;
@@ -1203,6 +1222,15 @@ namespace AlphaSoft
                     gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "INSERT INTO SALES HEADER [" + salesInvoice + "]");
                     if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
                         throw internalEX;
+
+                    if (SOisPesanan && originModuleID != globalConstants.SO_FULFILLMENT && gutil.isServerApp() == 0)
+                    {
+                        sqlCommand = "UPDATE NOTIF_TABLE SET NEW_ORDER = 1, EDITED = 2";
+
+                        gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "UPDATE NOTIF_TABLE [" + salesInvoice + "]");
+                        if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
+                            throw internalEX;
+                    }
                 }
                 else if (originModuleID == globalConstants.EDIT_SALES_ORDER)
                 {
@@ -1226,11 +1254,12 @@ namespace AlphaSoft
                                           "SALES_PAYMENT = " + gutil.validateDecimalNumericInput(bayarAmount) + ", " +
                                           "SALES_PAYMENT_CHANGE = " + gutil.validateDecimalNumericInput(sisaBayar) + ", " +
                                           "SALES_PAYMENT_METHOD = " + selectedPaymentMethod + ", " +
-                                          "SALES_ORDER_DATE = STR_TO_DATE('" + SOOrderDate + "', '%d-%m-%Y'), " +
+                                          "SALES_ORDER_DATE = STR_TO_DATE('" + SOOrderDate + "', '%d-%m-%Y %H:%i'), " +
                                           "SALES_ORDER_DELIVERED = " + delivered + ", " +
                                           "SALES_ORDER_DELIVERED_ADDRESS = '" + addressTextBox.Text + "', " +
                                           "REFERENCE_SO = '" + referenceSO + "', " +
-                                          "EDITED = " + editedFlag + " " +
+                                          "EDITED = " + editedFlag + ", " +
+                                          "USER_NAME = '" + userName + "' " +
                                           "WHERE SALES_INVOICE = '" + selectedsalesinvoice + "'";
 
                     gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "UPDATE SALES HEADER [" + salesInvoice + "]");
@@ -1362,8 +1391,16 @@ namespace AlphaSoft
                     double journalAmount = 0;
                     string journalDesc = "";
                     // SAVE TO CREDIT TABLE
-                    sqlCommand = "INSERT INTO CREDIT (SALES_INVOICE, CREDIT_DUE_DATE, CREDIT_NOMINAL, CREDIT_PAID) VALUES " +
-                                        "('" + salesInvoice + "', STR_TO_DATE('" + SODueDateTime + "', '%d-%m-%Y'), " + gutil.validateDecimalNumericInput(globalTotalValue-discValue) + ", " + salesPaid + ")";
+                    if (gutil.isServerApp() == 0)
+                        sqlCommand = "INSERT INTO CREDIT (SALES_INVOICE, CREDIT_DUE_DATE, CREDIT_NOMINAL, CREDIT_PAID) VALUES " +
+                                            "('" + salesInvoice + "', STR_TO_DATE('" + SODueDateTime + "', '%d-%m-%Y'), " + gutil.validateDecimalNumericInput(globalTotalValue-discValue) + ", " + salesPaid + ")";
+                    else
+                    {
+                        tempSalesID = gutil.getAutoGenerateID("CREDIT", "", "", "CREDIT_ID");
+
+                        sqlCommand = "INSERT INTO CREDIT (CREDIT_ID, SALES_INVOICE, CREDIT_DUE_DATE, CREDIT_NOMINAL, CREDIT_PAID) VALUES " +
+                                            "('" + tempSalesID + "', '" + salesInvoice + "', STR_TO_DATE('" + SODueDateTime + "', '%d-%m-%Y'), " + gutil.validateDecimalNumericInput(globalTotalValue - discValue) + ", " + salesPaid + ")";
+                    }
 
                     gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "INSERT TO CREDIT TABLE [" + salesInvoice + "]");
                     if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
@@ -1388,8 +1425,17 @@ namespace AlphaSoft
 
                     // PAYMENT IN CASH THEREFORE ADDING THE AMOUNT OF CASH IN THE CASH REGISTER
                     // ADD A NEW ENTRY ON THE DAILY JOURNAL TO KEEP TRACK THE ADDITIONAL CASH AMOUNT 
-                    sqlCommand = "INSERT INTO DAILY_JOURNAL (ACCOUNT_ID, JOURNAL_DATETIME, JOURNAL_NOMINAL, JOURNAL_DESCRIPTION, USER_ID, PM_ID) " +
-                                                       "VALUES (1, STR_TO_DATE('" + SODateTime + "', '%d-%m-%Y %H:%i')" + ", " + gutil.validateDecimalNumericInput(journalAmount) + ", '" + journalDesc + "', '" + gutil.getUserID() + "', 1)";
+                    if (gutil.isServerApp() == 0)
+                        sqlCommand = "INSERT INTO DAILY_JOURNAL (ACCOUNT_ID, JOURNAL_DATETIME, JOURNAL_NOMINAL, JOURNAL_DESCRIPTION, USER_ID, PM_ID) " +
+                                                           "VALUES (1, STR_TO_DATE('" + SODateTime + "', '%d-%m-%Y %H:%i')" + ", " + gutil.validateDecimalNumericInput(journalAmount) + ", '" + journalDesc + "', '" + gutil.getUserID() + "', 1)";
+                    else
+                    {
+                        tempSalesID = gutil.getAutoGenerateID("DAILY_JOURNAL", "", "", "JOURNAL_ID");
+
+                        sqlCommand = "INSERT INTO DAILY_JOURNAL (JOURNAL_ID, ACCOUNT_ID, JOURNAL_DATETIME, JOURNAL_NOMINAL, JOURNAL_DESCRIPTION, USER_ID, PM_ID) " +
+                                                           "VALUES ('" +tempSalesID+ "', 1, STR_TO_DATE('" + SODateTime + "', '%d-%m-%Y %H:%i')" + ", " + gutil.validateDecimalNumericInput(journalAmount) + ", '" + journalDesc + "', '" + gutil.getUserID() + "', 1)";
+
+                    }
                     gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "INSERT TO DAILY JOURNAL TABLE [" + gutil.validateDecimalNumericInput(journalAmount) + "]");
 
                     if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
@@ -1501,6 +1547,7 @@ namespace AlphaSoft
             int isDPPayment = 0;
             string paymentDesc = "";
             double paymentAmount = 0;
+            string tempID = "";
 
             DS.beginTransaction();
 
@@ -1537,8 +1584,16 @@ namespace AlphaSoft
                     //if (DS.getDataSingleValue(sqlCommand).ToString() == "0")
                     {
                         // INSERT INTO PAYMENT CREDIT
-                        sqlCommand = "INSERT INTO PAYMENT_CREDIT (CREDIT_ID, PAYMENT_DATE, PM_ID, PAYMENT_NOMINAL, PAYMENT_DESCRIPTION, PAYMENT_CONFIRMED, PAYMENT_CONFIRMED_DATE, PAYMENT_DUE_DATE, PAYMENT_IS_DP) " +
-                                               "VALUES (" + creditID + ", STR_TO_DATE('" + paymentDate + "', '%d-%m-%Y %H:%i'), 1, " + paymentAmount + ", '" + paymentDesc + "', 1, STR_TO_DATE('" + paymentDate + "', '%d-%m-%Y %H:%i'), STR_TO_DATE('" + paymentDate + "', '%d-%m-%Y %H:%i'), " +isDPPayment+ ")";
+                        if (gutil.isServerApp() == 0)
+                            sqlCommand = "INSERT INTO PAYMENT_CREDIT (CREDIT_ID, PAYMENT_DATE, PM_ID, PAYMENT_NOMINAL, PAYMENT_DESCRIPTION, PAYMENT_CONFIRMED, PAYMENT_CONFIRMED_DATE, PAYMENT_DUE_DATE, PAYMENT_IS_DP) " +
+                                                   "VALUES (" + creditID + ", STR_TO_DATE('" + paymentDate + "', '%d-%m-%Y %H:%i'), 1, " + paymentAmount + ", '" + paymentDesc + "', 1, STR_TO_DATE('" + paymentDate + "', '%d-%m-%Y %H:%i'), STR_TO_DATE('" + paymentDate + "', '%d-%m-%Y %H:%i'), " +isDPPayment+ ")";
+                        else
+                        {
+                            tempID = gutil.getAutoGenerateID("PAYMENT_CREDIT", "", "", "PAYMENT_ID");
+
+                            sqlCommand = "INSERT INTO PAYMENT_CREDIT (PAYMENT_ID, CREDIT_ID, PAYMENT_DATE, PM_ID, PAYMENT_NOMINAL, PAYMENT_DESCRIPTION, PAYMENT_CONFIRMED, PAYMENT_CONFIRMED_DATE, PAYMENT_DUE_DATE, PAYMENT_IS_DP) " +
+                                                   "VALUES ('" + tempID + "', " + creditID + ", STR_TO_DATE('" + paymentDate + "', '%d-%m-%Y %H:%i'), 1, " + paymentAmount + ", '" + paymentDesc + "', 1, STR_TO_DATE('" + paymentDate + "', '%d-%m-%Y %H:%i'), STR_TO_DATE('" + paymentDate + "', '%d-%m-%Y %H:%i'), " + isDPPayment + ")";
+                        }
 
                         if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
                             throw internalEX;
@@ -1796,6 +1851,9 @@ namespace AlphaSoft
 
             if (gSync.sendDataToServer("SALES_DETAIL_FULFILLMENT", "SALES_INVOICE", selectedsalesinvoice))
                 gSync.updateSyncFlag("SALES_DETAIL_FULFILLMENT", "SALES_INVOICE", selectedsalesinvoice);
+
+            if (gSync.sendDataToServer("NOTIF_TABLE"))
+                gSync.updateSyncFlag("NOTIF_TABLE");
         }
 
         private bool saveAndPrintOutInvoice()
@@ -2358,7 +2416,9 @@ namespace AlphaSoft
             {
                 labelBayar.Text = "D P [+]";
                 jobStartDateTimePicker.Visible = true;
-                labelTglOrder.Visible = true;
+                //labelJamKirim.Visible = true;
+                labelTglKirim.Visible = true;
+                //timeStartDateTimePicker.Visible = true;
                 SOisPesanan = true;
                 deliveredCheckbox.Visible = true;
 
@@ -2737,7 +2797,7 @@ namespace AlphaSoft
             SODateTimePicker.CustomFormat = globalUtilities.CUSTOM_DATE_FORMAT;
 
             jobStartDateTimePicker.Format = DateTimePickerFormat.Custom;
-            jobStartDateTimePicker.CustomFormat = globalUtilities.CUSTOM_DATE_FORMAT;
+            jobStartDateTimePicker.CustomFormat = globalUtilities.CUSTOM_DATE_TIME_FORMAT;
 
             userStatusLabel.Text = "Welcome, " + DS.getDataSingleValue("SELECT IFNULL(USER_FULL_NAME, 0) FROM MASTER_USER WHERE ID = " + gutil.getUserID()).ToString();
 
@@ -3092,7 +3152,9 @@ namespace AlphaSoft
             {
                 labelBayar.Text = "B a y a r [+]";
                 jobStartDateTimePicker.Visible = false;
-                labelTglOrder.Visible = false;
+                //labelJamKirim.Visible = false;
+                labelTglKirim.Visible = false;
+                //timeStartDateTimePicker.Visible = false;
                 SOisPesanan = false;
                 deliveredCheckbox.Visible = false;
                 addressTextBox.Visible = false;
@@ -4540,6 +4602,11 @@ namespace AlphaSoft
         }
 
         private void totalAfterDiscTextBox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void jobStartDateTimePicker_ValueChanged(object sender, EventArgs e)
         {
 
         }

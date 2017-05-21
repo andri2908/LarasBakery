@@ -951,17 +951,23 @@ namespace AlphaSoft
 
             localSuccess = true;
 
-            // SEND DATA PESANAN TO PABRIK 
-            // ===================================================
-            if (gSync.sendDataToServer("SALES_HEADER"))
-                gSync.updateSyncFlag("SALES_HEADER");
+            if (gUtil.isServerApp() == 0)
+            {
+                // SEND DATA PESANAN TO PABRIK 
+                // ===================================================
+                if (gSync.sendDataToServer("MASTER_CUSTOMER"))
+                    gSync.updateSyncFlag("MASTER_CUSTOMER");
 
-            if (gSync.sendDataToServer("SALES_DETAIL"))
-                gSync.updateSyncFlag("SALES_DETAIL");
+                if (gSync.sendDataToServer("SALES_HEADER"))
+                    gSync.updateSyncFlag("SALES_HEADER");
 
-            if (gSync.sendDataToServer("SALES_DETAIL_FULFILLMENT"))
-                gSync.updateSyncFlag("SALES_DETAIL_FULFILLMENT");
-            // ===================================================
+                if (gSync.sendDataToServer("SALES_DETAIL"))
+                    gSync.updateSyncFlag("SALES_DETAIL");
+
+                if (gSync.sendDataToServer("SALES_DETAIL_FULFILLMENT"))
+                    gSync.updateSyncFlag("SALES_DETAIL_FULFILLMENT");
+                // ===================================================
+            }
 
             // SYNCHRONIZE TO SERVER
             //if (synchronizeDataToServer())

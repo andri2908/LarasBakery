@@ -314,6 +314,9 @@ namespace AlphaSoft
                 loadSettingDB(1);
             }
 
+            if (gutil.isServerApp() == 1)
+                branchIDBox.Visible = false;
+
             gutil.reArrangeTabOrder(this);
         }
 

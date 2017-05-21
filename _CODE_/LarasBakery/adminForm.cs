@@ -12,6 +12,7 @@ using System.Threading;
 
 using Hotkeys;
 using System.Globalization;
+using System.Media;
 
 namespace AlphaSoft
 {
@@ -397,12 +398,21 @@ namespace AlphaSoft
             MAINMENU_Strip.Renderer = new MyRenderer();
             gutil.reArrangeTabOrder(this);
 
-            if (gutil.loadbranchID(2, out namaCabang) == 0)
+            if ((gutil.isServerApp() == 0) && (gutil.isSS_ServerApp() == 0) && (gutil.loadbranchID(2, out namaCabang) == 0))
             {
                 MessageBox.Show("CABANG BELUM DISET");
 
                 SetApplicationForm displayForm = new SetApplicationForm(this);
                 displayForm.ShowDialog(this);
+            }
+            else if (gutil.isServerApp() == 1)
+            {
+                this.Text = "PABRIK | ADMINISTRATOR MODULE";
+                timerPesanan.Start();
+            }
+            else if (gutil.isSS_ServerApp() == 1)
+            {
+                this.Text = "SYNC SERVER | ADMINISTRATOR MODULE";
             }
 
             activateUserAccessRight();
@@ -413,6 +423,10 @@ namespace AlphaSoft
         private void adminForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             timer1.Stop();
+
+            if (gutil.isServerApp() == 1)
+                timerPesanan.Stop();
+
             //write paper size settings last change to DB
         }
 
@@ -1113,13 +1127,15 @@ namespace AlphaSoft
             // SPECIAL CONDITION
             // LARAS : ONLY PABRIK APPLICATION HAS ACCESS TO DELIVERY ORDER
             if (gutil.isServerApp() == 1)
-            {
                 MENU_pengirimanPesanan.Visible = true;
-            }
             else
-            {
                 MENU_pengirimanPesanan.Visible = false;
-            }
+
+            if (gutil.isSS_ServerApp() == 1)
+                MENU_kirimDataCabang.Visible = true;
+            else
+                MENU_kirimDataCabang.Visible = false;
+
         }
 
         private void toolStripMenuItem1_Click_1(object sender, EventArgs e)
@@ -1537,6 +1553,9 @@ namespace AlphaSoft
             p.StartInfo.FileName = "USBLib.exe";
             p.StartInfo.Arguments = "runAdmin";
             p.Start();
+            SystemSounds.Asterisk.Play();
+
+            SystemSounds.Beep.Play();
         }
 
         private void stokProdukToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1607,6 +1626,9 @@ namespace AlphaSoft
 
             if (DialogResult.Yes == MessageBox.Show("KIRIM DATA PESANAN KE PABRIK ?", "WARNING", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
             {
+                if (gSync.sendDataToServer("MASTER_CUSTOMER"))
+                    gSync.updateSyncFlag("MASTER_CUSTOMER");
+
                 if (gSync.sendDataToServer("SALES_HEADER"))
                     gSync.updateSyncFlag("SALES_HEADER");
 
@@ -1618,6 +1640,29 @@ namespace AlphaSoft
 
                 MessageBox.Show("DONE");
             }
+        }
+
+        private void MENU_kirimDataCabang_Click_2(object sender, EventArgs e)
+        {
+            globalSynchronizeLib gSync = new globalSynchronizeLib();
+
+            if (DialogResult.Yes == MessageBox.Show("SYNC DATA TO CABANG?", "WARNING", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
+            { 
+                gSync.syncDataCabang("MASTER_BRANCH");
+                MessageBox.Show("DONE");
+            }
+        }
+
+        private void MENU_kirimDataProdukKeToko_Click(object sender, EventArgs e)
+        {
+            globalSynchronizeLib gSync = new globalSynchronizeLib();
+
+            gSync.syncDataProduk("MASTER_BRANCH");
+        }
+
+        private void timerPesanan_Tick(object sender, EventArgs e)
+        {
+            gutil.checkOrder();
         }
     }
 }
