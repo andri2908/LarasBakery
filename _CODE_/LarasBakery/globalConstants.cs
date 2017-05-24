@@ -90,6 +90,7 @@ namespace AlphaSoft
         public const int EDIT_SALES_ORDER = 510;
         public const int DELIVERY_ORDER = 511;
         public const int SO_FULFILLMENT = 512;
+        public const int SALES_QUOTATION = 513;
 
         // THESE CONSTANTS ARE USED TO CHECK GROUP ACCESS MODULE
         // THE VALUES MUST BE TIED TO THE VALUES INSIDE THE DATABASE TABLE
@@ -102,79 +103,67 @@ namespace AlphaSoft
         public const int MENU_SINKRONISASI_INFORMASI = 5;
         public const int MENU_PENGATURAN_PRINTER = 6;
         public const int MENU_PENGATURAN_GAMBAR_LATAR = 7;
+        public const int MENU_USB_UTILITY_MODULE = 8;
+        public const int MENU_PENGATURAN_SISTEM_APLIKASI = 9;
+        public const int MENU_TUTUP_TOKO = 10;
 
         // MAIN MENU GUDANG
-        public const int MENU_GUDANG = 8;
-        public const int MENU_PRODUK = 9;
-        public const int MENU_TAMBAH_PRODUK = 10;
-        public const int MENU_PENGATURAN_HARGA= 11;
-        public const int MENU_PENGATURAN_LIMIT_STOK= 12;
-        public const int MENU_PENGATURAN_KATEGORI_PRODUK = 13;
-        public const int MENU_PECAH_SATUAN_PRODUK= 14;
-        public const int MENU_PENGATURAN_NOMOR_RAK = 15;
-        public const int MENU_KATEGORI = 16;
-        public const int MENU_SATUAN = 17;
-        public const int MENU_TAMBAH_SATUAN = 18;
-        public const int MENU_PENGATURAN_KONVERSI = 19;
-        public const int MENU_STOK_OPNAME = 20;
-        public const int MENU_PENYESUAIAN_STOK = 21;
-        public const int MENU_MUTASI_BARANG = 22;
-        public const int MENU_TAMBAH_MUTASI_BARANG= 23;
-        public const int MENU_CEK_PERMINTAAN_BARANG = 24;
-        public const int MENU_PENERIMAAN_BARANG = 25;
-        public const int MENU_PENERIMAAN_BARANG_DARI_MUTASI = 26;
-        public const int MENU_PENERIMAAN_BARANG_DARI_PO = 27;
+        public const int MENU_GUDANG = 101;
+        public const int MENU_PRODUK = 102;
+        public const int MENU_TAMBAH_PRODUK = 103;
+        public const int MENU_PENGATURAN_HARGA= 104;
+        public const int MENU_PENGATURAN_LIMIT_STOK= 105;
+        public const int MENU_PENGATURAN_KATEGORI_PRODUK = 106;
+        public const int MENU_PECAH_SATUAN_PRODUK= 107;
+        public const int MENU_PENGATURAN_NOMOR_RAK = 108;
+        public const int MENU_KATEGORI = 109;
+        public const int MENU_SATUAN = 110;
+        public const int MENU_TAMBAH_SATUAN = 111;
+        public const int MENU_PENGATURAN_KONVERSI = 112;
+        public const int MENU_STOK_OPNAME = 113;
+        public const int MENU_PENYESUAIAN_STOK = 114;
+        public const int MENU_MUTASI_BARANG = 115;
+        public const int MENU_TAMBAH_MUTASI_BARANG= 116;
+        public const int MENU_CEK_PERMINTAAN_BARANG = 117;
+        public const int MENU_PENERIMAAN_BARANG = 118;
+        public const int MENU_PENERIMAAN_BARANG_DARI_MUTASI = 119;
+        public const int MENU_PENERIMAAN_BARANG_DARI_PO = 120;
+        public const int PENGATURAN_HARGA_POKOK = 121;
+        public const int STOCK_TAKE_HARIAN = 122;
+        public const int REVISI_STOCK_TAKE_HARIAN = 123;
 
         // MAIN MENU PEMBELIAN
-        public const int MENU_PEMBELIAN = 28;
-        public const int MENU_SUPPLIER = 29;
-        public const int MENU_REQUEST_ORDER = 30;
-        public const int MENU_PURCHASE_ORDER = 31;
-        public const int MENU_REPRINT_REQUEST_ORDER= 32;
-        public const int MENU_RETUR_PEMBELIAN = 33;
-        public const int MENU_RETUR_PERMINTAAN = 34;
+        public const int MENU_PEMBELIAN = 201;
+        public const int MENU_SUPPLIER = 202;
+        public const int MENU_REQUEST_ORDER = 203;
+        public const int MENU_PURCHASE_ORDER = 204;
+        public const int MENU_REPRINT_REQUEST_ORDER= 205;
+        public const int MENU_RETUR_PEMBELIAN = 206;
+        public const int MENU_RETUR_PERMINTAAN = 207;
         
         // MAIN MENU PENJUALAN
-        public const int MENU_PENJUALAN = 35;
-        public const int MENU_PELANGGAN = 36;
-        public const int MENU_TRANSAKSI_PENJUALAN = 37;
-        public const int MENU_SET_NO_FAKTUR = 38;
-        public const int MENU_RETUR_PENJUALAN = 39;
-        public const int MENU_RETUR_PENJUALAN_INVOICE = 40;
-        public const int MENU_RETUR_PENJUALAN_STOK = 41;
+        public const int MENU_PENJUALAN = 301;
+        public const int MENU_PELANGGAN = 302;
+        public const int MENU_TRANSAKSI_PENJUALAN = 303;
+        public const int MENU_SET_NO_FAKTUR = 304;
+        public const int MENU_RETUR_PENJUALAN = 305;
+        public const int MENU_RETUR_PENJUALAN_INVOICE = 306;
+        public const int MENU_RETUR_PENJUALAN_STOK = 307;
+        public const int MENU_SALES_QUOTATION = 308;
+        public const int APPROVAL_SALES_QUOTATION = 309;
 
         // MAIN MENU KEUANGAN
-        public const int MENU_KEUANGAN = 42;
-        public const int MENU_PENGATURAN_NO_AKUN = 43;
-        public const int MENU_TRANSAKSI = 44;
-        public const int MENU_TRANSAKSI_HARIAN = 45;
-        public const int MENU_PEMBAYARAN_PIUTANG = 46;
-        public const int MENU_PEMBAYARAN_PIUTANG_MUTASI = 47;
-        public const int MENU_PEMBAYARAN_HUTANG_SUPPLIER = 48;
-        public const int MENU_PENGATURAN_LIMIT_PAJAK = 49;
+        public const int MENU_KEUANGAN = 401;
+        public const int MENU_PENGATURAN_NO_AKUN = 402;
+        public const int MENU_TRANSAKSI = 403;
+        public const int MENU_TRANSAKSI_HARIAN = 404;
+        public const int MENU_PEMBAYARAN_PIUTANG = 405;
+        public const int MENU_PEMBAYARAN_PIUTANG_MUTASI = 406;
+        public const int MENU_PEMBAYARAN_HUTANG_SUPPLIER = 407;
+        public const int MENU_PENGATURAN_LIMIT_PAJAK = 408;
 
-        public const int MENU_MODULE_MESSAGING = 50;
-        public const int MENU_TAX_MODULE = 51;
-        public const int SALES_QUOTATION = 52;
-        public const int APPROVAL_SALES_QUOTATION = 53;
-        public const int PENGATURAN_HARGA_POKOK = 54;
-        public const int REVISI_STOCK_TAKE_HARIAN = 55;
-
-        public const int MENU_SALES_QUOTATION= 56;
-
-        //public const int MENU_USB_UTILITY_MODULE = 52;
-
-
-        // CONSTANTS FOR USER CHANGE LOG
-        public const int CHANGE_LOG_LOGIN = 1;
-        public const int CHANGE_LOG_LOGOUT = 2;
-        public const int CHANGE_LOG_INSERT = 3;
-        public const int CHANGE_LOG_UPDATE = 4;
-        public const int CHANGE_LOG_SET_NON_ACTIVE = 5;
-        public const int CHANGE_LOG_CASHIER_LOGIN = 6;
-        public const int CHANGE_LOG_CASHIER_LOGOUT = 7;
-        public const int CHANGE_LOG_PAYMENT_CREDIT = 8;
-        public const int CHANGE_LOG_PAYMENT_DEBT = 9;
+        public const int MENU_MODULE_MESSAGING = 501;
+        public const int MENU_TAX_MODULE = 502;
 
         //mode laporan
         public const int MENU_REPORT_USER = 601;
@@ -207,6 +196,17 @@ namespace AlphaSoft
         public const int REPORT_FINANCE_OUT = 742;
         public const int REPORT_MARGIN = 743;
         public const int REPORT_MONTHLY_BALANCE = 744;
+
+        // CONSTANTS FOR USER CHANGE LOG
+        public const int CHANGE_LOG_LOGIN = 1;
+        public const int CHANGE_LOG_LOGOUT = 2;
+        public const int CHANGE_LOG_INSERT = 3;
+        public const int CHANGE_LOG_UPDATE = 4;
+        public const int CHANGE_LOG_SET_NON_ACTIVE = 5;
+        public const int CHANGE_LOG_CASHIER_LOGIN = 6;
+        public const int CHANGE_LOG_CASHIER_LOGOUT = 7;
+        public const int CHANGE_LOG_PAYMENT_CREDIT = 8;
+        public const int CHANGE_LOG_PAYMENT_DEBT = 9;
 
         //XML file
         public const string AccountXML = "MasterAccount.xml";

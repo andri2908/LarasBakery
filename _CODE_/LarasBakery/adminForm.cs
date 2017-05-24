@@ -398,7 +398,8 @@ namespace AlphaSoft
             MAINMENU_Strip.Renderer = new MyRenderer();
             gutil.reArrangeTabOrder(this);
 
-            if ((gutil.isServerApp() == 0) && (gutil.isSS_ServerApp() == 0) && (gutil.loadbranchID(2, out namaCabang) == 0))
+            if ((gutil.isServerApp() == 0) && (gutil.isSS_ServerApp() == 0) 
+                && (gutil.loadbranchID(2, out namaCabang) == 0) && setAccessibility(globalConstants.MENU_PENGATURAN_SISTEM_APLIKASI, MENU_pengaturanSistemAplikasiToolStripMenuItem))
             {
                 MessageBox.Show("CABANG BELUM DISET");
 
@@ -407,15 +408,13 @@ namespace AlphaSoft
             }
             else if (gutil.isServerApp() == 1)
             {
-                this.Text = "PABRIK | ADMINISTRATOR MODULE";
+                this.Text = "    PABRIK | ADMINISTRATOR MODULE";
                 timerPesanan.Start();
             }
             else if (gutil.isSS_ServerApp() == 1)
             {
-                this.Text = "SYNC SERVER | ADMINISTRATOR MODULE";
+                this.Text = "    SYNC SERVER | ADMINISTRATOR MODULE";
             }
-
-            activateUserAccessRight();
 
             loadBGimage();
         }
@@ -996,14 +995,31 @@ namespace AlphaSoft
             displayImportDataCSVForm.WindowState = FormWindowState.Normal;
         }
 
-        private void setAccessibility(int moduleID, ToolStripMenuItem  menuItem)
+        private bool setAccessibility(int moduleID, ToolStripMenuItem  menuItem)
         {
             int userAccessRight = 0;
+            int moduleActive = 1;
 
-            userAccessRight = DS.getUserAccessRight(moduleID, selectedUserGroupID);
+            bool isVisible = true;
 
-            if (userAccessRight <= 0)
+            moduleActive = Convert.ToInt32(DS.getDataSingleValue("SELECT MODULE_ACTIVE FROM MASTER_MODULE WHERE MODULE_ID = " + moduleID));
+            if (moduleActive == 0)
+            {
                 menuItem.Visible = false;
+                isVisible = false;
+            }
+            else
+            {
+                userAccessRight = DS.getUserAccessRight(moduleID, selectedUserGroupID);
+
+                if (userAccessRight <= 0)
+                {
+                    menuItem.Visible = false;
+                    isVisible = false;
+                }
+            }
+
+            return isVisible;  
         }
 
         private void setAccessibility(int moduleID, ToolStripButton menuItem)
@@ -1036,6 +1052,7 @@ namespace AlphaSoft
             setAccessibility(globalConstants.MENU_SINKRONISASI_INFORMASI, MENU_sinkronisasiInformasi);
             setAccessibility(globalConstants.MENU_PENGATURAN_PRINTER, MENU_pengaturanPrinter);
             setAccessibility(globalConstants.MENU_PENGATURAN_GAMBAR_LATAR, MENU_pengaturanGambarLatar);
+            setAccessibility(globalConstants.MENU_PENGATURAN_SISTEM_APLIKASI, MENU_pengaturanSistemAplikasiToolStripMenuItem);
 
             //setAccessibility(globalConstants.MENU_USB_UTILITY_MODULE, uSBToolStripMenuItem);
 
@@ -1553,9 +1570,6 @@ namespace AlphaSoft
             p.StartInfo.FileName = "USBLib.exe";
             p.StartInfo.Arguments = "runAdmin";
             p.Start();
-            SystemSounds.Asterisk.Play();
-
-            SystemSounds.Beep.Play();
         }
 
         private void stokProdukToolStripMenuItem_Click(object sender, EventArgs e)

@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(cashierForm));
             this.panel1 = new System.Windows.Forms.Panel();
             this.titleLabel = new System.Windows.Forms.Label();
@@ -77,7 +77,6 @@
             this.paymentComboBox = new System.Windows.Forms.ComboBox();
             this.labelCaraBayar = new System.Windows.Forms.Label();
             this.panel9 = new System.Windows.Forms.Panel();
-            this.totalLabel = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.printDocument1 = new System.Drawing.Printing.PrintDocument();
@@ -95,6 +94,7 @@
             this.toolStripStatusLabel3 = new System.Windows.Forms.ToolStripStatusLabel();
             this.SODateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.labelTglNota = new System.Windows.Forms.Label();
+            this.totalLabel = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cashierDataGridView)).BeginInit();
             this.panel5.SuspendLayout();
@@ -104,12 +104,14 @@
             // 
             // panel1
             // 
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel1.AutoSize = true;
             this.panel1.BackColor = System.Drawing.Color.SteelBlue;
             this.panel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel1.Controls.Add(this.titleLabel);
             this.panel1.Controls.Add(this.panel4);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(985, 59);
@@ -129,7 +131,7 @@
             // 
             // panel4
             // 
-            this.panel4.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.panel4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.panel4.BackColor = System.Drawing.Color.Black;
             this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel4.Location = new System.Drawing.Point(-3, 0);
@@ -167,42 +169,45 @@
             // 
             this.cashierDataGridView.AllowUserToDeleteRows = false;
             this.cashierDataGridView.AllowUserToResizeRows = false;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FloralWhite;
-            this.cashierDataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle5.BackColor = System.Drawing.Color.FloralWhite;
+            this.cashierDataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle5;
+            this.cashierDataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.cashierDataGridView.BackgroundColor = System.Drawing.Color.FloralWhite;
             this.cashierDataGridView.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.SteelBlue;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Verdana", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.FloralWhite;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.cashierDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = System.Drawing.Color.SteelBlue;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Verdana", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.Color.FloralWhite;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.cashierDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle6;
             this.cashierDataGridView.ColumnHeadersHeight = 50;
             this.cashierDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.cashierDataGridView.Cursor = System.Windows.Forms.Cursors.Default;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FloralWhite;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.cashierDataGridView.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle7.BackColor = System.Drawing.Color.FloralWhite;
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.cashierDataGridView.DefaultCellStyle = dataGridViewCellStyle7;
             this.cashierDataGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.cashierDataGridView.EnableHeadersVisualStyles = false;
             this.cashierDataGridView.GridColor = System.Drawing.Color.Black;
             this.cashierDataGridView.Location = new System.Drawing.Point(2, 130);
             this.cashierDataGridView.MultiSelect = false;
             this.cashierDataGridView.Name = "cashierDataGridView";
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.cashierDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.cashierDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle8;
             this.cashierDataGridView.RowHeadersVisible = false;
             this.cashierDataGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.cashierDataGridView.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
@@ -222,6 +227,8 @@
             // 
             // panel5
             // 
+            this.panel5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.panel5.BackColor = System.Drawing.Color.SteelBlue;
             this.panel5.Controls.Add(this.refSOTextBox);
             this.panel5.Controls.Add(this.refSOLabel);
@@ -274,6 +281,7 @@
             // addressTextBox
             // 
             this.addressTextBox.Location = new System.Drawing.Point(362, 111);
+            this.addressTextBox.MaxLength = 200;
             this.addressTextBox.Multiline = true;
             this.addressTextBox.Name = "addressTextBox";
             this.addressTextBox.Size = new System.Drawing.Size(234, 102);
@@ -334,7 +342,6 @@
             // 
             // errorLabel
             // 
-            this.errorLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.errorLabel.AutoSize = true;
             this.errorLabel.BackColor = System.Drawing.Color.White;
             this.errorLabel.Font = new System.Drawing.Font("Verdana", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -406,6 +413,7 @@
             // 
             // panel6
             // 
+            this.panel6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.panel6.BackColor = System.Drawing.Color.FloralWhite;
             this.panel6.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.panel6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -696,7 +704,8 @@
             // 
             // panel9
             // 
-            this.panel9.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.panel9.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.panel9.BackColor = System.Drawing.Color.Black;
             this.panel9.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel9.Location = new System.Drawing.Point(2, 408);
@@ -704,24 +713,10 @@
             this.panel9.Size = new System.Drawing.Size(983, 10);
             this.panel9.TabIndex = 10;
             // 
-            // totalLabel
-            // 
-            this.totalLabel.AutoSize = true;
-            this.totalLabel.BackColor = System.Drawing.Color.Transparent;
-            this.totalLabel.Dock = System.Windows.Forms.DockStyle.Right;
-            this.totalLabel.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.totalLabel.Font = new System.Drawing.Font("Verdana", 40F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.totalLabel.ForeColor = System.Drawing.Color.Black;
-            this.totalLabel.Location = new System.Drawing.Point(801, 59);
-            this.totalLabel.Name = "totalLabel";
-            this.totalLabel.Size = new System.Drawing.Size(184, 65);
-            this.totalLabel.TabIndex = 11;
-            this.totalLabel.Text = "Rp. 0";
-            this.totalLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
             // panel2
             // 
-            this.panel2.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.panel2.BackColor = System.Drawing.Color.Black;
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel2.Location = new System.Drawing.Point(0, 59);
@@ -812,7 +807,6 @@
             // statusStrip1
             // 
             this.statusStrip1.BackColor = System.Drawing.Color.Black;
-            this.statusStrip1.Dock = System.Windows.Forms.DockStyle.None;
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.userStatusLabel,
             this.toolStripStatusLabel1,
@@ -824,9 +818,9 @@
             this.toolStripStatusLabel7,
             this.dateTimeStampLabel,
             this.toolStripStatusLabel3});
-            this.statusStrip1.Location = new System.Drawing.Point(1, 640);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 639);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1071, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(985, 22);
             this.statusStrip1.TabIndex = 12;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -858,17 +852,33 @@
             this.labelTglNota.Text = "Tanggal Nota";
             this.labelTglNota.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
+            // totalLabel
+            // 
+            this.totalLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.totalLabel.AutoSize = true;
+            this.totalLabel.BackColor = System.Drawing.Color.Transparent;
+            this.totalLabel.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.totalLabel.Font = new System.Drawing.Font("Verdana", 40F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.totalLabel.ForeColor = System.Drawing.Color.Black;
+            this.totalLabel.Location = new System.Drawing.Point(491, 64);
+            this.totalLabel.Name = "totalLabel";
+            this.totalLabel.Size = new System.Drawing.Size(184, 65);
+            this.totalLabel.TabIndex = 47;
+            this.totalLabel.Text = "Rp. 0";
+            this.totalLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // cashierForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FloralWhite;
             this.ClientSize = new System.Drawing.Size(985, 661);
+            this.Controls.Add(this.totalLabel);
             this.Controls.Add(this.SODateTimePicker);
             this.Controls.Add(this.labelTglNota);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.panel2);
-            this.Controls.Add(this.totalLabel);
             this.Controls.Add(this.panel9);
             this.Controls.Add(this.panel5);
             this.Controls.Add(this.noFakturLabel);
@@ -876,7 +886,6 @@
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.cashierDataGridView);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.MaximizeBox = false;
             this.Name = "cashierForm";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -927,7 +936,6 @@
         private System.Windows.Forms.TextBox totalAfterDiscTextBox;
         private System.Windows.Forms.TextBox totalPenjualanTextBox;
         private System.Windows.Forms.Panel panel9;
-        private System.Windows.Forms.Label totalLabel;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.TextBox pelangganTextBox;
@@ -961,6 +969,7 @@
         private System.Windows.Forms.Label refSOLabel;
         private System.Windows.Forms.TextBox refSOTextBox;
         private System.Windows.Forms.Label labelTglKirim;
+        private System.Windows.Forms.Label totalLabel;
     }
 }
 

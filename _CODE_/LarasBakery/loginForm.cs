@@ -190,6 +190,7 @@ namespace AlphaSoft
                         if (closeShop == true)
                         {
                             gClose.closeShopProcedure();
+                            closeShop = false;
                         }
 
                         gutil.saveSystemDebugLog(0, "USER ID = " + selectedUserID + "LOGOUT");

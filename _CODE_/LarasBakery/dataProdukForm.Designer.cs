@@ -44,6 +44,7 @@
             // 
             this.dataProdukGridView.AllowUserToAddRows = false;
             this.dataProdukGridView.AllowUserToDeleteRows = false;
+            this.dataProdukGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
             this.dataProdukGridView.BackgroundColor = System.Drawing.Color.FloralWhite;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;

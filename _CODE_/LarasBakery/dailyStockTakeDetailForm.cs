@@ -611,6 +611,7 @@ namespace AlphaSoft
                         dataSaved = true;
                         gUtil.setReadOnlyAllControls(this);
 
+                        moduleID = EDIT_DAILY_STOCK_TAKE;
                         if (closeStockTake)
                         {
                             stockTakeCloseStatus = 1;

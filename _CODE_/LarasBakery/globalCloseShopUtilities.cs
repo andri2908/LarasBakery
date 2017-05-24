@@ -343,16 +343,16 @@ namespace AlphaSoft
             graphics.DrawString(ucapan, new Font("Courier New", 9),
                                 new SolidBrush(Color.Black), rect, sf);
 
-            //sqlCommand = "SELECT IFNULL(SUM(PAYMENT_NOMINAL), 0) AS TOTAL_DP " +
-            //                        "FROM PAYMENT_CREDIT " +
-            //                        "WHERE PAYMENT_CONFIRMED = 1 AND PM_ID = 1 AND PAYMENT_IS_DP = 1";
+            sqlCommand = "SELECT IFNULL(SUM(PAYMENT_NOMINAL), 0) AS TOTAL_DP " +
+                                    "FROM PAYMENT_CREDIT " +
+                                    "WHERE PAYMENT_CONFIRMED = 1 AND PM_ID = 1 AND PAYMENT_IS_DP = 1";
 
-            sqlCommand = "SELECT IFNULL(SUM(DJ.JOURNAL_NOMINAL), 0) AS NOMINAL " +
-                                 "FROM DAILY_JOURNAL DJ " +
-                                 "WHERE JOURNAL_DESCRIPTION LIKE '%PEMBAYARAN DP [%'";
+            //sqlCommand = "SELECT IFNULL(SUM(DJ.JOURNAL_NOMINAL), 0) AS NOMINAL " +
+            //                     "FROM DAILY_JOURNAL DJ " +
+            //                     "WHERE JOURNAL_DESCRIPTION LIKE '%PEMBAYARAN DP [%'";
 
             if (!firstTimeClose)
-                whereClause = " AND DATE_FORMAT(DJ.JOURNAL_DATETIME, '%Y%m%d')  > '" + localSuccessDate + "'";
+                whereClause = " AND DATE_FORMAT(PAYMENT_DATE, '%Y%m%d')  > '" + localSuccessDate + "'";
 
             sqlCommand = sqlCommand + " " + whereClause;
 
@@ -372,12 +372,16 @@ namespace AlphaSoft
             graphics.DrawString(ucapan, new Font("Courier New", 9),
                                 new SolidBrush(Color.Black), rect, sf);
 
-            sqlCommand = "SELECT IFNULL(SUM(PAYMENT_NOMINAL), 0) AS TOTAL_CREDIT " +
-                                    "FROM PAYMENT_CREDIT " +
-                                    "WHERE PAYMENT_CONFIRMED = 1 AND PM_ID = 1 AND PAYMENT_IS_DP = 0";
+            //sqlCommand = "SELECT IFNULL(SUM(PAYMENT_NOMINAL), 0) AS TOTAL_CREDIT " +
+            //                        "FROM PAYMENT_CREDIT " +
+            //                        "WHERE PAYMENT_CONFIRMED = 1 AND PM_ID = 1 AND PAYMENT_IS_DP = 0";
+
+            sqlCommand = "SELECT IFNULL(SUM(SALES_TOTAL - SALES_DISCOUNT_FINAL), 0) AS TOTAL_SALES " +
+                                    "FROM SALES_HEADER " +
+                                    "WHERE SALES_TOP = 0";
 
             if (!firstTimeClose)
-                whereClause = " AND DATE_FORMAT(PAYMENT_CONFIRMED_DATE, '%Y%m%d')  > '" + localSuccessDate + "'";
+                whereClause = " AND DATE_FORMAT(SALES_DATE, '%Y%m%d')  > '" + localSuccessDate + "'";
 
             sqlCommand = sqlCommand + " " + whereClause;
 

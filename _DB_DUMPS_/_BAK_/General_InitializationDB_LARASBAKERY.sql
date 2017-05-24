@@ -2,7 +2,7 @@ CREATE DATABASE  IF NOT EXISTS `sys_pos_larasbakery` /*!40100 DEFAULT CHARACTER 
 USE `sys_pos_larasbakery`;
 -- MySQL dump 10.13  Distrib 5.5.16, for Win32 (x86)
 --
--- Host: localhost    Database: sys_pos
+-- Host: localhost    Database: sys_pos_larasbakery
 -- ------------------------------------------------------
 -- Server version	5.5.28
 
@@ -126,6 +126,31 @@ CREATE TABLE `cashier_log` (
 LOCK TABLES `cashier_log` WRITE;
 /*!40000 ALTER TABLE `cashier_log` DISABLE KEYS */;
 /*!40000 ALTER TABLE `cashier_log` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `close_shop_history`
+--
+
+DROP TABLE IF EXISTS `close_shop_history`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `close_shop_history` (
+  `ID` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `LAST_SUCCESS_LOCAL_DATE` datetime DEFAULT NULL,
+  `LAST_SUCCESS_SERVER_DATE` datetime DEFAULT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `close_shop_history`
+--
+
+LOCK TABLES `close_shop_history` WRITE;
+/*!40000 ALTER TABLE `close_shop_history` DISABLE KEYS */;
+INSERT INTO `close_shop_history` VALUES (2,'2017-05-01 00:00:00',NULL),(3,'2017-05-01 00:00:00',NULL),(4,'2017-05-01 00:00:00',NULL),(5,'2017-05-01 00:00:00',NULL),(6,'2017-05-01 00:00:00',NULL);
+/*!40000 ALTER TABLE `close_shop_history` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -475,7 +500,7 @@ CREATE TABLE `master_module` (
   `MODULE_FEATURES` tinyint(3) unsigned DEFAULT NULL,
   `MODULE_ACTIVE` tinyint(3) unsigned DEFAULT NULL,
   PRIMARY KEY (`MODULE_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -484,7 +509,7 @@ CREATE TABLE `master_module` (
 
 LOCK TABLES `master_module` WRITE;
 /*!40000 ALTER TABLE `master_module` DISABLE KEYS */;
-INSERT INTO `master_module` VALUES (1,'MANAJEMEN SISTEM',NULL,1,1),(2,'DATABASE',NULL,1,1),(3,'MANAJEMEN USER',NULL,3,1),(4,'MANAJEMEN CABANG',NULL,3,1),(5,'SINKRONISASI INFORMASI',NULL,1,1),(6,'PENGATURAN PRINTER',NULL,1,1),(7,'PENGATURAN GAMBAR LATAR',NULL,1,1),(8,'GUDANG',NULL,1,1),(9,'PRODUK',NULL,1,1),(10,'TAMBAH / UPDATE PRODUK',NULL,3,1),(11,'PENGATURAN HARGA PRODUK',NULL,1,1),(12,'PENGATURAN LIMIT STOK',NULL,1,1),(13,'PENGATURAN KATEGORI PRODUK',NULL,1,1),(14,'PECAH SATUAN PRODUK',NULL,1,1),(15,'PENGATURAN NOMOR RAK',NULL,1,1),(16,'KATEGORI PRODUK',NULL,3,1),(17,'SATUAN PRODUK',NULL,1,1),(18,'TAMBAH / UPDATE SATUAN',NULL,1,1),(19,'PENGATURAN KONVERSI SATUAN',NULL,1,1),(20,'STOK OPNAME',NULL,1,1),(21,'PENYESUAIAN STOK',NULL,1,1),(22,'MUTASI BARANG',NULL,1,1),(23,'TAMBAH / UPDATE MUTASI BARANG',NULL,3,1),(24,'CEK PERMINTAAN BARANG',NULL,1,1),(25,'PENERIMAAN BARANG',NULL,1,1),(26,'PENERIMAAN BARANG DARI MUTASI',NULL,1,1),(27,'PENERIMAAN BARANG DARI PO',NULL,1,1),(28,'PEMBELIAN',NULL,1,1),(29,'SUPPLIER',NULL,1,1),(30,'REQUEST ORDER',NULL,3,1),(31,'PURCHASE ORDER',NULL,3,1),(32,'REPRINT REQUEST ORDER',NULL,1,1),(33,'RETUR PEMBELIAN KE SUPPLIER',NULL,1,1),(34,'RETUR PERMINTAAN KE PUSAT',NULL,1,1),(35,'PENJUALAN',NULL,1,1),(36,'PELANGGAN',NULL,3,1),(37,'TRANSAKSI PENJUALAN',NULL,1,1),(38,'SET NO FAKTUR',NULL,1,1),(39,'RETUR PENJUALAN',NULL,1,1),(40,'RETUR PENJUALAN BY INVOICE',NULL,1,1),(41,'RETUR PENJUALAN BY STOK',NULL,1,1),(42,'KEUANGAN',NULL,1,1),(43,'PENGATURAN NO AKUN',NULL,3,1),(44,'TRANSAKSI',NULL,1,1),(45,'TAMBAH TRANSAKSI HARIAN',NULL,1,1),(46,'PEMBAYARAN PIUTANG',NULL,1,1),(47,'PEMBAYARAN PIUTANG MUTASI',NULL,1,1),(48,'PEMBAYARAN HUTANG KE SUPPLIER',NULL,1,1),(49,'PENGATURAN LIMIT PAJAK',NULL,1,1),(50,'MODUL MESSAGING',NULL,1,1),(51,'TAX_MODULE',NULL,1,1),(52,'SALES QUOTATION',NULL,1,1),(53,'APPROVAL SALES QUOTATION',NULL,1,1);
+INSERT INTO `master_module` VALUES (1,'MANAJEMEN SISTEM',NULL,1,1),(2,'DATABASE',NULL,1,1),(3,'MANAJEMEN USER',NULL,3,1),(4,'MANAJEMEN CABANG',NULL,3,1),(5,'SINKRONISASI INFORMASI',NULL,1,1),(6,'PENGATURAN PRINTER',NULL,1,1),(7,'PENGATURAN GAMBAR LATAR',NULL,1,1),(8,'GUDANG',NULL,1,1),(9,'PRODUK',NULL,1,1),(10,'TAMBAH / UPDATE PRODUK',NULL,3,1),(11,'PENGATURAN HARGA PRODUK',NULL,1,1),(12,'PENGATURAN LIMIT STOK',NULL,1,1),(13,'PENGATURAN KATEGORI PRODUK',NULL,1,1),(14,'PECAH SATUAN PRODUK',NULL,1,1),(15,'PENGATURAN NOMOR RAK',NULL,1,1),(16,'KATEGORI PRODUK',NULL,3,1),(17,'SATUAN PRODUK',NULL,1,1),(18,'TAMBAH / UPDATE SATUAN',NULL,1,1),(19,'PENGATURAN KONVERSI SATUAN',NULL,1,1),(20,'STOK OPNAME',NULL,1,1),(21,'PENYESUAIAN STOK',NULL,1,1),(22,'MUTASI BARANG',NULL,1,1),(23,'TAMBAH / UPDATE MUTASI BARANG',NULL,3,1),(24,'CEK PERMINTAAN BARANG',NULL,1,1),(25,'PENERIMAAN BARANG',NULL,1,1),(26,'PENERIMAAN BARANG DARI MUTASI',NULL,1,1),(27,'PENERIMAAN BARANG DARI PO',NULL,1,1),(28,'PEMBELIAN',NULL,1,1),(29,'SUPPLIER',NULL,1,1),(30,'REQUEST ORDER',NULL,3,1),(31,'PURCHASE ORDER',NULL,3,1),(32,'REPRINT REQUEST ORDER',NULL,1,1),(33,'RETUR PEMBELIAN KE SUPPLIER',NULL,1,1),(34,'RETUR PERMINTAAN KE PUSAT',NULL,1,1),(35,'PENJUALAN',NULL,1,1),(36,'PELANGGAN',NULL,3,1),(37,'TRANSAKSI PENJUALAN',NULL,1,1),(38,'SET NO FAKTUR',NULL,1,1),(39,'RETUR PENJUALAN',NULL,1,1),(40,'RETUR PENJUALAN BY INVOICE',NULL,1,1),(41,'RETUR PENJUALAN BY STOK',NULL,1,1),(42,'KEUANGAN',NULL,1,1),(43,'PENGATURAN NO AKUN',NULL,3,1),(44,'TRANSAKSI',NULL,1,1),(45,'TAMBAH TRANSAKSI HARIAN',NULL,1,1),(46,'PEMBAYARAN PIUTANG',NULL,1,1),(47,'PEMBAYARAN PIUTANG MUTASI',NULL,1,1),(48,'PEMBAYARAN HUTANG KE SUPPLIER',NULL,1,1),(49,'PENGATURAN LIMIT PAJAK',NULL,1,1),(50,'MODUL MESSAGING',NULL,1,1),(51,'TAX_MODULE',NULL,1,1),(52,'SALES QUOTATION',NULL,1,1),(53,'APPROVAL SALES QUOTATION',NULL,1,1),(54,'PENGATURAN HARGA POKOK',NULL,1,1),(55,'REVISI STOCK TAKE HARIAN',NULL,1,1),(56,'SALES QUOTATION',NULL,1,1);
 /*!40000 ALTER TABLE `master_module` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -507,7 +532,10 @@ CREATE TABLE `master_product` (
   `PRODUCT_WHOLESALE_PRICE` double DEFAULT '0',
   `PRODUCT_PHOTO_1` varchar(50) DEFAULT '',
   `UNIT_ID` smallint(5) unsigned DEFAULT '0',
+  `PRODUCT_BS_PRICE` double DEFAULT '0',
   `PRODUCT_STOCK_QTY` double DEFAULT '0',
+  `PRODUCT_STOCK_AWAL` double DEFAULT '0',
+  `PRODUCT_BS_QTY` double DEFAULT '0',
   `PRODUCT_LIMIT_STOCK` double DEFAULT '0',
   `PRODUCT_SHELVES` varchar(5) DEFAULT '--00',
   `PRODUCT_ACTIVE` tinyint(3) unsigned DEFAULT '0',
@@ -630,6 +658,7 @@ CREATE TABLE `payment_credit` (
   `payment_invalid` tinyint(4) DEFAULT '0',
   `payment_confirmed_date` date DEFAULT NULL,
   `payment_due_date` date DEFAULT NULL,
+  `payment_is_dp` tinyint(3) DEFAULT '0',
   PRIMARY KEY (`payment_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -747,6 +776,88 @@ CREATE TABLE `product_category` (
 LOCK TABLES `product_category` WRITE;
 /*!40000 ALTER TABLE `product_category` DISABLE KEYS */;
 /*!40000 ALTER TABLE `product_category` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `product_daily_adjustment_detail`
+--
+
+DROP TABLE IF EXISTS `product_daily_adjustment_detail`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `product_daily_adjustment_detail` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `PRODUCT_ADJUSTMENT_ID` int(11) DEFAULT NULL,
+  `PRODUCT_ID` varchar(45) DEFAULT NULL,
+  `PRODUCT_LAST_STOCK_QTY` double DEFAULT '0',
+  `PRODUCT_RECEIVED_QTY` double DEFAULT '0',
+  `PRODUCT_BS_QTY` double DEFAULT '0',
+  `PRODUCT_SOLD_QTY` double DEFAULT '0',
+  `PRODUCT_LEFTOVER_QTY` double DEFAULT '0',
+  `REMARKS` varchar(100) DEFAULT NULL,
+  `PRODUCT_RIIL_QTY` double DEFAULT NULL,
+  `PRODUCT_ADJUSTMENT_QTY` double DEFAULT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `product_daily_adjustment_detail`
+--
+
+LOCK TABLES `product_daily_adjustment_detail` WRITE;
+/*!40000 ALTER TABLE `product_daily_adjustment_detail` DISABLE KEYS */;
+/*!40000 ALTER TABLE `product_daily_adjustment_detail` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `product_daily_adjustment_header`
+--
+
+DROP TABLE IF EXISTS `product_daily_adjustment_header`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `product_daily_adjustment_header` (
+  `PRODUCT_ADJUSTMENT_ID` int(11) NOT NULL,
+  `PRODUCT_ADJUSTMENT_DATE` date DEFAULT NULL,
+  `USER_ID` tinyint(4) DEFAULT NULL,
+  `STOCK_TAKE_CLOSED` tinyint(4) DEFAULT '0',
+  PRIMARY KEY (`PRODUCT_ADJUSTMENT_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `product_daily_adjustment_header`
+--
+
+LOCK TABLES `product_daily_adjustment_header` WRITE;
+/*!40000 ALTER TABLE `product_daily_adjustment_header` DISABLE KEYS */;
+/*!40000 ALTER TABLE `product_daily_adjustment_header` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `product_daily_adjustment_history`
+--
+
+DROP TABLE IF EXISTS `product_daily_adjustment_history`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `product_daily_adjustment_history` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `PRODUCT_ADJUSTMENT_ID` int(11) DEFAULT NULL,
+  `PRODUCT_REVISION_NO` int(11) DEFAULT NULL,
+  `REVISION_REMARK` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `product_daily_adjustment_history`
+--
+
+LOCK TABLES `product_daily_adjustment_history` WRITE;
+/*!40000 ALTER TABLE `product_daily_adjustment_history` DISABLE KEYS */;
+/*!40000 ALTER TABLE `product_daily_adjustment_history` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -1364,6 +1475,11 @@ CREATE TABLE `sales_quotation_header` (
   `SQ_APPROVED` tinyint(3) unsigned DEFAULT '0',
   `SQ_APPROVED_DATE` date DEFAULT NULL,
   `SALESPERSON_ID` tinyint(3) DEFAULT '0',
+  `SQ_ORDER_DATE` date DEFAULT NULL,
+  `SQ_DP` double DEFAULT '0',
+  `SQ_ORDER_ADDRESS` varchar(100) DEFAULT '',
+  `DELIVERED` tinyint(3) DEFAULT '0',
+  `COMPLETED` tinyint(3) DEFAULT '0',
   PRIMARY KEY (`ID`),
   UNIQUE KEY `SQ_INVOICE_UNIQUE` (`SQ_INVOICE`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -1394,6 +1510,8 @@ CREATE TABLE `sys_config` (
   `store_address` varchar(100) DEFAULT NULL,
   `store_phone` varchar(20) DEFAULT NULL,
   `store_email` varchar(50) DEFAULT NULL,
+  `quotation_reminder` tinyint(3) DEFAULT NULL,
+  `server_IP4` varchar(15) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -1404,7 +1522,7 @@ CREATE TABLE `sys_config` (
 
 LOCK TABLES `sys_config` WRITE;
 /*!40000 ALTER TABLE `sys_config` DISABLE KEYS */;
-INSERT INTO `sys_config` VALUES (1,'SLO001',0,'127.0.0.1',NULL,NULL,NULL,NULL);
+INSERT INTO `sys_config` VALUES (1,'SLO001',0,'127.0.0.1',NULL,NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `sys_config` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1537,7 +1655,7 @@ CREATE TABLE `user_access_management` (
 
 LOCK TABLES `user_access_management` WRITE;
 /*!40000 ALTER TABLE `user_access_management` DISABLE KEYS */;
-INSERT INTO `user_access_management` VALUES (1,1,1,1),(2,1,2,1),(3,1,3,6),(4,1,4,6),(5,1,5,1),(6,1,6,1),(7,1,7,1),(8,1,8,1),(9,1,9,1),(10,1,10,6),(11,1,11,1),(12,1,12,1),(13,1,13,1),(14,1,14,1),(15,1,15,1),(16,1,16,6),(17,1,17,1),(18,1,18,1),(19,1,19,1),(20,1,20,1),(21,1,21,1),(22,1,22,1),(23,1,23,6),(24,1,24,1),(25,1,25,1),(26,1,26,1),(27,1,27,1),(28,1,28,1),(29,1,29,1),(30,1,30,6),(31,1,31,6),(32,1,32,1),(33,1,33,1),(34,1,34,1),(35,1,35,1),(36,1,36,6),(37,1,37,1),(38,1,38,1),(39,1,39,1),(40,1,40,1),(41,1,41,1),(42,1,42,1),(43,1,43,6),(44,1,44,1),(45,1,45,1),(46,1,46,1),(47,1,47,1),(48,1,48,1),(49,2,1,0),(50,2,2,0),(51,2,3,0),(52,2,4,0),(53,2,5,0),(54,2,6,0),(55,2,7,0),(56,2,8,0),(57,2,9,0),(58,2,10,0),(59,2,11,0),(60,2,12,0),(61,2,13,0),(62,2,14,0),(63,2,15,0),(64,2,16,0),(65,2,17,0),(66,2,18,0),(67,2,19,0),(68,2,20,0),(69,2,21,0),(70,2,22,0),(71,2,23,0),(72,2,24,0),(73,2,25,0),(74,2,26,0),(75,2,27,0),(76,2,28,0),(77,2,29,0),(78,2,30,0),(79,2,31,0),(80,2,32,0),(81,2,33,0),(82,2,34,0),(83,2,35,1),(84,2,36,6),(85,2,37,1),(86,2,38,0),(87,2,39,1),(88,2,40,1),(89,2,41,1),(90,2,42,1),(91,2,43,0),(92,2,44,1),(93,2,45,1),(94,2,46,1),(95,2,47,0),(96,2,48,0),(97,1,49,1),(98,2,49,0),(99,1,50,1),(100,1,51,1),(101,1,52,1),(102,1,53,1);
+INSERT INTO `user_access_management` VALUES (1,1,1,1),(2,1,2,1),(3,1,3,6),(4,1,4,6),(5,1,5,1),(6,1,6,1),(7,1,7,1),(8,1,8,1),(9,1,9,1),(10,1,10,6),(11,1,11,1),(12,1,12,1),(13,1,13,1),(14,1,14,1),(15,1,15,1),(16,1,16,6),(17,1,17,1),(18,1,18,1),(19,1,19,1),(20,1,20,1),(21,1,21,1),(22,1,22,1),(23,1,23,6),(24,1,24,1),(25,1,25,1),(26,1,26,1),(27,1,27,1),(28,1,28,1),(29,1,29,1),(30,1,30,0),(31,1,31,0),(32,1,32,0),(33,1,33,1),(34,1,34,0),(35,1,35,1),(36,1,36,6),(37,1,37,1),(38,1,38,1),(39,1,39,1),(40,1,40,1),(41,1,41,1),(42,1,42,1),(43,1,43,6),(44,1,44,1),(45,1,45,1),(46,1,46,1),(47,1,47,1),(48,1,48,1),(49,2,1,0),(50,2,2,0),(51,2,3,0),(52,2,4,0),(53,2,5,0),(54,2,6,0),(55,2,7,0),(56,2,8,0),(57,2,9,0),(58,2,10,0),(59,2,11,0),(60,2,12,0),(61,2,13,0),(62,2,14,0),(63,2,15,0),(64,2,16,0),(65,2,17,0),(66,2,18,0),(67,2,19,0),(68,2,20,0),(69,2,21,0),(70,2,22,0),(71,2,23,0),(72,2,24,0),(73,2,25,0),(74,2,26,0),(75,2,27,0),(76,2,28,0),(77,2,29,0),(78,2,30,0),(79,2,31,0),(80,2,32,0),(81,2,33,0),(82,2,34,0),(83,2,35,1),(84,2,36,6),(85,2,37,1),(86,2,38,0),(87,2,39,1),(88,2,40,1),(89,2,41,1),(90,2,42,1),(91,2,43,0),(92,2,44,1),(93,2,45,1),(94,2,46,1),(95,2,47,0),(96,2,48,0),(97,1,49,1),(98,2,49,0),(99,1,50,1),(100,1,51,1),(101,1,52,1),(102,1,53,1),(103,1,54,1),(104,1,55,1),(105,1,56,1);
 /*!40000 ALTER TABLE `user_access_management` ENABLE KEYS */;
 UNLOCK TABLES;
 

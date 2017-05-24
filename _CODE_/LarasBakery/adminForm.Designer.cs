@@ -1867,7 +1867,7 @@
             this.Name = "adminForm";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "ADMINISTRATOR MODULE";
+            this.Text = "    ADMINISTRATOR MODULE";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Activated += new System.EventHandler(this.adminForm_Activated);
             this.Deactivate += new System.EventHandler(this.adminForm_Deactivate);

@@ -1842,18 +1842,31 @@ namespace AlphaSoft
         private void sendDataPesananToPabrik()
         {
             globalSynchronizeLib gSync = new globalSynchronizeLib();
+            bool successSync = false;
+            bool result = false;
 
-            if (gSync.sendDataToServer("SALES_HEADER", "SALES_INVOICE", selectedsalesinvoice))
+            successSync = gSync.sendDataToServer("SALES_HEADER", "SALES_INVOICE", selectedsalesinvoice);
+            if (successSync)
+            {
+                result = true;
                 gSync.updateSyncFlag("SALES_HEADER", "SALES_INVOICE", selectedsalesinvoice);
 
-            if (gSync.sendDataToServer("SALES_DETAIL", "SALES_INVOICE", selectedsalesinvoice))
-                gSync.updateSyncFlag("SALES_DETAIL", "SALES_INVOICE", selectedsalesinvoice);
+                successSync = gSync.sendDataToServer("SALES_DETAIL", "SALES_INVOICE", selectedsalesinvoice);
+                if (successSync)
+                    gSync.updateSyncFlag("SALES_DETAIL", "SALES_INVOICE", selectedsalesinvoice);
+                result = result && successSync;
 
-            if (gSync.sendDataToServer("SALES_DETAIL_FULFILLMENT", "SALES_INVOICE", selectedsalesinvoice))
-                gSync.updateSyncFlag("SALES_DETAIL_FULFILLMENT", "SALES_INVOICE", selectedsalesinvoice);
+                successSync = gSync.sendDataToServer("SALES_DETAIL_FULFILLMENT", "SALES_INVOICE", selectedsalesinvoice);
+                if (successSync)
+                    gSync.updateSyncFlag("SALES_DETAIL_FULFILLMENT", "SALES_INVOICE", selectedsalesinvoice);
+                result = result && successSync;
 
-            if (gSync.sendDataToServer("NOTIF_TABLE"))
-                gSync.updateSyncFlag("NOTIF_TABLE");
+                if (gSync.sendDataToServer("NOTIF_TABLE"))
+                    gSync.updateSyncFlag("NOTIF_TABLE");
+            }
+
+            if (result == false)
+                MessageBox.Show("DATA GAGAL DIKIRIM KE PABRIK", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         private bool saveAndPrintOutInvoice()
@@ -4027,7 +4040,8 @@ namespace AlphaSoft
                 }
             }
 
-            if (originModuleID == 0 || originModuleID == globalConstants.EDIT_SALES_ORDER)
+            if (originModuleID == 0 || originModuleID == globalConstants.EDIT_SALES_ORDER || 
+                originModuleID == globalConstants.SO_FULFILLMENT || subOriginModuleID == globalConstants.SO_FULFILLMENT)
             {
                 // NORMAL TRANSACTION
                 sqlCommand = "SELECT IFNULL(SUM(PRODUCT_QTY), 0) FROM SALES_DETAIL S, MASTER_PRODUCT P WHERE S.PRODUCT_ID = P.PRODUCT_ID AND S.SALES_INVOICE = '" + selectedsalesinvoice + "'";
@@ -4081,7 +4095,7 @@ namespace AlphaSoft
 
             Offset = Offset + add_offset;
             rect.Y = startY + Offset;
-            ucapan = "TIDAK DAPAT DITUKAR/ DIKEMBALIKKAN";
+            ucapan = "TIDAK DAPAT DITUKAR/ DIKEMBALIKAN";
             graphics.DrawString(ucapan, new Font("Courier New", fontSize),
                      new SolidBrush(Color.Black), rect, sf);
             //end of footer

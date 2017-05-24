@@ -425,7 +425,7 @@ namespace AlphaSoft
 
             if (originModuleID == globalConstants.RETUR_PENJUALAN)
             {
-                sqlCommand = "SELECT M.ID, M.PRODUCT_ID AS 'PRODUK ID', M.PRODUCT_NAME AS 'NAMA PRODUK', M.PRODUCT_DESCRIPTION AS 'DESKRIPSI PRODUK' " +
+                sqlCommand = "SELECT M.ID, M.PRODUCT_ID AS 'PRODUK ID', M.PRODUCT_NAME AS 'NAMA PRODUK', M.PRODUCT_STOCK_QTY AS 'QTY', M.PRODUCT_DESCRIPTION AS 'DESKRIPSI PRODUK' " +
                                     "FROM MASTER_PRODUCT M, SALES_DETAIL SD " +
                                     "WHERE SD.SALES_INVOICE = '" + returJualSearchParam + "' AND SD.PRODUCT_ID = M.PRODUCT_ID AND PRODUCT_IS_SERVICE = 0 " +
                                     "AND M.PRODUCT_ID LIKE '%" + kodeProductParam + "%' AND M.PRODUCT_NAME LIKE '%" + namaProductParam + "%'" +
@@ -433,7 +433,7 @@ namespace AlphaSoft
             }
             else if (originModuleID == globalConstants.RETUR_PENJUALAN_STOCK_ADJUSTMENT)
             {
-                sqlCommand = "SELECT M.ID, M.PRODUCT_ID AS 'PRODUK ID', M.PRODUCT_NAME AS 'NAMA PRODUK', M.PRODUCT_DESCRIPTION AS 'DESKRIPSI PRODUK' " +
+                sqlCommand = "SELECT M.ID, M.PRODUCT_ID AS 'PRODUK ID', M.PRODUCT_NAME AS 'NAMA PRODUK', M.PRODUCT_STOCK_QTY AS 'QTY', M.PRODUCT_DESCRIPTION AS 'DESKRIPSI PRODUK' " +
                                     "FROM MASTER_PRODUCT M, SALES_DETAIL SD, SALES_HEADER SH " +
                                     "WHERE PRODUCT_ACTIVE = 1 AND SH.SALES_INVOICE = SD.SALES_INVOICE AND SD.PRODUCT_ID = M.PRODUCT_ID AND SH.CUSTOMER_ID = " + Convert.ToInt32(returJualSearchParam) + " AND PRODUCT_IS_SERVICE = 0 " +
                                     "AND M.PRODUCT_ID LIKE '%" + kodeProductParam + "%' AND M.PRODUCT_NAME LIKE '%" + namaProductParam + "%'" +
@@ -441,11 +441,11 @@ namespace AlphaSoft
             }
             else if (originModuleID == globalConstants.RETUR_PEMBELIAN)
             {
-                sqlCommand = "SELECT ID, PRODUCT_ID AS 'PRODUK ID', PRODUCT_NAME AS 'NAMA PRODUK', PRODUCT_DESCRIPTION AS 'DESKRIPSI PRODUK' FROM MASTER_PRODUCT WHERE PRODUCT_ACTIVE = 1 AND PRODUCT_IS_SERVICE = 0 AND (PRODUCT_STOCK_QTY - PRODUCT_LIMIT_STOCK > 0) ORDER BY PRODUCT_NAME ASC";
+                sqlCommand = "SELECT ID, PRODUCT_ID AS 'PRODUK ID', PRODUCT_NAME AS 'NAMA PRODUK', PRODUCT_STOCK_QTY AS 'QTY', PRODUCT_DESCRIPTION AS 'DESKRIPSI PRODUK' FROM MASTER_PRODUCT WHERE PRODUCT_ACTIVE = 1 AND PRODUCT_IS_SERVICE = 0 AND (PRODUCT_STOCK_QTY - PRODUCT_LIMIT_STOCK > 0) ORDER BY PRODUCT_NAME ASC";
             }
             else
             {
-                sqlCommand = "SELECT ID, PRODUCT_ID AS 'PRODUK ID', PRODUCT_NAME AS 'NAMA PRODUK', PRODUCT_DESCRIPTION AS 'DESKRIPSI PRODUK' FROM MASTER_PRODUCT WHERE PRODUCT_ACTIVE = 1 AND PRODUCT_ID LIKE '%" + kodeProductParam + "%' AND PRODUCT_NAME LIKE '%" + namaProductParam + "%'";
+                sqlCommand = "SELECT ID, PRODUCT_ID AS 'PRODUK ID', PRODUCT_NAME AS 'NAMA PRODUK', PRODUCT_STOCK_QTY AS 'QTY', PRODUCT_DESCRIPTION AS 'DESKRIPSI PRODUK' FROM MASTER_PRODUCT WHERE PRODUCT_ACTIVE = 1 AND PRODUCT_ID LIKE '%" + kodeProductParam + "%' AND PRODUCT_NAME LIKE '%" + namaProductParam + "%'";
             }
 
             if (originModuleID == globalConstants.STOK_PECAH_BARANG)
@@ -461,9 +461,9 @@ namespace AlphaSoft
                     dataProdukGridView.DataSource = dt;
 
                     dataProdukGridView.Columns["ID"].Visible = false;
-                    dataProdukGridView.Columns["PRODUK ID"].Width = 200;
-                    dataProdukGridView.Columns["NAMA PRODUK"].Width = 200;
-                    dataProdukGridView.Columns["DESKRIPSI PRODUK"].Width = 300;                    
+                    //dataProdukGridView.Columns["PRODUK ID"].Width = 200;
+                    //dataProdukGridView.Columns["NAMA PRODUK"].Width = 200;
+                    //dataProdukGridView.Columns["DESKRIPSI PRODUK"].Width = 300;                    
                 }
             }
         }

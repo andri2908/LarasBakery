@@ -47,7 +47,7 @@ namespace AlphaSoft
             DataGridViewTextBoxColumn qtyColumn = new DataGridViewTextBoxColumn();
 
             // LOAD DATA HEADER
-            sqlCommand = "SELECT SH.SALES_INVOICE, IFNULL(MC.CUSTOMER_FULL_NAME, 'P-UMUM') AS CUSTOMER_NAME FROM SALES_HEADER SH LEFT OUTER JOIN MASTER_CUSTOMER MC ON (SH.CUSTOMER_ID = MC.CUSTOMER_ID) WHERE SH.SALES_INVOICE = '" + selectedSalesInvoice + "' AND SH.BRANCH_ID = " + branchID;
+            sqlCommand = "SELECT SH.SALES_INVOICE, IFNULL(MC.CUSTOMER_FULL_NAME, 'P-UMUM') AS CUSTOMER_NAME, IFNULL(SALES_ORDER_DELIVERED_ADDRESS, '') AS REMARK FROM SALES_HEADER SH LEFT OUTER JOIN MASTER_CUSTOMER MC ON (SH.CUSTOMER_ID = MC.CUSTOMER_ID) WHERE SH.SALES_INVOICE = '" + selectedSalesInvoice + "' AND SH.BRANCH_ID = " + branchID;
 
             using (rdr = DS.getData(sqlCommand))
             {
@@ -57,6 +57,7 @@ namespace AlphaSoft
                     {
                         noInvoiceTextBox.Text = rdr.GetString("SALES_INVOICE");
                         customerNameTextBox.Text = rdr.GetString("CUSTOMER_NAME");
+                        instructionTextBox.Text = rdr.GetString("REMARK");
                     }
                 }
             }
@@ -219,7 +220,7 @@ namespace AlphaSoft
                 DS.mySqlConnect();
 
                 // INSERT DATA HEADER
-                sqlCommand = "INSERT INTO DELIVERY_ORDER_HEADER (DO_ID, SALES_INVOICE, DO_DATE) VALUES ('" + doInvoiceTextBox.Text + "', '" + selectedSalesInvoice + "', STR_TO_DATE('" + DODateTime + "', '%d-%m-%Y'))";
+                sqlCommand = "INSERT INTO DELIVERY_ORDER_HEADER (DO_ID, SALES_INVOICE, DO_DATE, REMARK) VALUES ('" + doInvoiceTextBox.Text + "', '" + selectedSalesInvoice + "', STR_TO_DATE('" + DODateTime + "', '%d-%m-%Y'), '" + instructionTextBox.Text + "')";
                 if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
                     throw internalEX;
 
@@ -450,7 +451,7 @@ namespace AlphaSoft
 
         private void printOutDeliveryOrder(string SONo, string revNo, string salesStatus = "0")
         {
-            string sqlCommandx = "SELECT DH.DO_ID, '"+ salesStatus + "' AS 'SALES_STATUS', DH.DO_DATE AS 'TGL', DH.SALES_INVOICE AS 'INVOICE', IFNULL(MC.CUSTOMER_FULL_NAME, '') AS 'CUSTOMER_NAME', MP.PRODUCT_NAME AS 'PRODUK', DD.PRODUCT_QTY AS 'QTY' " +
+            string sqlCommandx = "SELECT DH.DO_ID, '"+ salesStatus + "' AS 'SALES_STATUS', DH.DO_DATE AS 'TGL', DH.SALES_INVOICE AS 'INVOICE', IFNULL(MC.CUSTOMER_FULL_NAME, '') AS 'CUSTOMER_NAME', MP.PRODUCT_NAME AS 'PRODUK', DD.PRODUCT_QTY AS 'QTY', IFNULL(DH.REMARK, '') AS REMARK " +
                                         "FROM DELIVERY_ORDER_HEADER DH, DELIVERY_ORDER_DETAIL DD, SALES_HEADER SH LEFT OUTER JOIN MASTER_CUSTOMER MC ON (SH.CUSTOMER_ID = MC.CUSTOMER_ID) , MASTER_PRODUCT MP " +
                                         "WHERE DH.DO_ID = '" + doInvoiceTextBox.Text + "' AND DH.SALES_INVOICE = '" + SONo + "' AND DD.DO_ID = DH.DO_ID AND DD.PRODUCT_ID = MP.PRODUCT_ID AND SH.SALES_INVOICE = '" + SONo + "'";
 
@@ -462,6 +463,11 @@ namespace AlphaSoft
         private void deliveryOrderForm_Activated(object sender, EventArgs e)
         {
             doInvoiceTextBox.Select();
+        }
+
+        private void groupBox1_Enter(object sender, EventArgs e)
+        {
+
         }
     }
 }

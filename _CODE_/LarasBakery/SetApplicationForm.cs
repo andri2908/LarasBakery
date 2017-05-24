@@ -116,6 +116,7 @@ namespace AlphaSoft
                 serverIPRadioButton.Checked = true;
             }*/
         }
+
         private bool checkActiveSetting(int opt)
         {
             bool rslt = false;
@@ -133,6 +134,7 @@ namespace AlphaSoft
             }
             return rslt;
         }
+
         private void loadSettingDB(int opt)
         {
             MySqlDataReader rdr;
@@ -146,10 +148,11 @@ namespace AlphaSoft
                 {                    
                     while (rdr.Read())
                     {
-                    //    if (rdr.GetInt32("BRANCH_ID") > 0)
+                        //    if (rdr.GetInt32("BRANCH_ID") > 0)
+                        if (branchCombo.Items.Count > 0)
                         { 
                             BranchIDTextbox.Text = rdr.GetString("BRANCH_ID");
-                            branchCombo.SelectedIndex = rdr.GetInt32("BRANCH_ID");
+                            branchCombo.SelectedIndex = rdr.GetInt32("BRANCH_ID")-1;
                         }
 
                         string tmp, tmp2;
@@ -249,8 +252,11 @@ namespace AlphaSoft
             branchCombo.Items.Clear();
             branchComboHidden.Items.Clear();
 
-            branchCombo.Items.Add("PUSAT");
-            branchComboHidden.Items.Add("0");
+            if (gutil.isServerApp() != 0 && gutil.isSS_ServerApp() != 0)
+            {
+                branchCombo.Items.Add("PUSAT");
+                branchComboHidden.Items.Add("0");
+            }
 
             using (rdr = DS.getData(sqlCommand))
             {
