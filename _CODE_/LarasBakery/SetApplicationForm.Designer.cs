@@ -75,6 +75,10 @@
             this.label7 = new System.Windows.Forms.Label();
             this.branchIDBox = new System.Windows.Forms.GroupBox();
             this.branchCombo = new System.Windows.Forms.ComboBox();
+            this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.kuartoPrinter = new System.Windows.Forms.ComboBox();
+            this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.posReceiptPrinter = new System.Windows.Forms.ComboBox();
             this.ConModeBox.SuspendLayout();
             this.ipServerBox.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -87,6 +91,8 @@
             this.groupBox1.SuspendLayout();
             this.HQIPBox.SuspendLayout();
             this.branchIDBox.SuspendLayout();
+            this.groupBox7.SuspendLayout();
+            this.groupBox8.SuspendLayout();
             this.SuspendLayout();
             // 
             // ip1Textbox
@@ -238,7 +244,7 @@
             this.panel1.Controls.Add(this.errorLabel);
             this.panel1.Location = new System.Drawing.Point(1, 1);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(456, 29);
+            this.panel1.Size = new System.Drawing.Size(580, 29);
             this.panel1.TabIndex = 22;
             // 
             // errorLabel
@@ -258,7 +264,7 @@
             // 
             this.saveButton.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.saveButton.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.saveButton.Location = new System.Drawing.Point(163, 604);
+            this.saveButton.Location = new System.Drawing.Point(235, 604);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(108, 37);
             this.saveButton.TabIndex = 21;
@@ -268,7 +274,9 @@
             // 
             // AppModeBox
             // 
+            this.AppModeBox.Controls.Add(this.groupBox7);
             this.AppModeBox.Controls.Add(this.branchComboHidden);
+            this.AppModeBox.Controls.Add(this.groupBox8);
             this.AppModeBox.Controls.Add(this.BranchIDTextbox);
             this.AppModeBox.Controls.Add(this.groupBox6);
             this.AppModeBox.Controls.Add(this.groupBox5);
@@ -282,7 +290,7 @@
             this.AppModeBox.Font = new System.Drawing.Font("Verdana", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.AppModeBox.Location = new System.Drawing.Point(9, 36);
             this.AppModeBox.Name = "AppModeBox";
-            this.AppModeBox.Size = new System.Drawing.Size(441, 562);
+            this.AppModeBox.Size = new System.Drawing.Size(564, 562);
             this.AppModeBox.TabIndex = 24;
             this.AppModeBox.TabStop = false;
             this.AppModeBox.Text = "Pengaturan Aplikasi";
@@ -417,9 +425,9 @@
             this.groupBox5.Controls.Add(this.labelCaraBayar);
             this.groupBox5.Controls.Add(this.reminderTextBox);
             this.groupBox5.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox5.Location = new System.Drawing.Point(238, 417);
+            this.groupBox5.Location = new System.Drawing.Point(235, 95);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(188, 70);
+            this.groupBox5.Size = new System.Drawing.Size(188, 59);
             this.groupBox5.TabIndex = 30;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Reminder";
@@ -659,12 +667,58 @@
             this.branchCombo.Enter += new System.EventHandler(this.branchCombo_Enter);
             this.branchCombo.Leave += new System.EventHandler(this.branchCombo_Leave);
             // 
+            // groupBox7
+            // 
+            this.groupBox7.Controls.Add(this.kuartoPrinter);
+            this.groupBox7.Font = new System.Drawing.Font("Verdana", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox7.Location = new System.Drawing.Point(235, 477);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.Size = new System.Drawing.Size(314, 54);
+            this.groupBox7.TabIndex = 53;
+            this.groupBox7.TabStop = false;
+            this.groupBox7.Text = "Kuarto Printer";
+            // 
+            // kuartoPrinter
+            // 
+            this.kuartoPrinter.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.kuartoPrinter.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.kuartoPrinter.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.kuartoPrinter.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.kuartoPrinter.FormattingEnabled = true;
+            this.kuartoPrinter.Location = new System.Drawing.Point(8, 21);
+            this.kuartoPrinter.Name = "kuartoPrinter";
+            this.kuartoPrinter.Size = new System.Drawing.Size(298, 26);
+            this.kuartoPrinter.TabIndex = 48;
+            // 
+            // groupBox8
+            // 
+            this.groupBox8.Controls.Add(this.posReceiptPrinter);
+            this.groupBox8.Font = new System.Drawing.Font("Verdana", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox8.Location = new System.Drawing.Point(235, 417);
+            this.groupBox8.Name = "groupBox8";
+            this.groupBox8.Size = new System.Drawing.Size(314, 54);
+            this.groupBox8.TabIndex = 52;
+            this.groupBox8.TabStop = false;
+            this.groupBox8.Text = "POS Receipt Printer";
+            // 
+            // posReceiptPrinter
+            // 
+            this.posReceiptPrinter.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.posReceiptPrinter.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.posReceiptPrinter.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.posReceiptPrinter.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.posReceiptPrinter.FormattingEnabled = true;
+            this.posReceiptPrinter.Location = new System.Drawing.Point(8, 21);
+            this.posReceiptPrinter.Name = "posReceiptPrinter";
+            this.posReceiptPrinter.Size = new System.Drawing.Size(300, 26);
+            this.posReceiptPrinter.TabIndex = 48;
+            // 
             // SetApplicationForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FloralWhite;
-            this.ClientSize = new System.Drawing.Size(458, 653);
+            this.ClientSize = new System.Drawing.Size(579, 653);
             this.Controls.Add(this.AppModeBox);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.saveButton);
@@ -700,6 +754,8 @@
             this.HQIPBox.ResumeLayout(false);
             this.HQIPBox.PerformLayout();
             this.branchIDBox.ResumeLayout(false);
+            this.groupBox7.ResumeLayout(false);
+            this.groupBox8.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -752,5 +808,9 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.GroupBox groupBox7;
+        private System.Windows.Forms.ComboBox kuartoPrinter;
+        private System.Windows.Forms.GroupBox groupBox8;
+        private System.Windows.Forms.ComboBox posReceiptPrinter;
     }
 }

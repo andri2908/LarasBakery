@@ -867,13 +867,18 @@ namespace AlphaSoft
             jumlahList[rowSelectedIndex] = selectedRow.Cells["jumlah"].Value.ToString();
             calculateTotal();
 
-            cashierDataGridView.CurrentCell = selectedRow.Cells["qty"];
-            cashierDataGridView.AllowUserToAddRows = true;
-            //comboSelectedIndexChangeMethod(rowSelectedIndex, i, selectedRow);
-            //cashierDataGridView.CurrentCell = cashierDataGridView.Rows[rowSelectedIndex].Cells["qty"];
+            if (null == displayBarcodeForm || displayBarcodeForm.IsDisposed)
+            {
+                cashierDataGridView.CurrentCell = selectedRow.Cells["qty"];
+                cashierDataGridView.AllowUserToAddRows = true;
+                //comboSelectedIndexChangeMethod(rowSelectedIndex, i, selectedRow);
+                //cashierDataGridView.CurrentCell = cashierDataGridView.Rows[rowSelectedIndex].Cells["qty"];
 
-            cashierDataGridView.Select();
-            cashierDataGridView.BeginEdit(true);
+                cashierDataGridView.Select();
+                cashierDataGridView.BeginEdit(true);
+            }
+
+            cashierDataGridView.AllowUserToAddRows = true;
         }
 
         private bool productIDValid(string productID)
@@ -3319,7 +3324,9 @@ namespace AlphaSoft
             //Font font = new Font("Courier New", 15);
 
             //cek paper mode
-            int papermode = gutil.getPaper();
+            int papermode = comboBox1.SelectedIndex; //gutil.getPaper();
+            gutil.setPaper(papermode);
+
             int paperLength = 0;
 
             gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : PrintReceipt");
@@ -4295,14 +4302,22 @@ namespace AlphaSoft
 
         private void cashierDataGridView_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
+            bool tempIsLoading = isLoading;
+            int rowIndex = e.RowIndex+1;
+
             if ((cashierDataGridView.Columns[e.ColumnIndex].Name == "productPrice" || cashierDataGridView.Columns[e.ColumnIndex].Name == "qty" || cashierDataGridView.Columns[e.ColumnIndex].Name == "discRP" || cashierDataGridView.Columns[e.ColumnIndex].Name == "jumlah")
                 && e.RowIndex != this.cashierDataGridView.NewRowIndex && null != e.Value)
             {
                 isLoading = true;
-                double d = double.Parse(e.Value.ToString());
-                e.Value = d.ToString(globalUtilities.CELL_FORMATTING_NUMERIC_FORMAT);
-                isLoading = false;    
+                double d;
+                if (double.TryParse(e.Value.ToString(), out d))
+                    e.Value = d.ToString(globalUtilities.CELL_FORMATTING_NUMERIC_FORMAT);
+                else
+                    errorLabel.Text = "INPUT PADA BARIS [" + rowIndex + "] TIDAK VALID";
+                isLoading = false;
             }
+
+            isLoading = tempIsLoading;
         }
 
         private void cashierDataGridView_Enter(object sender, EventArgs e)

@@ -1157,7 +1157,7 @@
             this.hutangLewatJatuhTempoToolStripMenuItem.ForeColor = System.Drawing.Color.FloralWhite;
             this.hutangLewatJatuhTempoToolStripMenuItem.Name = "hutangLewatJatuhTempoToolStripMenuItem";
             this.hutangLewatJatuhTempoToolStripMenuItem.Size = new System.Drawing.Size(276, 22);
-            this.hutangLewatJatuhTempoToolStripMenuItem.Text = "Hutang Lewat Jatuh Tempo";
+            this.hutangLewatJatuhTempoToolStripMenuItem.Text = "Hutang Yang Jatuh Tempo";
             this.hutangLewatJatuhTempoToolStripMenuItem.Click += new System.EventHandler(this.hutangLewatJatuhTempoToolStripMenuItem_Click);
             // 
             // pembayaranHutangToolStripMenuItem

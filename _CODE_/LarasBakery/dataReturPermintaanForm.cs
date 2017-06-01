@@ -386,7 +386,10 @@ namespace AlphaSoft
             if (detailReturDataGridView.ReadOnly == true)
                 return;
 
-            detailReturDataGridView.Focus();
+            if (null == displayBarcodeForm || displayBarcodeForm.IsDisposed)
+                detailReturDataGridView.Focus();
+
+            detailReturDataGridView.AllowUserToAddRows = false;
 
             if (rowIndex >= 0)
             {
@@ -457,11 +460,16 @@ namespace AlphaSoft
 
             calculateTotal();
 
-            detailReturDataGridView.CurrentCell = selectedRow.Cells["qty"];
-            detailReturDataGridView.BeginEdit(true);
+            if (null == displayBarcodeForm || displayBarcodeForm.IsDisposed)
+            {
+                detailReturDataGridView.CurrentCell = selectedRow.Cells["qty"];
+                detailReturDataGridView.BeginEdit(true);
 
-            detailReturDataGridView.Select();
-            detailReturDataGridView.Focus();
+                detailReturDataGridView.Select();
+                detailReturDataGridView.Focus();
+            }
+
+            detailReturDataGridView.AllowUserToAddRows = true;
         }
 
         private double getHPPValue(string productID)

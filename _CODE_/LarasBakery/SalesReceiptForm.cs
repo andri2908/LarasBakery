@@ -20,6 +20,7 @@ namespace AlphaSoft
     {
         private globalUtilities gutil = new globalUtilities();
         private Data_Access DS = new Data_Access();
+        private globalPrinterUtility gPrinter = new globalPrinterUtility();
 
         public SalesReceiptForm()
         {
@@ -114,8 +115,16 @@ namespace AlphaSoft
                 int branch_id = gutil.loadbranchID(2, out namacabang);
                 txtReportHeader4.Text = namacabang;
                 rptXMLReport.Database.Tables[0].SetDataSource(dsTempReport.Tables[0]);
+
+                rptXMLReport.PrintOptions.PrinterName = gPrinter.getConfigPrinterName(2);
+                rptXMLReport.PrintOptions.PaperSize = (CrystalDecisions.Shared.PaperSize)gPrinter.getReportPaperSize(globalPrinterUtility.HALF_KUARTO_PAPER_SIZE);
+                rptXMLReport.PrintOptions.PaperOrientation = CrystalDecisions.Shared.PaperOrientation.Portrait;
+
                 crystalReportViewer1.ReportSource = rptXMLReport;
                 crystalReportViewer1.Refresh();
+
+                rptXMLReport.PrintToPrinter(1, false, 0, 0);
+
             }
             catch (Exception ex)
             {

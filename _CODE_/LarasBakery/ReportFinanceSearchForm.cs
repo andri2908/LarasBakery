@@ -84,7 +84,7 @@ namespace AlphaSoft
                                         "AND DATE_FORMAT(DJ.JOURNAL_DATETIME, '%Y%m%d') >= '" + dateFrom + "' AND DATE_FORMAT(DJ.JOURNAL_DATETIME, '%Y%m%d') <= '" + dateTo + "'";
 
                     DS.writeXML(sqlCommandx, globalConstants.FinanceInXML);
-                    ReportCashierLogForm displayedForm1 = new ReportCashierLogForm();
+                    ReportFinanceInForm displayedForm1 = new ReportFinanceInForm();
                     displayedForm1.ShowDialog(this);
                     break;
                 case globalConstants.REPORT_FINANCE_OUT:
@@ -217,7 +217,6 @@ namespace AlphaSoft
                     displayedForm4.ShowDialog(this);
                     break;
             }
-            
         }
 
         private void ReportFinanceSearchForm_Load(object sender, EventArgs e)
@@ -226,9 +225,9 @@ namespace AlphaSoft
             selectedBranchID = gutil.loadbranchID(2, out namaCabang);
 
             datefromPicker.Format = DateTimePickerFormat.Custom;
-            datetoPicker.Format = DateTimePickerFormat.Custom;
-
             datefromPicker.CustomFormat = globalUtilities.CUSTOM_DATE_FORMAT;
+
+            datetoPicker.Format = DateTimePickerFormat.Custom;
             datetoPicker.CustomFormat = globalUtilities.CUSTOM_DATE_FORMAT;
 
             gutil.reArrangeTabOrder(this);

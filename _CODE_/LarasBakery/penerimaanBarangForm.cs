@@ -315,6 +315,8 @@ namespace AlphaSoft
             if (detailGridView.ReadOnly == true)
                 return;
 
+            detailGridView.AllowUserToAddRows = false;
+
             if (rowIndex >= 0)
             {
                 rowSelectedIndex = rowIndex;
@@ -389,11 +391,16 @@ namespace AlphaSoft
 
             calculateTotal();
 
-            detailGridView.CurrentCell = selectedRow.Cells["qtyReceived"];
-            detailGridView.Select();
-            detailGridView.BeginEdit(true);
+            if (null == displayBarcodeForm || displayBarcodeForm.IsDisposed)
+            {
+                detailGridView.CurrentCell = selectedRow.Cells["qtyReceived"];
+                detailGridView.Select();
+                detailGridView.BeginEdit(true);
 
-            detailGridView.Focus();
+                detailGridView.Focus();
+            }
+
+            detailGridView.AllowUserToAddRows = true;
         }
 
         public void setSelectedInvoice(string invoiceNo)
@@ -1633,6 +1640,9 @@ namespace AlphaSoft
         private void printReport(string invoiceNo)
         {
             string sqlCommandx = "";
+
+            gUtil.setPaper(comboBox1.SelectedIndex + 1);
+
             if (originModuleId == globalConstants.PENERIMAAN_BARANG_DARI_MUTASI)
             {
                 sqlCommandx = "SELECT '1' AS TYPE, '"+noMutasiTextBox.Text+"' AS ORIGIN_INVOICE, DATE(PH.PR_DATE) AS 'TGL', PH.PR_INVOICE AS 'INVOICE', MP.PRODUCT_NAME AS 'PRODUK', PD.PRODUCT_BASE_PRICE AS 'HARGA', PD.PRODUCT_ACTUAL_QTY AS 'QTY', PD.PR_SUBTOTAL AS 'SUBTOTAL' " +

@@ -46,7 +46,6 @@
             this.addressTextBox = new System.Windows.Forms.TextBox();
             this.deliveredCheckbox = new System.Windows.Forms.CheckBox();
             this.rejectButton = new System.Windows.Forms.Button();
-            this.ChangePrinterButton = new System.Windows.Forms.Button();
             this.approvalButton = new System.Windows.Forms.Button();
             this.errorLabel = new System.Windows.Forms.Label();
             this.pelangganTextBox = new System.Windows.Forms.TextBox();
@@ -76,6 +75,7 @@
             this.tempoMaskedTextBox = new System.Windows.Forms.MaskedTextBox();
             this.paymentComboBox = new System.Windows.Forms.ComboBox();
             this.labelCaraBayar = new System.Windows.Forms.Label();
+            this.ChangePrinterButton = new System.Windows.Forms.Button();
             this.panel9 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
@@ -95,6 +95,8 @@
             this.SODateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.labelTglNota = new System.Windows.Forms.Label();
             this.totalLabel = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cashierDataGridView)).BeginInit();
             this.panel5.SuspendLayout();
@@ -230,12 +232,13 @@
             this.panel5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel5.BackColor = System.Drawing.Color.SteelBlue;
+            this.panel5.Controls.Add(this.label2);
             this.panel5.Controls.Add(this.refSOTextBox);
+            this.panel5.Controls.Add(this.comboBox1);
             this.panel5.Controls.Add(this.refSOLabel);
             this.panel5.Controls.Add(this.addressTextBox);
             this.panel5.Controls.Add(this.deliveredCheckbox);
             this.panel5.Controls.Add(this.rejectButton);
-            this.panel5.Controls.Add(this.ChangePrinterButton);
             this.panel5.Controls.Add(this.approvalButton);
             this.panel5.Controls.Add(this.errorLabel);
             this.panel5.Controls.Add(this.pelangganTextBox);
@@ -306,34 +309,22 @@
             // 
             this.rejectButton.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rejectButton.ForeColor = System.Drawing.Color.Black;
-            this.rejectButton.Location = new System.Drawing.Point(471, 50);
+            this.rejectButton.Location = new System.Drawing.Point(471, 55);
             this.rejectButton.Name = "rejectButton";
-            this.rejectButton.Size = new System.Drawing.Size(95, 34);
+            this.rejectButton.Size = new System.Drawing.Size(95, 29);
             this.rejectButton.TabIndex = 41;
             this.rejectButton.Text = "CANCEL";
             this.rejectButton.UseVisualStyleBackColor = true;
             this.rejectButton.Visible = false;
             this.rejectButton.Click += new System.EventHandler(this.rejectButton_Click);
             // 
-            // ChangePrinterButton
-            // 
-            this.ChangePrinterButton.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ChangePrinterButton.ForeColor = System.Drawing.Color.Black;
-            this.ChangePrinterButton.Location = new System.Drawing.Point(389, 13);
-            this.ChangePrinterButton.Name = "ChangePrinterButton";
-            this.ChangePrinterButton.Size = new System.Drawing.Size(158, 34);
-            this.ChangePrinterButton.TabIndex = 37;
-            this.ChangePrinterButton.Text = "SET PRINTER";
-            this.ChangePrinterButton.UseVisualStyleBackColor = true;
-            this.ChangePrinterButton.Click += new System.EventHandler(this.ChangePrinterButton_Click);
-            // 
             // approvalButton
             // 
             this.approvalButton.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.approvalButton.ForeColor = System.Drawing.Color.Black;
-            this.approvalButton.Location = new System.Drawing.Point(362, 50);
+            this.approvalButton.Location = new System.Drawing.Point(362, 55);
             this.approvalButton.Name = "approvalButton";
-            this.approvalButton.Size = new System.Drawing.Size(103, 34);
+            this.approvalButton.Size = new System.Drawing.Size(103, 29);
             this.approvalButton.TabIndex = 40;
             this.approvalButton.Text = "CONFIRM";
             this.approvalButton.UseVisualStyleBackColor = true;
@@ -702,6 +693,18 @@
             this.labelCaraBayar.Text = "Cara Bayar       :";
             this.labelCaraBayar.Visible = false;
             // 
+            // ChangePrinterButton
+            // 
+            this.ChangePrinterButton.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ChangePrinterButton.ForeColor = System.Drawing.Color.Black;
+            this.ChangePrinterButton.Location = new System.Drawing.Point(143, 314);
+            this.ChangePrinterButton.Name = "ChangePrinterButton";
+            this.ChangePrinterButton.Size = new System.Drawing.Size(158, 34);
+            this.ChangePrinterButton.TabIndex = 37;
+            this.ChangePrinterButton.Text = "SET PRINTER";
+            this.ChangePrinterButton.UseVisualStyleBackColor = true;
+            this.ChangePrinterButton.Click += new System.EventHandler(this.ChangePrinterButton_Click);
+            // 
             // panel9
             // 
             this.panel9.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
@@ -755,7 +758,7 @@
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(60, 17);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(76, 17);
             this.toolStripStatusLabel1.Spring = true;
             // 
             // toolStripStatusLabel2
@@ -791,7 +794,7 @@
             // toolStripStatusLabel7
             // 
             this.toolStripStatusLabel7.Name = "toolStripStatusLabel7";
-            this.toolStripStatusLabel7.Size = new System.Drawing.Size(60, 17);
+            this.toolStripStatusLabel7.Size = new System.Drawing.Size(76, 17);
             this.toolStripStatusLabel7.Spring = true;
             this.toolStripStatusLabel7.Text = "toolStripStatusLabel7";
             // 
@@ -827,7 +830,7 @@
             // toolStripStatusLabel3
             // 
             this.toolStripStatusLabel3.Name = "toolStripStatusLabel3";
-            this.toolStripStatusLabel3.Size = new System.Drawing.Size(118, 17);
+            this.toolStripStatusLabel3.Size = new System.Drawing.Size(118, 15);
             this.toolStripStatusLabel3.Text = "toolStripStatusLabel3";
             // 
             // SODateTimePicker
@@ -868,6 +871,30 @@
             this.totalLabel.Text = "Rp. 0";
             this.totalLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.ForeColor = System.Drawing.Color.FloralWhite;
+            this.label2.Location = new System.Drawing.Point(380, 2);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(123, 18);
+            this.label2.TabIndex = 49;
+            this.label2.Text = "Ukuran Kertas";
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Items.AddRange(new object[] {
+            "POS RECEIPT",
+            "1/2 KUARTO",
+            "KUARTO"});
+            this.comboBox1.Location = new System.Drawing.Point(383, 23);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(183, 26);
+            this.comboBox1.TabIndex = 48;
+            this.comboBox1.Text = "POS RECEIPT";
+            // 
             // cashierForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -879,6 +906,7 @@
             this.Controls.Add(this.labelTglNota);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.panel2);
+            this.Controls.Add(this.ChangePrinterButton);
             this.Controls.Add(this.panel9);
             this.Controls.Add(this.panel5);
             this.Controls.Add(this.noFakturLabel);
@@ -970,6 +998,8 @@
         private System.Windows.Forms.TextBox refSOTextBox;
         private System.Windows.Forms.Label labelTglKirim;
         private System.Windows.Forms.Label totalLabel;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ComboBox comboBox1;
     }
 }
 

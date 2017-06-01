@@ -1653,6 +1653,8 @@ CREATE TABLE `sys_config` (
   `store_email` varchar(50) DEFAULT NULL,
   `quotation_reminder` tinyint(3) DEFAULT NULL,
   `server_IP4` varchar(15) DEFAULT NULL,
+  `POS_RECEIPT_PRINTER` varchar(100) DEFAULT '',
+  `KUARTO_PRINTER` varchar(100) DEFAULT '',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -1663,7 +1665,7 @@ CREATE TABLE `sys_config` (
 
 LOCK TABLES `sys_config` WRITE;
 /*!40000 ALTER TABLE `sys_config` DISABLE KEYS */;
-INSERT INTO `sys_config` VALUES (1,'SLO001',0,'127.0.0.1',NULL,NULL,NULL,NULL,NULL,'127.0.0.1');
+INSERT INTO `sys_config` VALUES (1,'SLO001',0,'127.0.0.1',NULL,NULL,NULL,NULL,NULL,'127.0.0.1', '', '');
 /*!40000 ALTER TABLE `sys_config` ENABLE KEYS */;
 UNLOCK TABLES;
 

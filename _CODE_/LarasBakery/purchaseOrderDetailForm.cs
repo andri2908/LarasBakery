@@ -320,7 +320,8 @@ namespace AlphaSoft
 
             detailPODataGridView.AllowUserToAddRows = false;
 
-            detailPODataGridView.Focus();
+            if (null == displayBarcodeForm || displayBarcodeForm.IsDisposed)
+                detailPODataGridView.Focus();
 
             if (rowIndex >= 0)
             {
@@ -392,12 +393,16 @@ namespace AlphaSoft
 
             calculateTotal();
 
-            detailPODataGridView.CurrentCell = selectedRow.Cells["qty"];
-            detailPODataGridView.AllowUserToAddRows = true;
-            detailPODataGridView.Select();
-            detailPODataGridView.BeginEdit(true);
+            if (null == displayBarcodeForm || displayBarcodeForm.IsDisposed)
+            {
+                detailPODataGridView.CurrentCell = selectedRow.Cells["qty"];
+                detailPODataGridView.Select();
+                detailPODataGridView.BeginEdit(true);
 
-            detailPODataGridView.Focus();
+                detailPODataGridView.Focus();
+            }
+
+            detailPODataGridView.AllowUserToAddRows = true;
         }
 
         private void fillInSupplierCombo()
@@ -1301,6 +1306,8 @@ namespace AlphaSoft
         private void printOutPurchaseOrder()
         {
             string PONo = POinvoiceTextBox.Text;
+
+            gUtil.setPaper(comboBox1.SelectedIndex + 1);
 
             string sqlCommandx = "SELECT PH.PURCHASE_DATETIME AS 'TGL', PH.PURCHASE_DATE_RECEIVED AS 'TERIMA', PH.PURCHASE_INVOICE AS 'INVOICE', MS.SUPPLIER_FULL_NAME AS 'SUPPLIER', MP.PRODUCT_NAME AS 'PRODUK', PD.PRODUCT_PRICE AS 'HARGA', PD.PRODUCT_QTY AS 'QTY', PD.PURCHASE_SUBTOTAL AS 'SUBTOTAL' " +
                                         "FROM PURCHASE_HEADER PH, PURCHASE_DETAIL PD, MASTER_SUPPLIER MS, MASTER_PRODUCT MP " +

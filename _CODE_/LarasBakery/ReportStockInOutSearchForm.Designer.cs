@@ -46,6 +46,7 @@
             this.datefromPicker = new System.Windows.Forms.DateTimePicker();
             this.CustomercomboBox = new System.Windows.Forms.ComboBox();
             this.SupplierNameCombobox = new System.Windows.Forms.ComboBox();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -69,9 +70,9 @@
             this.groupBox1.Controls.Add(this.CustomercomboBox);
             this.groupBox1.Controls.Add(this.SupplierNameCombobox);
             this.groupBox1.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox1.Location = new System.Drawing.Point(12, 12);
+            this.groupBox1.Location = new System.Drawing.Point(12, 39);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(663, 181);
+            this.groupBox1.Size = new System.Drawing.Size(663, 218);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Kriteria Pencarian Data Mutasi dan Retur";
@@ -83,7 +84,7 @@
             this.TagsComboBox.FormattingEnabled = true;
             this.TagsComboBox.Location = new System.Drawing.Point(204, 60);
             this.TagsComboBox.Name = "TagsComboBox";
-            this.TagsComboBox.Size = new System.Drawing.Size(200, 26);
+            this.TagsComboBox.Size = new System.Drawing.Size(439, 26);
             this.TagsComboBox.TabIndex = 14;
             this.TagsComboBox.Visible = false;
             // 
@@ -101,7 +102,7 @@
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(183, 99);
+            this.checkBox1.Location = new System.Drawing.Point(183, 127);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(15, 14);
             this.checkBox1.TabIndex = 11;
@@ -133,7 +134,7 @@
             // nonactivecheckbox2
             // 
             this.nonactivecheckbox2.AutoSize = true;
-            this.nonactivecheckbox2.Location = new System.Drawing.Point(417, 62);
+            this.nonactivecheckbox2.Location = new System.Drawing.Point(204, 88);
             this.nonactivecheckbox2.Name = "nonactivecheckbox2";
             this.nonactivecheckbox2.Size = new System.Drawing.Size(138, 22);
             this.nonactivecheckbox2.TabIndex = 8;
@@ -145,7 +146,7 @@
             // 
             this.ErrorLabel1.AutoSize = true;
             this.ErrorLabel1.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ErrorLabel1.Location = new System.Drawing.Point(207, 94);
+            this.ErrorLabel1.Location = new System.Drawing.Point(207, 122);
             this.ErrorLabel1.Name = "ErrorLabel1";
             this.ErrorLabel1.Size = new System.Drawing.Size(126, 18);
             this.ErrorLabel1.TabIndex = 7;
@@ -159,13 +160,13 @@
             this.ProductcomboBox.FormattingEnabled = true;
             this.ProductcomboBox.Location = new System.Drawing.Point(204, 60);
             this.ProductcomboBox.Name = "ProductcomboBox";
-            this.ProductcomboBox.Size = new System.Drawing.Size(200, 26);
+            this.ProductcomboBox.Size = new System.Drawing.Size(439, 26);
             this.ProductcomboBox.TabIndex = 6;
             // 
             // nonactivecheckbox1
             // 
             this.nonactivecheckbox1.AutoSize = true;
-            this.nonactivecheckbox1.Location = new System.Drawing.Point(417, 95);
+            this.nonactivecheckbox1.Location = new System.Drawing.Point(204, 148);
             this.nonactivecheckbox1.Name = "nonactivecheckbox1";
             this.nonactivecheckbox1.Size = new System.Drawing.Size(138, 22);
             this.nonactivecheckbox1.TabIndex = 5;
@@ -175,7 +176,7 @@
             // 
             // CariButton
             // 
-            this.CariButton.Location = new System.Drawing.Point(294, 141);
+            this.CariButton.Location = new System.Drawing.Point(294, 175);
             this.CariButton.Name = "CariButton";
             this.CariButton.Size = new System.Drawing.Size(75, 34);
             this.CariButton.TabIndex = 4;
@@ -187,7 +188,7 @@
             // 
             this.LabelOptions1.AutoSize = true;
             this.LabelOptions1.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LabelOptions1.Location = new System.Drawing.Point(6, 96);
+            this.LabelOptions1.Location = new System.Drawing.Point(6, 123);
             this.LabelOptions1.Name = "LabelOptions1";
             this.LabelOptions1.Size = new System.Drawing.Size(79, 18);
             this.LabelOptions1.TabIndex = 3;
@@ -231,9 +232,9 @@
             this.CustomercomboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Append;
             this.CustomercomboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.CustomercomboBox.FormattingEnabled = true;
-            this.CustomercomboBox.Location = new System.Drawing.Point(204, 91);
+            this.CustomercomboBox.Location = new System.Drawing.Point(204, 119);
             this.CustomercomboBox.Name = "CustomercomboBox";
-            this.CustomercomboBox.Size = new System.Drawing.Size(200, 26);
+            this.CustomercomboBox.Size = new System.Drawing.Size(438, 26);
             this.CustomercomboBox.TabIndex = 13;
             this.CustomercomboBox.Text = "Customer";
             this.CustomercomboBox.Visible = false;
@@ -243,18 +244,30 @@
             this.SupplierNameCombobox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Append;
             this.SupplierNameCombobox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.SupplierNameCombobox.FormattingEnabled = true;
-            this.SupplierNameCombobox.Location = new System.Drawing.Point(204, 91);
+            this.SupplierNameCombobox.Location = new System.Drawing.Point(204, 119);
             this.SupplierNameCombobox.Name = "SupplierNameCombobox";
-            this.SupplierNameCombobox.Size = new System.Drawing.Size(200, 26);
+            this.SupplierNameCombobox.Size = new System.Drawing.Size(438, 26);
             this.SupplierNameCombobox.TabIndex = 1;
             this.SupplierNameCombobox.Text = "Supplier";
             this.SupplierNameCombobox.Visible = false;
+            // 
+            // panel1
+            // 
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel1.BackColor = System.Drawing.Color.SteelBlue;
+            this.panel1.Location = new System.Drawing.Point(1, 1);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(684, 29);
+            this.panel1.TabIndex = 47;
             // 
             // ReportStockInOutSearchForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(687, 201);
+            this.BackColor = System.Drawing.Color.FloralWhite;
+            this.ClientSize = new System.Drawing.Size(687, 264);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.groupBox1);
             this.Name = "ReportStockInOutSearchForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -286,5 +299,6 @@
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.ComboBox CustomercomboBox;
         private System.Windows.Forms.ComboBox TagsComboBox;
+        private System.Windows.Forms.Panel panel1;
     }
 }

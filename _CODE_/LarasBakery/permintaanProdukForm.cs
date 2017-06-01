@@ -306,7 +306,10 @@ namespace AlphaSoft
             if (detailRequestOrderDataGridView.ReadOnly == true)
                 return;
 
-            detailRequestOrderDataGridView.Focus();
+            if (null == displayBarcodeForm || displayBarcodeForm.IsDisposed)
+                detailRequestOrderDataGridView.Focus();
+
+            detailRequestOrderDataGridView.AllowUserToAddRows = false;
 
             // CHECK FOR EXISTING SELECTED ITEM
             for (i = 0; i < detailRequestOrderDataGridView.Rows.Count && !found && !foundEmptyRow; i++)
@@ -367,11 +370,16 @@ namespace AlphaSoft
 
             calculateTotal();
 
-            detailRequestOrderDataGridView.CurrentCell = selectedRow.Cells["qty"];
-            detailRequestOrderDataGridView.Select();
-            detailRequestOrderDataGridView.BeginEdit(true);
+            if (null == displayBarcodeForm || displayBarcodeForm.IsDisposed)
+            {
+                detailRequestOrderDataGridView.CurrentCell = selectedRow.Cells["qty"];
+                detailRequestOrderDataGridView.Select();
+                detailRequestOrderDataGridView.BeginEdit(true);
 
-            detailRequestOrderDataGridView.Focus();
+                detailRequestOrderDataGridView.Focus();
+            }
+
+            detailRequestOrderDataGridView.AllowUserToAddRows = true;
         }
 
         private void loadDataHeaderRO()

@@ -113,7 +113,10 @@ namespace AlphaSoft
 
         private void ReportSalesSummarySearchForm_Load(object sender, EventArgs e)
         {
+            datefromPicker.Format = DateTimePickerFormat.Custom;
             datefromPicker.CustomFormat = globalUtilities.CUSTOM_DATE_FORMAT;
+
+            datetoPicker.Format = DateTimePickerFormat.Custom;
             datetoPicker.CustomFormat = globalUtilities.CUSTOM_DATE_FORMAT;
 
             switch (originModuleID)
@@ -176,25 +179,45 @@ namespace AlphaSoft
                 case globalConstants.REPORT_SALES_SUMMARY:
                     if (taxModule == false)
                     {
-                        sqlCommandx = "SELECT '' AS BRANCH_NAME, S.SALES_INVOICE AS 'INVOICE', C.CUSTOMER_FULL_NAME AS 'CUSTOMER', DATE_FORMAT(S.SALES_DATE, '%d-%M-%Y') AS 'DATE',S.SALES_TOTAL AS 'TOTAL', IF(C.CUSTOMER_GROUP=1,'RETAIL',IF(C.CUSTOMER_GROUP=2,'GROSIR','PARTAI')) AS 'GROUP' " +
-                                                "FROM SALES_HEADER S,MASTER_CUSTOMER C " +
-                                                "WHERE " +
-                                                "S.CUSTOMER_ID = C.CUSTOMER_ID AND DATE_FORMAT(S.SALES_DATE, '%Y%m%d')  >= '" + dateFrom + "' AND DATE_FORMAT(S.SALES_DATE, '%Y%m%d')  <= '" + dateTo + "'" +  //AND S.CUSTOMER_ID = " + cust_id + " " +
+                        sqlCommandx = "SELECT S.SALES_TOP, SALES_INVOICE AS 'INVOICE', C.CUSTOMER_FULL_NAME AS 'CUSTOMER', DATE_FORMAT(S.SALES_DATE, '%d-%M-%Y') AS 'DATE',S.SALES_TOTAL AS 'TOTAL', IF(C.CUSTOMER_GROUP=1,'RETAIL', IF(C.CUSTOMER_GROUP=2,'GROSIR','PARTAI')) AS 'GROUP' " +
+                                                ", P.PM_NAME AS 'PEMBAYARAN' " +
+                                                "FROM SALES_HEADER S,MASTER_CUSTOMER C, PAYMENT_METHOD P " +
+                                                "WHERE S.CUSTOMER_ID = C.CUSTOMER_ID AND DATE_FORMAT(S.SALES_DATE, '%Y%m%d')  >= '" + dateFrom + "' AND DATE_FORMAT(S.SALES_DATE, '%Y%m%d')  <= '" + dateTo + "'" + " AND S.SALES_PAYMENT_METHOD = P.PM_ID " + //AND S.CUSTOMER_ID = " + cust_id + " " +
                                                 "UNION " +
-                                                "SELECT '' AS BRANCH_NAME, S.SALES_INVOICE AS 'INVOICE', 'P-UMUM' AS 'CUSTOMER', DATE_FORMAT(S.SALES_DATE, '%d-%M-%Y') AS 'DATE', S.SALES_TOTAL AS 'TOTAL', 'RETAIL' AS 'GROUP' " +
-                                                "FROM SALES_HEADER S " +
-                                                "WHERE " +
-                                                "DATE_FORMAT(S.SALES_DATE, '%Y%m%d') >= '" + dateFrom + "' AND DATE_FORMAT(S.SALES_DATE, '%Y%m%d')  <= '" + dateTo + "' AND S.CUSTOMER_ID = 0";
+                                                "SELECT S.SALES_TOP, S.SALES_INVOICE AS 'INVOICE', 'P-UMUM' AS 'CUSTOMER', DATE_FORMAT(S.SALES_DATE, '%d-%M-%Y') AS 'DATE', S.SALES_TOTAL AS 'TOTAL', 'RETAIL' AS 'GROUP' " +
+                                                ", P.PM_NAME AS 'PEMBAYARAN' " +
+                                                "FROM SALES_HEADER S, PAYMENT_METHOD P " +
+                                                "WHERE DATE_FORMAT(S.SALES_DATE, '%Y%m%d') >= '" + dateFrom + "' AND DATE_FORMAT(S.SALES_DATE, '%Y%m%d')  <= '" + dateTo + "' AND S.CUSTOMER_ID = 0 AND S.SALES_PAYMENT_METHOD = P.PM_ID";
+
+                        //sqlCommandx = "SELECT '' AS BRANCH_NAME, S.SALES_INVOICE AS 'INVOICE', C.CUSTOMER_FULL_NAME AS 'CUSTOMER', DATE_FORMAT(S.SALES_DATE, '%d-%M-%Y') AS 'DATE',S.SALES_TOTAL AS 'TOTAL', IF(C.CUSTOMER_GROUP=1,'RETAIL',IF(C.CUSTOMER_GROUP=2,'GROSIR','PARTAI')) AS 'GROUP' " +
+                        //                        "FROM SALES_HEADER S,MASTER_CUSTOMER C " +
+                        //                        "WHERE " +
+                        //                        "S.CUSTOMER_ID = C.CUSTOMER_ID AND DATE_FORMAT(S.SALES_DATE, '%Y%m%d')  >= '" + dateFrom + "' AND DATE_FORMAT(S.SALES_DATE, '%Y%m%d')  <= '" + dateTo + "'" +  //AND S.CUSTOMER_ID = " + cust_id + " " +
+                        //                        "UNION " +
+                        //                        "SELECT '' AS BRANCH_NAME, S.SALES_INVOICE AS 'INVOICE', 'P-UMUM' AS 'CUSTOMER', DATE_FORMAT(S.SALES_DATE, '%d-%M-%Y') AS 'DATE', S.SALES_TOTAL AS 'TOTAL', 'RETAIL' AS 'GROUP' " +
+                        //                        "FROM SALES_HEADER S " +
+                        //                        "WHERE " +
+                        //                        "DATE_FORMAT(S.SALES_DATE, '%Y%m%d') >= '" + dateFrom + "' AND DATE_FORMAT(S.SALES_DATE, '%Y%m%d')  <= '" + dateTo + "' AND S.CUSTOMER_ID = 0";
                     }
                     else
                     {
-                        sqlCommandx = "SELECT '' AS BRANCH_NAME, S.SALES_INVOICE AS 'INVOICE', C.CUSTOMER_FULL_NAME AS 'CUSTOMER', DATE_FORMAT(S.SALES_DATE, '%d-%M-%Y') AS 'DATE',S.SALES_TOTAL AS 'TOTAL', IF(C.CUSTOMER_GROUP=1,'RETAIL',IF(C.CUSTOMER_GROUP=2,'GROSIR','PARTAI')) AS 'GROUP' " +
-                                                "FROM SALES_HEADER_TAX S,MASTER_CUSTOMER C " +
+                        sqlCommandx = "SELECT S.SALES_TOP, SALES_INVOICE AS 'INVOICE', C.CUSTOMER_FULL_NAME AS 'CUSTOMER', DATE_FORMAT(S.SALES_DATE, '%d-%M-%Y') AS 'DATE',S.SALES_TOTAL AS 'TOTAL', IF(C.CUSTOMER_GROUP=1,'RETAIL',IF(C.CUSTOMER_GROUP=2,'GROSIR','PARTAI')) AS 'GROUP' " +
+                                                ", P.PM_NAME AS 'PEMBAYARAN' " +
+                                                "FROM SALES_HEADER_TAX S,MASTER_CUSTOMER C, PAYMENT_METHOD P AND S.SALES_PAYMENT_METHOD = P.PM_ID " +
                                                 "WHERE S.CUSTOMER_ID = C.CUSTOMER_ID AND DATE_FORMAT(S.SALES_DATE, '%Y%m%d')  >= '" + dateFrom + "' AND DATE_FORMAT(S.SALES_DATE, '%Y%m%d')  <= '" + dateTo + "'" +  //AND S.CUSTOMER_ID = " + cust_id + " " +
                                                 "UNION " +
-                                                "SELECT '' AS BRANCH_NAME, S.SALES_INVOICE AS 'INVOICE', 'P-UMUM' AS 'CUSTOMER', DATE_FORMAT(S.SALES_DATE, '%d-%M-%Y') AS 'DATE', S.SALES_TOTAL AS 'TOTAL', 'RETAIL' AS 'GROUP' " +
-                                                "FROM SALES_HEADER_TAX S " +
-                                                "WHERE DATE_FORMAT(S.SALES_DATE, '%Y%m%d') >= '" + dateFrom + "' AND DATE_FORMAT(S.SALES_DATE, '%Y%m%d')  <= '" + dateTo + "' AND S.CUSTOMER_ID = 0";
+                                                "SELECT S.SALES_TOP, S.SALES_INVOICE AS 'INVOICE', 'P-UMUM' AS 'CUSTOMER', DATE_FORMAT(S.SALES_DATE, '%d-%M-%Y') AS 'DATE', S.SALES_TOTAL AS 'TOTAL', 'RETAIL' AS 'GROUP' " +
+                                                ", P.PM_NAME AS 'PEMBAYARAN' " +
+                                                "FROM SALES_HEADER_TAX S, PAYMENT_METHOD P " +
+                                                "WHERE DATE_FORMAT(S.SALES_DATE, '%Y%m%d') >= '" + dateFrom + "' AND DATE_FORMAT(S.SALES_DATE, '%Y%m%d')  <= '" + dateTo + "' AND S.CUSTOMER_ID = 0 AND S.SALES_PAYMENT_METHOD = P.PM_ID";
+
+                        //sqlCommandx = "SELECT '' AS BRANCH_NAME, S.SALES_INVOICE AS 'INVOICE', C.CUSTOMER_FULL_NAME AS 'CUSTOMER', DATE_FORMAT(S.SALES_DATE, '%d-%M-%Y') AS 'DATE',S.SALES_TOTAL AS 'TOTAL', IF(C.CUSTOMER_GROUP=1,'RETAIL',IF(C.CUSTOMER_GROUP=2,'GROSIR','PARTAI')) AS 'GROUP' " +
+                        //                        "FROM SALES_HEADER_TAX S,MASTER_CUSTOMER C " +
+                        //                        "WHERE S.CUSTOMER_ID = C.CUSTOMER_ID AND DATE_FORMAT(S.SALES_DATE, '%Y%m%d')  >= '" + dateFrom + "' AND DATE_FORMAT(S.SALES_DATE, '%Y%m%d')  <= '" + dateTo + "'" +  //AND S.CUSTOMER_ID = " + cust_id + " " +
+                        //                        "UNION " +
+                        //                        "SELECT '' AS BRANCH_NAME, S.SALES_INVOICE AS 'INVOICE', 'P-UMUM' AS 'CUSTOMER', DATE_FORMAT(S.SALES_DATE, '%d-%M-%Y') AS 'DATE', S.SALES_TOTAL AS 'TOTAL', 'RETAIL' AS 'GROUP' " +
+                        //                        "FROM SALES_HEADER_TAX S " +
+                        //                        "WHERE DATE_FORMAT(S.SALES_DATE, '%Y%m%d') >= '" + dateFrom + "' AND DATE_FORMAT(S.SALES_DATE, '%Y%m%d')  <= '" + dateTo + "' AND S.CUSTOMER_ID = 0";
                     }
                     DS.writeXML(sqlCommandx, globalConstants.SalesSummaryXML);
                     ReportSalesSummaryForm displayedForm1 = new ReportSalesSummaryForm();

@@ -391,7 +391,8 @@ namespace AlphaSoft
 
             isLoading = true;
 
-            detailRequestOrderDataGridView.Focus();
+            if (null == displayBarcodeForm || displayBarcodeForm.IsDisposed)
+                detailRequestOrderDataGridView.Focus();
 
             detailRequestOrderDataGridView.AllowUserToAddRows = false;
 
@@ -462,11 +463,14 @@ namespace AlphaSoft
 
             calculateTotal();
 
-            detailRequestOrderDataGridView.CurrentCell = selectedRow.Cells["qty"];
-            detailRequestOrderDataGridView.AllowUserToAddRows = true;
-            detailRequestOrderDataGridView.BeginEdit(true);
+            if (null == displayBarcodeForm || displayBarcodeForm.IsDisposed)
+            {
+                detailRequestOrderDataGridView.CurrentCell = selectedRow.Cells["qty"];
+                detailRequestOrderDataGridView.BeginEdit(true);
 
-            detailRequestOrderDataGridView.Select();
+                detailRequestOrderDataGridView.Select();
+            }
+            detailRequestOrderDataGridView.AllowUserToAddRows = true;
 
             isLoading = false;
         }

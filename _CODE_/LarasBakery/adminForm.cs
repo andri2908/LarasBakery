@@ -1377,10 +1377,10 @@ namespace AlphaSoft
         private void hutangLewatJatuhTempoToolStripMenuItem_Click(object sender, EventArgs e)
         {
             string sqlCommandx = "";
-            sqlCommandx = "SELECT D.PURCHASE_INVOICE AS 'INVOICE', D.DEBT_NOMINAL AS 'TOTAL', DATE(D.DEBT_DUE_DATE) AS 'JATUHTEMPO', " +
+            sqlCommandx = "SELECT '' AS BRANCH_NAME, D.PURCHASE_INVOICE AS 'INVOICE', D.DEBT_NOMINAL AS 'TOTAL', DATE(D.DEBT_DUE_DATE) AS 'JATUHTEMPO', " +
                             "ABS(DATEDIFF(NOW(), D.DEBT_DUE_DATE)) AS 'TERLAMBAT' " +
                             "FROM DEBT D " +
-                            "WHERE D.DEBT_PAID = 0 AND DATEDIFF(NOW(), D.DEBT_DUE_DATE)> 0";
+                            "WHERE D.DEBT_PAID = 0 AND DATEDIFF(NOW(), D.DEBT_DUE_DATE)>= 0";
             DS.writeXML(sqlCommandx, globalConstants.DebtUnpaidXML);
             ReportDebtUnpaidForm displayedForm = new ReportDebtUnpaidForm();
             displayedForm.ShowDialog(this);
@@ -1389,7 +1389,7 @@ namespace AlphaSoft
         private void analisaUmurHutangToolStripMenuItem_Click(object sender, EventArgs e)
         {
             string sqlCommandx = "";
-            sqlCommandx = "SELECT D.PURCHASE_INVOICE AS 'INVOICE', D.DEBT_NOMINAL AS 'TOTAL', D.DEBT_DUE_DATE AS 'JATUHTEMPO', " +
+            sqlCommandx = "SELECT '' AS BRANCH_NAME, D.PURCHASE_INVOICE AS 'INVOICE', D.DEBT_NOMINAL AS 'TOTAL', D.DEBT_DUE_DATE AS 'JATUHTEMPO', " +
                             "DATEDIFF(NOW(), D.DEBT_DUE_DATE) AS 'WAKTU' " +
                             "FROM DEBT D WHERE " +
                             "D.DEBT_PAID = 0 AND DATEDIFF(NOW(), D.DEBT_DUE_DATE)< 0";
@@ -1495,7 +1495,7 @@ namespace AlphaSoft
 
         private void pemasukanKasToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ReportFinanceSearchForm displayedForm = new ReportFinanceSearchForm(globalConstants.REPORT_FINANCE_OUT);
+            ReportFinanceSearchForm displayedForm = new ReportFinanceSearchForm(globalConstants.REPORT_FINANCE_IN);
             displayedForm.ShowDialog(this);
         }
 

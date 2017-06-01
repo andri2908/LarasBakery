@@ -41,6 +41,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.datetoPicker = new System.Windows.Forms.DateTimePicker();
             this.datefromPicker = new System.Windows.Forms.DateTimePicker();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -59,9 +60,9 @@
             this.groupBox1.Controls.Add(this.datetoPicker);
             this.groupBox1.Controls.Add(this.datefromPicker);
             this.groupBox1.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox1.Location = new System.Drawing.Point(12, 12);
+            this.groupBox1.Location = new System.Drawing.Point(12, 37);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(685, 146);
+            this.groupBox1.Size = new System.Drawing.Size(685, 170);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Kriteria Pencarian Data Pembayaran";
@@ -83,7 +84,7 @@
             this.BranchcomboBox.FormattingEnabled = true;
             this.BranchcomboBox.Location = new System.Drawing.Point(230, 58);
             this.BranchcomboBox.Name = "BranchcomboBox";
-            this.BranchcomboBox.Size = new System.Drawing.Size(200, 26);
+            this.BranchcomboBox.Size = new System.Drawing.Size(439, 26);
             this.BranchcomboBox.TabIndex = 8;
             this.BranchcomboBox.Text = "SEMUA";
             this.BranchcomboBox.Visible = false;
@@ -104,9 +105,9 @@
             this.CustomercomboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Append;
             this.CustomercomboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.CustomercomboBox.FormattingEnabled = true;
-            this.CustomercomboBox.Location = new System.Drawing.Point(230, 58);
+            this.CustomercomboBox.Location = new System.Drawing.Point(231, 58);
             this.CustomercomboBox.Name = "CustomercomboBox";
-            this.CustomercomboBox.Size = new System.Drawing.Size(200, 26);
+            this.CustomercomboBox.Size = new System.Drawing.Size(438, 26);
             this.CustomercomboBox.TabIndex = 6;
             this.CustomercomboBox.Text = "SEMUA";
             this.CustomercomboBox.Visible = false;
@@ -114,7 +115,7 @@
             // nonactivecheckbox
             // 
             this.nonactivecheckbox.AutoSize = true;
-            this.nonactivecheckbox.Location = new System.Drawing.Point(443, 62);
+            this.nonactivecheckbox.Location = new System.Drawing.Point(230, 90);
             this.nonactivecheckbox.Name = "nonactivecheckbox";
             this.nonactivecheckbox.Size = new System.Drawing.Size(138, 22);
             this.nonactivecheckbox.TabIndex = 5;
@@ -123,7 +124,7 @@
             // 
             // CariButton
             // 
-            this.CariButton.Location = new System.Drawing.Point(294, 99);
+            this.CariButton.Location = new System.Drawing.Point(294, 122);
             this.CariButton.Name = "CariButton";
             this.CariButton.Size = new System.Drawing.Size(75, 34);
             this.CariButton.TabIndex = 4;
@@ -136,9 +137,9 @@
             this.SupplierNameCombobox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Append;
             this.SupplierNameCombobox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.SupplierNameCombobox.FormattingEnabled = true;
-            this.SupplierNameCombobox.Location = new System.Drawing.Point(231, 58);
+            this.SupplierNameCombobox.Location = new System.Drawing.Point(230, 58);
             this.SupplierNameCombobox.Name = "SupplierNameCombobox";
-            this.SupplierNameCombobox.Size = new System.Drawing.Size(200, 26);
+            this.SupplierNameCombobox.Size = new System.Drawing.Size(439, 26);
             this.SupplierNameCombobox.TabIndex = 1;
             this.SupplierNameCombobox.Text = "P-UMUM";
             this.SupplierNameCombobox.Visible = false;
@@ -186,11 +187,23 @@
             this.datefromPicker.Size = new System.Drawing.Size(200, 27);
             this.datefromPicker.TabIndex = 0;
             // 
+            // panel1
+            // 
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel1.BackColor = System.Drawing.Color.SteelBlue;
+            this.panel1.Location = new System.Drawing.Point(-2, 2);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(710, 29);
+            this.panel1.TabIndex = 47;
+            // 
             // ReportPaymentSearchForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(709, 168);
+            this.BackColor = System.Drawing.Color.FloralWhite;
+            this.ClientSize = new System.Drawing.Size(709, 218);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.groupBox1);
             this.Name = "ReportPaymentSearchForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -217,5 +230,6 @@
         private System.Windows.Forms.DateTimePicker datefromPicker;
         private System.Windows.Forms.ComboBox BranchcomboBox;
         private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.Panel panel1;
     }
 }

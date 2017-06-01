@@ -383,6 +383,7 @@
     <Compile Include="globalCloseShopUtilities.cs" />
     <Compile Include="globalCryptographyMethod.cs" />
     <Compile Include="globalFeatureList.cs" />
+    <Compile Include="globalPrinterUtility.cs" />
     <Compile Include="globalSynchronizeLib.cs" />
     <Compile Include="messagingForm.cs">
       <SubType>Form</SubType>
