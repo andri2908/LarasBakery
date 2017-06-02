@@ -1,6 +1,6 @@
 ﻿namespace AlphaSoft
 {
-    partial class newMessageForm
+    partial class newOrderForm
     {
         /// <summary>
         /// Required designer variable.
@@ -38,12 +38,12 @@
             this.label1.ForeColor = System.Drawing.Color.SteelBlue;
             this.label1.Location = new System.Drawing.Point(11, 6);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(320, 38);
+            this.label1.Size = new System.Drawing.Size(275, 38);
             this.label1.TabIndex = 1;
-            this.label1.Text = "NEW MESSAGE...";
+            this.label1.Text = "NEW ORDER...";
             this.label1.DoubleClick += new System.EventHandler(this.label1_DoubleClick);
             // 
-            // newMessageForm
+            // newOrderForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -54,14 +54,14 @@
             this.Cursor = System.Windows.Forms.Cursors.Hand;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "newMessageForm";
+            this.Name = "newOrderForm";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.TopMost = true;
-            this.Load += new System.EventHandler(this.newMessageForm_Load);
-            this.Click += new System.EventHandler(this.newMessageForm_Click);
-            this.DoubleClick += new System.EventHandler(this.newMessageForm_DoubleClick);
+            this.Load += new System.EventHandler(this.newOrderForm_Load);
+            this.Click += new System.EventHandler(this.newOrderForm_Click);
+            this.DoubleClick += new System.EventHandler(this.newOrderForm_DoubleClick);
             this.ResumeLayout(false);
             this.PerformLayout();
 

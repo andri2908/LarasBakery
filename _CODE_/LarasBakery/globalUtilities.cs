@@ -711,7 +711,7 @@ namespace AlphaSoft
                 for (int j = 0; j < 1000; j++) ;
         }
 
-        public void checkOrder()
+        public int checkOrder()
         {
             int newOrderValue = Convert.ToInt32(DS.getDataSingleValue("SELECT NEW_ORDER FROM NOTIF_TABLE"));
 
@@ -731,6 +731,8 @@ namespace AlphaSoft
                     saveSystemDebugLog(0, "[NOTIF] FAILED TO UPDATE NOTIF TABLE [" + ex.Message + "]");
                 }
             }
+
+            return newOrderValue;
         }
 
     }

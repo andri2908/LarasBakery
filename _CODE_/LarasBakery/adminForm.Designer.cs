@@ -954,6 +954,7 @@
             this.MAINMENU_KEUANGAN.Text = "Keuangan";
             this.MAINMENU_KEUANGAN.DropDownClosed += new System.EventHandler(this.administrasiToolStripMenuItem_DropDownClosed);
             this.MAINMENU_KEUANGAN.DropDownOpened += new System.EventHandler(this.administrasiToolStripMenuItem_DropDownOpened);
+            this.MAINMENU_KEUANGAN.Click += new System.EventHandler(this.MAINMENU_KEUANGAN_Click);
             // 
             // MENU_pengaturanNomorAkun
             // 

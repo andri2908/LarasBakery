@@ -10,11 +10,11 @@ using System.Windows.Forms;
 
 namespace AlphaSoft
 {
-    public partial class newMessageForm : Form
+    public partial class newOrderForm : Form
     {
         Form parentForm = null;
 
-        public newMessageForm(Form originForm)
+        public newOrderForm (Form originForm)
         {
             InitializeComponent();
             parentForm = originForm;
@@ -25,16 +25,16 @@ namespace AlphaSoft
             adminForm originForm;
             this.Hide();
 
-            messagingForm newMessagingForm = new messagingForm();
-            newMessagingForm.ShowDialog(this);
-
             originForm = (adminForm)parentForm;
-            originForm.setNewMessageFormExist(false);
+            originForm.setNewOrderFormExist(false);
+
+            dataSalesInvoice displayedForm = new dataSalesInvoice(globalConstants.DELIVERY_ORDER);
+            displayedForm.ShowDialog(this);
 
             this.Close();
         }
 
-        private void newMessageForm_Click(object sender, EventArgs e)
+        private void newOrderForm_Click(object sender, EventArgs e)
         {
             closeForm();
         }
@@ -44,12 +44,12 @@ namespace AlphaSoft
             closeForm();
         }
 
-        private void newMessageForm_DoubleClick(object sender, EventArgs e)
+        private void newOrderForm_DoubleClick(object sender, EventArgs e)
         {
             closeForm();
         }
 
-        private void newMessageForm_Load(object sender, EventArgs e)
+        private void newOrderForm_Load(object sender, EventArgs e)
         {
 
         }

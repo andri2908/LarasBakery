@@ -30,6 +30,7 @@ namespace AlphaSoft
         private int selectedUserGroupID = 0;
         private globalUtilities gutil = new globalUtilities();
         private bool newMessageFormExist = false;
+        private bool newOrderFormExist = false;
         private Hotkeys.GlobalHotkey ghk_F1;
         private Hotkeys.GlobalHotkey ghk_F2;
         private Hotkeys.GlobalHotkey ghk_F3;
@@ -338,6 +339,11 @@ namespace AlphaSoft
         public void setNewMessageFormExist(bool value)
         {
             newMessageFormExist = value;
+        }
+
+        public void setNewOrderFormExist(bool value)
+        {
+            newOrderFormExist = value;
         }
 
         private void updateLabel()
@@ -1676,7 +1682,23 @@ namespace AlphaSoft
 
         private void timerPesanan_Tick(object sender, EventArgs e)
         {
-            gutil.checkOrder();
+            if (gutil.checkOrder() ==1)
+            {
+                newOrderFormExist = true;
+                newOrderForm newMsgForm = new newOrderForm((Form)this);
+                newMsgForm.Top = Screen.PrimaryScreen.Bounds.Height - (newMsgForm.Height * 2) - 5;
+                newMsgForm.Left = Screen.PrimaryScreen.Bounds.Width - newMsgForm.Width;
+
+                newMsgForm.Show();
+
+                //  ALlow main UI thread to properly display please wait form.
+                Application.DoEvents();
+            }
+        }
+
+        private void MAINMENU_KEUANGAN_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
