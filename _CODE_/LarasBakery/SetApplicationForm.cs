@@ -304,6 +304,7 @@ namespace AlphaSoft
         {
             gutil.reArrangeTabOrder(this);
             fillInBranchCombo();
+            fillInPrinterCombo();
 
             errorLabel.Text = "";
             if (checkconfig())
@@ -515,6 +516,9 @@ namespace AlphaSoft
             string reminderValue = gutil.allTrim(reminderTextBox.Text);
             int id = 2;
             DS.beginTransaction();
+
+            if (gutil.isSS_ServerApp() == 1)
+                branchID = "0";
 
             try
             {

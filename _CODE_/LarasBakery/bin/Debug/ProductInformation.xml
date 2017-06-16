@@ -1,0 +1,43 @@
+<?xml version="1.0" standalone="yes"?>
+<NewDataSet>
+  <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true">
+      <xs:complexType>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+          <xs:element name="Table">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="ID" type="xs:string" minOccurs="0" />
+                <xs:element name="NAME" type="xs:string" minOccurs="0" />
+                <xs:element name="RETAIL" type="xs:double" minOccurs="0" />
+                <xs:element name="GROSIR" type="xs:double" minOccurs="0" />
+                <xs:element name="PARTAI" type="xs:double" minOccurs="0" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:choice>
+      </xs:complexType>
+    </xs:element>
+  </xs:schema>
+  <Table>
+    <ID>RT002</ID>
+    <NAME>ROTI AYAM</NAME>
+    <RETAIL>20</RETAIL>
+    <GROSIR>0</GROSIR>
+    <PARTAI>0</PARTAI>
+  </Table>
+  <Table>
+    <ID>RT003</ID>
+    <NAME>ROTI KEJU</NAME>
+    <RETAIL>10</RETAIL>
+    <GROSIR>0</GROSIR>
+    <PARTAI>0</PARTAI>
+  </Table>
+  <Table>
+    <ID>RT001</ID>
+    <NAME>ROTI PISANG</NAME>
+    <RETAIL>10</RETAIL>
+    <GROSIR>0</GROSIR>
+    <PARTAI>0</PARTAI>
+  </Table>
+</NewDataSet>
